@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: external_package.py
-Porpose: finds and loads a module
-Compatibility: Python3
+Purpose: finds and loads a module
+Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.19.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,11 +24,12 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
-import sys
+
 import importlib
 import importlib.machinery
 import importlib.util
+import os
+import sys
 
 
 def importer_package_dir(pkg, path):
@@ -47,7 +48,7 @@ def importer_package_dir(pkg, path):
     return None
 
 
-def importer_init_file(path, test: list = None):
+def importer_init_file(path: str, test: list[str] | None = None):
     """
     Given a pathname to a python package, import relative
     `__init__` file.
@@ -55,19 +56,29 @@ def importer_init_file(path, test: list = None):
     `FileNotFoundError` and `ModuleNotFoundError`. Optionally
     you can test a list of one or more submodules using the `test`
     argument.
+    Example: from external_package import importer_init_file
+             submod = ['compile_catalog','extract_messages',
+                       'update_catalog','init_catalog']
+             importer_init_file('/lib/python3.13/site-packages/babel/',
+             submod)
     """
     pkgname = os.path.basename(path)
-    initpath = os.path.join(path, '__init__.py')
+    initpath = os.path.join(path, "__init__.py")
 
     if not os.path.exists(initpath) or not os.path.isfile(initpath):
-        return f'No such file or directory: «{initpath}»'
+        return f"No such file or directory: «{initpath}»"
 
     spec = importlib.util.spec_from_file_location(pkgname, initpath)
     newmodule = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = newmodule
     spec.loader.exec_module(newmodule)
+
     if test:
+        foundsub = []
         for mod in test:
             if not sys.modules.get(mod, None):
-                return f'Module not found: \'{mod}\''
+                foundsub.append(mod)
+                # return f'Module not found: \'{mod}\''
+        if foundsub:
+            return f"Module not found: {', '.join(foundsub)}"
     return None

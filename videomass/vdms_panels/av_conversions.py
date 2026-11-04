@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: av_conversions.py
-Porpose: audio/video conversions interface
-Compatibility: Python3, wxPython4 Phoenix
+Purpose: audio/video conversions interface
+Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,76 +24,87 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 from pubsub import pub
-from videomass.vdms_utils.utils import update_timeseq_duration
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_io.checkup import check_files
-from videomass.vdms_dialogs.epilogue import Formula
+
 from videomass.vdms_dialogs import setting_profiles
+from videomass.vdms_dialogs.avconv_cmd_line import Raw_Cmd_Line
+from videomass.vdms_dialogs.epilogue import Formula
+from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
 from videomass.vdms_dialogs.filter_crop import Crop
-from videomass.vdms_dialogs.filter_transpose import Transpose
-from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
+from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
-from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
+from videomass.vdms_dialogs.filter_transpose import Transpose
 from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
-from videomass.vdms_dialogs.avconv_cmd_line import Raw_Cmd_Line
+from videomass.vdms_io.checkup import check_files
 from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
-from . video_encoders.video_no_enc import Video_No_Enc
-from . video_encoders.mpeg4 import Mpeg_4
-from . video_encoders.av1_aom import AV1_Aom
-from . video_encoders.av1_svt import AV1_Svt
-from . video_encoders.vp9_webm import Vp9_WebM
-from . video_encoders.avc_x264 import Avc_X264
-from . video_encoders.hevc_x265 import Hevc_X265
-from . video_encoders.video_encodercopy import Copy_Vcodec
-from . audio_encoders.acodecs import AudioEncoders
-from . miscellaneous.miscell import Miscellaneous
+from videomass.vdms_threads.ffplay_file import FilePlay
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import update_timeseq_duration
+
+from .audio_encoders.acodecs import AudioEncoders
+from .miscellaneous.miscell import Miscellaneous
+from .video_encoders.av1_aom import AV1_Aom
+from .video_encoders.av1_svt import AV1_Svt
+from .video_encoders.avc_x264 import Avc_X264
+from .video_encoders.hevc_x265 import Hevc_X265
+from .video_encoders.mpeg4 import Mpeg_4
+from .video_encoders.video_encodercopy import Copy_Vcodec
+from .video_encoders.video_no_enc import Video_No_Enc
+from .video_encoders.vp9_webm import Vp9_WebM
 
 
 class AV_Conv(wx.Panel):
     """
     Panel GUI for audio and video conversions
     """
+
     # colour rappresentetion in html
-    AZURE = '#15a6a6'
-    YELLOW = '#bd9f00'
-    RED = '#ea312d'
-    ORANGE = '#f28924'
-    GREENOLIVE = '#6aaf23'
-    GREEN = '#268826'
-    CYAN = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
-    VIOLET = '#D64E93'
-    LIMEGREEN = '#87A615'
-    TROPGREEN = '#15A660'
-    WHITE = '#fbf4f4'
-    BLACK = '#060505'
+    AZURE = "#15a6a6"
+    YELLOW = "#bd9f00"
+    RED = "#ea312d"
+    ORANGE = "#f28924"
+    GREENOLIVE = "#6aaf23"
+    GREEN = "#268826"
+    CYAN = "#61ccc7"  # rgb form (wx.Colour(97, 204, 199)
+    VIOLET = "#D64E93"
+    LIMEGREEN = "#87A615"
+    TROPGREEN = "#15A660"
+    WHITE = "#fbf4f4"
+    BLACK = "#060505"
 
     # MUXERS dictionary:
-    MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'mp4': 'mp4',
-              'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
-              }
+    MUXERS: ClassVar[dict[str, Any]] = {
+        "mkv": "matroska",
+        "avi": "avi",
+        "mp4": "mp4",
+        "m4v": "null",
+        "ogg": "ogg",
+        "webm": "webm",
+    }
     # Namings in the video container selection combo box:
-    VCODECS = ({"MPEG-4": {"-c:v mpeg4": ["avi"]},
-                "XVID MPEG-4": {"-c:v libxvid": ["avi"]},
-                "H.264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
-                "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
-                "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "AOM-AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
-                "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
-                "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
-                "VP9": {"-c:v libvpx-vp9": ["webm", "mkv"]},
-                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v",
-                                       "webm", "Copy"]}
-                })
+    VCODECS: ClassVar[dict[str, Any]] = {
+        "MPEG-4": {"-c:v mpeg4": ["avi"]},
+        "XVID MPEG-4": {"-c:v libxvid": ["avi"]},
+        "H.264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
+        "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
+        "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+        "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+        "AOM-AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+        "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
+        "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
+        "VP9": {"-c:v libvpx-vp9": ["webm", "mkv"]},
+        "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "webm", "Copy"]},
+    }
     # Namings in the audio format selection on Container combobox:
-    A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac', 'opus')
+    A_FORMATS = ("wav", "mp3", "ac3", "ogg", "flac", "m4a", "aac", "opus")
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -107,33 +118,50 @@ class AV_Conv(wx.Panel):
         icons = get.iconset
         self.videopanel = None
 
-        bmpplay = get_bmp(icons['preview'], ((16, 16)))
-        self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
-        bmpresize = get_bmp(icons['scale'], ((16, 16)))
-        bmpcrop = get_bmp(icons['crop'], ((16, 16)))
-        bmprotate = get_bmp(icons['rotate'], ((16, 16)))
-        bmpdeinterlace = get_bmp(icons['deinterlace'], ((16, 16)))
-        bmpdenoiser = get_bmp(icons['denoiser'], ((16, 16)))
-        bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
-        bmpsaveprf = get_bmp(icons['addtoprst'], ((16, 16)))
-        bmpcoloreq = get_bmp(icons['coloreq'], ((16, 16)))
-        bmpcmd = get_bmp(icons['cmdshow'], ((16, 16)))
+        bmpplay = get_bmp(icons["preview"], ((16, 16)))
+        self.bmpreset = get_bmp(icons["clear"], ((16, 16)))
+        bmpresize = get_bmp(icons["scale"], ((16, 16)))
+        bmpcrop = get_bmp(icons["crop"], ((16, 16)))
+        bmprotate = get_bmp(icons["rotate"], ((16, 16)))
+        bmpdeinterlace = get_bmp(icons["deinterlace"], ((16, 16)))
+        bmpdenoiser = get_bmp(icons["denoiser"], ((16, 16)))
+        bmpstab = get_bmp(icons["stabilizer"], ((16, 16)))
+        bmpsaveprf = get_bmp(icons["addtoprst"], ((16, 16)))
+        bmpcoloreq = get_bmp(icons["coloreq"], ((16, 16)))
+        bmpcmd = get_bmp(icons["cmdshow"], ((16, 16)))
 
         # Default keys:values dictionary definition in this class
-        self.opt = {"Media": "Video", "VidCmbxStr": "H.264",
-                    "OutputFormat": "mkv", "VideoCodec": "-c:v libx264",
-                    "ext_input": "", "Passes": "Auto", "InputDir": "",
-                    "OutputDir": "", "SubtitleMap": "-map 0:s?",
-                    "SubtitleEnc": "",
-                    "Deinterlace": "", "Interlace": "", "ColorEQ": "",
-                    "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
-                    "CropColor": "", "Scale": "", "Setdar": "", "Setsar": "",
-                    "Denoiser": "", "Vidstabtransform": "",
-                    "Vidstabdetect": "", "Unsharp": "", "Makeduo": False,
-                    "VFilters": "", "CmdVideoParams": "", "CmdAudioParams": "",
-                    "VideoMap": "-map 0:v?",
-
-                    }
+        self.opt = {
+            "Media": "Video",
+            "VidCmbxStr": "H.264",
+            "OutputFormat": "mkv",
+            "VideoCodec": "-c:v libx264",
+            "ext_input": "",
+            "Passes": "Auto",
+            "InputDir": "",
+            "OutputDir": "",
+            "SubtitleMap": "-map 0:s?",
+            "SubtitleEnc": "",
+            "Deinterlace": "",
+            "Interlace": "",
+            "ColorEQ": "",
+            "PixelFormat": "",
+            "Orientation": ["", ""],
+            "Crop": "",
+            "CropColor": "",
+            "Scale": "",
+            "Setdar": "",
+            "Setsar": "",
+            "Denoiser": "",
+            "Vidstabtransform": "",
+            "Vidstabdetect": "",
+            "Unsharp": "",
+            "Makeduo": False,
+            "VFilters": "",
+            "CmdVideoParams": "",
+            "CmdAudioParams": "",
+            "VideoMap": "-map 0:v?",
+        }
         wx.Panel.__init__(self, parent, -1)
         # ------------ widgets
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -142,31 +170,36 @@ class AV_Conv(wx.Panel):
         msg = _("Target")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         sizer_convin = wx.BoxSizer(wx.HORIZONTAL)
-        txtmedia = wx.StaticText(box1, wx.ID_ANY, _('Media:'))
+        txtmedia = wx.StaticText(box1, wx.ID_ANY, _("Media:"))
         sizer_convin.Add(txtmedia, 0, wx.LEFT | wx.CENTRE, 5)
-        self.cmb_Media = wx.ComboBox(box1, wx.ID_ANY,
-                                     choices=['Video', 'Audio'],
-                                     size=(100, -1), style=wx.CB_DROPDOWN
-                                     | wx.CB_READONLY
-                                     )
+        self.cmb_Media = wx.ComboBox(
+            box1,
+            wx.ID_ANY,
+            choices=["Video", "Audio"],
+            size=(100, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         sizer_convin.Add(self.cmb_Media, 0, wx.LEFT | wx.CENTRE, 5)
-        txtVcod = wx.StaticText(box1, wx.ID_ANY, 'Video Encoder:')
+        txtVcod = wx.StaticText(box1, wx.ID_ANY, "Video Encoder:")
         sizer_convin.Add(txtVcod, 0, wx.LEFT | wx.CENTRE, 20)
-        self.cmb_vencoder = wx.ComboBox(box1, wx.ID_ANY,
-                                        choices=list(AV_Conv.VCODECS.keys()),
-                                        size=(120, -1),
-                                        style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                        )
+        self.cmb_vencoder = wx.ComboBox(
+            box1,
+            wx.ID_ANY,
+            choices=list(AV_Conv.VCODECS.keys()),
+            size=(120, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         sizer_convin.Add(self.cmb_vencoder, 0, wx.LEFT | wx.CENTRE, 5)
-        txtFormat = wx.StaticText(box1, wx.ID_ANY, _('Container:'))
+        txtFormat = wx.StaticText(box1, wx.ID_ANY, _("Container:"))
         sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 20)
-        choices = list(AV_Conv.VCODECS['H.264'].values())[0]
-        self.cmb_cont = wx.ComboBox(box1, wx.ID_ANY,
-                                    choices=choices,
-                                    size=(100, -1),
-                                    style=wx.CB_DROPDOWN
-                                    | wx.CB_READONLY,
-                                    )
+        choices = next(iter(AV_Conv.VCODECS["H.264"].values()))
+        self.cmb_cont = wx.ComboBox(
+            box1,
+            wx.ID_ANY,
+            choices=choices,
+            size=(100, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         sizer_convin.Add(self.cmb_cont, 0, wx.LEFT | wx.CENTRE, 5)
         self.btn_saveprst = wx.Button(box1, wx.ID_ANY, "", size=(40, -1))
         self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
@@ -181,9 +214,9 @@ class AV_Conv(wx.Panel):
         # END BOX top Media and Format
 
         # ------------------ BEGIN NOTEBOOK CONSTRUCTOR
-        self.notebook = wx.Notebook(self, wx.ID_ANY,
-                                    style=wx.NB_NOPAGETHEME | wx.NB_TOP
-                                    )
+        self.notebook = wx.Notebook(
+            self, wx.ID_ANY, style=wx.NB_NOPAGETHEME | wx.NB_TOP
+        )
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -------------- BEGIN NOTEBOOK PANEL 1
         self.nb_Video = wx.Panel(self.notebook, wx.ID_ANY)
@@ -203,10 +236,16 @@ class AV_Conv(wx.Panel):
         self.vcopypanel = Copy_Vcodec(box3, self.opt)
         self.disablevidpanels = Video_No_Enc(box3)
 
-        for vpan in (self.aompanel, self.svtpanel, self.vp9panel,
-                     self.mpeg4panel, self.h264panel, self.h265panel,
-                     self.vcopypanel, self.disablevidpanels,
-                     ):
+        for vpan in (
+            self.aompanel,
+            self.svtpanel,
+            self.vp9panel,
+            self.mpeg4panel,
+            self.h264panel,
+            self.h265panel,
+            self.vcopypanel,
+            self.disablevidpanels,
+        ):
             box_opt.Add(vpan, 0, wx.ALL | wx.EXPAND, 5)
 
         self.vp9panel.Hide(), self.h265panel.Hide()
@@ -220,60 +259,71 @@ class AV_Conv(wx.Panel):
         box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, "")
         box_Vfilters = wx.StaticBoxSizer(box4, wx.VERTICAL)
         sizer_nbVideo.Add(box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
-        self.filterVpanel = scrolled.ScrolledPanel(box4, -1,
-                                                   size=(70, 700),
-                                                   style=wx.TAB_TRAVERSAL
-                                                   | wx.BORDER_NONE,
-                                                   name="panelscroll",
-                                                   )
+        self.filterVpanel = scrolled.ScrolledPanel(
+            box4,
+            -1,
+            size=(70, 700),
+            style=wx.TAB_TRAVERSAL | wx.BORDER_NONE,
+            name="panelscroll",
+        )
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
 
-        self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "", size=(40, -1))
+        self.btn_preview = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
         sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_preview.Disable()
-        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   "", size=(40, -1))
+        self.btn_reset = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
         sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_reset.Disable()
-        lineflt = wx.StaticLine(self.filterVpanel,
-                                wx.ID_ANY,
-                                pos=wx.DefaultPosition,
-                                size=wx.DefaultSize,
-                                style=wx.LI_HORIZONTAL,
-                                name=wx.StaticLineNameStr,
-                                )
+        lineflt = wx.StaticLine(
+            self.filterVpanel,
+            wx.ID_ANY,
+            pos=wx.DefaultPosition,
+            size=wx.DefaultSize,
+            style=wx.LI_HORIZONTAL,
+            name=wx.StaticLineNameStr,
+        )
         sizer_Vfilter.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
-        self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                       "", size=(40, -1))
+        self.btn_videosize = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_videosize.SetBitmap(bmpresize, wx.LEFT)
         sizer_Vfilter.Add(self.btn_videosize, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_crop = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                  "", size=(40, -1))
+        self.btn_crop = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_crop.SetBitmap(bmpcrop, wx.LEFT)
         sizer_Vfilter.Add(self.btn_crop, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_rotate = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    "", size=(40, -1))
+        self.btn_rotate = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_rotate.SetBitmap(bmprotate, wx.LEFT)
 
         sizer_Vfilter.Add(self.btn_rotate, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_lacing = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    "", size=(40, -1))
+        self.btn_lacing = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_lacing.SetBitmap(bmpdeinterlace, wx.LEFT)
         sizer_Vfilter.Add(self.btn_lacing, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_denois = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    "", size=(40, -1))
+        self.btn_denois = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_denois.SetBitmap(bmpdenoiser, wx.LEFT)
         sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "", size=(40, -1))
+        self.btn_vidstab = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.CENTRE, 5)
 
-        self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "", size=(40, -1))
+        self.btn_coloreq = wx.Button(
+            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        )
         self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
         sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.CENTRE, 5)
 
@@ -313,33 +363,39 @@ class AV_Conv(wx.Panel):
         self.Fit()
         self.Layout()
         # ---------------------- Tooltips
-        tip = _('Save as a new profile of the Presets Manager.')
+        tip = _("Save as a new profile of the Presets Manager.")
         self.btn_saveprst.SetToolTip(tip)
-        tip = _('Displays the RAW commands for the selected file.')
+        tip = _("Displays the RAW commands for the selected file.")
         self.btn_cmd.SetToolTip(tip)
-        tip = (_('Available video encoders. "Copy" means that the video '
-                 'stream will not be re-encoded and will allow you (depending '
-                 'on the encoder) to change the container, audio codec and a '
-                 'few other parameters.'))
+        tip = _(
+            'Available video encoders. "Copy" means that the video '
+            "stream will not be re-encoded and will allow you (depending "
+            "on the encoder) to change the container, audio codec and a "
+            "few other parameters."
+        )
         self.cmb_vencoder.SetToolTip(tip)
-        tip = (_('Container format. It is usually represented by the file '
-                 'extension (output format).\n\nIf the Media target is set '
-                 'to "Video" and the Video Encoder to "Copy", optionally you '
-                 'can set this control to "Copy" the same container as '
-                 'source file.\n\nIf the media target is set to "Audio", you '
-                 'can extract only the audio streams from videos, or simply '
-                 'convert audio source files.'))
+        tip = _(
+            "Container format. It is usually represented by the file "
+            "extension (output format).\n\nIf the Media target is set "
+            'to "Video" and the Video Encoder to "Copy", optionally you '
+            'can set this control to "Copy" the same container as '
+            'source file.\n\nIf the media target is set to "Audio", you '
+            "can extract only the audio streams from videos, or simply "
+            "convert audio source files."
+        )
         self.cmb_cont.SetToolTip(tip)
-        tip = (_('Set output files target: "Video" to save output files as '
-                 'video files; "Audio" to save files using an audio encoder '
-                 'and format.\n\nNote that by using "Audio" as the target, '
-                 'you will still be able to work on the video source files '
-                 'but you will only be able to extract the audio streams, '
-                 'convert them and apply audio filters such as '
-                 'normalization.'))
+        tip = _(
+            'Set output files target: "Video" to save output files as '
+            'video files; "Audio" to save files using an audio encoder '
+            'and format.\n\nNote that by using "Audio" as the target, '
+            "you will still be able to work on the video source files "
+            "but you will only be able to extract the audio streams, "
+            "convert them and apply audio filters such as "
+            "normalization."
+        )
         self.cmb_Media.SetToolTip(tip)
-        self.btn_preview.SetToolTip(_('Preview video filters'))
-        self.btn_reset.SetToolTip(_('Disable active filters'))
+        self.btn_preview.SetToolTip(_("Preview video filters"))
+        self.btn_reset.SetToolTip(_("Disable active filters"))
         self.btn_videosize.SetToolTip(_("Resize"))
         self.btn_crop.SetToolTip(_("Crop"))
         self.btn_rotate.SetToolTip(_("Transpose"))
@@ -367,8 +423,11 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Set_coloreq, self.btn_coloreq)
         self.Bind(wx.EVT_BUTTON, self.on_video_preview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_vfilters_clear, self.btn_reset)
-        self.Bind(wx.EVT_BUTTON, self.on_audio_preview,
-                  self.audioenc.btn_audio_preview)
+        self.Bind(
+            wx.EVT_BUTTON,
+            self.on_audio_preview,
+            self.audioenc.btn_audio_preview,
+        )
 
         self.Bind(wx.EVT_BUTTON, self.on_cmd_line, self.btn_cmd)
 
@@ -378,6 +437,7 @@ class AV_Conv(wx.Panel):
         self.vencoder_panel_set(default=True)
         self.audioenc.startup_one_time(), self.audioenc.normalize_default()
         pub.subscribe(self.reset_on_changed_data, "RESET_ON_CHANGED_LIST")
+
     # -------------------------------------------------------------------#
 
     def reset_on_changed_data(self, msg):
@@ -391,6 +451,7 @@ class AV_Conv(wx.Panel):
             self.audioenc.normalize_default()
         if self.opt["VFilters"]:
             self.on_vfilters_clear(self)
+
     # -------------------------------------------------------------------#
 
     def vencoder_panel_set(self, default=False):
@@ -399,12 +460,12 @@ class AV_Conv(wx.Panel):
         encoder. Inizializing this class make sure to pass the
         `default=True` argument to this method.
         """
-        if self.cmb_Media.GetValue() == 'Audio':
+        if self.cmb_Media.GetValue() == "Audio":
             self.videopanel.default(), self.videopanel.Hide()
             self.filterVpanel.Disable(), self.on_vfilters_clear(self)
             self.videopanel = self.disablevidpanels
             self.videopanel.Show(), self.videopanel.default()
-            self.opt["CmdVideoParams"] = ''
+            self.opt["CmdVideoParams"] = ""
 
         elif self.opt["VideoCodec"] == "-c:v libx264":  # default
             if not default:
@@ -453,10 +514,12 @@ class AV_Conv(wx.Panel):
         This event triggers the setting to the default values.
         """
         selected = AV_Conv.VCODECS.get(self.cmb_vencoder.GetValue())
-        libcodec = list(selected.keys())[0]
+        libcodec = next(iter(selected.keys()))
         self.cmb_cont.Clear()
         for f in selected.values():
-            self.cmb_cont.Append((f),)
+            self.cmb_cont.Append(
+                (f),
+            )
         self.cmb_cont.SetSelection(0)
         self.opt["VideoCodec"] = libcodec
         self.opt["VidCmbxStr"] = self.cmb_vencoder.GetValue()
@@ -465,33 +528,37 @@ class AV_Conv(wx.Panel):
         self.audioenc.audio_default()
         self.audioenc.set_audio_radiobox(None)
         self.miscfunc.set_subt_radiobox()
+
     # ------------------------------------------------------------------#
 
     def on_Media(self, event):
         """
         Combobox Media Sets layout to Audio or Video formats
         """
-        if self.cmb_Media.GetValue() == 'Audio':
-            self.opt["Media"] = 'Audio'
+        if self.cmb_Media.GetValue() == "Audio":
+            self.opt["Media"] = "Audio"
             self.cmb_vencoder.Disable()
-            self.opt["VideoCodec"] = ''
-            self.opt["VidCmbxStr"] = ''
+            self.opt["VideoCodec"] = ""
+            self.opt["VidCmbxStr"] = ""
             self.audioenc.audio_default()
             self.cmb_cont.Clear()
             for f in AV_Conv.A_FORMATS:
-                self.cmb_cont.Append((f),)
+                self.cmb_cont.Append(
+                    (f),
+                )
             self.cmb_cont.SetSelection(0)
             self.opt["OutputFormat"] = self.cmb_cont.GetValue()
             self.vencoder_panel_set()
             self.audioenc.set_audio_radiobox(None)
             self.miscfunc.set_subt_radiobox()
 
-        elif self.cmb_Media.GetValue() == 'Video':
-            self.opt["Media"] = 'Video'
+        elif self.cmb_Media.GetValue() == "Video":
+            self.opt["Media"] = "Video"
             self.cmb_vencoder.Enable()
             self.cmb_vencoder.SetSelection(2)
             self.videoCodec(self)
             self.miscfunc.set_subt_radiobox()
+
     # ------------------------------------------------------------------#
 
     def on_Container(self, event):
@@ -499,11 +566,12 @@ class AV_Conv(wx.Panel):
         Appends on container combobox according to audio and video formats
         """
         if self.cmb_cont.GetValue() == "Copy":
-            self.opt["OutputFormat"] = ''
+            self.opt["OutputFormat"] = ""
         else:
             self.opt["OutputFormat"] = self.cmb_cont.GetValue()
         self.audioenc.set_audio_radiobox(None)
         self.miscfunc.set_subt_radiobox()
+
     # ------------------------------------------------------------------#
 
     def on_video_preview(self, event):
@@ -515,27 +583,43 @@ class AV_Conv(wx.Panel):
         if not fget or not self.opt["VFilters"]:
             return
         if self.opt["Vidstabtransform"]:
-            wx.MessageBox(_("To preview Stabilize filter, please click "
-                            "Preview button on Video Stabilizer Tool"),
-                          "Videomass", wx.ICON_INFORMATION, self)
+            wx.MessageBox(
+                _(
+                    "To preview Stabilize filter, please click "
+                    "Preview button on Video Stabilizer Tool"
+                ),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
             return
 
         flt = self.opt["VFilters"]
-        autoexit = '-autoexit' if self.parent.autoexit else ''
+        autoexit = "-autoexit" if self.parent.autoexit else ""
+        filesel = self.parent.file_src[fget[1]]
 
         if self.parent.checktimestamp:
-            args = (f'{autoexit} -i "{self.parent.file_src[fget[1]]}" '
-                    f'{self.parent.time_seq} '
-                    f'{flt},"{self.parent.cmdtimestamp}"')
+            args = (
+                f'{autoexit} -i "{filesel}" '
+                f"{self.parent.time_seq} "
+                f'{flt},"{self.parent.cmdtimestamp}"'
+            )
         else:
-            args = f'{autoexit} -i "{self.parent.file_src[fget[1]]}" {flt}'
+            args = f'{autoexit} -i "{filesel}" {flt}'
+
         try:
-            with open(self.parent.file_src[fget[1]], encoding='utf-8'):
-                FilePlay(self.GetParent(), args)
-        except IOError:
-            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
-                          "Videomass", wx.ICON_EXCLAMATION, self)
+            with open(filesel, encoding="utf-8"):
+                playback = FilePlay(self.GetParent(), args)
+                playback.start()
+        except OSError:
+            wx.MessageBox(
+                _("Invalid or unsupported file:  %s") % (filesel),
+                "Videomass",
+                wx.ICON_EXCLAMATION,
+                self,
+            )
             return
+
     # ------------------------------------------------------------------#
 
     def on_audio_preview(self, event):
@@ -545,6 +629,7 @@ class AV_Conv(wx.Panel):
         """
         fget = self.file_selection()
         self.audioenc.on_audio_preview(fget)
+
     # ------------------------------------------------------------------#
 
     def on_vfilters_clear(self, event):
@@ -553,10 +638,10 @@ class AV_Conv(wx.Panel):
         arg is True, it disable only vidstab filter values.
         """
         if self.opt["VFilters"]:
-            self.opt['Crop'], self.opt["Orientation"] = "", ["", ""]
-            self.opt['Scale'], self.opt['Setdar'] = "", ""
-            self.opt['Setsar'], self.opt['Deinterlace'] = "", ""
-            self.opt['Interlace'], self.opt['Denoiser'] = "", ""
+            self.opt["Crop"], self.opt["Orientation"] = "", ["", ""]
+            self.opt["Scale"], self.opt["Setdar"] = "", ""
+            self.opt["Setsar"], self.opt["Deinterlace"] = "", ""
+            self.opt["Interlace"], self.opt["Denoiser"] = "", ""
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
             self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
             self.opt["VFilters"], self.opt["ColorEQ"] = "", ""
@@ -570,6 +655,7 @@ class AV_Conv(wx.Panel):
             self.btn_coloreq.SetBackgroundColour(wx.NullColour)
             self.btn_preview.Disable()
             self.btn_reset.Disable()
+
     # ------------------------------------------------------------------#
 
     def file_selection(self):
@@ -583,12 +669,17 @@ class AV_Conv(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("Have to select an item in the file list first"),
-                          'Videomass', wx.ICON_INFORMATION, self)
+            wx.MessageBox(
+                _("Have to select an item in the file list first"),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
             return None
 
         clicked = self.parent.filedropselected
         return (clicked, self.parent.file_src.index(clicked))
+
     # ------------------------------------------------------------------#
 
     def get_video_stream(self):
@@ -602,25 +693,40 @@ class AV_Conv(wx.Panel):
 
         index = self.parent.data_files[fget[1]]
 
-        if 'video' in index.get('streams')[0]['codec_type']:
-            width = int(index['streams'][0]['width'])
-            height = int(index['streams'][0]['height'])
-            filename = index['format']['filename']
-            duration = index['format'].get('time', '00:00:00.000')
+        if "video" in index.get("streams")[0]["codec_type"]:
+            width = int(index["streams"][0]["width"])
+            height = int(index["streams"][0]["height"])
+            filename = index["format"]["filename"]
+            duration = index["format"].get("time", "00:00:00.000")
             if not width or not height:
-                wx.MessageBox(_('Unsupported file:\n'
-                                'Missing decoder or library? '
-                                'Check FFmpeg configuration.'),
-                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
+                wx.MessageBox(
+                    _(
+                        "Unsupported file:\n"
+                        "Missing decoder or library? "
+                        "Check FFmpeg configuration."
+                    ),
+                    _("Videomass - Warning!"),
+                    wx.ICON_WARNING,
+                    self,
+                )
                 self.on_vfilters_clear(self)
                 return None
-            return dict(zip(['width', 'height', 'filename', 'duration'],
-                            [width, height, filename, duration]))
+            return dict(
+                zip(
+                    ["width", "height", "filename", "duration"],
+                    [width, height, filename, duration],
+                )
+            )
 
-        wx.MessageBox(_('The file is not a frame or a video file'),
-                      _('Videomass - Warning!'), wx.ICON_WARNING, self)
+        wx.MessageBox(
+            _("The file is not a frame or a video file"),
+            _("Videomass - Warning!"),
+            wx.ICON_WARNING,
+            self,
+        )
         self.on_vfilters_clear(self)
         return None
+
     # ------------------------------------------------------------------#
 
     def chain_all_video_filters(self):
@@ -628,13 +734,20 @@ class AV_Conv(wx.Panel):
         Concatenate all video filters enabled and sorts
         them according to an consistance ffmpeg syntax.
         """
-        orderf = (self.opt['Deinterlace'], self.opt['Interlace'],
-                  self.opt["Denoiser"], self.opt["Vidstabtransform"],
-                  self.opt["Unsharp"], self.opt['Crop'], self.opt['Scale'],
-                  self.opt["Setdar"], self.opt["Setsar"],
-                  self.opt['Orientation'][0], self.opt["ColorEQ"],
-                  )  # do not change the order of the filters on this tuple
-        filters = ''.join([f'{x},' for x in orderf if x])[:-1]
+        orderf = (
+            self.opt["Deinterlace"],
+            self.opt["Interlace"],
+            self.opt["Denoiser"],
+            self.opt["Vidstabtransform"],
+            self.opt["Unsharp"],
+            self.opt["Crop"],
+            self.opt["Scale"],
+            self.opt["Setdar"],
+            self.opt["Setsar"],
+            self.opt["Orientation"][0],
+            self.opt["ColorEQ"],
+        )  # do not change the order of the filters on this tuple
+        filters = "".join([f"{x}," for x in orderf if x])[:-1]
 
         if filters:
             self.opt["VFilters"] = f"-vf {filters}"
@@ -642,6 +755,7 @@ class AV_Conv(wx.Panel):
         else:
             self.opt["VFilters"] = ""
             self.btn_preview.Disable(), self.btn_reset.Disable()
+
     # ------------------------------------------------------------------#
 
     def on_Set_scale(self, event):
@@ -651,13 +765,14 @@ class AV_Conv(wx.Panel):
         kwa = self.get_video_stream()
         if not kwa:
             return
-        with Scale(self,
-                   self.opt["Scale"],
-                   self.opt["Setdar"],
-                   self.opt["Setsar"],
-                   self.bmpreset,
-                   **kwa,
-                   ) as sizing:
+        with Scale(
+            self,
+            self.opt["Scale"],
+            self.opt["Setdar"],
+            self.opt["Setsar"],
+            self.bmpreset,
+            **kwa,
+        ) as sizing:
             if sizing.ShowModal() == wx.ID_OK:
                 data = sizing.getvalue()
                 if not [x for x in data.values() if x]:
@@ -667,12 +782,14 @@ class AV_Conv(wx.Panel):
                     self.opt["Scale"] = ""
                 else:
                     self.btn_videosize.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
-                    self.opt["Scale"] = data['scale']
-                    self.opt['Setdar'] = data['setdar']
-                    self.opt['Setsar'] = data['setsar']
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
+                    self.opt["Scale"] = data["scale"]
+                    self.opt["Setdar"] = data["setdar"]
+                    self.opt["Setsar"] = data["setsar"]
 
                 self.chain_all_video_filters()
+
     # -----------------------------------------------------------------#
 
     def on_Set_transpose(self, event):
@@ -682,12 +799,13 @@ class AV_Conv(wx.Panel):
         kwa = self.get_video_stream()
         if not kwa:
             return
-        with Transpose(self,
-                       self.opt["Orientation"][0],
-                       self.opt["Orientation"][1],
-                       self.bmpreset,
-                       **kwa,
-                       ) as rotate:
+        with Transpose(
+            self,
+            self.opt["Orientation"][0],
+            self.opt["Orientation"][1],
+            self.bmpreset,
+            **kwa,
+        ) as rotate:
             if rotate.ShowModal() == wx.ID_OK:
                 data = rotate.getvalue()
                 self.opt["Orientation"][0] = data[0]  # cmd option
@@ -696,8 +814,10 @@ class AV_Conv(wx.Panel):
                     self.btn_rotate.SetBackgroundColour(wx.NullColour)
                 else:
                     self.btn_rotate.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
                 self.chain_all_video_filters()
+
     # ------------------------------------------------------------------#
 
     def on_Set_crop(self, event):
@@ -707,20 +827,23 @@ class AV_Conv(wx.Panel):
         kwa = self.get_video_stream()
         if not kwa:
             return
-        with Crop(self, self.opt["Crop"], self.opt["CropColor"],
-                  self.bmpreset, **kwa) as crop:
+        with Crop(
+            self, self.opt["Crop"], self.opt["CropColor"], self.bmpreset, **kwa
+        ) as crop:
             if crop.ShowModal() == wx.ID_OK:
                 data = crop.getvalue()
                 if not data:
                     self.btn_crop.SetBackgroundColour(wx.NullColour)
-                    self.opt["Crop"] = ''
-                    self.opt["CropColor"] = ''
+                    self.opt["Crop"] = ""
+                    self.opt["CropColor"] = ""
                 else:
                     self.btn_crop.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
-                    self.opt["Crop"] = f'crop={data[0]}'
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
+                    self.opt["Crop"] = f"crop={data[0]}"
                     self.opt["CropColor"] = data[1]
                 self.chain_all_video_filters()
+
     # ------------------------------------------------------------------#
 
     def on_Set_deinterlace(self, event):
@@ -731,27 +854,30 @@ class AV_Conv(wx.Panel):
         sdf = self.get_video_stream()
         if not sdf:
             return
-        with Deinterlace(self,
-                         self.opt["Deinterlace"],
-                         self.opt["Interlace"],
-                         self.bmpreset,
-                         ) as lacing:
+        with Deinterlace(
+            self,
+            self.opt["Deinterlace"],
+            self.opt["Interlace"],
+            self.bmpreset,
+        ) as lacing:
             if lacing.ShowModal() == wx.ID_OK:
                 data = lacing.getvalue()
                 if not data:
                     self.btn_lacing.SetBackgroundColour(wx.NullColour)
-                    self.opt["Deinterlace"] = ''
-                    self.opt["Interlace"] = ''
+                    self.opt["Deinterlace"] = ""
+                    self.opt["Interlace"] = ""
                 else:
                     self.btn_lacing.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
-                    if 'deinterlace' in data:
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
+                    if "deinterlace" in data:
                         self.opt["Deinterlace"] = data["deinterlace"]
-                        self.opt["Interlace"] = ''
-                    elif 'interlace' in data:
+                        self.opt["Interlace"] = ""
+                    elif "interlace" in data:
                         self.opt["Interlace"] = data["interlace"]
-                        self.opt["Deinterlace"] = ''
+                        self.opt["Deinterlace"] = ""
                 self.chain_all_video_filters()
+
     # ------------------------------------------------------------------#
 
     def on_Set_denoiser(self, event):
@@ -769,12 +895,14 @@ class AV_Conv(wx.Panel):
                 data = den.getvalue()
                 if not data:
                     self.btn_denois.SetBackgroundColour(wx.NullColour)
-                    self.opt["Denoiser"] = ''
+                    self.opt["Denoiser"] = ""
                 else:
                     self.btn_denois.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
                     self.opt["Denoiser"] = data
                 self.chain_all_video_filters()
+
     # ------------------------------------------------------------------#
 
     def on_Set_stabilizer(self, event):
@@ -786,14 +914,15 @@ class AV_Conv(wx.Panel):
         sdf = self.get_video_stream()
         if not sdf:
             return
-        with VidstabSet(self,
-                        self.opt["Vidstabdetect"],
-                        self.opt["Vidstabtransform"],
-                        self.opt["Unsharp"],
-                        self.opt["Makeduo"],
-                        self.bmpreset,
-                        **sdf,
-                        ) as stab:
+        with VidstabSet(
+            self,
+            self.opt["Vidstabdetect"],
+            self.opt["Vidstabtransform"],
+            self.opt["Unsharp"],
+            self.opt["Makeduo"],
+            self.bmpreset,
+            **sdf,
+        ) as stab:
             if stab.ShowModal() == wx.ID_OK:
                 data = stab.getvalue()
                 if not data:
@@ -804,12 +933,14 @@ class AV_Conv(wx.Panel):
                     self.opt["Makeduo"] = False
                 else:
                     self.btn_vidstab.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
                     self.opt["Vidstabdetect"] = data[0]
-                    self.opt['Vidstabtransform'] = data[1]
-                    self.opt['Unsharp'] = data[2]
+                    self.opt["Vidstabtransform"] = data[1]
+                    self.opt["Unsharp"] = data[2]
                     self.opt["Makeduo"] = data[3]
                 self.chain_all_video_filters()
+
     # ------------------------------------------------------------------#
 
     def on_Set_coloreq(self, event):
@@ -820,18 +951,24 @@ class AV_Conv(wx.Panel):
         kwa = self.get_video_stream()
         if not kwa:
             return
-        with ColorEQ(self, self.opt["ColorEQ"], self.bmpreset, **kwa,
-                     ) as coloreq:
+        with ColorEQ(
+            self,
+            self.opt["ColorEQ"],
+            self.bmpreset,
+            **kwa,
+        ) as coloreq:
             if coloreq.ShowModal() == wx.ID_OK:
                 data = coloreq.getvalue()
                 if not data:
                     self.btn_coloreq.SetBackgroundColour(wx.NullColour)
-                    self.opt["ColorEQ"] = ''
+                    self.opt["ColorEQ"] = ""
                 else:
                     self.btn_coloreq.SetBackgroundColour(
-                        wx.Colour(AV_Conv.VIOLET))
+                        wx.Colour(AV_Conv.VIOLET)
+                    )
                     self.opt["ColorEQ"] = data
                 self.chain_all_video_filters()
+
     # ------------------------------------------------------------------#
 
     def get_codec_args(self):
@@ -842,12 +979,11 @@ class AV_Conv(wx.Panel):
         self.opt["CmdVideoParams"] = self.videopanel.video_options()
         self.opt["CmdAudioParams"] = self.audioenc.audio_options()
 
-        if self.opt["Media"] == 'Video':
-
+        if self.opt["Media"] == "Video":
             if self.opt["Vidstabdetect"]:
                 kwargs = self.video_stabilizer()
 
-            elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+            elif self.opt["EBU"][0] == "EBU R128 (High-Quality)":
                 kwargs = self.video_ebu()
             else:
                 kwargs = self.video_std()
@@ -855,12 +991,13 @@ class AV_Conv(wx.Panel):
             return kwargs
 
         # self.opt["Media"] == 'Audio':
-        if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+        if self.opt["EBU"][0] == "EBU R128 (High-Quality)":
             kwargs = self.audio_ebu()
         else:
             kwargs = self.audio_std()
 
         return kwargs
+
     # ------------------------------------------------------------------#
 
     def check_options(self, index=None, checkexists=True):
@@ -868,10 +1005,16 @@ class AV_Conv(wx.Panel):
         Update entries and file check.
         """
         if self.audioenc.btn_voldect.IsEnabled():
-            wx.MessageBox(_('Undetected volume values! Click the '
-                            '"Volume detect" button to analyze '
-                            'audio volume data.'),
-                          'Videomass', wx.ICON_INFORMATION, self)
+            wx.MessageBox(
+                _(
+                    "Undetected volume values! Click the "
+                    '"Volume detect" button to analyze '
+                    "audio volume data."
+                ),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
             return None
 
         if index is not None:
@@ -881,17 +1024,19 @@ class AV_Conv(wx.Panel):
             infile = self.parent.file_src
             outfilenames = self.parent.outputnames
 
-        filecheck = check_files(infile,
-                                self.appdata['outputdir'],
-                                self.appdata['outputdir_asinput'],
-                                self.appdata['filesuffix'],
-                                self.opt["OutputFormat"],
-                                outfilenames,
-                                checkexists=checkexists,
-                                )
+        filecheck = check_files(
+            infile,
+            self.appdata["outputdir"],
+            self.appdata["outputdir_asinput"],
+            self.appdata["filesuffix"],
+            self.opt["OutputFormat"],
+            outfilenames,
+            checkexists=checkexists,
+        )
         if not filecheck:  # User changing idea or not such files exist
             return None
         return filecheck
+
     # ------------------------------------------------------------------#
 
     def queue_mode(self):
@@ -900,7 +1045,7 @@ class AV_Conv(wx.Panel):
         called by `parent.on_add_to_queue`.
         Return a dictionary of data.
         """
-        logname = 'Queue Processing.log'
+        logname = "Queue Processing.log"
         index = self.parent.file_src.index(self.parent.filedropselected)
 
         check = self.check_options(index)
@@ -909,22 +1054,23 @@ class AV_Conv(wx.Panel):
 
         f_src, f_dest = check[0][0], check[1][0]
         kwargs = self.get_codec_args()
-        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
-                                              self.parent.duration
-                                              )
-        kwargs['extension'] = self.opt["OutputFormat"]
-        kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
-        kwargs['logname'] = logname
-        kwargs['source'] = f_src
-        kwargs['destination'] = f_dest
+        dur, ss, et = update_timeseq_duration(
+            self.parent.time_seq, self.parent.duration
+        )
+        kwargs["extension"] = self.opt["OutputFormat"]
+        kwargs["pre-input-1"], kwargs["pre-input-2"] = "", ""
+        kwargs["logname"] = logname
+        kwargs["source"] = f_src
+        kwargs["destination"] = f_dest
         kwargs["duration"] = dur[index]
-        kwargs['start-time'], kwargs['end-time'] = ss, et
+        kwargs["start-time"], kwargs["end-time"] = ss, et
         if kwargs.get("volume"):
             kwargs["volume"] = kwargs["volume"][index]
         else:
-            kwargs["volume"] = ''
+            kwargs["volume"] = ""
 
         return kwargs
+
     # ------------------------------------------------------------------#
 
     def batch_mode(self):
@@ -932,47 +1078,50 @@ class AV_Conv(wx.Panel):
         build batch mode arguments. This method is called
         by `parent.click_start`
         """
-        logname = 'AV Conversions.log'
+        logname = "AV Conversions.log"
 
         check = self.check_options()
         if not check:
-            return None
+            return
 
         f_src, f_dest = check
         kwargs = self.get_codec_args()
-        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
-                                              self.parent.duration
-                                              )
-        kwargs['extension'] = self.opt["OutputFormat"]
-        kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
-        kwargs['logname'] = logname
-        kwargs['start-time'], kwargs['end-time'] = ss, et
+        dur, ss, et = update_timeseq_duration(
+            self.parent.time_seq, self.parent.duration
+        )
+        kwargs["extension"] = self.opt["OutputFormat"]
+        kwargs["pre-input-1"], kwargs["pre-input-2"] = "", ""
+        kwargs["logname"] = logname
+        kwargs["start-time"], kwargs["end-time"] = ss, et
         batchlist = []
         for index in enumerate(self.parent.file_src):
             kw = kwargs.copy()
-            kw['source'] = f_src[index[0]]
-            kw['destination'] = f_dest[index[0]]
-            kw['duration'] = dur[index[0]]
+            kw["source"] = f_src[index[0]]
+            kw["destination"] = f_dest[index[0]]
+            kw["duration"] = dur[index[0]]
             if kw.get("volume"):
                 kw["volume"] = kw["volume"][index[0]]
             else:
-                kw["volume"] = ''
+                kw["volume"] = ""
             batchlist.append(kw)
 
         keyval = self.update_dict(len(f_src), **kwargs)
-        ending = Formula(self, (700, 250),
-                         self.parent.movetotrash,
-                         self.parent.emptylist,
-                         **keyval,
-                         )
+        ending = Formula(
+            self,
+            (700, 250),
+            self.parent.movetotrash,
+            self.parent.emptylist,
+            **keyval,
+        )
         if ending.ShowModal() == wx.ID_OK:
-            (self.parent.movetotrash,
-             self.parent.emptylist) = ending.getvalue()
-            self.parent.switch_to_processing(kwargs["type"],
-                                             logname,
-                                             datalist=batchlist
-                                             )
-        return None
+            (self.parent.movetotrash, self.parent.emptylist) = (
+                ending.getvalue()
+            )
+            self.parent.switch_to_processing(
+                kwargs["type"], logname, datalist=batchlist
+            )
+        return
+
     # ------------------------------------------------------------------#
 
     def video_stabilizer(self):
@@ -981,55 +1130,61 @@ class AV_Conv(wx.Panel):
         video stabilizations process.
 
         """
-        if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-
-            if self.opt["Passes"] == '2':
-                cmd1 = (f'{self.opt["CmdVideoParams"]} '
-                        f'-filter:v {self.opt["Vidstabdetect"]} '
-                        f'{self.opt["passlogfile1"]} {self.opt["AudioIndex"]} '
-                        f'-filter:a: {self.opt["EBU"][1]} -sn -dn '
-                        f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]}'
-                        )
-                cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                        f'{self.opt["passlogfile2"]} '
-                        f'{self.opt["CmdAudioParams"]} '
-                        f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
-                        f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
-                        )
+        if self.opt["EBU"][0] == "EBU R128 (High-Quality)":
+            if self.opt["Passes"] == "2":
+                cmd1 = (
+                    f"{self.opt['CmdVideoParams']} "
+                    f"-filter:v {self.opt['Vidstabdetect']} "
+                    f"{self.opt['passlogfile1']} {self.opt['AudioIndex']} "
+                    f"-filter:a: {self.opt['EBU'][1]} -sn -dn "
+                    f"-f {AV_Conv.MUXERS[self.opt['OutputFormat']]}"
+                )
+                cmd2 = (
+                    f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                    f"{self.opt['passlogfile2']} "
+                    f"{self.opt['CmdAudioParams']} "
+                    f"{self.opt['SubtitleEnc']} {self.opt['SubtitleMap']} "
+                    f"{self.opt['Chapters']} {self.opt['MetaData']}"
+                )
             else:  # single pass
-                cmd1 = (f'-filter:v {self.opt["Vidstabdetect"]} '
-                        f'{self.opt["AudioIndex"]} '
-                        f'-filter:a: {self.opt["EBU"][1]} -sn -dn -f null'
-                        )
-                cmd2 = (f'{self.opt["CmdVideoParams"]} '
-                        f'{self.opt["VFilters"]} {self.opt["CmdAudioParams"]} '
-                        f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
-                        f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
-                        )
+                cmd1 = (
+                    f"-filter:v {self.opt['Vidstabdetect']} "
+                    f"{self.opt['AudioIndex']} "
+                    f"-filter:a: {self.opt['EBU'][1]} -sn -dn -f null"
+                )
+                cmd2 = (
+                    f"{self.opt['CmdVideoParams']} "
+                    f"{self.opt['VFilters']} {self.opt['CmdAudioParams']} "
+                    f"{self.opt['SubtitleEnc']} {self.opt['SubtitleMap']} "
+                    f"{self.opt['Chapters']} {self.opt['MetaData']}"
+                )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
-                      'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"],
-                      'preset name':
-                          'A/V Conversions - Video VIDSTAB/EBU Norm.',
-                      }
+            kwargs = {
+                "type": "Two pass EBU",
+                "args": [pass1, pass2],
+                "EBU": self.opt["EBU"][1],
+                "audiomap": self.opt["AudioMap"],
+                "preset name": "A/V Conversions - Video VIDSTAB/EBU Norm.",
+            }
         else:
-            audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
-                       else self.opt["PEAK"])
+            audnorm = (
+                self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
+            )
 
-            cmd1 = (f'-filter:v {self.opt["Vidstabdetect"]} '
-                    f'-an -sn -dn -f null'
-                    )
-            cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                    f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                    f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
-                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
-                    )
+            cmd1 = f"-filter:v {self.opt['Vidstabdetect']} -an -sn -dn -f null"
+            cmd2 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['CmdAudioParams']} {self.opt['EBU'][1]} "
+                f"{self.opt['SubtitleEnc']} {self.opt['SubtitleMap']} "
+                f"{self.opt['Chapters']} {self.opt['MetaData']}"
+            )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'Two pass VIDSTAB', 'args': [pass1, pass2],
-                      'volume': [vol[5] for vol in audnorm],
-                      'preset name': 'A/V Conversions - Video VIDSTAB.',
-                      }
+            kwargs = {
+                "type": "Two pass VIDSTAB",
+                "args": [pass1, pass2],
+                "volume": [vol[5] for vol in audnorm],
+                "preset name": "A/V Conversions - Video VIDSTAB.",
+            }
         return kwargs
         # ------------------------------------------------------------------#
 
@@ -1041,47 +1196,56 @@ class AV_Conv(wx.Panel):
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
 
         if self.cmb_vencoder.GetValue() == "Copy":
-
-            args = (f'{self.opt["CmdVideoParams"]} '
-                    f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                    f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
-                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
-                    )
-            pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'type': 'One pass', 'args': [pass1, pass2],
-                      'volume': [vol[5] for vol in audnorm],
-                      'preset name': 'A/V Conversions - Video standard',
-                      }
+            args = (
+                f"{self.opt['CmdVideoParams']} "
+                f"{self.opt['CmdAudioParams']} {self.opt['EBU'][1]} "
+                f"{self.opt['SubtitleEnc']} {self.opt['SubtitleMap']} "
+                f"{self.opt['Chapters']} {self.opt['MetaData']}"
+            )
+            pass1, pass2 = " ".join(args.split()), ""
+            kwargs = {
+                "type": "One pass",
+                "args": [pass1, pass2],
+                "volume": [vol[5] for vol in audnorm],
+                "preset name": "A/V Conversions - Video standard",
+            }
         elif self.opt["Passes"] == "2":
-
-            cmd1 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                    f'{self.opt["passlogfile1"]} -an -sn -dn -f rawvideo'
-                    )
-            cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                    f'{self.opt["passlogfile2"]} {self.opt["CmdAudioParams"]} '
-                    f'{self.opt["EBU"][1]} {self.opt["SubtitleEnc"]} '
-                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                    f'{self.opt["MetaData"]}'
-                    )
+            cmd1 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['passlogfile1']} -an -sn -dn -f rawvideo"
+            )
+            cmd2 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['passlogfile2']} {self.opt['CmdAudioParams']} "
+                f"{self.opt['EBU'][1]} {self.opt['SubtitleEnc']} "
+                f"{self.opt['SubtitleMap']} {self.opt['Chapters']} "
+                f"{self.opt['MetaData']}"
+            )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'Two pass', 'args': [pass1, pass2],
-                      'volume': [vol[5] for vol in audnorm],
-                      'preset name': 'A/V Conversions - Video standard.',
-                      }
+            kwargs = {
+                "type": "Two pass",
+                "args": [pass1, pass2],
+                "volume": [vol[5] for vol in audnorm],
+                "preset name": "A/V Conversions - Video standard.",
+            }
         elif self.opt["Passes"] == "Auto":
-            args = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                    f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                    f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
-                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
-                    )
-            pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'type': 'One pass', 'args': [pass1, pass2],
-                      'volume': [vol[5] for vol in audnorm],
-                      'preset name': 'A/V Conversions - Video standard',
-                      }
+            args = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['CmdAudioParams']} {self.opt['EBU'][1]} "
+                f"{self.opt['SubtitleEnc']} {self.opt['SubtitleMap']} "
+                f"{self.opt['Chapters']} {self.opt['MetaData']}"
+            )
+            pass1, pass2 = " ".join(args.split()), ""
+            kwargs = {
+                "type": "One pass",
+                "args": [pass1, pass2],
+                "volume": [vol[5] for vol in audnorm],
+                "preset name": "A/V Conversions - Video standard",
+            }
         else:
             return None
         return kwargs
+
     # ------------------------------------------------------------------#
 
     def video_ebu(self):
@@ -1093,58 +1257,70 @@ class AV_Conv(wx.Panel):
 
         """
         if self.cmb_vencoder.GetValue() == "Copy":
-            cmd_1 = (f'{self.opt["AudioIndex"]} '
-                     f'-filter:a: {self.opt["EBU"][1]} -vn -sn -dn  -f null'
-                     )
-            cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleEnc"]} '
-                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                     f'{self.opt["MetaData"]}'
-                     )
+            cmd_1 = (
+                f"{self.opt['AudioIndex']} "
+                f"-filter:a: {self.opt['EBU'][1]} -vn -sn -dn  -f null"
+            )
+            cmd_2 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['CmdAudioParams']} {self.opt['SubtitleEnc']} "
+                f"{self.opt['SubtitleMap']} {self.opt['Chapters']} "
+                f"{self.opt['MetaData']}"
+            )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
-                      'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"],
-                      'preset name': 'A/V Conversions - copy Video/EBU Norm.',
-                      }
+            kwargs = {
+                "type": "Two pass EBU",
+                "args": [pass1, pass2],
+                "EBU": self.opt["EBU"][1],
+                "audiomap": self.opt["AudioMap"],
+                "preset name": "A/V Conversions - copy Video/EBU Norm.",
+            }
         elif self.opt["Passes"] == "2":
-
-            cmd_1 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                     f'{self.opt["passlogfile1"]} {self.opt["AudioIndex"]} '
-                     f'-filter:a: {self.opt["EBU"][1]} '
-                     f'-sn -dn -f {AV_Conv.MUXERS[self.opt["OutputFormat"]]}'
-                     )
-            cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                     f'{self.opt["passlogfile2"]} '
-                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleEnc"]} '
-                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                     f'{self.opt["MetaData"]}'
-                     )
+            cmd_1 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['passlogfile1']} {self.opt['AudioIndex']} "
+                f"-filter:a: {self.opt['EBU'][1]} "
+                f"-sn -dn -f {AV_Conv.MUXERS[self.opt['OutputFormat']]}"
+            )
+            cmd_2 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['passlogfile2']} "
+                f"{self.opt['CmdAudioParams']} {self.opt['SubtitleEnc']} "
+                f"{self.opt['SubtitleMap']} {self.opt['Chapters']} "
+                f"{self.opt['MetaData']}"
+            )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
-                      'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"],
-                      'preset name': 'A/V Conversions - Video/EBU Norm.',
-                      }
+            kwargs = {
+                "type": "Two pass EBU",
+                "args": [pass1, pass2],
+                "EBU": self.opt["EBU"][1],
+                "audiomap": self.opt["AudioMap"],
+                "preset name": "A/V Conversions - Video/EBU Norm.",
+            }
         else:
-            cmd_1 = (f'{self.opt["AudioIndex"]} '
-                     f'-filter:a: {self.opt["EBU"][1]} -vn -sn -dn -f null'
-                     )
-            cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleEnc"]} '
-                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                     f'{self.opt["MetaData"]}'
-                     )
+            cmd_1 = (
+                f"{self.opt['AudioIndex']} "
+                f"-filter:a: {self.opt['EBU'][1]} -vn -sn -dn -f null"
+            )
+            cmd_2 = (
+                f"{self.opt['CmdVideoParams']} {self.opt['VFilters']} "
+                f"{self.opt['CmdAudioParams']} {self.opt['SubtitleEnc']} "
+                f"{self.opt['SubtitleMap']} {self.opt['Chapters']} "
+                f"{self.opt['MetaData']}"
+            )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
-                      'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"],
-                      'preset name': 'A/V Conversions - Video/EBU Norm.',
-                      }
+            kwargs = {
+                "type": "Two pass EBU",
+                "args": [pass1, pass2],
+                "EBU": self.opt["EBU"][1],
+                "audiomap": self.opt["AudioMap"],
+                "preset name": "A/V Conversions - Video/EBU Norm.",
+            }
         return kwargs
+
     # ------------------------------------------------------------------#
 
     def audio_std(self):
@@ -1155,15 +1331,19 @@ class AV_Conv(wx.Panel):
         """
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
 
-        args = (f'{self.opt["CmdAudioParams"]} '
-                f'{self.opt["EBU"][1]} -vn -sn {self.opt["MetaData"]}'
-                )
-        pass1, pass2 = " ".join(args.split()), ''
-        kwargs = {'type': 'One pass', 'args': [pass1, pass2],
-                  'volume': [vol[5] for vol in audnorm],
-                  'preset name': 'A/V Conversions - Audio standard',
-                  }
+        args = (
+            f"{self.opt['CmdAudioParams']} "
+            f"{self.opt['EBU'][1]} -vn -sn {self.opt['MetaData']}"
+        )
+        pass1, pass2 = " ".join(args.split()), ""
+        kwargs = {
+            "type": "One pass",
+            "args": [pass1, pass2],
+            "volume": [vol[5] for vol in audnorm],
+            "preset name": "A/V Conversions - Audio standard",
+        }
         return kwargs
+
     # ------------------------------------------------------------------#
 
     def audio_ebu(self):
@@ -1174,18 +1354,22 @@ class AV_Conv(wx.Panel):
         and not send self.opt["AudioMap"] to process because the files
         audio has not indexes
         """
-        cmd_1 = (f'{self.opt["AudioMap"][0]} -filter:a: {self.opt["EBU"][1]} '
-                 f'-vn -sn -dn -f null'
-                 )
-        cmd_2 = (f'{self.opt["CmdAudioParams"]} -vn -sn {self.opt["MetaData"]}'
-                 )
+        cmd_1 = (
+            f"{self.opt['AudioMap'][0]} -filter:a: {self.opt['EBU'][1]} "
+            f"-vn -sn -dn -f null"
+        )
+        cmd_2 = f"{self.opt['CmdAudioParams']} -vn -sn {self.opt['MetaData']}"
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
-        kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
-                  'EBU': self.opt["EBU"][1], 'audiomap': self.opt["AudioMap"],
-                  'preset name': 'A/V Conversions - Audio/EBU Norm.',
-                  }
+        kwargs = {
+            "type": "Two pass EBU",
+            "args": [pass1, pass2],
+            "EBU": self.opt["EBU"][1],
+            "audiomap": self.opt["AudioMap"],
+            "preset name": "A/V Conversions - Audio/EBU Norm.",
+        }
         return kwargs
+
     # ------------------------------------------------------------------#
 
     def update_dict(self, countmax, **kwa):
@@ -1193,58 +1377,61 @@ class AV_Conv(wx.Panel):
         Update to epilogue
         """
         if self.opt["PEAK"]:
-            normalize = 'PEAK'
+            normalize = "PEAK"
         elif self.opt["RMS"]:
-            normalize = 'RMS'
+            normalize = "RMS"
         elif self.opt["EBU"]:
             normalize = self.opt["EBU"][0]
         else:
-            normalize = _('Off')
+            normalize = _("Off")
         if self.cmb_cont.GetValue() == "Copy":
             outputformat = "Copy"
         else:
             outputformat = self.opt["OutputFormat"]
         if not self.parent.time_seq:
-            sst, endt = _('Same as source'), _('Same as source')
+            sst, endt = _("Same as source"), _("Same as source")
         else:
             sst = kwa["start-time"].split()[1]
             endt = kwa["end-time"].split()[1]
-        if self.appdata['outputdir_asinput']:
-            dest = _('Same destination paths as source files')
+        if self.appdata["outputdir_asinput"]:
+            dest = _("Same destination paths as source files")
         else:
-            dest = self.appdata['outputdir']
+            dest = self.appdata["outputdir"]
 
-        if self.opt["Media"] == 'Audio':
-            subtitles = _('Disabled')
+        if self.opt["Media"] == "Audio":
+            subtitles = _("Disabled")
         elif not self.opt["SubtitleEnc"]:
-            subtitles = _('Auto')
-        elif self.opt["SubtitleEnc"] == '-sn':
-            subtitles = _('No Subtitles')
+            subtitles = _("Auto")
+        elif self.opt["SubtitleEnc"] == "-sn":
+            subtitles = _("No Subtitles")
         else:
             subtitles = self.opt["SubtitleEnc"].split()[1]
 
-        passes = '1' if kwa["args"][1] == '' else '2'
+        passes = "1" if kwa["args"][1] == "" else "2"
 
-        keys = (_("Batch processing items\nDestination\nAutomation/Preset"
-                  "\nEncoding passes\nOutput Format\nVideo Codec"
-                  "\nSubtitle Stream\nAudio Codec\nAudio Normalization"
-                  "\nOutput multimedia type\nStart of segment"
-                  "\nClip duration"
-                  ))
-        vals = (f'{countmax}\n'
-                f'{dest}\n'
-                f'{kwa["preset name"]}\n'
-                f'{passes}\n'
-                f'{outputformat}\n'
-                f'{self.opt["VidCmbxStr"]}\n'
-                f'{subtitles}\n'
-                f'{self.opt["AudioCodStr"]}\n'
-                f'{normalize}\n'
-                f'{self.opt["Media"]}\n'
-                f'{sst}\n'
-                f'{endt}'
-                )
-        return {'key': keys, 'val': vals}
+        keys = _(
+            "Batch processing items\nDestination\nAutomation/Preset"
+            "\nEncoding passes\nOutput Format\nVideo Codec"
+            "\nSubtitle Stream\nAudio Codec\nAudio Normalization"
+            "\nOutput multimedia type\nStart of segment"
+            "\nClip duration"
+        )
+        vals = (
+            f"{countmax}\n"
+            f"{dest}\n"
+            f"{kwa['preset name']}\n"
+            f"{passes}\n"
+            f"{outputformat}\n"
+            f"{self.opt['VidCmbxStr']}\n"
+            f"{subtitles}\n"
+            f"{self.opt['AudioCodStr']}\n"
+            f"{normalize}\n"
+            f"{self.opt['Media']}\n"
+            f"{sst}\n"
+            f"{endt}"
+        )
+        return {"key": keys, "val": vals}
+
     # ------------------------------------------------------------------#
 
     def on_cmd_line(self, event):
@@ -1254,108 +1441,126 @@ class AV_Conv(wx.Panel):
         try:
             index = self.parent.file_src.index(self.parent.filedropselected)
         except ValueError:
-            wx.MessageBox(_("Have to select an item in the file list first"),
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return None
+            wx.MessageBox(
+                _("Have to select an item in the file list first"),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
+            return
 
         check = self.check_options(index=index, checkexists=False)
         if not check:
-            return None
+            return
         f_src, f_dest = check[0][0], check[1][0]
         kwargs = self.get_codec_args()
-        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
-                                              self.parent.duration
-                                              )
-        kwargs['extension'] = self.opt["OutputFormat"]
-        kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
-        kwargs['source'] = f_src
-        kwargs['destination'] = f_dest
+        dur, ss, et = update_timeseq_duration(
+            self.parent.time_seq, self.parent.duration
+        )
+        kwargs["extension"] = self.opt["OutputFormat"]
+        kwargs["pre-input-1"], kwargs["pre-input-2"] = "", ""
+        kwargs["source"] = f_src
+        kwargs["destination"] = f_dest
         kwargs["duration"] = dur[index]
-        kwargs['start-time'], kwargs['end-time'] = ss, et
+        kwargs["start-time"], kwargs["end-time"] = ss, et
         if kwargs.get("volume"):
             kwargs["volume"] = kwargs["volume"][index]
         else:
-            kwargs["volume"] = ''
+            kwargs["volume"] = ""
 
         cmd = get_raw_cmdline_args(**kwargs)
 
         displaycmd = Raw_Cmd_Line(self, *cmd)
         displaycmd.ShowModal()
 
-        return None
+        return
+
     # ------------------------------------------------------------------#
 
     def save_to_preset(self, presetname):
         """
         Save the current profile in the Preset Manager
         """
-        if self.cmb_Media.GetValue() == 'Video':
+        if self.cmb_Media.GetValue() == "Video":
             self.opt["CmdVideoParams"] = self.videopanel.video_options()
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
 
             if self.opt["Vidstabdetect"]:
                 kwargs = self.video_stabilizer()
-            elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+            elif self.opt["EBU"][0] == "EBU R128 (High-Quality)":
                 kwargs = self.video_ebu()
             else:
                 kwargs = self.video_std()
 
         else:  # self.cmb_Media.GetValue() == 'Audio'
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
-            if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+            if self.opt["EBU"][0] == "EBU R128 (High-Quality)":
                 kwargs = self.audio_ebu()
             else:
                 kwargs = self.audio_std()
 
         fname = os.path.basename(presetname)
-        title = _('Write profile on «{0}»').format(fname)
+        title = _("Write profile on «{0}»").format(fname)
         args = kwargs["args"][0], kwargs["args"][1], self.opt["OutputFormat"]
-        with setting_profiles.SettingProfile(self, 'addprofile',
-                                             presetname,
-                                             args,
-                                             title,
-                                             ) as prstdialog:
-
+        with setting_profiles.SettingProfile(
+            self,
+            "addprofile",
+            presetname,
+            args,
+            title,
+        ) as prstdialog:
             if prstdialog.ShowModal() == wx.ID_CANCEL:
                 return
         self.parent.PrstsPanel.presets_refresh(self)
         return
+
     # ------------------------------------------------------------------#
 
     def preset_name(self, action):
         """
         Return the preset name
         """
-        defaultdir = os.path.join(self.appdata['confdir'], 'presets')
+        defaultdir = os.path.join(self.appdata["confdir"], "presets")
         if action == 0:
-            with wx.FileDialog(self, _("Enter name for new preset"),
-                               defaultDir=defaultdir,
-                               wildcard="Videomass preset (*.json;)|*.json;",
-                               style=wx.FD_SAVE
-                               | wx.FD_OVERWRITE_PROMPT) as fileDialog:
-                fileDialog.SetFilename('New preset.json')
+            with wx.FileDialog(
+                self,
+                _("Enter name for new preset"),
+                defaultDir=defaultdir,
+                wildcard="Videomass preset (*.json;)|*.json;",
+                style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+            ) as fileDialog:
+                fileDialog.SetFilename("New preset.json")
                 if fileDialog.ShowModal() == wx.ID_CANCEL:
                     return None
                 filename = fileDialog.GetPath()
-                if os.path.splitext(filename)[1].strip() != '.json':
-                    wx.LogError(_('Invalid file name, make sure to provide a '
-                                  'valid name including the «.json» '
-                                  'extension'))
+                if os.path.splitext(filename)[1].strip() != ".json":
+                    wx.LogError(
+                        _(
+                            "Invalid file name, make sure to provide a "
+                            "valid name including the «.json» "
+                            "extension"
+                        )
+                    )
                     return None
             try:
-                with open(filename, 'w', encoding='utf-8') as file:
-                    file.write('[]')
-            except IOError:
-                wx.LogError(_("Cannot save current "
-                              "data in file «{}».").format(filename))
+                with open(filename, "w", encoding="utf-8") as file:
+                    file.write("[]")
+            except OSError:
+                wx.LogError(
+                    _("Cannot save current data in file «{}».").format(
+                        filename
+                    )
+                )
                 return None
 
         elif action == 1:
-            with wx.FileDialog(self, _("Open Videomass preset"),
-                               defaultDir=defaultdir,
-                               wildcard="Videomass preset (*.json;)|*.json;",
-                               style=wx.FD_OPEN
-                               | wx.FD_FILE_MUST_EXIST) as fileDialog:
+            with wx.FileDialog(
+                self,
+                _("Open Videomass preset"),
+                defaultDir=defaultdir,
+                wildcard="Videomass preset (*.json;)|*.json;",
+                style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+            ) as fileDialog:
                 if fileDialog.ShowModal() == wx.ID_CANCEL:
                     return None
                 filename = fileDialog.GetPath()
@@ -1363,16 +1568,19 @@ class AV_Conv(wx.Panel):
             return None
 
         return filename
+
     # ------------------------------------------------------------------#
 
     def on_saveprst(self, event):
         """
         Asks to the user where add the new profile
         """
-        caption = _('Videomass - Save new profile')
-        message = _('Where do you want to save this profile?')
-        choices = (_('Save the profile to a new preset'),
-                   _('Save the profile to an existing preset'))
+        caption = _("Videomass - Save new profile")
+        message = _("Where do you want to save this profile?")
+        choices = (
+            _("Save the profile to a new preset"),
+            _("Save the profile to an existing preset"),
+        )
         with SingleChoice(self, caption, message, choices, 0) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 presetname = self.preset_name(dlg.getvalue())

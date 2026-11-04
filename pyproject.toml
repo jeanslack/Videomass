@@ -139,3 +139,69 @@ Issues = "https://github.com/jeanslack/Videomass/issues"
 
 [project.gui-scripts]
 videomass = "videomass.gui_app:main"
+
+# ---------------------------------------- Pylint linter configuration
+
+[tool.pylint.master]
+# Carica l'estensione per il controllo dei moduli C/C++ generati a runtime
+load-plugins = "pylint.extensions.docparams"
+
+[tool.pylint.typecheck]
+# RISOLVE GLI ERRORE E1101 (no-member):
+# Dice a Pylint di ignorare la mancanza di attributi/metodi dentro il modulo wx
+generated-members = ["wx.*"]
+
+[tool.pylint.variables]
+# RISOLVE L'ERRORE E0602 per '_':
+# Dice a Pylint che la funzione '_' esiste a livello globale (es. per le traduzioni i18n)
+additional-builtins = ["_"]
+
+[tool.pylint.messages_control]
+# Disattiva le regole che entrano in conflitto con lo stile di wxPython
+disable = [
+    "invalid-name",      # wxPython usa il CamelCase per i metodi (es. ShowModal), Python vuole lo snake_case
+    "unused-argument",   # I gestori di eventi di wx richiedono l'argomento 'event', anche se spesso non lo usi
+    "too-many-ancestors" # Le classi di wxPython (es. wx.Frame) hanno catene di ereditarietà molto profonde
+]
+
+[tool.pylint.format]
+# Opzionale: Alza il limite di lunghezza delle righe a 120 caratteri
+# (molto utile per le lunghe righe di configurazione dei widget grafici)
+max-line-length = 80
+
+# --------------------------------------- Ruff linter configuration
+[tool.ruff]
+# Ignores F821 Undefined name '_'
+builtins = ["_"]
+# Limit code line length to 79 characters
+line-length = 79
+# Minimun Python version of the project
+target-version = "py311"
+
+[tool.ruff.lint]
+# add or remove other rules here (e.g., select, ignore, etc.)
+
+# # Select the rule groups to activate
+# select = [
+#     "E",   # Errori di pycodestyle (stile e spaziature)
+#     "W",   # Warning di pycodestyle (linee vuote, spazi a fine riga)
+#     "F",   # Pyflakes (variabili non usate, errori di sintassi)
+#     "I",   # Isort (ordinamento automatico degli import secondo PEP 8)
+#     "D",   # Pydocstyle (convenzioni sulle docstring di PEP 257)
+#     "UP",  # Pyupgrade (suggerisce la sintassi Python più moderna)
+# ]
+# # You can ignore specific rules if they are too invasive (e.g. the docstring on the first line)
+# ignore = [
+#     "D100", # Manca la docstring all'inizio del file modulo
+#     "D104", # Manca la docstring nel file __init__.py
+# ]
+
+[tool.ruff.lint.isort]
+# Configure isort to group imports cleanly
+combine-as-imports = true
+lines-after-imports = 2 # PEP 8 richiede esattamente 2 linee vuote dopo gli import prima del codice
+
+[tool.ruff.format]
+# Configure the formatter to align with my style choices
+quote-style = "double"
+indent-style = "space"

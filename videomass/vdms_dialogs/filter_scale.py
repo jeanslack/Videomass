@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: filter_scale.py
-Porpose: Show dialog to get scale data based on FFmpeg syntax
-Compatibility: Python3, wxPython Phoenix
+Purpose: Show dialog to get scale data based on FFmpeg syntax
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.20.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,17 +24,19 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 import time
 import webbrowser
+
 import wx
-from videomass.vdms_io import io_tools
+
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io import io_tools
 from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
 class Scale(wx.Dialog):
@@ -43,13 +45,14 @@ class Scale(wx.Dialog):
     data based on FFmpeg syntax.
 
     """
-    LGREEN = '#52ee7d'
-    BLACK = '#1f1f1f'
+
+    LGREEN = "#52ee7d"
+    BLACK = "#1f1f1f"
     get = wx.GetApp()
     appdata = get.appset
-    LOGDIR = appdata['logdir']
-    TMPROOT = os.path.join(appdata['cachedir'], 'tmp', 'Scale')
-    TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
+    LOGDIR = appdata["logdir"]
+    TMPROOT = os.path.join(appdata["cachedir"], "tmp", "Scale")
+    TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
 
     def __init__(self, parent, *args, **kwa):
@@ -65,10 +68,10 @@ class Scale(wx.Dialog):
         self.darDen = "0"
         self.sarNum = "0"
         self.sarDen = "0"
-        self.filename = kwa['filename']  # selected filename on file list
+        self.filename = kwa["filename"]  # selected filename on file list
         name = os.path.splitext(os.path.basename(self.filename))[0]
-        self.frame = os.path.join(f'{Scale.TMPSRC}', f'{name}.png')  # image
-        self.mills = time_to_integer(kwa['duration'].split('.')[0])
+        self.frame = os.path.join(f"{Scale.TMPSRC}", f"{name}.png")  # image
+        self.mills = time_to_integer(kwa["duration"].split(".")[0])
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -89,26 +92,33 @@ class Scale(wx.Dialog):
         box_scale.Add(Flex_scale, 0, wx.ALL | wx.CENTER, 5)
         label_width = wx.StaticText(sbox0, wx.ID_ANY, (_("Width:")))
         Flex_scale.Add(label_width, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_scale_width = wx.SpinCtrl(sbox0, wx.ID_ANY, "0",
-                                            min=-2, max=9000,
-                                            style=wx.TE_PROCESS_ENTER
-                                            | wx.SP_ARROW_KEYS
-                                            )
-        Flex_scale.Add(self.spin_scale_width, 0, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL, 5
-                       )
+        self.spin_scale_width = wx.SpinCtrl(
+            sbox0,
+            wx.ID_ANY,
+            "0",
+            min=-2,
+            max=9000,
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+        )
+        Flex_scale.Add(
+            self.spin_scale_width, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
         label_height = wx.StaticText(sbox0, wx.ID_ANY, (_("Height:")))
         Flex_scale.Add(label_height, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_scale_height = wx.SpinCtrl(sbox0, wx.ID_ANY, "0",
-                                             min=-2, max=9000,
-                                             style=wx.TE_PROCESS_ENTER
-                                             | wx.SP_ARROW_KEYS
-                                             )
-        Flex_scale.Add(self.spin_scale_height, 0, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL, 5
-                       )
-        dim = _("Source size: {0} x {1} pixels").format(kwa['width'],
-                                                        kwa['height'])
+        self.spin_scale_height = wx.SpinCtrl(
+            sbox0,
+            wx.ID_ANY,
+            "0",
+            min=-2,
+            max=9000,
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+        )
+        Flex_scale.Add(
+            self.spin_scale_height, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
+        dim = _("Source size: {0} x {1} pixels").format(
+            kwa["width"], kwa["height"]
+        )
         label_sdim = wx.StaticText(sbox0, wx.ID_ANY, dim)
         box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # ----- options
@@ -117,12 +127,14 @@ class Scale(wx.Dialog):
         self.ckbx_keep = wx.CheckBox(sbox0, wx.ID_ANY, lab)
         box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 0)
         # grid_opt.Add((30, 0), 0, wx.ALL, 5)
-        self.rdb_scale = wx.RadioBox(sbox0, wx.ID_ANY,
-                                     (_("Which dimension to adjust?")),
-                                     choices=[_("Width"), _("Height")],
-                                     majorDimension=1,
-                                     style=wx.RA_SPECIFY_ROWS
-                                     )
+        self.rdb_scale = wx.RadioBox(
+            sbox0,
+            wx.ID_ANY,
+            (_("Which dimension to adjust?")),
+            choices=[_("Width"), _("Height")],
+            majorDimension=1,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         self.rdb_scale.Disable()
         box_scale.Add(self.rdb_scale, 0, wx.ALL | wx.CENTER, 10)
         # ----- setdar section:
@@ -137,29 +149,37 @@ class Scale(wx.Dialog):
         box_ar.Add(Flex_dar, 0, wx.ALL | wx.CENTRE, 5)
         self.label_num = wx.StaticText(sbox1, wx.ID_ANY, (_("Numerator")))
         Flex_dar.Add(self.label_num, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setdarNum = wx.SpinCtrl(sbox1, wx.ID_ANY,
-                                          "0", min=0, max=99,
-                                          style=wx.TE_PROCESS_ENTER
-                                          | wx.SP_ARROW_KEYS,
-                                          size=(-1, -1)
-                                          )
-        Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5
-                     )
+        self.spin_setdarNum = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=0,
+            max=99,
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+            size=(-1, -1),
+        )
+        Flex_dar.Add(
+            self.spin_setdarNum, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
         self.label_sepdar = wx.StaticText(sbox1, wx.ID_ANY, ("/"))
-        self.label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
-                                  wx.BOLD, 0, ""))
-        Flex_dar.Add(self.label_sepdar, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setdarDen = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
-                                          min=0, max=99,
-                                          style=wx.TE_PROCESS_ENTER
-                                          | wx.SP_ARROW_KEYS,
-                                          size=(-1, -1)
-                                          )
-        Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5
-                     )
+        self.label_sepdar.SetFont(
+            wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, "")
+        )
+        Flex_dar.Add(
+            self.label_sepdar, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
+        self.spin_setdarDen = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=0,
+            max=99,
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+            size=(-1, -1),
+        )
+        Flex_dar.Add(
+            self.spin_setdarDen, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
         self.label_den = wx.StaticText(sbox1, wx.ID_ANY, (_("Denominator")))
         Flex_dar.Add(self.label_den, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         # ----- setsar section:
@@ -171,29 +191,37 @@ class Scale(wx.Dialog):
         box_ar.Add(Flex_sar, 0, wx.ALL | wx.CENTRE, 5)
         self.label_num1 = wx.StaticText(sbox1, wx.ID_ANY, (_("Numerator")))
         Flex_sar.Add(self.label_num1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setsarNum = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
-                                          min=0, max=99,
-                                          style=wx.TE_PROCESS_ENTER
-                                          | wx.SP_ARROW_KEYS,
-                                          size=(-1, -1)
-                                          )
-        Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5
-                     )
+        self.spin_setsarNum = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=0,
+            max=99,
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+            size=(-1, -1),
+        )
+        Flex_sar.Add(
+            self.spin_setsarNum, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
         self.label_sepsar = wx.StaticText(sbox1, wx.ID_ANY, ("/"))
-        self.label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
-                                  wx.BOLD, 0, ""))
-        Flex_sar.Add(self.label_sepsar, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setsarDen = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
-                                          min=0, max=99,
-                                          style=wx.TE_PROCESS_ENTER
-                                          | wx.SP_ARROW_KEYS,
-                                          size=(-1, -1)
-                                          )
-        Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5
-                     )
+        self.label_sepsar.SetFont(
+            wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, "")
+        )
+        Flex_sar.Add(
+            self.label_sepsar, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
+        self.spin_setsarDen = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=0,
+            max=99,
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+            size=(-1, -1),
+        )
+        Flex_sar.Add(
+            self.spin_setsarDen, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
         self.label_den1 = wx.StaticText(sbox1, wx.ID_ANY, (_("Denominator")))
         Flex_sar.Add(self.label_den1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
@@ -216,18 +244,17 @@ class Scale(wx.Dialog):
 
         # ----- Properties
         self.SetTitle(_("Resize Tool"))
-        scale_str = _('Scale filter, set to 0 to disable')
+        scale_str = _("Scale filter, set to 0 to disable")
         self.spin_scale_width.SetToolTip(scale_str)
         self.spin_scale_height.SetToolTip(scale_str)
-        setdar_str = _('Display Aspect Ratio. Set to 0 to disable')
+        setdar_str = _("Display Aspect Ratio. Set to 0 to disable")
         self.spin_setdarNum.SetToolTip(setdar_str)
         self.spin_setdarDen.SetToolTip(setdar_str)
-        setsar_str = (_('Sample (aka Pixel) Aspect Ratio.\nSet to 0 '
-                        'to disable'))
+        setsar_str = _("Sample (aka Pixel) Aspect Ratio.\nSet to 0 to disable")
         self.spin_setsarNum.SetToolTip(setsar_str)
         self.spin_setsarDen.SetToolTip(setsar_str)
 
-        if Scale.appdata['ostype'] == 'Darwin':
+        if Scale.appdata["ostype"] == "Darwin":
             label_sdim.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             label_sdim.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -253,16 +280,16 @@ class Scale(wx.Dialog):
 
         # Set previous changes
         if args[0]:  # scale
-            self.width = args[0].split(':', maxsplit=1)[0][8:]
-            self.height = args[0].split(':', maxsplit=1)[1][2:]
+            self.width = args[0].split(":", maxsplit=1)[0][8:]
+            self.height = args[0].split(":", maxsplit=1)[1][2:]
 
-            if self.width in ('-1', '-2'):
+            if self.width in ("-1", "-2"):
                 self.ckbx_keep.SetValue(True)
                 self.rdb_scale.Enable()
                 self.rdb_scale.SetSelection(1)
                 self.keep_aspect_ratio_on()
                 self.on_dimension(self)
-            elif self.height in ('-1', '-2'):
+            elif self.height in ("-1", "-2"):
                 self.ckbx_keep.SetValue(True)
                 self.rdb_scale.Enable()
                 self.rdb_scale.SetSelection(0)
@@ -273,13 +300,13 @@ class Scale(wx.Dialog):
             self.spin_scale_height.SetValue(self.height)
 
         if args[1]:  # dar
-            self.darNum = args[1].split('/')[0][7:]
-            self.darDen = args[1].split('/')[1]
+            self.darNum = args[1].split("/")[0][7:]
+            self.darDen = args[1].split("/")[1]
             self.spin_setdarNum.SetValue(int(self.darNum))
             self.spin_setdarDen.SetValue(int(self.darDen))
         if args[2]:  # sar
-            self.sarNum = args[2].split('/')[0][7:]
-            self.sarDen = args[2].split('/')[1]
+            self.sarNum = args[2].split("/")[0][7:]
+            self.sarDen = args[2].split("/")[1]
             self.spin_setsarNum.SetValue(int(self.sarNum))
             self.spin_setsarDen.SetValue(int(self.sarDen))
 
@@ -287,8 +314,9 @@ class Scale(wx.Dialog):
         concat = self.concat_filter(scaledata)
         error = self.process(concat)
         if error:
-            wx.MessageBox(f'{error}', _('Videomass - Error!'),
-                          wx.ICON_ERROR, self)
+            wx.MessageBox(
+                f"{error}", _("Videomass - Error!"), wx.ICON_ERROR, self
+            )
 
     def keep_aspect_ratio_on(self):
         """
@@ -334,7 +362,7 @@ class Scale(wx.Dialog):
         Returns the `scale` filter string in ffmpeg syntax.
         """
         orderf = list(scaledata.values())
-        concat = ''.join([f'{x},' for x in orderf if x])[:-1]
+        concat = "".join([f"{x}," for x in orderf if x])[:-1]
         return concat
 
     def process(self, concat):
@@ -343,49 +371,52 @@ class Scale(wx.Dialog):
         filter. Note that the trim start point on this process is
         set to the total length of the movie divided by two.
         """
-        logfile = make_log_template('generic_task.log',
-                                    Scale.LOGDIR,
-                                    mode="w",
-                                    )
+        logfile = make_log_template(
+            "generic_task.log",
+            Scale.LOGDIR,
+            mode="w",
+        )
         if not self.mills:
-            sseg = ''
+            sseg = ""
         else:
             stime = integer_to_time(int(self.mills / 2), False)
-            sseg = f'-ss {stime}'
-        scale = '' if not concat else f'-vf "{concat}"'
-        arg = (f'{sseg} -i "{self.filename}" -f image2 -update 1 '
-               f'-frames:v 1 {scale} "{self.frame}"')
-        thread = FFmpegGenericTask(arg, 'Scale', logfile)
+            sseg = f"-ss {stime}"
+        scale = "" if not concat else f'-vf "{concat}"'
+        arg = (
+            f'{sseg} -i "{self.filename}" -f image2 -update 1 '
+            f'-frames:v 1 {scale} "{self.frame}"'
+        )
+        thread = FFmpegGenericTask(arg, "Scale", logfile)
         error = thread.status
         if error:
-            show_msg_notify(self.GetParent(),
-                            logname=os.path.basename(logfile))
+            show_msg_notify(
+                self.GetParent(), logname=os.path.basename(logfile)
+            )
             return error
         return None
+
     # ----------------------Event handler (callback)---------------------#
 
     def on_readme(self, event):
         """
         event on button Read me
         """
-        msg = (_("If you want to maintain the aspect ratio, select "
-                 "\"Constrain proportions\" below and specify only one "
-                 "dimension, width or height, and set the other dimension to "
-                 "-1 or -2.\n\nSetting the value to -1 will cause FFmpeg to "
-                 "calculate the perfect mathematical proportion, but without "
-                 "checking for divisibility.\n\nBy setting the value to -2, "
-                 "you will tell FFmpeg to do exactly the same proportional "
-                 "calculation, but force the result to round to the nearest "
-                 "even number.\n\nAlso note that some codecs strictly require "
-                 "-2, so you should do some testing first.\n\nClick the Help "
-                 "button for full documentation on this filter."))
-        win = NormalTransientPopup(self,
-                                   wx.SIMPLE_BORDER,
-                                   msg,
-                                   Scale.LGREEN,
-                                   Scale.BLACK,
-                                   wrap=500
-                                   )
+        msg = _(
+            "If you want to maintain the aspect ratio, select "
+            '"Constrain proportions" below and specify only one '
+            "dimension, width or height, and set the other dimension to "
+            "-1 or -2.\n\nSetting the value to -1 will cause FFmpeg to "
+            "calculate the perfect mathematical proportion, but without "
+            "checking for divisibility.\n\nBy setting the value to -2, "
+            "you will tell FFmpeg to do exactly the same proportional "
+            "calculation, but force the result to round to the nearest "
+            "even number.\n\nAlso note that some codecs strictly require "
+            "-2, so you should do some testing first.\n\nClick the Help "
+            "button for full documentation on this filter."
+        )
+        win = NormalTransientPopup(
+            self, wx.SIMPLE_BORDER, msg, Scale.LGREEN, Scale.BLACK, wrap=500
+        )
         # Show the popup right below or above the button
         # depending on available screen space...
         btn = event.GetEventObject()
@@ -394,6 +425,7 @@ class Scale(wx.Dialog):
         win.Position(pos, (0, sz[1]))
 
         win.Popup()
+
     # --------------------------------------------------------------#
 
     def on_image_viewer(self, event):
@@ -408,6 +440,7 @@ class Scale(wx.Dialog):
         if os.path.exists(self.frame) and os.path.isfile(self.frame):
             time.sleep(0.5)  # to ensure correct size in default image viewer
             io_tools.openpath(self.frame)
+
     # ------------------------------------------------------------------#
 
     def on_negative_width(self, event):
@@ -419,11 +452,14 @@ class Scale(wx.Dialog):
         the image height scaling. That is, exactly the same as when the
         "Constrain Proportion" checkbox is checked.
         """
-        if not self.ckbx_keep.IsChecked():
-            if self.spin_scale_width.GetValue() in (-1, -2):
-                self.ckbx_keep.SetValue(True)
-                self.rdb_scale.SetSelection(1)  # call this before on_constrain
-                self.on_constrain(None)
+        if (
+            not self.ckbx_keep.IsChecked()
+            and self.spin_scale_width.GetValue() in (-1, -2)
+        ):
+            self.ckbx_keep.SetValue(True)
+            self.rdb_scale.SetSelection(1)  # call this before on_constrain
+            self.on_constrain(None)
+
     # ------------------------------------------------------------------#
 
     def on_negative_height(self, event):
@@ -435,11 +471,14 @@ class Scale(wx.Dialog):
         the image width scaling. That is, exactly the same as when the
         "Constrain Proportion" checkbox is checked.
         """
-        if not self.ckbx_keep.IsChecked():
-            if self.spin_scale_height.GetValue() in (-1, -2):
-                self.ckbx_keep.SetValue(True)
-                self.rdb_scale.SetSelection(0)  # call this before on_constrain
-                self.on_constrain(None)
+        if (
+            not self.ckbx_keep.IsChecked()
+            and self.spin_scale_height.GetValue() in (-1, -2)
+        ):
+            self.ckbx_keep.SetValue(True)
+            self.rdb_scale.SetSelection(0)  # call this before on_constrain
+            self.on_constrain(None)
+
     # ------------------------------------------------------------------#
 
     def on_constrain(self, event):
@@ -454,6 +493,7 @@ class Scale(wx.Dialog):
             self.rdb_scale.Disable()
 
         self.on_dimension(self)
+
     # ------------------------------------------------------------------#
 
     def on_dimension(self, event):
@@ -487,6 +527,7 @@ class Scale(wx.Dialog):
                 self.spin_scale_width.SetValue(0)
             if self.spin_scale_height.GetValue() in (-1, -2):
                 self.spin_scale_height.SetValue(0)
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -494,12 +535,15 @@ class Scale(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide/'
-                'Video_filters_en.pdf#%5B%7B%22num%22%3A10%2C%22gen%22%'
-                '3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C785.'
-                '189%2C0%5D')
+        page = (
+            "https://jeanslack.github.io/Videomass/User-guide/"
+            "Video_filters_en.pdf#%5B%7B%22num%22%3A10%2C%22gen%22%"
+            "3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C785."
+            "189%2C0%5D"
+        )
 
         webbrowser.open(page)
+
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
@@ -517,6 +561,7 @@ class Scale(wx.Dialog):
         self.spin_setdarDen.SetValue(0)
         self.spin_setsarNum.SetValue(0)
         self.spin_setsarDen.SetValue(0)
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -524,6 +569,7 @@ class Scale(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
@@ -531,6 +577,7 @@ class Scale(wx.Dialog):
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def getvalue(self):
@@ -538,38 +585,38 @@ class Scale(wx.Dialog):
         This method return values via the getvalue() interface
         from the caller. See the caller for more info and usage.
         """
-        diction = {'scale': '', 'setdar': '', 'setsar': ''}
-        self.width = f'{self.spin_scale_width.GetValue()}'
-        self.height = f'{self.spin_scale_height.GetValue()}'
-        self.darNum = f'{self.spin_setdarNum.GetValue()}'
-        self.darDen = f'{self.spin_setdarDen.GetValue()}'
-        self.sarNum = f'{self.spin_setsarNum.GetValue()}'
-        self.sarDen = f'{self.spin_setsarDen.GetValue()}'
+        diction = {"scale": "", "setdar": "", "setsar": ""}
+        self.width = f"{self.spin_scale_width.GetValue()}"
+        self.height = f"{self.spin_scale_height.GetValue()}"
+        self.darNum = f"{self.spin_setdarNum.GetValue()}"
+        self.darDen = f"{self.spin_setdarDen.GetValue()}"
+        self.sarNum = f"{self.spin_setsarNum.GetValue()}"
+        self.sarDen = f"{self.spin_setsarDen.GetValue()}"
 
-        if self.width == '0' or self.height == '0':
-            size = ''
-        elif self.width in ('-1', '-2') or self.height in ('-1', '-2'):
-            if self.width in ('-1', '-2') and self.height in ('-1', '-2'):
-                size = ''
+        if self.width == "0" or self.height == "0":
+            size = ""
+        elif self.width in ("-1", "-2") or self.height in ("-1", "-2"):
+            if self.width in ("-1", "-2") and self.height in ("-1", "-2"):
+                size = ""
             else:
-                size = f'scale=w={self.width}:h={self.height}'
-                diction['scale'] = size
-            self.darNum, self.darDen = '0', '0'
-            self.sarNum, self.sarDen = '0', '0'
+                size = f"scale=w={self.width}:h={self.height}"
+                diction["scale"] = size
+            self.darNum, self.darDen = "0", "0"
+            self.sarNum, self.sarDen = "0", "0"
         else:
-            size = f'scale=w={self.width}:h={self.height}'
-            diction['scale'] = size
+            size = f"scale=w={self.width}:h={self.height}"
+            diction["scale"] = size
 
-        if self.darNum == '0' or self.darDen == '0':
-            setdar = ''
+        if self.darNum == "0" or self.darDen == "0":
+            setdar = ""
         else:
-            setdar = f'setdar={self.darNum}/{self.darDen}'
-            diction['setdar'] = setdar
+            setdar = f"setdar={self.darNum}/{self.darDen}"
+            diction["setdar"] = setdar
 
-        if self.sarNum == '0' or self.sarDen == '0':
-            setsar = ''
+        if self.sarNum == "0" or self.sarDen == "0":
+            setsar = ""
         else:
-            setsar = f'setsar={self.sarNum}/{self.sarDen}'
-            diction['setsar'] = setsar
+            setsar = f"setsar={self.sarNum}/{self.sarDen}"
+            diction["setsar"] = setsar
 
         return diction

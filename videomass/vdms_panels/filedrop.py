@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: filedrop.py
-Porpose: files drag n drop interface
-Compatibility: Python3, wxPython Phoenix
+Purpose: files drag n drop interface
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.20.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,16 +24,18 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 import re
+
 import wx
 from pubsub import pub
+
+from videomass.vdms_dialogs.list_warning import ListWarning
+from videomass.vdms_dialogs.renamer import Renamer
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads.ffprobe import ffprobe
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import to_bytes
-from videomass.vdms_dialogs.renamer import Renamer
-from videomass.vdms_dialogs.list_warning import ListWarning
+from videomass.vdms_utils.utils import time_to_integer, to_bytes
 
 
 def fullpathname_sanitize(fullpathfilename):
@@ -43,16 +45,22 @@ def fullpathname_sanitize(fullpathfilename):
     """
     illegal = '^` ~ " # % & * : < > ? / \\ { | }'
     illegalchars = _("File has illegal characters like:")
-    invalidpath = _("Invalid character found in path name: (\")")
+    invalidpath = _('Invalid character found in path name: (")')
     justfile = _("Directories are not allowed, just add files, please.")
-    noext = _("File without format extension: please give an "
-              "appropriate extension to the file name, example "
-              "'.mkv', '.avi', '.mp3', etc.")
+    noext = _(
+        "File without format extension: please give an "
+        "appropriate extension to the file name, example "
+        "'.mkv', '.avi', '.mp3', etc."
+    )
 
-    check = bool(re.search(r"^(?:[^\^\`\~\"\#\%\&\*\:\<\>\?\/\\\{\|\}])*$",
-                 os.path.basename(fullpathfilename)))
+    check = bool(
+        re.search(
+            r"^(?:[^\^\`\~\"\#\%\&\*\:\<\>\?\/\\\{\|\}])*$",
+            os.path.basename(fullpathfilename),
+        )
+    )
     if check is not True:
-        return f'{illegalchars} {illegal}'
+        return f"{illegalchars} {illegal}"
 
     if '"' in fullpathfilename:
         return invalidpath
@@ -60,10 +68,12 @@ def fullpathname_sanitize(fullpathfilename):
     if os.path.isdir(fullpathfilename):
         return justfile
 
-    if os.path.splitext(os.path.basename(fullpathfilename))[1] == '':
+    if os.path.splitext(os.path.basename(fullpathfilename))[1] == "":
         return noext
 
     return None
+
+
 # ----------------------------------------------------------------------#
 
 
@@ -81,18 +91,25 @@ def filename_sanitize(newname, outputnames):
     return None otherwise
     """
     illegal = '^` ~ " # % & * : < > ? / \\ { | }'
-    msg_invalid = _('Name has illegal characters like: {0}').format(illegal)
-    msg_inuse = _('Name already in use:')
+    msg_invalid = _("Name has illegal characters like: {0}").format(illegal)
+    msg_inuse = _("Name already in use:")
 
-    check = bool(re.search(r"^(?:[^\^\`\~\"\#\%\&\*\:\<\>\?\/\\\{\|\}]"
-                           r"{1,255}$)*$", newname))
+    check = bool(
+        re.search(
+            r"^(?:[^\^\`\~\"\#\%\&\*\:\<\>\?\/\\\{\|\}]"
+            r"{1,255}$)*$",
+            newname,
+        )
+    )
     if check is not True:
-        return f'{msg_invalid}'
+        return f"{msg_invalid}"
 
     if newname in outputnames:
-        return f'{msg_inuse} {newname}'
+        return f"{msg_inuse} {newname}"
 
     return None
+
+
 # ----------------------------------------------------------------------
 
 
@@ -101,6 +118,7 @@ class MyListCtrl(wx.ListCtrl):
     This is the listControl widget.
     Note that this wideget has DnDPanel parented.
     """
+
     def __init__(self, parent):
         """
         Constructor.
@@ -116,11 +134,12 @@ class MyListCtrl(wx.ListCtrl):
         self.duration = self.parent.duration
         self.outputnames = self.parent.outputnames
         self.errors = {}
-        wx.ListCtrl.__init__(self,
-                             parent,
-                             style=wx.LC_REPORT
-                             | wx.LC_SINGLE_SEL,
-                             )
+        wx.ListCtrl.__init__(
+            self,
+            parent,
+            style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
+        )
+
     # ----------------------------------------------------------------------#
 
     def dropUpdate(self, path, newname=None):
@@ -137,10 +156,14 @@ class MyListCtrl(wx.ListCtrl):
             self.errors[f'"{path}"'] = warn
             return
 
-        if not [x for x in self.data if x['format']['filename'] == path]:
-            probe = ffprobe(path, cmd=self.appdata['ffprobe_cmd'],
-                            txtenc=self.appdata['encoding'],
-                            hide_banner=None, pretty=None)
+        if not [x for x in self.data if x["format"]["filename"] == path]:
+            probe = ffprobe(
+                path,
+                cmd=self.appdata["ffprobe_cmd"],
+                txtenc=self.appdata["encoding"],
+                hide_banner=None,
+                pretty=None,
+            )
             if probe[1]:
                 self.errors[f'"{path}"'] = probe[1]
                 return
@@ -149,25 +172,25 @@ class MyListCtrl(wx.ListCtrl):
             self.InsertItem(self.index, str(self.index + 1))
             self.SetItem(self.index, 1, path)
 
-            if 'duration' not in probe['format'].keys():
-                self.SetItem(self.index, 2, 'N/A')
+            if "duration" not in probe["format"]:
+                self.SetItem(self.index, 2, "N/A")
                 # NOTE these are my custom adds to probe data
-                probe['format']['time'] = '00:00:00.000'
-                probe['format']['duration'] = 0
+                probe["format"]["time"] = "00:00:00.000"
+                probe["format"]["duration"] = 0
 
             else:
-                tdur = probe['format']['duration'].split(':')
-                sec, msec = tdur[2].split('.')[0], tdur[2].split('.')[1]
-                tdur = f'{tdur[0]}h : {tdur[1]}m : {sec} : {msec}'
+                tdur = probe["format"]["duration"].split(":")
+                sec, msec = tdur[2].split(".")[0], tdur[2].split(".")[1]
+                tdur = f"{tdur[0]}h : {tdur[1]}m : {sec} : {msec}"
                 self.SetItem(self.index, 2, tdur)
-                probe['format']['time'] = probe.get('format').pop('duration')
-                time = time_to_integer(probe.get('format')['time'])
-                probe['format']['duration'] = time
+                probe["format"]["time"] = probe.get("format").pop("duration")
+                time = time_to_integer(probe.get("format")["time"])
+                probe["format"]["duration"] = time
 
-            media = probe['streams'][0]['codec_type']
-            formatname = probe['format']['format_long_name']
-            self.SetItem(self.index, 3, f'{media}: {formatname}')
-            self.SetItem(self.index, 4, probe['format']['size'])
+            media = probe["streams"][0]["codec_type"]
+            formatname = probe["format"]["format_long_name"]
+            self.SetItem(self.index, 3, f"{media}: {formatname}")
+            self.SetItem(self.index, 4, probe["format"]["size"])
             if newname:
                 self.SetItem(self.index, 5, newname)
                 self.outputnames.append(newname)
@@ -178,12 +201,13 @@ class MyListCtrl(wx.ListCtrl):
             self.index += 1
             self.data.append(probe)
             self.file_src.append(path)
-            self.duration.append(probe['format']['duration'])
+            self.duration.append(probe["format"]["duration"])
             # self.parent.statusbar_msg('', None)
             self.parent.changes_in_progress()
         else:
             mess = _("Duplicate file, it has already been added to the list.")
             self.errors[f'"{path}"'] = mess
+
     # ----------------------------------------------------------------------#
 
     def rejected_files(self):
@@ -191,12 +215,13 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected files if any
         """
         if self.errors:
-            with ListWarning(self,
-                             self.errors,
-                             caption=_('Error list'),
-                             header=_('Rejected files'),
-                             buttons='OK',
-                             ) as log:
+            with ListWarning(
+                self,
+                self.errors,
+                caption=_("Error list"),
+                header=_("Rejected files"),
+                buttons="OK",
+            ) as log:
                 log.ShowModal()
             self.errors.clear()  # clear values here
 
@@ -205,6 +230,7 @@ class FileDrop(wx.FileDropTarget):
     """
     This is the file drop target class
     """
+
     # ----------------------------------------------------------------------#
 
     def __init__(self, window):
@@ -213,6 +239,7 @@ class FileDrop(wx.FileDropTarget):
         """
         wx.FileDropTarget.__init__(self)
         self.window = window  # window is MyListCtr class
+
     # ----------------------------------------------------------------------#
 
     def OnDropFiles(self, x, y, filenames):
@@ -225,6 +252,7 @@ class FileDrop(wx.FileDropTarget):
         self.window.rejected_files()  # call parent.rejected_files at end
 
         return True
+
     # ----------------------------------------------------------------------#
 
 
@@ -235,10 +263,11 @@ class FileDnD(wx.Panel):
     sort them or remove them from the listctrl.
 
     """
+
     # CONSTANTS:
-    YELLOW = '#bd9f00'
-    BLACK = '#060505'  # black for background status bar
-    ORANGE = '#f28924'
+    YELLOW = "#bd9f00"
+    BLACK = "#060505"  # black for background status bar
+    ORANGE = "#f28924"
 
     def __init__(self, parent, *args):
         """
@@ -246,7 +275,7 @@ class FileDnD(wx.Panel):
         """
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
-        self.themecolor = self.appdata['colorscheme']
+        self.themecolor = self.appdata["colorscheme"]
         self.parent = parent  # parent is the MainFrame
         self.outputnames = args[0]
         self.data = args[1]
@@ -264,13 +293,13 @@ class FileDnD(wx.Panel):
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # populate columns
-        colw = self.appdata['filedrop_column_width']
-        self.flCtrl.InsertColumn(0, '#', width=colw[0])
-        self.flCtrl.InsertColumn(1, _('Source file'), width=colw[1])
-        self.flCtrl.InsertColumn(2, _('Duration'), width=colw[2])
-        self.flCtrl.InsertColumn(3, _('Media type'), width=colw[3])
-        self.flCtrl.InsertColumn(4, _('Size'), width=colw[4])
-        self.flCtrl.InsertColumn(5, _('Destination file name'), width=colw[5])
+        colw = self.appdata["filedrop_column_width"]
+        self.flCtrl.InsertColumn(0, "#", width=colw[0])
+        self.flCtrl.InsertColumn(1, _("Source file"), width=colw[1])
+        self.flCtrl.InsertColumn(2, _("Duration"), width=colw[2])
+        self.flCtrl.InsertColumn(3, _("Media type"), width=colw[3])
+        self.flCtrl.InsertColumn(4, _("Size"), width=colw[4])
+        self.flCtrl.InsertColumn(5, _("Destination file name"), width=colw[5])
         # create widgets
         infomsg = _("Drag one or more files below")
         self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
@@ -281,21 +310,26 @@ class FileDnD(wx.Panel):
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
         lblsave = wx.StaticText(self, wx.ID_ANY, label=_("Save to:"))
         sizer_outdir.Add(lblsave, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 2)
-        self.btn_destpath = wx.Button(self, wx.ID_OPEN, _('Change'),
-                                      name='button destpath filedrop')
-        self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
-                                          style=wx.TE_PROCESS_ENTER
-                                          | wx.TE_READONLY,
-                                          )
-        sizer_outdir.Add(self.text_path_save, 1, wx.LEFT
-                         | wx.RIGHT
-                         | wx.EXPAND, 2,
-                         )
+        self.btn_destpath = wx.Button(
+            self, wx.ID_OPEN, _("Change"), name="button destpath filedrop"
+        )
+        self.text_path_save = wx.TextCtrl(
+            self,
+            wx.ID_ANY,
+            "",
+            style=wx.TE_PROCESS_ENTER | wx.TE_READONLY,
+        )
+        sizer_outdir.Add(
+            self.text_path_save,
+            1,
+            wx.LEFT | wx.RIGHT | wx.EXPAND,
+            2,
+        )
         sizer_outdir.Add(self.btn_destpath, 0, wx.LEFT | wx.CENTER, 2)
         sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if self.appdata['ostype'] == 'Darwin':
+        if self.appdata["ostype"] == "Darwin":
             self.lbl_info.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             lblsave.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
@@ -303,8 +337,9 @@ class FileDnD(wx.Panel):
             lblsave.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
         # ---- Tooltips
-        self.btn_destpath.SetToolTip(_('Set a new destination folder for '
-                                       'encodings'))
+        self.btn_destpath.SetToolTip(
+            _("Set a new destination folder for encodings")
+        )
         self.text_path_save.SetToolTip(_("Encodings destination folder"))
 
         # ---- Binding (EVT)
@@ -313,8 +348,9 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
 
-        self.on_file_save(self.appdata['outputdir'])
+        self.on_file_save(self.appdata["outputdir"])
         pub.subscribe(self.text_information, "SET_DRAG_AND_DROP_TOPIC")
+
     # ----------------------------------------------------------------------
 
     def onContext(self, event):
@@ -367,6 +403,7 @@ class FileDnD(wx.Panel):
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
+
     # ----------------------------------------------------------------------
 
     def onPopup(self, event):
@@ -393,6 +430,7 @@ class FileDnD(wx.Panel):
 
         elif menuItem.GetItemLabel() == _("Play file"):
             self.on_play_select(None)
+
     # ----------------------------------------------------------------------
 
     def text_information(self, topic):
@@ -401,18 +439,20 @@ class FileDnD(wx.Panel):
         This method is called using pub/sub protocol
         "SET_DRAG_AND_DROP_TOPIC".
         """
-        if topic in ('Presets Manager', 'Audio/Video Conversions'):
-            self.lbl_info.SetLabel(_('Drag one or more files below'))
+        if topic in ("Presets Manager", "Audio/Video Conversions"):
+            self.lbl_info.SetLabel(_("Drag one or more files below"))
 
-        elif topic == 'Concatenate Demuxer':
-            self.lbl_info.SetLabel(_('Drag two or more Audio/Video '
-                                     'files below'))
+        elif topic == "Concatenate Demuxer":
+            self.lbl_info.SetLabel(
+                _("Drag two or more Audio/Video files below")
+            )
 
-        elif topic == 'Image Sequence to Video':
-            self.lbl_info.SetLabel(_('Drag one or more Image files below'))
+        elif topic == "Image Sequence to Video":
+            self.lbl_info.SetLabel(_("Drag one or more Image files below"))
 
-        elif topic == 'Video to Pictures':
-            self.lbl_info.SetLabel(_('Drag one or more Video files below'))
+        elif topic == "Video to Pictures":
+            self.lbl_info.SetLabel(_("Drag one or more Video files below"))
+
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -435,12 +475,15 @@ class FileDnD(wx.Panel):
                 return
 
             for x in range(count):
-                curritems.append((self.flCtrl.GetItemText(x, col=1),
-                                  self.flCtrl.GetItemText(x, col=2),
-                                  self.flCtrl.GetItemText(x, col=3),
-                                  self.flCtrl.GetItemText(x, col=4),
-                                  self.flCtrl.GetItemText(x, col=5),
-                                  ))
+                curritems.append(
+                    (
+                        self.flCtrl.GetItemText(x, col=1),
+                        self.flCtrl.GetItemText(x, col=2),
+                        self.flCtrl.GetItemText(x, col=3),
+                        self.flCtrl.GetItemText(x, col=4),
+                        self.flCtrl.GetItemText(x, col=5),
+                    )
+                )
             if event.GetColumn() == 1:
                 curritems.sort(key=lambda item: item[0])
             elif event.GetColumn() == 2:
@@ -448,25 +491,27 @@ class FileDnD(wx.Panel):
             elif event.GetColumn() == 3:
                 curritems.sort(key=lambda item: item[2])
             elif event.GetColumn() == 4:
-                curritems.sort(key=lambda item:
-                               to_bytes(''.join(item[3].split())))
+                curritems.sort(
+                    key=lambda item: to_bytes("".join(item[3].split()))
+                )
             elif event.GetColumn() == 5:
                 curritems.sort(key=lambda item: item[4])
 
             self.delete_all(None, setstate=False)  # no event, no setstate here
 
-            if self.sortingstate == 'descending':
-                self.sortingstate = 'ascending'
-            elif self.sortingstate == 'ascending':
-                self.sortingstate = 'descending'
+            if self.sortingstate == "descending":
+                self.sortingstate = "ascending"
+            elif self.sortingstate == "ascending":
+                self.sortingstate = "descending"
             elif not self.sortingstate:
-                self.sortingstate = 'ascending'
+                self.sortingstate = "ascending"
 
-            if self.sortingstate == 'descending':
+            if self.sortingstate == "descending":
                 curritems.reverse()
 
             for data in curritems:
                 self.flCtrl.dropUpdate(data[0], data[4])
+
     # ----------------------------------------------------------------------
 
     def changes_in_progress(self, setfocus=True):
@@ -492,6 +537,7 @@ class FileDnD(wx.Panel):
             self.flCtrl.Select(selitem, on=1)  # default event selection
 
         pub.sendMessage("RESET_ON_CHANGED_LIST", msg=selitem)
+
     # ----------------------------------------------------------------------
 
     def on_play_select(self, event):
@@ -499,26 +545,38 @@ class FileDnD(wx.Panel):
         Playback the selected file
         """
         if self.flCtrl.GetFirstSelected() == -1:  # None
-            wx.MessageBox(_("Have to select an item in the file list first"),
-                          'Videomass', wx.ICON_INFORMATION, self)
+            wx.MessageBox(
+                _("Have to select an item in the file list first"),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
             return
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
 
-        autoexit = '-autoexit' if self.parent.autoexit else ''
+        autoexit = "-autoexit" if self.parent.autoexit else ""
         if self.parent.checktimestamp:
-            args = (f'{autoexit} -i "{item}" '
-                    f'{self.parent.time_seq} '
-                    f'-vf "{self.parent.cmdtimestamp}"')
+            args = (
+                f'{autoexit} -i "{item}" '
+                f"{self.parent.time_seq} "
+                f'-vf "{self.parent.cmdtimestamp}"'
+            )
         else:
             args = f'{autoexit} -i "{item}" {self.parent.time_seq}'
         try:
-            with open(item, encoding='utf-8'):
-                FilePlay(self.GetParent(), args)
-        except IOError:
-            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
-                          "Videomass", wx.ICON_EXCLAMATION, self)
+            with open(item, encoding="utf-8"):
+                playback = FilePlay(self.GetParent(), args)
+                playback.start()
+        except OSError:
+            wx.MessageBox(
+                _("Invalid or unsupported file:  %s") % (item),
+                "Videomass",
+                wx.ICON_EXCLAMATION,
+                self,
+            )
             return
+
     # ----------------------------------------------------------------------
 
     def on_delete_selected(self, event):
@@ -530,9 +588,9 @@ class FileDnD(wx.Panel):
 
         item, indexes = -1, []
         while 1:
-            item = self.flCtrl.GetNextItem(item,
-                                           wx.LIST_NEXT_ALL,
-                                           wx.LIST_STATE_SELECTED)
+            item = self.flCtrl.GetNextItem(
+                item, wx.LIST_NEXT_ALL, wx.LIST_STATE_SELECTED
+            )
             indexes.append(item)
             if item == -1:
                 indexes.remove(-1)
@@ -555,6 +613,7 @@ class FileDnD(wx.Panel):
         for x in range(self.flCtrl.GetItemCount()):
             self.flCtrl.SetItem(x, 0, str(x + 1))  # re-load counter
         return
+
     # ----------------------------------------------------------------------
 
     def delete_all(self, event, setstate=True):
@@ -580,6 +639,7 @@ class FileDnD(wx.Panel):
         if setstate:
             self.sortingstate = None
             self.parent.toolbar.EnableTool(9, False)
+
     # ----------------------------------------------------------------------
 
     def on_select(self, event):
@@ -592,6 +652,7 @@ class FileDnD(wx.Panel):
         self.parent.rename.Enable(True)
         self.parent.delfile.Enable(True)
         pub.sendMessage("RESET_ON_CHANGED_LIST", msg=index)
+
     # ----------------------------------------------------------------------
 
     def on_deselect(self, event):
@@ -603,17 +664,19 @@ class FileDnD(wx.Panel):
         self.parent.rename.Enable(False)
         self.parent.delfile.Enable(False)
         pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
+
     # ----------------------------------------------------------------------
 
     def on_file_save(self, path):
         """
         Set a specific directory for files saving
         """
-        if self.appdata['outputdir_asinput']:
-            msg = _('Same destination paths as source files')
+        if self.appdata["outputdir_asinput"]:
+            msg = _("Same destination paths as source files")
             self.text_path_save.SetValue(msg)
             return
         self.text_path_save.SetValue(path)
+
     # -----------------------------------------------------------------------
 
     def renaming_file(self):
@@ -624,29 +687,34 @@ class FileDnD(wx.Panel):
         same name as outputnames are rejected silently.
         """
         if self.flCtrl.GetFirstSelected() == -1:  # None
-            wx.MessageBox(_("Have to select an item in the file list first"),
-                          'Videomass', wx.ICON_INFORMATION, self)
+            wx.MessageBox(
+                _("Have to select an item in the file list first"),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
             return
 
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
-        newname = ''
-        title = _('Rename the file destination')
-        msg = _('Rename the selected file to:')
+        newname = ""
+        title = _("Rename the file destination")
+        msg = _("Rename the selected file to:")
 
-        with Renamer(self,
-                     nameprop=oldname,
-                     caption=title,
-                     message=msg,
-                     mode=0,
-                     ) as dlg:
+        with Renamer(
+            self,
+            nameprop=oldname,
+            caption=title,
+            message=msg,
+            mode=0,
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 newname = dlg.getvalue()
             else:
                 return
 
-        if newname == '' or newname == oldname or newname.isspace():
-            self.parent.statusbar_msg(_('Add Files'), None)
+        if newname == "" or newname == oldname or newname.isspace():
+            self.parent.statusbar_msg(_("Add Files"), None)
             return
 
         sanitize = filename_sanitize(newname, self.outputnames)
@@ -656,21 +724,23 @@ class FileDnD(wx.Panel):
 
         self.flCtrl.SetItem(row_id, 5, newname)
         self.outputnames[row_id] = newname
-        self.parent.statusbar_msg(_('Add Files'), None)
-# -----------------------------------------------------------------------
+        self.parent.statusbar_msg(_("Add Files"), None)
+
+    # -----------------------------------------------------------------------
 
     def renaming_batch_files(self):
         """
         This method is responsible for batch file renaming.
         """
-        title = _('Rename in batch')
-        msg = _('Rename the {0} items to:').format(len(self.outputnames))
-        with Renamer(self,
-                     nameprop=_('New Name #'),
-                     caption=title,
-                     message=msg,
-                     mode=len(self.outputnames)
-                     ) as dlg:
+        title = _("Rename in batch")
+        msg = _("Rename the {0} items to:").format(len(self.outputnames))
+        with Renamer(
+            self,
+            nameprop=_("New Name #"),
+            caption=title,
+            message=msg,
+            mode=len(self.outputnames),
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 newname = dlg.getvalue()
             else:
@@ -679,12 +749,13 @@ class FileDnD(wx.Panel):
         for name in newname:
             sanitize = filename_sanitize(name, self.outputnames)
             if sanitize:
-                self.parent.statusbar_msg(sanitize, FileDnD.YELLOW,
-                                          FileDnD.BLACK)
+                self.parent.statusbar_msg(
+                    sanitize, FileDnD.YELLOW, FileDnD.BLACK
+                )
                 return
 
         for num, name in enumerate(newname):
             self.flCtrl.SetItem(num, 5, name)
             self.outputnames[num] = name
 
-        self.parent.statusbar_msg(_('Add Files'), None)
+        self.parent.statusbar_msg(_("Add Files"), None)

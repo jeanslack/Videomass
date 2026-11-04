@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: while_playing.py
-Porpose: Show box with shortcuts keyboard when playback with FFplay
-Compatibility: Python3, wxPython4
+Purpose: Show box with shortcuts keyboard when playback with FFplay
+Compatibility: Python >= 3.11, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import wx
 from pubsub import pub
 
@@ -34,10 +35,12 @@ class WhilePlaying(wx.Dialog):
     useful when you use playback function with FFplay
 
     """
-    KEYS = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
-              "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
-              "right mouse click\nleft mouse double-click"
-              ))
+
+    KEYS = _(
+        "q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
+        "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
+        "right mouse click\nleft mouse double-click"
+    )
     EXPLAN = (
         "Quiet.\nToggle full screen.\nPause.\nToggle mute.\n"
         "Decrease and increase volume respectively.\n"
@@ -54,7 +57,8 @@ class WhilePlaying(wx.Dialog):
         "Seek to the previous/next chapter. Or Seek backward/forward\n"
         "10 minutes if there are no chapters.\n"
         "Seek to percentage in file corresponding to fraction of width.\n"
-        "Toggle full screen.")
+        "Toggle full screen."
+    )
     # ----------------------------------------------------------------------
 
     def __init__(self, OS):
@@ -67,18 +71,18 @@ class WhilePlaying(wx.Dialog):
         if close videomass also close parent window
         """
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['colorscheme']
-        vidicon = get.iconset['videomass']
+        colorscheme = get.appset["colorscheme"]
+        vidicon = get.iconset["videomass"]
 
-        wx.Dialog.__init__(self, None,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.DIALOG_NO_PARENT
-                           )
+        wx.Dialog.__init__(
+            self, None, style=wx.DEFAULT_DIALOG_STYLE | wx.DIALOG_NO_PARENT
+        )
         # -------------------- widget --------------------------#
-        panel_base = wx.Panel(self, wx.ID_ANY,
-                              style=wx.TAB_TRAVERSAL
-                              | wx.BORDER_THEME,
-                              )
+        panel_base = wx.Panel(
+            self,
+            wx.ID_ANY,
+            style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
+        )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # panel_base.SetBackgroundColour(wx.Colour('#008000'))
         # panel_base.SetBackgroundColour(wx.Colour('#101212'))
@@ -91,9 +95,9 @@ class WhilePlaying(wx.Dialog):
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcut keys while playing with FFplay"))
 
-        panel.SetBackgroundColour(wx.Colour(colorscheme['BACKGRD']))
-        label2.SetForegroundColour(wx.Colour(colorscheme['INFO']))
-        label1.SetForegroundColour(wx.Colour(colorscheme['TXT0']))
+        panel.SetBackgroundColour(wx.Colour(colorscheme["BACKGRD"]))
+        label2.SetForegroundColour(wx.Colour(colorscheme["INFO"]))
+        label1.SetForegroundColour(wx.Colour(colorscheme["TXT0"]))
         # ---------------------- Layout ----------------------#
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
@@ -101,11 +105,11 @@ class WhilePlaying(wx.Dialog):
         btngrid = wx.FlexGridSizer(1, 1, 0, 0)
         btngrid.Add(button_close, 0, wx.ALL, 0)
         panel.SetSizer(gr_s1)
-        sizer_base.Add(btngrid, flag=wx.ALL
-                       | wx.ALIGN_RIGHT
-                       | wx.RIGHT,
-                       border=5,
-                       )
+        sizer_base.Add(
+            btngrid,
+            flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT,
+            border=5,
+        )
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
@@ -116,10 +120,11 @@ class WhilePlaying(wx.Dialog):
         # binding
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
+
     # --------------------------------------------------------------#
 
     def on_close(self, event):
         """
         Destroy this window
         """
-        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='WhilePlaying')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg="WhilePlaying")

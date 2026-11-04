@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: epilogue.py
-Porpose: shows dialog box before start process
-Compatibility: Python3, wxPython Phoenix
+Purpose: shows dialog box before start process
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2022
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,7 +25,9 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+
 import os
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -34,45 +36,54 @@ class Formula(wx.Dialog):
     """
     Show a dialog box before run process.
     """
+
     def __init__(self, parent, *args, **kwargs):
 
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
-        colorscheme = self.appdata['colorscheme']
+        colorscheme = self.appdata["colorscheme"]
         self.movetotrash = args[1]
         self.emptylist = args[2]
 
-        wx.Dialog.__init__(self, parent, -1,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.RESIZE_BORDER
-                           )
+        wx.Dialog.__init__(
+            self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+        )
         sizbase = wx.BoxSizer(wx.VERTICAL)
-        panelscroll = scrolled.ScrolledPanel(self, wx.ID_ANY,
-                                             size=args[0],
-                                             style=wx.TAB_TRAVERSAL
-                                             | wx.BORDER_THEME,
-                                             name="panelscr",
-                                             )
+        panelscroll = scrolled.ScrolledPanel(
+            self,
+            wx.ID_ANY,
+            size=args[0],
+            style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
+            name="panelscr",
+        )
         sizbase.Add(panelscroll, 1, wx.ALL | wx.EXPAND, 5)
-        label1 = wx.StaticText(panelscroll, wx.ID_ANY, kwargs['key'])
-        label2 = wx.StaticText(panelscroll, wx.ID_ANY, kwargs['val'])
-        panelscroll.SetBackgroundColour(colorscheme['BACKGRD'])
-        label1.SetForegroundColour(colorscheme['TXT3'])
-        label2.SetForegroundColour(colorscheme['TXT1'])
+        label1 = wx.StaticText(panelscroll, wx.ID_ANY, kwargs["key"])
+        label2 = wx.StaticText(panelscroll, wx.ID_ANY, kwargs["val"])
+        panelscroll.SetBackgroundColour(colorscheme["BACKGRD"])
+        label1.SetForegroundColour(colorscheme["TXT3"])
+        label2.SetForegroundColour(colorscheme["TXT1"])
         grid_pan = wx.BoxSizer(wx.HORIZONTAL)
-        grid_pan.Add(label1, 0, wx.ALL
-                     | wx.ALIGN_CENTRE_VERTICAL
-                     | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-        grid_pan.Add(label2, 0, wx.ALL
-                     | wx.ALIGN_CENTRE_VERTICAL
-                     | wx.ALIGN_CENTRE_HORIZONTAL, 5)
+        grid_pan.Add(
+            label1,
+            0,
+            wx.ALL | wx.ALIGN_CENTRE_VERTICAL | wx.ALIGN_CENTRE_HORIZONTAL,
+            5,
+        )
+        grid_pan.Add(
+            label2,
+            0,
+            wx.ALL | wx.ALIGN_CENTRE_VERTICAL | wx.ALIGN_CENTRE_HORIZONTAL,
+            5,
+        )
 
         panelscroll.SetSizer(grid_pan)
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
 
-        lab = (_('When finished, once the operations '
-                 'have been completed successfully:'))
+        lab = _(
+            "When finished, once the operations "
+            "have been completed successfully:"
+        )
         lbl = wx.StaticText(self, label=lab)
         sizbase.Add(lbl, 0, wx.LEFT | wx.TOP, 5)
         sizeropt = wx.BoxSizer(wx.HORIZONTAL)
@@ -94,7 +105,7 @@ class Formula(wx.Dialog):
         btngrid.Add(btnok, 0, wx.LEFT, 5)
         sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
 
-        self.SetTitle(_('Videomass - Batch Mode'))
+        self.SetTitle(_("Videomass - Batch Mode"))
         self.SetMinSize(args[0])
         self.SetSizer(sizbase)
         sizbase.Fit(self)
@@ -115,13 +126,14 @@ class Formula(wx.Dialog):
             self.emptylist = True
         else:
             self.emptylist = False
+
     # --------------------------------------------------------------------#
 
     def on_file_to_trash(self, event):
         """
         enable/disable "Move file to trash" after successful encoding
         """
-        trashdir = self.appdata['trashdir_loc']
+        trashdir = self.appdata["trashdir_loc"]
         if self.ckbx_trash.IsChecked():
             self.movetotrash = True
             self.ckbx_del.SetValue(True)
@@ -134,6 +146,7 @@ class Formula(wx.Dialog):
             self.ckbx_del.Enable()
             self.ckbx_del.SetValue(False)
             self.emptylist = False
+
     # --------------------------------------------------------------------#
 
     def on_cancel(self, event):

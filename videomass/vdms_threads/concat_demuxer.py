@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: concat_demuxer.py
-Porpose: FFmpeg long processing task for Concatenation processing
-Compatibility: Python3, wxPython4 Phoenix
+Purpose: FFmpeg long processing task for Concatenation processing
+Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.24.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,19 +24,23 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from threading import Thread
-import time
+
 import subprocess
-import platform
+import sys
+import time
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.thread_utils import BaseVideomassThread
+
+
+if sys.platform != "win32":
     import shlex
 
 
-class ConcatDemuxer(Thread):
+class ConcatDemuxer(BaseVideomassThread):
     """
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
@@ -46,6 +50,7 @@ class ConcatDemuxer(Thread):
     https://stackoverflow.com/questions/1388753/how-to-get-output-
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
+
     # ---------------------------------------------------------------
 
     def __init__(self, *args, **kwargs):
@@ -54,15 +59,11 @@ class ConcatDemuxer(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
+        super().__init__(logfile=args[0])
+
         get = wx.GetApp()  # get videomass wx.App attribute
         self.appdata = get.appset
-        self.stop_work_thread = False  # process terminate
-        self.logfile = args[0]  # log filename
         self.kwa = kwargs
-
-        Thread.__init__(self)
-
-        self.start()
 
     def run(self):
         """
@@ -70,98 +71,108 @@ class ConcatDemuxer(Thread):
 
         """
         filedone = None
-        cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
-               f'{self.appdata["ffmpeg-default-args"]} '
-               f'{self.appdata["ffmpeg_loglev"]} -f concat '
-               f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"')
+        cmd = (
+            f'"{self.appdata["ffmpeg_cmd"]}" '
+            f"{self.appdata['ffmpeg-default-args']} "
+            f"{self.appdata['ffmpeg_loglev']} -f concat "
+            f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"'
+        )
 
-        count = (f'{self.kwa["nmax"]} Items in progress...\nSource: '
-                 f'"{self.kwa["source"]}"\nDestination: '
-                 f'"{self.kwa["destination"]}"'
-                 )
-        stamp = f'{count}\n\n[COMMAND]:\n{cmd}'
+        count = (
+            f"{self.kwa['nmax']} Items in progress...\nSource: "
+            f'"{self.kwa["source"]}"\nDestination: '
+            f'"{self.kwa["destination"]}"'
+        )
+        stamp = f"{count}\n\n[COMMAND]:\n{cmd}"
 
-        countevt = (f'{self.kwa["nmax"]} Items in progress...\n...for '
-                    f'details see Current Log.\nDestination: '
-                    f'"{self.kwa["destination"]}"')
+        countevt = (
+            f"{self.kwa['nmax']} Items in progress...\n...for "
+            f"details see Current Log.\nDestination: "
+            f'"{self.kwa["destination"]}"'
+        )
 
-        wx.CallAfter(pub.sendMessage,
-                     "COUNT_EVT",
-                     count=countevt,
-                     duration=self.kwa['duration'],
-                     end='CONTINUE',
-                     )
+        wx.CallAfter(
+            pub.sendMessage,
+            "COUNT_EVT",
+            count=countevt,
+            duration=self.kwa["duration"],
+            end="CONTINUE",
+        )
         tolog(stamp, self.logfile, sep=True, wdate=True)
 
-        if not platform.system() == 'Windows':
-            cmd = shlex.split(cmd)
+        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
+
         try:
-            with Popen(cmd,
-                       stderr=subprocess.PIPE,
-                       stdin=subprocess.PIPE,
-                       bufsize=1,
-                       universal_newlines=True,
-                       encoding=self.appdata['encoding'],
-                       ) as proc:
-                for line in proc.stderr:
-                    wx.CallAfter(pub.sendMessage,
-                                 "UPDATE_EVT",
-                                 output=line,
-                                 duration=self.kwa['duration'],
-                                 status=0,
-                                 )
+            with subprocess.Popen(
+                cmd,
+                stderr=subprocess.PIPE,
+                stdin=subprocess.PIPE,
+                bufsize=1,
+                text=True,
+                encoding=self.appdata["encoding"],
+                creationflags=self.creationflags,
+            ) as self.process:
+                for line in self.process.stderr:
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "UPDATE_EVT",
+                        output=line,
+                        duration=self.kwa["duration"],
+                        status=0,
+                    )
                     if self.stop_work_thread:
-                        proc.stdin.write('q')  # stop ffmpeg
-                        out = proc.communicate()[1]
-                        proc.wait()
-                        wx.CallAfter(pub.sendMessage,
-                                     "UPDATE_EVT",
-                                     output='STOP',
-                                     duration=self.kwa['duration'],
-                                     status=1,
-                                     )
+                        if self.fatal:
+                            return
+                        out = self.process.communicate()[1]
+                        self.process.wait()
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "UPDATE_EVT",
+                            output="STOP",
+                            duration=self.kwa["duration"],
+                            status=1,
+                        )
                         tolog(out, self.logfile)
                         time.sleep(1)
-                        wx.CallAfter(pub.sendMessage, "END_EVT",
-                                     filetotrash=filedone)
+                        wx.CallAfter(
+                            pub.sendMessage, "END_EVT", filetotrash=filedone
+                        )
                         return
 
-                if proc.wait():  # error
-                    out = proc.communicate()[1]
-                    wx.CallAfter(pub.sendMessage,
-                                 "UPDATE_EVT",
-                                 output='FAILED',
-                                 duration=self.kwa['duration'],
-                                 status=proc.wait(),
-                                 )
-                    tolog(f"[VIDEOMASS]: Error Exit Status: "
-                          f"{proc.wait()} {out}", self.logfile
-                          )
+                if self.process.wait():  # error
+                    out = self.process.communicate()[1]
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "UPDATE_EVT",
+                        output="FAILED",
+                        duration=self.kwa["duration"],
+                        status=self.process.wait(),
+                    )
+                    tolog(
+                        f"[VIDEOMASS]: Error Exit Status: "
+                        f"{self.process.wait()} {out}",
+                        self.logfile,
+                    )
                     time.sleep(1)
 
                 else:  # Done
                     filedone = self.kwa["source"]
-                    wx.CallAfter(pub.sendMessage,
-                                 "COUNT_EVT",
-                                 count='',
-                                 duration='',
-                                 end='DONE'
-                                 )
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "COUNT_EVT",
+                        count="",
+                        duration="",
+                        end="DONE",
+                    )
         except (OSError, FileNotFoundError) as err:
-            wx.CallAfter(pub.sendMessage,
-                         "COUNT_EVT",
-                         count=err,
-                         duration=0,
-                         end='ERROR',
-                         )
+            wx.CallAfter(
+                pub.sendMessage,
+                "COUNT_EVT",
+                count=err,
+                duration=0,
+                end="ERROR",
+            )
             tolog(err, self.logfile)
 
-        time.sleep(.5)
+        time.sleep(0.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
-    # --------------------------------------------------------------------#
-
-    def stop(self):
-        """
-        Sets the stop work thread to terminate the process
-        """
-        self.stop_work_thread = True

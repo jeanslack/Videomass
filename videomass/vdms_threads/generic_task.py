@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: generic_task.py
-Porpose: Execute a generic task with FFmpeg
-Compatibility: Python3 (Unix, Windows)
+Purpose: Execute a generic task with FFmpeg
+Compatibility: Python >= 3.11 (Unix, win32)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.19.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,18 +24,23 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from threading import Thread
-import platform
+
 import subprocess
+import sys
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.thread_utils import BaseVideomassThread
+
+
+if sys.platform != "win32":
     import shlex
 
 
-class FFmpegGenericTaskOutLines(Thread):
+class FFmpegGenericTaskOutLines(BaseVideomassThread):
     """
     Run a generic task using FFmpeg sub-process as a separate thread.
     Unlike FFmpegGenericTask, this class also provides a control
@@ -56,10 +61,13 @@ class FFmpegGenericTaskOutLines(Thread):
     Return: None
 
     """
-    STOP = ('WARNING: [VIDEOMASS]: STOP command received by signal '
-            'event.\nTerminated process ')
 
-    def __init__(self, args, procname='Unknown', logfile='logfile.log'):
+    STOP = (
+        "WARNING: [VIDEOMASS]: STOP command received by signal "
+        "event.\nTerminated process "
+    )
+
+    def __init__(self, args, procname="Unknown", logfile="logfile.log"):
         """
         Attributes defined here:
 
@@ -73,16 +81,14 @@ class FFmpegGenericTaskOutLines(Thread):
                      it must be handled appropriately, in the other
                      case it is None.
         """
+        super().__init__(logfile=logfile)
+
         get = wx.GetApp()
         self.appdata = get.appset
-        self.stop_work_thread = False  # process terminate
-        self.logfile = logfile
         self.procname = procname
         self.args = args
         self.status = None
 
-        Thread.__init__(self)
-        self.start()
     # ----------------------------------------------------------------#
 
     def run(self):
@@ -91,61 +97,59 @@ class FFmpegGenericTaskOutLines(Thread):
 
         """
         outlist = []
-        cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
-               f'{self.appdata["ffmpeg-default-args"]} '
-               f'{self.appdata["ffmpeg_loglev"]} '
-               f'{self.args}'
-               )
-        tolog(f'INFO: VIDEOMASS TASK: {self.procname}\n'
-              f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
-              sep=True, wdate=True
-              )
-        if not platform.system() == 'Windows':
-            cmd = shlex.split(cmd)
+        cmd = (
+            f'"{self.appdata["ffmpeg_cmd"]}" '
+            f"{self.appdata['ffmpeg-default-args']} "
+            f"{self.appdata['ffmpeg_loglev']} "
+            f"{self.args}"
+        )
+        tolog(
+            f"INFO: VIDEOMASS TASK: {self.procname}\n"
+            f"INFO: VIDEOMASS COMMAND: {cmd}",
+            self.logfile,
+            sep=True,
+            wdate=True,
+        )
+        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
         try:
-            with Popen(cmd,
-                       stderr=subprocess.PIPE,
-                       stdin=subprocess.PIPE,
-                       universal_newlines=True,
-                       encoding=self.appdata["encoding"],
-                       ) as proc:
-                for line in proc.stderr:
+            with subprocess.Popen(
+                cmd,
+                stderr=subprocess.PIPE,
+                stdin=subprocess.PIPE,
+                text=True,
+                encoding=self.appdata["encoding"],
+                creationflags=self.creationflags,
+            ) as self.process:
+                for line in self.process.stderr:
                     outlist.append(line)
                     if self.stop_work_thread:
-                        proc.stdin.write('q')  # stop ffmpeg
-                        output = proc.communicate()[1]
-                        proc.wait()
-                        tolog(FFmpegGenericTaskOutLines.STOP
-                              + f'with PID {proc.pid}', self.logfile
-                              )
-                        self.status = 'STOP'
+                        if self.fatal:
+                            return
+                        output = self.process.communicate()[1]
+                        self.process.wait()
+                        tolog(
+                            FFmpegGenericTaskOutLines.STOP
+                            + f"with PID {self.process.pid}",
+                            self.logfile,
+                        )
+                        self.status = "STOP"
                         break
 
-                    if proc.wait():
-                        output = proc.communicate()[1]
+                    if self.process.wait():
+                        output = self.process.communicate()[1]
                         tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
-                        self.status = 'ERROR'
+                        self.status = "ERROR"
                         break
 
         except (OSError, FileNotFoundError) as err:
-            tolog(f'[VIDEOMASS]: ERROR: {err}', self.logfile)
-            self.status = 'ERROR'
+            tolog(f"[VIDEOMASS]: ERROR: {err}", self.logfile)
+            self.status = "ERROR"
 
         if not self.status:
-            output = ''.join(outlist)
-            tolog(f'INFO: [FFMPEG] OUTPUT:\n{output}', self.logfile)
+            output = "".join(outlist)
+            tolog(f"INFO: [FFMPEG] OUTPUT:\n{output}", self.logfile)
 
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-    # ----------------------------------------------------------------#
-
-    def stop(self):
-        """
-        Sets the stop work thread to terminate the process
-        """
-        self.stop_work_thread = True
+        wx.CallAfter(pub.sendMessage, "RESULT_EVT", status="")
 
 
 class FFmpegGenericTask(Thread):
@@ -167,7 +171,8 @@ class FFmpegGenericTask(Thread):
     Return: None
 
     """
-    def __init__(self, args, procname='Unknown', logfile='logfile.log'):
+
+    def __init__(self, args, procname="Unknown", logfile="logfile.log"):
         """
         Attributes defined here:
 
@@ -187,9 +192,15 @@ class FFmpegGenericTask(Thread):
         self.procname = procname
         self.args = args
         self.status = None
+        self.creationflags = (
+            subprocess.CREATE_NO_WINDOW
+            if self.appdata["ostype"] == "Windows"
+            else 0
+        )
 
         Thread.__init__(self)
         self.start()
+
     # ----------------------------------------------------------------#
 
     def run(self):
@@ -197,25 +208,30 @@ class FFmpegGenericTask(Thread):
         Start thread
 
         """
-        cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
-               f'{self.appdata["ffmpeg-default-args"]} '
-               f'{self.appdata["ffmpeg_loglev"]} '
-               f'{self.args}'
-               )
-        tolog(f'INFO: VIDEOMASS TASK: {self.procname}\n'
-              f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
-              sep=True, wdate=True
-              )
-        if not platform.system() == 'Windows':
-            cmd = shlex.split(cmd)
+        cmd = (
+            f'"{self.appdata["ffmpeg_cmd"]}" '
+            f"{self.appdata['ffmpeg-default-args']} "
+            f"{self.appdata['ffmpeg_loglev']} "
+            f"{self.args}"
+        )
+        tolog(
+            f"INFO: VIDEOMASS TASK: {self.procname}\n"
+            f"INFO: VIDEOMASS COMMAND: {cmd}",
+            self.logfile,
+            sep=True,
+            wdate=True,
+        )
+        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
         try:
-            with Popen(cmd,
-                       stderr=subprocess.PIPE,
-                       universal_newlines=True,
-                       encoding=self.appdata["encoding"],
-                       ) as proc:
+            with subprocess.Popen(
+                cmd,
+                stderr=subprocess.PIPE,
+                text=True,
+                encoding=self.appdata["encoding"],
+                creationflags=self.creationflags,
+            ) as proc:
                 output = proc.communicate()[1]
-                tolog(f'INFO: [FFMPEG] OUTPUT:\n{output}', self.logfile)
+                tolog(f"INFO: [FFMPEG] OUTPUT:\n{output}", self.logfile)
                 if proc.returncode:  # ffmpeg error
                     self.status = f"[FFMPEG] OUTPUT ERROR:\n{output}"
 
@@ -225,7 +241,4 @@ class FFmpegGenericTask(Thread):
         if self.status:
             tolog(f"{self.status}", self.logfile)
 
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
+        wx.CallAfter(pub.sendMessage, "RESULT_EVT", status="")

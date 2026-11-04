@@ -13,6 +13,7 @@ For the complete list of the wx.Language CONSTANT identifiers please visit:
 
 import wx
 
+
 # language domain
 langDomain = "videomass"
 
@@ -36,4 +37,5 @@ supLang = {  # languages you want to support.
     "ru_RU": (wx.LANGUAGE_RUSSIAN, ("Russian")),
     "es_ES": (wx.LANGUAGE_SPANISH, ("Spanish (Spain)")),
     "es_MX": (wx.LANGUAGE_SPANISH_MEXICAN, ("Spanish (Mexico)")),
-    "es_CU": (wx.LANGUAGE_SPANISH, ("Spanish (Cuba)")), }
+    "es_CU": (wx.LANGUAGE_SPANISH, ("Spanish (Cuba)")),
+}

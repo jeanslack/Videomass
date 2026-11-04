@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 File Name: make_filelog.py
-Porpose: log file generator
-Compatibility: Python3, Python2
+Purpose: log file generator
+Compatibility: Python >= 3.11, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.19.2025
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,8 +25,8 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import time
 import os
+import time
 
 
 def tolog(info, logfile, sep=False, wdate=False, txtenc="utf-8"):
@@ -35,20 +35,22 @@ def tolog(info, logfile, sep=False, wdate=False, txtenc="utf-8"):
     to a given `logfile` during the processes.
     """
     if sep:
-        line = '\n' + '-' * 80 + '\n'
+        line = "\n" + "-" * 80 + "\n"
     else:
-        line = '\n'
+        line = "\n"
 
     if wdate:
         curdate = time.strftime("%c")  # date/time
-        strdate = f'DATE: {curdate}\n'
+        strdate = f"DATE: {curdate}\n"
     else:
-        strdate = ''
+        strdate = ""
 
-    apnd = f'{line}{strdate}{info}\n'
+    apnd = f"{line}{strdate}{info}\n"
 
     with open(logfile, "a", encoding=txtenc) as log:
         log.write(apnd)
+
+
 # ----------------------------------------------------------------#
 
 
@@ -63,7 +65,7 @@ def make_log_template(logname, logdir, mode="a", txtenc="utf-8"):
 
     Returns an absolute/relative pathname of the logfile.
     """
-    sep = '=' * 80
+    sep = "=" * 80
     current_date = time.strftime("%c")  # date/time
     logfile = os.path.join(logdir, logname)
 

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ffmpeg_codecs.py
-Porpose: Mini-frame to show the available decoders/encoders on the FFmpeg
-Compatibility: Python3, wxPython Phoenix
+Purpose: Mini-frame to show the available decoders/encoders on the FFmpeg
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import wx
 from pubsub import pub
 
@@ -33,6 +34,7 @@ class FFmpegCodecs(wx.Dialog):
     It shows a dialog box with a pretty kind of GUI to view
     the formats available on FFmpeg
     """
+
     def __init__(self, dict_decoders, OS, option):
         """
         with 'None' not depend from parent:
@@ -43,54 +45,63 @@ class FFmpegCodecs(wx.Dialog):
         if close videomass also close parent window:
         """
         self.option = option
-        if self.option == '-encoders':
+        if self.option == "-encoders":
             title = _("FFmpeg encoders")
             header = _("supported encoders")
         else:
             title = _("FFmpeg decoders")
             header = _("supported decoders")
         get = wx.GetApp()  # get data from bootstrap
-        vidicon = get.iconset['videomass']
+        vidicon = get.iconset["videomass"]
 
-        wx.Dialog.__init__(self, None,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.RESIZE_BORDER
-                           | wx.DIALOG_NO_PARENT
-                           )
+        wx.Dialog.__init__(
+            self,
+            None,
+            style=wx.DEFAULT_DIALOG_STYLE
+            | wx.RESIZE_BORDER
+            | wx.DIALOG_NO_PARENT,
+        )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY,
-                              style=wx.TAB_TRAVERSAL
-                              | wx.BORDER_THEME,
-                              )
+        self.panel = wx.Panel(
+            self,
+            wx.ID_ANY,
+            style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
+        )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        notebook = wx.Notebook(self.panel, wx.ID_ANY,)
+        notebook = wx.Notebook(
+            self.panel,
+            wx.ID_ANY,
+        )
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -- nb 1
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
-        vid = wx.ListCtrl(nb_panel_1, wx.ID_ANY,
-                          style=wx.LC_REPORT
-                          | wx.SUNKEN_BORDER,
-                          )
+        vid = wx.ListCtrl(
+            nb_panel_1,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER,
+        )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(vid, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_1.SetSizer(sizer_tab1)
         notebook.AddPage(nb_panel_1, (_("Video")))
         # --- nb2
         nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
-        aud = wx.ListCtrl(nb_panel_2, wx.ID_ANY,
-                          style=wx.LC_REPORT
-                          | wx.SUNKEN_BORDER,
-                          )
+        aud = wx.ListCtrl(
+            nb_panel_2,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER,
+        )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(aud, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_2.SetSizer(sizer_tab2)
         notebook.AddPage(nb_panel_2, (_("Audio")))
         # -- nb3
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
-        sub = wx.ListCtrl(nb_panel_3, wx.ID_ANY,
-                          style=wx.LC_REPORT
-                          | wx.SUNKEN_BORDER,
-                          )
+        sub = wx.ListCtrl(
+            nb_panel_3,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER,
+        )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(sub, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_3.SetSizer(sizer_tab3)
@@ -106,33 +117,33 @@ class FFmpegCodecs(wx.Dialog):
 
         # ----------------------Properties----------------------#
         vid.InsertColumn(0, header, width=200)
-        vid.InsertColumn(1, ('F'), width=40)
-        vid.InsertColumn(2, ('S'), width=40)
-        vid.InsertColumn(3, ('X'), width=40)
-        vid.InsertColumn(4, ('B'), width=40)
-        vid.InsertColumn(5, ('D'), width=40)
-        vid.InsertColumn(6, _('description'), width=450)
+        vid.InsertColumn(1, ("F"), width=40)
+        vid.InsertColumn(2, ("S"), width=40)
+        vid.InsertColumn(3, ("X"), width=40)
+        vid.InsertColumn(4, ("B"), width=40)
+        vid.InsertColumn(5, ("D"), width=40)
+        vid.InsertColumn(6, _("description"), width=450)
         # vid.SetBackgroundColour(wx.Colour(217, 255, 255))
         # aud.SetMinSize((600, 300))
         aud.InsertColumn(0, header, width=200)
-        aud.InsertColumn(1, ('F'), width=40)
-        aud.InsertColumn(2, ('S'), width=40)
-        aud.InsertColumn(3, ('X'), width=40)
-        aud.InsertColumn(4, ('B'), width=40)
-        aud.InsertColumn(5, ('D'), width=40)
-        aud.InsertColumn(6, _('description'), width=450)
+        aud.InsertColumn(1, ("F"), width=40)
+        aud.InsertColumn(2, ("S"), width=40)
+        aud.InsertColumn(3, ("X"), width=40)
+        aud.InsertColumn(4, ("B"), width=40)
+        aud.InsertColumn(5, ("D"), width=40)
+        aud.InsertColumn(6, _("description"), width=450)
         # aud.SetBackgroundColour(wx.Colour(217, 255, 255))
         # sub.SetMinSize((600, 300))
         sub.InsertColumn(0, header, width=200)
-        sub.InsertColumn(1, ('F'), width=40)
-        sub.InsertColumn(2, ('S'), width=40)
-        sub.InsertColumn(3, ('X'), width=40)
-        sub.InsertColumn(4, ('B'), width=40)
-        sub.InsertColumn(5, ('D'), width=40)
-        sub.InsertColumn(6, _('description'), width=450)
+        sub.InsertColumn(1, ("F"), width=40)
+        sub.InsertColumn(2, ("S"), width=40)
+        sub.InsertColumn(3, ("X"), width=40)
+        sub.InsertColumn(4, ("B"), width=40)
+        sub.InsertColumn(5, ("D"), width=40)
+        sub.InsertColumn(6, _("description"), width=450)
         # sub.SetBackgroundColour(wx.Colour(217, 255, 255))
 
-        if OS == 'Darwin':
+        if OS == "Darwin":
             vid.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
             aud.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
             sub.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -143,11 +154,13 @@ class FFmpegCodecs(wx.Dialog):
             sub.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             stext.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
 
-        leg = ("F = frame-level multithreading\n"
-               "S = slice-level multithreading\n"
-               "X = Codec is experimental\n"
-               "B = Supports draw_horiz_band\n"
-               "D = Supports direct rendering method 1")
+        leg = (
+            "F = frame-level multithreading\n"
+            "S = slice-level multithreading\n"
+            "X = Codec is experimental\n"
+            "B = Supports draw_horiz_band\n"
+            "D = Supports direct rendering method 1"
+        )
         stext.SetLabel(leg)
 
         icon = wx.Icon()
@@ -162,71 +175,71 @@ class FFmpegCodecs(wx.Dialog):
 
         # populate vid listctrl output:
         index = 0
-        vcodlist = dict_decoders['Video']
+        vcodlist = dict_decoders["Video"]
         if vcodlist:
             for a in vcodlist:
-                vid.InsertItem(index, a[6:].split(' ')[1])
-                if 'F' in a[1]:
-                    vid.SetItem(index, 1, 'YES')
-                if 'S' in a[2]:
-                    vid.SetItem(index, 2, 'YES')
-                if 'X' in a[3]:
-                    vid.SetItem(index, 3, 'YES')
-                if 'B' in [4]:
-                    vid.SetItem(index, 4, 'YES')
-                if 'D' in [5]:
-                    vid.SetItem(index, 5, 'YES')
+                vid.InsertItem(index, a[6:].split(" ")[1])
+                if "F" in a[1]:
+                    vid.SetItem(index, 1, "YES")
+                if "S" in a[2]:
+                    vid.SetItem(index, 2, "YES")
+                if "X" in a[3]:
+                    vid.SetItem(index, 3, "YES")
+                if "B" in [4]:
+                    vid.SetItem(index, 4, "YES")
+                if "D" in [5]:
+                    vid.SetItem(index, 5, "YES")
                 d = " ".join(a.split()).split(None, 2)[2]
                 if len(d):
                     vid.SetItem(index, 6, d)
                 else:
-                    vid.SetItem(index, 6, '')
+                    vid.SetItem(index, 6, "")
                 index += 1
 
         # populate aud listctrl output:
         index = 0
-        acodlist = dict_decoders['Audio']
+        acodlist = dict_decoders["Audio"]
         if acodlist:
             for a in acodlist:
-                aud.InsertItem(index, a[6:].split(' ')[1])
-                if 'F' in a[1]:
-                    aud.SetItem(index, 1, 'YES')
-                if 'S' in a[2]:
-                    aud.SetItem(index, 2, 'YES')
-                if 'X' in a[3]:
-                    aud.SetItem(index, 3, 'YES')
-                if 'B' in [4]:
-                    aud.SetItem(index, 4, 'YES')
-                if 'D' in [5]:
-                    aud.SetItem(index, 5, 'YES')
+                aud.InsertItem(index, a[6:].split(" ")[1])
+                if "F" in a[1]:
+                    aud.SetItem(index, 1, "YES")
+                if "S" in a[2]:
+                    aud.SetItem(index, 2, "YES")
+                if "X" in a[3]:
+                    aud.SetItem(index, 3, "YES")
+                if "B" in [4]:
+                    aud.SetItem(index, 4, "YES")
+                if "D" in [5]:
+                    aud.SetItem(index, 5, "YES")
                 d = " ".join(a.split()).split(None, 2)[2]
                 if len(d):
                     aud.SetItem(index, 6, d)
                 else:
-                    aud.SetItem(index, 6, '')
+                    aud.SetItem(index, 6, "")
                 index += 1
 
         # populate sub listctrl output:
         index = 0
-        scodlist = dict_decoders['Subtitle']
+        scodlist = dict_decoders["Subtitle"]
         if scodlist:
             for a in scodlist:
-                sub.InsertItem(index, a[6:].split(' ')[1])
-                if 'F' in a[1]:
-                    sub.SetItem(index, 1, 'YES')
-                if 'S' in a[2]:
-                    sub.SetItem(index, 2, 'YES')
-                if 'X' in a[3]:
-                    sub.SetItem(index, 3, 'YES')
-                if 'B' in [4]:
-                    sub.SetItem(index, 4, 'YES')
-                if 'D' in [5]:
-                    sub.SetItem(index, 5, 'YES')
+                sub.InsertItem(index, a[6:].split(" ")[1])
+                if "F" in a[1]:
+                    sub.SetItem(index, 1, "YES")
+                if "S" in a[2]:
+                    sub.SetItem(index, 2, "YES")
+                if "X" in a[3]:
+                    sub.SetItem(index, 3, "YES")
+                if "B" in [4]:
+                    sub.SetItem(index, 4, "YES")
+                if "D" in [5]:
+                    sub.SetItem(index, 5, "YES")
                 d = " ".join(a.split()).split(None, 2)[2]
                 if len(d):
                     sub.SetItem(index, 6, d)
                 else:
-                    sub.SetItem(index, 6, '')
+                    sub.SetItem(index, 6, "")
                 index += 1
 
         # ----------------------Binding (EVT)----------------------#
@@ -239,8 +252,8 @@ class FFmpegCodecs(wx.Dialog):
         """
         Destroy this window
         """
-        if self.option == '-encoders':
-            pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegCodecs')
+        if self.option == "-encoders":
+            pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg="FFmpegCodecs")
 
-        elif self.option == '-decoders':
-            pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegDecoders')
+        elif self.option == "-decoders":
+            pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg="FFmpegDecoders")

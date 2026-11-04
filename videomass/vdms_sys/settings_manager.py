@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: settings_manager.py
-Porpose: Read and write the configuration file
-Compatibility: Python3
+Purpose: Read and write the configuration file
+Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.10.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -24,8 +24,10 @@ Code checker: flake8, pylint
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
+
 import json
+import os
+from typing import Any, ClassVar
 
 
 class ConfigManager:
@@ -150,37 +152,39 @@ class ConfigManager:
         column width in the File Drop panel.
 
     """
+
     VERSION = 8.5
-    DEFAULT_OPTIONS = {"confversion": VERSION,
-                       "shutdown": False,
-                       "sudo_password": "",
-                       "auto_exit": False,
-                       "encoding": "utf-8",
-                       "outputdir": "",
-                       "outputdir_asinput": False,
-                       "filesuffix": "",
-                       "ffmpeg_cmd": "",
-                       "ffmpeg_islocal": False,
-                       "ffmpeg_loglev": "-loglevel info",
-                       "ffplay_cmd": "",
-                       "ffplay_islocal": False,
-                       "ffplay_loglev": "-loglevel error",
-                       "ffprobe_cmd": "",
-                       "ffprobe_islocal": False,
-                       "warnexiting": True,
-                       "icontheme": "Videomass-Colours",
-                       "toolbarsize": 24,
-                       "toolbarpos": 3,
-                       "main_window_size": [850, 560],
-                       "main_window_pos": [0, 0],
-                       "clearcache": True,
-                       "clearlogfiles": False,
-                       "move_file_to_trash": False,
-                       "trashdir_loc": "",
-                       "locale_name": "Default",
-                       "prstmng_column_width": [250, 350, 200, 220],
-                       "filedrop_column_width": [30, 200, 200, 200, 150, 200],
-                       }
+    DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
+        "confversion": VERSION,
+        "shutdown": False,
+        "sudo_password": "",
+        "auto_exit": False,
+        "encoding": "utf-8",
+        "outputdir": "",
+        "outputdir_asinput": False,
+        "filesuffix": "",
+        "ffmpeg_cmd": "",
+        "ffmpeg_islocal": False,
+        "ffmpeg_loglev": "-loglevel info",
+        "ffplay_cmd": "",
+        "ffplay_islocal": False,
+        "ffplay_loglev": "-loglevel error",
+        "ffprobe_cmd": "",
+        "ffprobe_islocal": False,
+        "warnexiting": True,
+        "icontheme": "Videomass-Colours",
+        "toolbarsize": 24,
+        "toolbarpos": 3,
+        "main_window_size": [850, 560],
+        "main_window_pos": [0, 0],
+        "clearcache": True,
+        "clearlogfiles": False,
+        "move_file_to_trash": False,
+        "trashdir_loc": "",
+        "locale_name": "Default",
+        "prstmng_column_width": [250, 350, 200, 220],
+        "filedrop_column_width": [30, 200, 200, 200, 150, 200],
+    }
 
     def __init__(self, filename, makeportable=None):
         """
@@ -195,10 +199,10 @@ class ConfigManager:
         if self.makeportable:
             trscodepath = os.path.join(makeportable, "Media", "Transcoding")
             trscodedir = os.path.relpath(trscodepath)
-            ConfigManager.DEFAULT_OPTIONS['outputdir'] = trscodedir
+            ConfigManager.DEFAULT_OPTIONS["outputdir"] = trscodedir
             self.trscodedir = trscodedir
         else:
-            self.trscodedir = os.path.expanduser('~')
+            self.trscodedir = os.path.expanduser("~")
 
     def write_options(self, **options):
         """
@@ -211,13 +215,10 @@ class ConfigManager:
         else:
             set_options = ConfigManager.DEFAULT_OPTIONS
 
-        with open(self.filename, "w", encoding='utf-8') as settings_file:
-
-            json.dump(set_options,
-                      settings_file,
-                      indent=4,
-                      separators=(",", ": ")
-                      )
+        with open(self.filename, "w", encoding="utf-8") as settings_file:
+            json.dump(
+                set_options, settings_file, indent=4, separators=(",", ": ")
+            )
 
     def read_options(self):
         """
@@ -225,7 +226,7 @@ class ConfigManager:
         Returns: current options, `None` otherwise.
         Raise: json.JSONDecodeError
         """
-        with open(self.filename, 'r', encoding='utf-8') as settings_file:
+        with open(self.filename, "r", encoding="utf-8") as settings_file:
             try:
                 options = json.load(settings_file)
             except json.JSONDecodeError:
@@ -241,11 +242,11 @@ class ConfigManager:
         (such as pendrives, hard drives, etc.) or to deleted directories.
         Returns a dict object.
         """
-        trscpath = options['outputdir']
+        trscpath = options["outputdir"]
         if not os.path.exists(trscpath) and not os.path.isdir(trscpath):
             if self.makeportable:
-                options['outputdir'] = self.trscodedir
+                options["outputdir"] = self.trscodedir
             else:
-                options['outputdir'] = f"{os.path.expanduser('~')}"
+                options["outputdir"] = f"{os.path.expanduser('~')}"
 
         return options

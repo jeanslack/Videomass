@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
 Name: inkscape2png
-Porpose: Wrapper interface to perform batch conversion using the
+Purpose: Wrapper interface to perform batch conversion using the
          Inkscape library
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -38,13 +37,11 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-
+import argparse
+import glob
+import os
 import platform
 import subprocess
-import os
-import glob
-import argparse
 import sys
 
 
@@ -96,7 +93,7 @@ def svg2png(delete, paths, parameters, outputdir,
             try:
                 proc = subprocess.run(command,
                                       capture_output=True,
-                                      universal_newlines=True,
+                                      text=True,
                                       check=True,
                                       )
             except FileNotFoundError:
@@ -182,10 +179,9 @@ def main():
         if not os.path.isdir(pth):
             raise NotADirectoryError(f"Invalid or inexistent pathname for "
                                      f"inputdir '{pth}'")
-    if args.output:
-        if not os.path.isdir(args.output):
-            raise NotADirectoryError(f"Invalid or inexistent pathname for "
-                                     f"outputdir '{args.output}'")
+    if args.output and not os.path.isdir(args.output):
+        raise NotADirectoryError(f"Invalid or inexistent pathname for "
+                                 f"outputdir '{args.output}'")
     if args.format == 'svg' and not args.output:
         raise FileExistsError('Could not overwrite the SVG files themselves. '
                               'You must provide an output pathname using the '

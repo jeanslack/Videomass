@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: setting_profiles.py
-Porpose: profiles storing and profiles editing dialog
-Compatibility: Python3, wxPython Phoenix
+Purpose: profiles storing and profiles editing dialog
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.06.2024
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,10 +24,15 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import webbrowser
+
 import wx
-from videomass.vdms_utils.presets_manager_utils import write_new_profile
-from videomass.vdms_utils.presets_manager_utils import edit_existing_profile
+
+from videomass.vdms_utils.presets_manager_utils import (
+    edit_existing_profile,
+    write_new_profile,
+)
 
 
 class SettingProfile(wx.Dialog):
@@ -35,17 +40,21 @@ class SettingProfile(wx.Dialog):
     Show dialog to store and edit profiles of a selected preset.
 
     """
-    PASS_1 = _("One-Pass, Do not start with `ffmpeg "
-               "-i filename`; do not end with "
-               "`output-filename`"
-               )
-    PASS_2 = _("Two-Pass (optional), Do not start with "
-               "`ffmpeg -i filename`; do not end with "
-               "`output-filename`"
-               )
+
+    PASS_1 = _(
+        "One-Pass, Do not start with `ffmpeg "
+        "-i filename`; do not end with "
+        "`output-filename`"
+    )
+    PASS_2 = _(
+        "Two-Pass (optional), Do not start with "
+        "`ffmpeg -i filename`; do not end with "
+        "`output-filename`"
+    )
     SUPFORMAT = _("Supported Formats list (optional). Do not include the `.`")
-    OUTFORMAT = _("Output Format. Empty to copy format and codec. "
-                  "Do not include the `.`")
+    OUTFORMAT = _(
+        "Output Format. Empty to copy format and codec. Do not include the `.`"
+    )
     # ------------------------------------------------------------------
 
     def __init__(self, parent, arg, filename, array, title):
@@ -63,8 +72,13 @@ class SettingProfile(wx.Dialog):
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
         self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext,..]
 
-        wx.Dialog.__init__(self, parent, -1, title,
-                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        wx.Dialog.__init__(
+            self,
+            parent,
+            -1,
+            title,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+        )
 
         size_base = wx.BoxSizer(wx.VERTICAL)
         labname = wx.StaticText(self, wx.ID_ANY, _("Profile Name"))
@@ -73,20 +87,21 @@ class SettingProfile(wx.Dialog):
         size_base.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
         labdescr = wx.StaticText(self, wx.ID_ANY, _("Description"))
         size_base.Add(labdescr, 0, wx.ALL | wx.EXPAND, 5)
-        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, 80),
-                                        style=wx.TE_MULTILINE)
+        self.txt_descript = wx.TextCtrl(
+            self, wx.ID_ANY, "", size=(-1, 80), style=wx.TE_MULTILINE
+        )
         size_base.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
         labpass1 = wx.StaticText(self, wx.ID_ANY, SettingProfile.PASS_1)
         size_base.Add(labpass1, 0, wx.ALL | wx.EXPAND, 5)
-        self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.TE_MULTILINE
-                                      )
+        self.pass_1_cmd = wx.TextCtrl(
+            self, wx.ID_ANY, "", style=wx.TE_MULTILINE
+        )
         size_base.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
         labpass2 = wx.StaticText(self, wx.ID_ANY, SettingProfile.PASS_2)
         size_base.Add(labpass2, 0, wx.ALL | wx.EXPAND, 5)
-        self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.TE_MULTILINE
-                                      )
+        self.pass_2_cmd = wx.TextCtrl(
+            self, wx.ID_ANY, "", style=wx.TE_MULTILINE
+        )
         size_base.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
         boxpre1 = wx.BoxSizer(wx.VERTICAL)
         msg = _("Pre-input arguments for One-Pass (optional)")
@@ -133,35 +148,48 @@ class SettingProfile(wx.Dialog):
         size_base.Add(grdBtn, 0, wx.EXPAND)
 
         # ----- set_properties:
-        if self.appdata['ostype'] == 'Darwin':
+        if self.appdata["ostype"] == "Darwin":
             fontsize = 10
         else:
             fontsize = 8
-        self.pass_1_cmd.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
-        self.pass_2_cmd.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
-        self.pass_1_pre.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
-        self.pass_2_pre.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
+        self.pass_1_cmd.SetFont(
+            wx.Font(fontsize, wx.FONTFAMILY_TELETYPE, wx.NORMAL, wx.NORMAL)
+        )
+        self.pass_2_cmd.SetFont(
+            wx.Font(fontsize, wx.FONTFAMILY_TELETYPE, wx.NORMAL, wx.NORMAL)
+        )
+        self.pass_1_pre.SetFont(
+            wx.Font(fontsize, wx.FONTFAMILY_TELETYPE, wx.NORMAL, wx.NORMAL)
+        )
+        self.pass_2_pre.SetFont(
+            wx.Font(fontsize, wx.FONTFAMILY_TELETYPE, wx.NORMAL, wx.NORMAL)
+        )
 
-        self.txt_name.SetToolTip(_('A short profile name'))
-        self.txt_descript.SetToolTip(_('A long description of the profile'))
-        self.pass_1_cmd.SetToolTip(_('FFmpeg arguments for one-pass encoding'))
-        self.pass_2_cmd.SetToolTip(_('FFmpeg arguments for two-pass encoding'))
-        self.txt_supp.SetToolTip(_('One or more comma-separated format names '
-                                   'compatible with this profile'))
-        self.txt_ext.SetToolTip(_('Output format extension. Leave empty to '
-                                  'copy codec and format'))
+        self.txt_name.SetToolTip(_("A short profile name"))
+        self.txt_descript.SetToolTip(_("A long description of the profile"))
+        self.pass_1_cmd.SetToolTip(_("FFmpeg arguments for one-pass encoding"))
+        self.pass_2_cmd.SetToolTip(_("FFmpeg arguments for two-pass encoding"))
+        self.txt_supp.SetToolTip(
+            _(
+                "One or more comma-separated format names "
+                "compatible with this profile"
+            )
+        )
+        self.txt_ext.SetToolTip(
+            _("Output format extension. Leave empty to copy codec and format")
+        )
 
-        tip = (_('Any optional arguments to add before input file on the '
-                 'one-pass encoding, e.g required names of some hardware '
-                 'accelerations like -hwaccel to use with CUDA.'))
+        tip = _(
+            "Any optional arguments to add before input file on the "
+            "one-pass encoding, e.g required names of some hardware "
+            "accelerations like -hwaccel to use with CUDA."
+        )
         self.pass_1_pre.SetToolTip(tip)
-        tip = (_('Any optional arguments to add before input file on the '
-                 'two-pass encoding, e.g required names of some hardware '
-                 'accelerations like -hwaccel to use with CUDA.'))
+        tip = _(
+            "Any optional arguments to add before input file on the "
+            "two-pass encoding, e.g required names of some hardware "
+            "accelerations like -hwaccel to use with CUDA."
+        )
         self.pass_2_pre.SetToolTip(tip)
         # ------ Set Layout
         self.SetMinSize((850, 600))
@@ -177,10 +205,10 @@ class SettingProfile(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_apply, btn_save)
 
         # -------------------Binder (EVT) End --------------------#
-        if arg == 'edit':
-            self.array[5] = '' if array[5] == 'copy' else array[5]
+        if arg == "edit":
+            self.array[5] = "" if array[5] == "copy" else array[5]
             self.change()
-        elif arg == 'addprofile':
+        elif arg == "addprofile":
             self.pass_1_cmd.AppendText(self.array[0])  # command or param
             self.pass_2_cmd.AppendText(self.array[1])
             self.txt_ext.AppendText(self.array[2])  # extension
@@ -198,6 +226,7 @@ class SettingProfile(wx.Dialog):
         self.txt_ext.AppendText(self.array[5])  # extension
         self.pass_1_pre.AppendText(self.array[6])  # input 1
         self.pass_2_pre.AppendText(self.array[7])  # input 2
+
     # ---------------------Callbacks (event handler)----------------------#
 
     def on_Name(self, event):
@@ -205,6 +234,7 @@ class SettingProfile(wx.Dialog):
         if self.txt_name.GetBackgroundColour() == (152, 131, 19, 255):
             # html: ('#988313') == rgb: (152, 131, 19, 255) =
             self.txt_name.SetBackgroundColour(wx.NullColour)
+
     # ------------------------------------------------------------------#
 
     def on_Descript(self, event):
@@ -212,6 +242,7 @@ class SettingProfile(wx.Dialog):
         if self.txt_descript.GetBackgroundColour() == (152, 131, 19, 255):
             # html: ('#988313') == rgb: (152, 131, 19, 255) =
             self.txt_descript.SetBackgroundColour(wx.NullColour)
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -219,10 +250,13 @@ class SettingProfile(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide/'
-                'Presets_Manager_en.pdf')
+        page = (
+            "https://jeanslack.github.io/Videomass/User-guide/"
+            "Presets_Manager_en.pdf"
+        )
 
         webbrowser.open(page)
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -230,6 +264,7 @@ class SettingProfile(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_apply(self, event):
@@ -242,71 +277,96 @@ class SettingProfile(wx.Dialog):
         pass_2 = self.pass_2_cmd.GetValue()
         file_support = self.txt_supp.GetValue().strip()
         extens = self.txt_ext.GetValue().strip()
-        extens = 'copy' if not extens else extens
+        extens = "copy" if not extens else extens
         preinput1 = self.pass_1_pre.GetValue()
         preinput2 = self.pass_2_pre.GetValue()
 
         # ---------------------------------------------------------------
-        if [txt for txt in [name, descript] if txt.strip() == '']:
+        if [txt for txt in [name, descript] if txt.strip() == ""]:
             if not name.strip():
-                self.txt_name.SetBackgroundColour('#988313')
+                self.txt_name.SetBackgroundColour("#988313")
             if not descript.strip():
-                self.txt_descript.SetBackgroundColour('#988313')
+                self.txt_descript.SetBackgroundColour("#988313")
 
-            wx.MessageBox(_("Incomplete profile assignments"),
-                          _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            wx.MessageBox(
+                _("Incomplete profile assignments"),
+                _("Videomass - Warning!"),
+                wx.ICON_WARNING,
+                self,
+            )
             return
 
         if len(file_support.split()) > 1:
-            supp = ''.join(file_support.split())
-            if [i for i in supp.split() if ',' not in i]:
-                wx.MessageBox(_("Formats must be comma-separated"),
-                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            supp = "".join(file_support.split())
+            if [i for i in supp.split() if "," not in i]:
+                wx.MessageBox(
+                    _("Formats must be comma-separated"),
+                    _("Videomass - Warning!"),
+                    wx.ICON_WARNING,
+                    self,
+                )
                 return
 
-        if self.arg in ('newprofile', 'addprofile'):
-            writenewprf = write_new_profile(self.filename,
-                                            Name=name.strip(),
-                                            Description=descript,
-                                            First_pass=pass_1,
-                                            Second_pass=pass_2,
-                                            Supported_list=file_support,
-                                            Output_extension=extens,
-                                            Preinput_1=preinput1,
-                                            Preinput_2=preinput2,
-                                            )
-            if writenewprf == 'invalid JSON file':
-                msg = (_('ERROR: Keys mismatched for requested data.\n'
-                         'Invalid file: «{0}»').format(self.filename))
-                wx.MessageBox(msg, _('Videomass - Error!'), wx.STAY_ON_TOP
-                              | wx.ICON_ERROR | wx.OK, self)
+        if self.arg in ("newprofile", "addprofile"):
+            writenewprf = write_new_profile(
+                self.filename,
+                Name=name.strip(),
+                Description=descript,
+                First_pass=pass_1,
+                Second_pass=pass_2,
+                Supported_list=file_support,
+                Output_extension=extens,
+                Preinput_1=preinput1,
+                Preinput_2=preinput2,
+            )
+            if writenewprf == "invalid JSON file":
+                msg = _(
+                    "ERROR: Keys mismatched for requested data.\n"
+                    "Invalid file: «{0}»"
+                ).format(self.filename)
+                wx.MessageBox(
+                    msg,
+                    _("Videomass - Error!"),
+                    wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
+                    self,
+                )
                 return
-            if writenewprf == 'already exist':
-                wx.MessageBox(_("Profile already stored with same name"),
-                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            if writenewprf == "already exist":
+                wx.MessageBox(
+                    _("Profile already stored with same name"),
+                    _("Videomass - Warning!"),
+                    wx.ICON_WARNING,
+                    self,
+                )
                 return
             if writenewprf is not None:
-                wx.MessageBox(writenewprf, _('Videomass - Error!'),
-                              wx.ICON_WARNING, self)
+                wx.MessageBox(
+                    writenewprf, _("Videomass - Error!"), wx.ICON_WARNING, self
+                )
                 return
 
             wx.MessageBox(_("Profile stored successfully!"))
 
-        elif self.arg == 'edit':
-            editprf = edit_existing_profile(self.filename,
-                                            self.array[0],
-                                            Name=name.strip(),
-                                            Description=descript,
-                                            First_pass=pass_1,
-                                            Second_pass=pass_2,
-                                            Supported_list=file_support,
-                                            Output_extension=extens,
-                                            Preinput_1=preinput1,
-                                            Preinput_2=preinput2,
-                                            )
-            if editprf == 'already exist':
-                wx.MessageBox(_("Profile already stored with same name"),
-                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
+        elif self.arg == "edit":
+            editprf = edit_existing_profile(
+                self.filename,
+                self.array[0],
+                Name=name.strip(),
+                Description=descript,
+                First_pass=pass_1,
+                Second_pass=pass_2,
+                Supported_list=file_support,
+                Output_extension=extens,
+                Preinput_1=preinput1,
+                Preinput_2=preinput2,
+            )
+            if editprf == "already exist":
+                wx.MessageBox(
+                    _("Profile already stored with same name"),
+                    _("Videomass - Warning!"),
+                    wx.ICON_WARNING,
+                    self,
+                )
                 return
             wx.MessageBox(_("Profile change successful!"))
             # self.Destroy() # con ID_OK e ID_CANCEL non serve

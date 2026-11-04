@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: infoprog.py
-Porpose: about videomass
-Compatibility: Python3, wxPython Phoenix
+Purpose: about videomass
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.04.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,6 +27,7 @@ This file is part of Videomass.
 
 import wx
 import wx.adv
+
 from videomass.vdms_sys import about_app
 
 
@@ -49,8 +50,9 @@ def show_about_dlg(parent, videomass_icon, aboutrel=about_app):
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
     info.SetName(f"{name_upper}")
     info.SetVersion(f"v{version}")
-    info.SetDescription(_("Cross-platform graphical user interface for FFmpeg"
-                          "\n"))
+    info.SetDescription(
+        _("Cross-platform graphical user interface for FFmpeg\n")
+    )
     info.SetCopyright(f"Copyright {copyr} {author[0]} {author[1]}")
     info.SetWebSite(website)
     info.SetLicence(long_lic)
@@ -60,23 +62,32 @@ def show_about_dlg(parent, videomass_icon, aboutrel=about_app):
     info.AddTranslator("bovirus https://github.com/bovirus (it_IT)")
     info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru_RU)")
     info.AddTranslator("Roelof Berkepeis <roelof@imoma.eu> (nl_NL)")
-    info.AddTranslator("johannesdedoper https://github.com/johannesdedoper "
-                       "(nl_NL)")
+    info.AddTranslator(
+        "johannesdedoper https://github.com/johannesdedoper (nl_NL)"
+    )
     info.AddTranslator("Samuel http://littlesvr.ca/ostd/ (pt_BR)")
-    info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ "
-                       "(es_ES)")
-    info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ "
-                       "(es_CU)")
-    info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ "
-                       "(es_MX)")
+    info.AddTranslator(
+        "katnatek from blogdrake https://www.blogdrake.net/ (es_ES)"
+    )
+    info.AddTranslator(
+        "katnatek from blogdrake https://www.blogdrake.net/ (es_CU)"
+    )
+    info.AddTranslator(
+        "katnatek from blogdrake https://www.blogdrake.net/ (es_MX)"
+    )
     info.AddTranslator("Phil Aug <philiaug@live.fr> (fr_FR)")
     info.AddTranslator("MaiJZ https://github.com/maijz128 (zh_CN)")
     info.AddTranslator("Peter Dave Hello <hsu@peterdavehello.org> (zh_TW)")
     info.AddTranslator("schenklklopfer <@schenklklopfer> (de_DE)")
-    info.AddTranslator("AbdEl-Rahman Mohammed Hassan "
-                       "https://github.com/vfggf95565 (ar_SA)")
+    info.AddTranslator(
+        "AbdEl-Rahman Mohammed Hassan https://github.com/vfggf95565 (ar_SA)"
+    )
 
-    info.SetArtists(['WxPython Phoenix <wxpython-users@googlegroups.com>',
-                     'Gianluca Pernigotto <jeanlucperni@gmail.com>'])
+    info.SetArtists(
+        [
+            "WxPython Phoenix <wxpython-users@googlegroups.com>",
+            "Gianluca Pernigotto <jeanlucperni@gmail.com>",
+        ]
+    )
     wx.adv.AboutBox(info)
     # event.Skip()

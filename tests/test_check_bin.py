@@ -1,16 +1,12 @@
 # -*- coding: UTF-8 -*-
 
-# Porpose: Contains test cases for the check_bin object.
+# Purpose: Contains test cases for the check_bin object.
 # Rev: Oct.04.2020 *PEP8 compatible*
 
-import sys
-import platform
 import os.path
+import platform
+import sys
 import unittest
-
-if sys.version_info[0] != 3:
-    sys.exit('\nERROR: You are using an unsupported version of Python. '
-             'Python3 is required.\n')
 
 PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))

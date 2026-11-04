@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ffprobe.py
-Porpose: simple cross-platform wrap for ffprobe
-Compatibility: Python3
+Purpose: simple cross-platform wrap for ffprobe
+Compatibility: Python >= 3.11
 Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2022
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of FFcuesplitter.
@@ -25,11 +25,11 @@ This file is part of FFcuesplitter.
    You should have received a copy of the GNU General Public License
    along with FFcuesplitter.  If not, see <http://www.gnu.org/licenses/>.
 """
-import subprocess
-import shlex
-import platform
+
 import json
-from videomass.vdms_utils.utils import Popen
+import shlex
+import subprocess
+import sys
 
 
 def from_kwargs_to_args(kwargs):
@@ -40,13 +40,13 @@ def from_kwargs_to_args(kwargs):
     args = []
     for key in sorted(kwargs.keys()):
         val = kwargs[key]
-        args.append(f'-{key}')
+        args.append(f"-{key}")
         if val is not None:
-            args.append(f'{val}')
+            args.append(f"{val}")
     return args
 
 
-def ffprobe(filename, cmd='ffprobe', txtenc='utf-8', **kwargs):
+def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
     """
     Run ffprobe subprocess on the specified file.
     This function always returns a tuple of two items (data, error),
@@ -74,23 +74,29 @@ def ffprobe(filename, cmd='ffprobe', txtenc='utf-8', **kwargs):
         >>> else:
         >>>     probe[0]
     """
-    args = (f'"{cmd}" -show_format -show_streams -of json '
-            f'{" ".join(from_kwargs_to_args(kwargs))} '
-            f'"{filename}"'
-            )
-    args = shlex.split(args) if platform.system() != 'Windows' else args
+    args = (
+        f'"{cmd}" -show_format -show_streams -of json '
+        f"{' '.join(from_kwargs_to_args(kwargs))} "
+        f'"{filename}"'
+    )
+    args = shlex.split(args) if sys.platform != "win32" else args
+    creationflags = (
+        subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+    )
     try:
-        with Popen(args,
-                   stdout=subprocess.PIPE,
-                   stderr=subprocess.PIPE,
-                   bufsize=1,
-                   universal_newlines=True,
-                   encoding=txtenc,
-                   ) as proc:
+        with subprocess.Popen(
+            args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            bufsize=1,
+            text=True,
+            encoding=txtenc,
+            creationflags=creationflags,
+        ) as proc:
             output, error = proc.communicate()
 
             if proc.returncode != 0:
-                return (None, f'ffprobe: {error}')
+                return (None, f"ffprobe: {error}")
 
     except (OSError, FileNotFoundError, UnicodeDecodeError) as excepterr:
         return (None, excepterr)

@@ -9,7 +9,7 @@
 #          located in "videomass/data/locale" .
 #
 # USAGE: ~$ cd /Videomass/source/directory
-#        ~$ develop/gettext_utils/update_po_files.sh
+#        ~$ develop/localization_tools/using-gettex/update_po_files.sh
 
 TARGET="videomass/data/locale"  # relative path to "locale" directory
 POT="$TARGET/videomass.pot"  # pot file

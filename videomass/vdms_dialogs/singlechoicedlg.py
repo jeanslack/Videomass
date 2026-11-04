@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: singlechoice.py
-Porpose: shows a single choice dialog box
-Compatibility: Python3, wxPython Phoenix
+Purpose: shows a single choice dialog box
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import wx
 
 
@@ -35,16 +36,18 @@ class SingleChoice(wx.Dialog):
     Return index (int) of selected item.
 
     """
-    get = wx.GetApp()  # get data from bootstrap
-    APPICON = get.iconset['videomass']
 
-    def __init__(self,
-                 parent,
-                 caption='Single Choice dialog',
-                 message='Test message',
-                 choices=('1', '2', '3', '4'),
-                 setsel=0,
-                 ):
+    get = wx.GetApp()  # get data from bootstrap
+    APPICON = get.iconset["videomass"]
+
+    def __init__(
+        self,
+        parent,
+        caption="Single Choice dialog",
+        message="Test message",
+        choices=("1", "2", "3", "4"),
+        setsel=0,
+    ):
         """
         Usage: `parent, -1` to make parent, use 'None' otherwise
         caption: the text dialog caption to display (str)
@@ -53,8 +56,9 @@ class SingleChoice(wx.Dialog):
         setsel: Sets the index of the initially selected item (int)
 
         """
-        wx.Dialog.__init__(self, parent, -1,
-                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        wx.Dialog.__init__(
+            self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+        )
 
         # ------ Add widget controls
         sizbase = wx.BoxSizer(wx.VERTICAL)
@@ -62,11 +66,13 @@ class SingleChoice(wx.Dialog):
         lab = wx.StaticText(self, label=message)
         sizbase.Add(lab, 0, wx.LEFT | wx.EXPAND, 5)
         sizbase.Add((0, 10), 0)
-        self.listchoice = wx.ListBox(self, wx.ID_ANY,
-                                     choices=choices,
-                                     style=0,
-                                     name='ListBox',
-                                     )
+        self.listchoice = wx.ListBox(
+            self,
+            wx.ID_ANY,
+            choices=choices,
+            style=0,
+            name="ListBox",
+        )
         self.listchoice.SetSelection(setsel)
         sizbase.Add(self.listchoice, 1, wx.ALL | wx.EXPAND, 5)
 
@@ -80,8 +86,9 @@ class SingleChoice(wx.Dialog):
 
         # ------ Properties
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(SingleChoice.APPICON,
-                                      wx.BITMAP_TYPE_ANY))
+        icon.CopyFromBitmap(
+            wx.Bitmap(SingleChoice.APPICON, wx.BITMAP_TYPE_ANY)
+        )
         self.SetIcon(icon)
         self.SetTitle(caption)
         self.SetMinSize((620, 270))
@@ -109,6 +116,7 @@ class SingleChoice(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):

@@ -3,13 +3,13 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: July.10.2024
+# Rev: July.11.2025
 #
-# PORPOSE: Generate a binary catalog for each locale found
-#          from the TARGET directory.
+# PORPOSE: Delete obsolete translation messages on videomass.po files
+#          for each locale found on the TARGET directory.
 #
 # USAGE: ~$ cd /Videomass/source/directory
-#        ~$ develop/gettext_utils/update_MO_files.sh
+#        ~$ develop/localization_tools/using-gettex/purge_deleted_translation.sh
 
 TARGET="videomass/data/locale"  # relative path to "locale" directory
 
@@ -23,13 +23,13 @@ fi
 for langdirs in $(ls -d ${TARGET}/*/)
 do
     PO="${langdirs}LC_MESSAGES/videomass.po"
-    msgfmt --check "${PO}" --output-file="${langdirs}LC_MESSAGES/videomass.mo"
+    msgattrib --output-file="${PO}" --no-obsolete "${PO}"
     if [[ $? -ne 0 ]]; then
         echo -e '\e[1m\033[31mFailed!\e[0m'
         exit $?
     fi
-    echo "Compile '${langdirs}LC_MESSAGES/videomass.mo' ...OK"
+    echo "INFO: Deleting obsolete: '"${PO}"' ...OK"
 done
 
-echo -e "\n\e[1mBinary catalogs successfully generated.\e[0m"
+echo -e "\n\e[1mSuccessfully updated.\e[0m"
 echo -e "\033[32mDone!\e[0m"
