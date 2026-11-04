@@ -29,6 +29,7 @@ This file is part of Videomass.
 import os
 import shlex
 import subprocess
+import sys
 from threading import Lock, Thread
 from typing import ClassVar
 
@@ -120,17 +121,44 @@ class BaseFilePlay(Thread):
 
     @classmethod
     def stop_all(cls):
-        """If the user closes the Videomass app, this method
-        will also force close ALL open ffplay windows."""
+        """
+        If the user closes the Videomass app, this method
+        will also force close ALL open ffplay windows.
+        On MSWindows neither `proc.terminate()` nor `proc.kill()`
+        were effective in instantly closing ffplay windows, although
+        background processes were successfully closed by manually
+        closing them at the end. To succeed, I had to use `taskkill`:
 
+        /F forces the closure,
+        /T terminates the entire tree of child processes (`ffplay.exe`)
+        /PID specifies the process identifier.
+
+        """
         with cls._lock:  # block concurency access on closing app
             # Closing Videomass while ffplay is in execution
             cls._is_exiting = True
+            is_windows = sys.platform == "win32"
 
             for proc in list(cls._active_processes):
                 if proc.poll() is None:
                     try:
-                        proc.terminate()
+                        if is_windows:
+                            subprocess.run(
+                                [
+                                    "taskkill",
+                                    "/F",
+                                    "/T",
+                                    "/PID",
+                                    str(proc.pid),
+                                ],
+                                stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL,
+                                creationflags=subprocess.CREATE_NO_WINDOW,
+                                check=False,  # Any errors will be ignored
+                            )
+                        else:
+                            proc.terminate()
+
                         proc.wait(timeout=1)
                     except (OSError, subprocess.TimeoutExpired):
                         pass

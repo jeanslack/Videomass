@@ -47,9 +47,9 @@ Wed, 04 November 2026 v6.1.24
     ensuring the GUI remains completely free from potential blocks or freezes
     while waiting for termination outputs.
   * Fixed issue with orphaned processes remaining in the background if the user
-    closed Videomass while "Play File" or "Preview" functionalities were still
-    running. New, advanced functionality has been implemented for managing the
-    secondary ffplay thread, ensuring that all running instances are terminated
+    closing Videomass while running "Play File" or "Preview". New, advanced
+    functionality has been implemented for managing the secondary ffplay thread
+    in these scenarios, ensuring that all running instances are terminated
     when the application's main window is closed.
   * Improved code for Python >= 3.11 compatibility using Ruff linter.
   * Improved project.toml file to make linter rules more consistent and
