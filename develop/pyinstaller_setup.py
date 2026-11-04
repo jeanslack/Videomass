@@ -23,6 +23,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import argparse
 import glob
 import os
@@ -35,10 +36,13 @@ import time
 from babel.messages.mofile import write_mo
 from babel.messages.pofile import read_po
 
-for x in ('pyinstaller', 'pyi-makespec'):
+
+for x in ("pyinstaller", "pyi-makespec"):
     if not shutil.which(x):
-        sys.exit(f'ERROR: {x} is required, please install '
-                 f'`pyinstaller` before launch this script.')
+        sys.exit(
+            f"ERROR: {x} is required, please install "
+            f"`pyinstaller` before launch this script."
+        )
 
 THIS = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.getcwd())
@@ -46,13 +50,15 @@ sys.path.insert(0, os.getcwd())
 try:
     from videomass.vdms_sys import about_app
 except ModuleNotFoundError as modulerror:
-    sys.exit(f'ERROR: {modulerror}\nMake sure to cd to Videomass source '
-             f'directory first.')
+    sys.exit(
+        f"ERROR: {modulerror}\nMake sure to cd to Videomass source "
+        f"directory first."
+    )
 
-SCRIPT = 'launcher'
+SCRIPT = "launcher"
 NAME = about_app.PRGNAME
 BINARY = SCRIPT
-SPECFILE = f'{NAME}.spec'
+SPECFILE = f"{NAME}.spec"
 
 
 def build_language_catalog():
@@ -61,32 +67,35 @@ def build_language_catalog():
     MO files for this macchine.
     """
     while True:
-        quest = input('\nDo you want to compile MO files for '
-                      'this macchine? (y/n)? ')
-        if quest.strip() in ('Y', 'y', 'n', 'N'):
+        quest = input(
+            "\nDo you want to compile MO files for this macchine? (y/n)? "
+        )
+        if quest.strip() in ("Y", "y", "n", "N"):
             break
         print(f"\nInvalid option '{quest}'")
         continue
 
-    if quest in ('y', 'Y'):
-        localedir = os.path.join('videomass', 'data', 'locale')
+    if quest in ("y", "Y"):
+        localedir = os.path.join("videomass", "data", "locale")
 
         if not os.path.exists(localedir):
-            sys.exit(f"ERROR! Not found: \"{localedir}\"")
+            sys.exit(f'ERROR! Not found: "{localedir}"')
 
         print(f'\nCompiling directory: "{localedir}"\n')
 
-        popath = glob.glob(f'{localedir}/**/*.po', recursive=True)
+        popath = glob.glob(f"{localedir}/**/*.po", recursive=True)
         for pf in popath:
             if os.path.exists(pf):
-                mf = os.path.splitext(pf)[0] + '.mo'
-                print(f'Compiling "{pf.replace(localedir, "")}" '
-                      f'to "{mf.replace(localedir, "")}"...')
+                mf = os.path.splitext(pf)[0] + ".mo"
+                print(
+                    f'Compiling "{pf.replace(localedir, "")}" '
+                    f'to "{mf.replace(localedir, "")}"...'
+                )
 
-                with open(pf, 'r', encoding='utf-8') as po_file:
+                with open(pf, "r", encoding="utf-8") as po_file:
                     catalog = read_po(po_file)
 
-                with open(mf, 'wb') as mo_file:
+                with open(mf, "wb") as mo_file:
                     write_mo(mo_file, catalog)
 
         print("....MO files Compiled successfully!\n")
@@ -97,38 +106,32 @@ def videomass_data_source(name=NAME, release=about_app):
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
     """
-    return {"RLS_NAME": release.RELNAME,  # first letter is Uppercase
-            "PRG_NAME": release.PRGNAME,  # first letter is lower
-            "NAME": name,
-            "VERSION": release.VERSION,
-            "RELEASE": release.RELSTATE,
-            "COPYRIGHT": release.COPYRIGHT,
-            "WEBSITE": release.WEBSITE,
-            "AUTHOR": release.AUTHOR,
-            "EMAIL": release.MAIL,
-            "COMMENT": release.COMMENT,
-            "ART": os.path.join('videomass', 'data', 'icons'),
-            "LOCALE": os.path.join('videomass', 'data', 'locale'),
-            "SHARE": os.path.join('videomass', 'data', 'presets'),
-            "FFMPEG": os.path.join('videomass', 'data', 'FFMPEG'),
-            "NOTICE": os.path.join('videomass', 'data',
-                                   'FFMPEG', 'README'),
-            "AUTH": 'AUTHORS',
-            "BUGS": 'BUGS',
-            "CHANGELOG": 'CHANGELOG',
-            "COPYING": 'LICENSE',
-            "INSTALL": 'INSTALL',
-            "README": 'README.md',
-            "TODO": 'TODO',
-            "ICNS": os.path.join('videomass',
-                                 'data',
-                                 'icons',
-                                 'videomass.icns'),
-            "ICO": os.path.join('videomass',
-                                'data',
-                                'icons',
-                                'videomass.ico')
-            }
+    return {
+        "RLS_NAME": release.RELNAME,  # first letter is Uppercase
+        "PRG_NAME": release.PRGNAME,  # first letter is lower
+        "NAME": name,
+        "VERSION": release.VERSION,
+        "RELEASE": release.RELSTATE,
+        "COPYRIGHT": release.COPYRIGHT,
+        "WEBSITE": release.WEBSITE,
+        "AUTHOR": release.AUTHOR,
+        "EMAIL": release.MAIL,
+        "COMMENT": release.COMMENT,
+        "ART": os.path.join("videomass", "data", "icons"),
+        "LOCALE": os.path.join("videomass", "data", "locale"),
+        "SHARE": os.path.join("videomass", "data", "presets"),
+        "FFMPEG": os.path.join("videomass", "data", "FFMPEG"),
+        "NOTICE": os.path.join("videomass", "data", "FFMPEG", "README"),
+        "AUTH": "AUTHORS",
+        "BUGS": "BUGS",
+        "CHANGELOG": "CHANGELOG",
+        "COPYING": "LICENSE",
+        "INSTALL": "INSTALL",
+        "README": "README.md",
+        "TODO": "TODO",
+        "ICNS": os.path.join("videomass", "data", "icons", "videomass.icns"),
+        "ICO": os.path.join("videomass", "data", "icons", "videomass.ico"),
+    }
 
 
 class PyinstallerSpec:
@@ -140,27 +143,29 @@ class PyinstallerSpec:
 
     """
 
-    def __init__(self, onedf='--onedir'):
+    def __init__(self, onedf="--onedir"):
         """
         The following OS's are supported:
         Linux, MacOS and MS-Windows
         """
         self.onedf = onedf  # is None if --start_build option is given
         self.getdata = videomass_data_source()
-        sep = ';' if platform.system() == 'Windows' else ':'
+        sep = ";" if platform.system() == "Windows" else ":"
 
-        self.datas = (f"--add-data {self.getdata['ART']}{sep}icons "
-                      f"--add-data {self.getdata['LOCALE']}{sep}locale "
-                      f"--add-data {self.getdata['SHARE']}{sep}presets "
-                      f"--add-data {self.getdata['FFMPEG']}{sep}FFMPEG "
-                      f"--add-data {self.getdata['AUTH']}{sep}DOC "
-                      f"--add-data {self.getdata['BUGS']}{sep}DOC "
-                      f"--add-data {self.getdata['CHANGELOG']}{sep}DOC "
-                      f"--add-data {self.getdata['COPYING']}{sep}DOC "
-                      f"--add-data {self.getdata['INSTALL']}{sep}DOC "
-                      f"--add-data {self.getdata['README']}{sep}DOC "
-                      f"--add-data {self.getdata['TODO']}{sep}DOC "
-                      )
+        self.datas = (
+            f"--add-data {self.getdata['ART']}{sep}icons "
+            f"--add-data {self.getdata['LOCALE']}{sep}locale "
+            f"--add-data {self.getdata['SHARE']}{sep}presets "
+            f"--add-data {self.getdata['FFMPEG']}{sep}FFMPEG "
+            f"--add-data {self.getdata['AUTH']}{sep}DOC "
+            f"--add-data {self.getdata['BUGS']}{sep}DOC "
+            f"--add-data {self.getdata['CHANGELOG']}{sep}DOC "
+            f"--add-data {self.getdata['COPYING']}{sep}DOC "
+            f"--add-data {self.getdata['INSTALL']}{sep}DOC "
+            f"--add-data {self.getdata['README']}{sep}DOC "
+            f"--add-data {self.getdata['TODO']}{sep}DOC "
+        )
+
     # ---------------------------------------------------------#
 
     def windows_platform(self):
@@ -168,12 +173,15 @@ class PyinstallerSpec:
         Set options flags and spec file pathname
         on MS-Windows platform.
         """
-        options = (f"--name {self.getdata['RLS_NAME']} {self.onedf} "
-                   f"--windowed --noconsole --icon {self.getdata['ICO']} "
-                   # f"--exclude-module 'yt_dlp' "
-                   f"{self.datas} ")
+        options = (
+            f"--name {self.getdata['RLS_NAME']} {self.onedf} "
+            f"--windowed --noconsole --icon {self.getdata['ICO']} "
+            # f"--exclude-module 'yt_dlp' "
+            f"{self.datas} "
+        )
 
         return options
+
     # ---------------------------------------------------------#
 
     def darwin_platform(self):
@@ -182,20 +190,21 @@ class PyinstallerSpec:
         on MacOS platform.
         FIXME : use codesign identity when pyinstaller is fixed to v.4.5.2
         """
-        rlsname = self.getdata['RLS_NAME']
-        version = self.getdata['VERSION']
-        cright = self.getdata['COPYRIGHT']
+        rlsname = self.getdata["RLS_NAME"]
+        version = self.getdata["VERSION"]
+        cright = self.getdata["COPYRIGHT"]
 
-        opts = (f"--name '{rlsname}' {self.onedf} "
-                f"--windowed --noconsole --icon "
-                f"'{self.getdata['ICNS']}' --osx-bundle-identifier "
-                f"'com.jeanslack.videomass' "
-                # f"--codesign-identity IDENTITY "
-                # f"--osx-entitlements-file FILENAME "
-                f"{self.datas} ")
+        opts = (
+            f"--name '{rlsname}' {self.onedf} "
+            f"--windowed --noconsole --icon "
+            f"'{self.getdata['ICNS']}' --osx-bundle-identifier "
+            f"'com.jeanslack.videomass' "
+            # f"--codesign-identity IDENTITY "
+            # f"--osx-entitlements-file FILENAME "
+            f"{self.datas} "
+        )
 
-        plist = (
-            f"""             info_plist={{# 'LSEnvironment': '$0',
+        plist = f"""             info_plist={{# 'LSEnvironment': '$0',
              'NSPrincipalClass': 'NSApplication',
              'NSAppleScriptEnabled': False,
              'CFBundleName': '{rlsname}',
@@ -207,9 +216,10 @@ class PyinstallerSpec:
              'NSHumanReadableCopyright':'Copyright {cright}, '
                                         'Gianluca Pernigotto, '
                                         'All Rights Reserved',}})
-""")
+"""
 
         return opts, plist
+
     # ---------------------------------------------------------#
 
     def linux_platform(self):
@@ -217,11 +227,14 @@ class PyinstallerSpec:
         Set options flags and spec file pathname
         on Linux platform.
         """
-        options = (f"--name {self.getdata['NAME']} {self.onedf} "
-                   f"--windowed --noconsole {self.datas}"
-                   )
+        options = (
+            f"--name {self.getdata['NAME']} {self.onedf} "
+            f"--windowed --noconsole {self.datas}"
+        )
 
         return options
+
+
 # --------------------------------------------------------#
 
 
@@ -230,20 +243,24 @@ def onefile_or_onedir():
     Pyinstaller offer two options to generate stand-alone executables.
     The `--onedir` option is the default.
     """
-    text = ('\nChoose from the following options:\n'
-            '[1] Build a one-folder bundle containing an '
-            'executable (default).\n'
-            '[2] Build a one-file bundled executable\n'
-            '(1/2) ')
+    text = (
+        "\nChoose from the following options:\n"
+        "[1] Build a one-folder bundle containing an "
+        "executable (default).\n"
+        "[2] Build a one-file bundled executable\n"
+        "(1/2) "
+    )
 
     while True:
         onedf = input(text)
-        if onedf.strip() in ('1', '2', ''):
+        if onedf.strip() in ("1", "2", ""):
             break
         print(f"\nInvalid option '{onedf}'")
         continue
 
-    return '--onefile' if onedf == '2' else '--onedir'
+    return "--onefile" if onedf == "2" else "--onedir"
+
+
 # --------------------------------------------------------#
 
 
@@ -253,6 +270,8 @@ def fetch_exec(binary=BINARY):
     """
     if not os.path.exists(binary):  # binary
         sys.exit(f"ERROR: no file found named '{binary}'")
+
+
 # --------------------------------------------------------#
 
 
@@ -270,22 +289,27 @@ def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
     an existing videomass.spec file.
     """
     try:
-        subprocess.run(f'pyi-makespec {options} {script}',
-                       shell=True, check=True)
+        subprocess.run(
+            f"pyi-makespec {options} {script}", shell=True, check=True
+        )
     except subprocess.CalledProcessError as err:
-        sys.exit(f'\nERROR: {err}\n')
+        sys.exit(f"\nERROR: {err}\n")
 
-    if platform.system() == 'Darwin' and addplist is not None:
-        with open(specfile, 'r', encoding='utf-8') as specf:
+    if platform.system() == "Darwin" and addplist is not None:
+        with open(specfile, "r", encoding="utf-8") as specf:
             arr = specf.readlines()
 
-        idx = arr.index("             bundle_identifier='com."
-                        "jeanslack.videomass')\n")
-        arr[idx] = ("             bundle_identifier='com."
-                    "jeanslack.videomass',\n")
-        newspec = ''.join(arr) + addplist
-        with open(specfile, 'w', encoding='utf-8') as specf:
+        idx = arr.index(
+            "             bundle_identifier='com.jeanslack.videomass')\n"
+        )
+        arr[idx] = (
+            "             bundle_identifier='com.jeanslack.videomass',\n"
+        )
+        newspec = "".join(arr) + addplist
+        with open(specfile, "w", encoding="utf-8") as specf:
             specf.write(newspec)
+
+
 # --------------------------------------------------------#
 
 
@@ -294,23 +318,24 @@ def clean_buildingdirs(name=NAME):
     Asks the user if they want to clean-up building
     directories, usually "dist", "build", "*.egg-info" dirs.
     """
-    target = ('dist', 'build', f'{name}.egg-info')
+    target = ("dist", "build", f"{name}.egg-info")
     aredirs = [x for x in os.listdir() if os.path.isdir(x)]
     toremove = [t for t in aredirs if t in target]
 
     if toremove:
         while True:
-            clean = input('\nDo you want to clean build folders? (y/n)? ')
-            if clean.strip() in ('Y', 'y', 'n', 'N'):
+            clean = input("\nDo you want to clean build folders? (y/n)? ")
+            if clean.strip() in ("Y", "y", "n", "N"):
                 break
             print(f"\nInvalid option '{clean}'")
             continue
 
-        if clean in ('y', 'Y'):
+        if clean in ("y", "Y"):
             for names in toremove:
-                print('Removing: ', names)
+                print("Removing: ", names)
                 shutil.rmtree(names, ignore_errors=True)
-            print('\n')
+            print("\n")
+
 
 # --------------------------------------------------------#
 
@@ -323,18 +348,23 @@ def run_pyinst(specfile=SPECFILE, this=THIS):
         fetch_exec()  # fetch videomass binary
         time.sleep(1)
         try:
-            subprocess.run(f'pyinstaller --clean {specfile}',
-                           shell=True, check=True)
+            subprocess.run(
+                f"pyinstaller --clean {specfile}", shell=True, check=True
+            )
         except subprocess.CalledProcessError as err:
-            return f'\nERROR: {err}\n'
+            return f"\nERROR: {err}\n"
 
         print(f"\nSUCCESS: {os.path.basename(THIS)}: Build finished.\n")
     else:
-        return (f"\nERROR: no such file \"{specfile}\", Make sure to generate "
-                f"a *.spec file first. You can use the `-g`, `--gen-spec` "
-                f"option along with the `-b`, `--build` option.")
+        return (
+            f'\nERROR: no such file "{specfile}", Make sure to generate '
+            f"a *.spec file first. You can use the `-g`, `--gen-spec` "
+            f"option along with the `-b`, `--build` option."
+        )
 
     return None
+
+
 # --------------------------------------------------------#
 
 
@@ -350,39 +380,46 @@ def make_portable():
         be next to the videomass standalone executable.
     """
     while True:
-        portable = input('Do you want to keep all application data inside '
-                         'the program folder? (makes stand-alone executable '
-                         'fully portable and stealth) (y/N) ')
-        if portable.strip() in ('Y', 'y', 'n', 'N'):
+        portable = input(
+            "Do you want to keep all application data inside "
+            "the program folder? (makes stand-alone executable "
+            "fully portable and stealth) (y/N) "
+        )
+        if portable in ("Y", "y", "n", "N"):
             break
         print(f"\nInvalid option '{portable}'")
         continue
 
-    if portable in ('n', 'N'):
+    if portable in ("n", "N"):
         return False
 
     idx = None
-    row = "        kwargs = {'make_portable': None}"
-    code = ("        data = os.path.join(os.path.dirname(sys.executable), "
-            "'portable_data')\n        kwargs = {'make_portable': data}\n")
-    filename = os.path.join('videomass', 'gui_app.py')
+    row_target = 'kwargs = {"make_portable": None}'
+    code = (
+        "        data = os.path.join(os.path.dirname(sys.executable), "
+        '"portable_data")\n        kwargs = {"make_portable": data}\n'
+    )
 
-    with open(filename, 'r+', encoding='utf-8') as gui_app:
+    filename = os.path.join("videomass", "gui_app.py")
+
+    with open(filename, "r", encoding="utf-8") as gui_app:
         data = gui_app.readlines()
 
-        for line in data:
-            if line.startswith(row):
-                idx = data.index(line)
-        if idx:
-            gui_app.flush()
-            gui_app.seek(0)
-            data[idx] = code  # replace `row` line with `code`
-            gui_app.writelines(data)
-            gui_app.truncate()
+        for i, line in enumerate(data):
+            if line.strip() == row_target:
+                idx = i
+                break
+
+        if idx is not None:
+            data[idx] = code
+            with open(filename, "w", encoding="utf-8") as gui_app:
+                gui_app.writelines(data)
         else:
             sys.exit("\nERROR on writing file `gui_app.py`")
 
     return True
+
+
 # --------------------------------------------------------#
 
 
@@ -390,9 +427,11 @@ def restore_sources(data):
     """
     Restore source file `gui_app.py`
     """
-    filename = os.path.join('videomass', 'gui_app.py')
-    with open(filename, 'w', encoding='utf-8') as bak:
-        bak.write(''.join(data))
+    filename = os.path.join("videomass", "gui_app.py")
+    with open(filename, "w", encoding="utf-8") as bak:
+        bak.write("".join(data))
+
+
 # --------------------------------------------------------#
 
 
@@ -401,10 +440,12 @@ def backup_sources():
     Backup source file `gui_app.py`
     """
     data = None
-    filename = os.path.join('videomass', 'gui_app.py')
-    with open(filename, 'r', encoding='utf-8') as gui_app:
+    filename = os.path.join("videomass", "gui_app.py")
+    with open(filename, "r", encoding="utf-8") as gui_app:
         data = gui_app.readlines()
     return data
+
+
 # --------------------------------------------------------#
 
 
@@ -412,25 +453,28 @@ def get_data_platform():
     """
     Retrieves data options and generates spec file.
     """
-    if not platform.system() in ('Windows', 'Darwin', 'Linux'):
-        sys.exit("\nERROR: Unsupported platform.\n"
-                 "Try creating a 'spec' file by typing the "
-                 "following command:\n"
-                 "\"pyi-makespec [options] videomass.py\"\n"
-                 )
+    if not platform.system() in ("Windows", "Darwin", "Linux"):
+        sys.exit(
+            "\nERROR: Unsupported platform.\n"
+            "Try creating a 'spec' file by typing the "
+            "following command:\n"
+            '"pyi-makespec [options] videomass.py"\n'
+        )
     wrap = PyinstallerSpec(onefile_or_onedir())
 
-    if platform.system() == 'Linux':
+    if platform.system() == "Linux":
         getopts = wrap.linux_platform()
         genspec(getopts)
 
-    elif platform.system() == 'Darwin':
+    elif platform.system() == "Darwin":
         getopts = wrap.darwin_platform()
         genspec(getopts[0], addplist=getopts[1])
 
-    elif platform.system() == 'Windows':
+    elif platform.system() == "Windows":
         getopts = wrap.windows_platform()
         genspec(getopts)
+
+
 # ----------------------------------------------#
 
 
@@ -438,29 +482,38 @@ def main():
     """
     Inputs parser (positional/optional arguments)
     """
-    descr = ('Provides build options to help bundle a Videomass application. '
-             'A bundle application is a stand-alone application that '
-             'can be run on the same operating system it is created on. '
-             'Currently supported operating systems are Gnu-Linux, '
-             'MacOs, MS-Windows.')
-    parser = argparse.ArgumentParser(prog=THIS,
-                                     description=descr,
-                                     add_help=True,
-                                     )
+    descr = (
+        "Provides build options to help bundle a Videomass application. "
+        "A bundle application is a stand-alone application that "
+        "can be run on the same operating system it is created on. "
+        "Currently supported operating systems are Gnu-Linux, "
+        "MacOs, MS-Windows."
+    )
+    parser = argparse.ArgumentParser(
+        prog=THIS,
+        description=descr,
+        add_help=True,
+    )
     parser.add_argument(
-        '-g', '--gen-spec',
-        help=("Generate a `videomass.spec` file only. A *.spec file is "
-              "only specific for the operating system in use and is required "
-              "by pyinstaller to bundle the stand-alone application. This "
-              "option can be given alone."),
+        "-g",
+        "--gen-spec",
+        help=(
+            "Generate a `videomass.spec` file only. A *.spec file is "
+            "only specific for the operating system in use and is required "
+            "by pyinstaller to bundle the stand-alone application. This "
+            "option can be given alone."
+        ),
         action="store_true",
     )
     parser.add_argument(
-        '-b', '--build',
-        help=("Build the bundle application. Can be used with `--gen-spec` "
-              "option before starting the build to generate a "
-              "`videomass.spec` file if not present or if you want to "
-              "overwrite the existing one."),
+        "-b",
+        "--build",
+        help=(
+            "Build the bundle application. Can be used with `--gen-spec` "
+            "option before starting the build to generate a "
+            "`videomass.spec` file if not present or if you want to "
+            "overwrite the existing one."
+        ),
         action="store_true",
     )
 
@@ -477,7 +530,7 @@ def main():
         backup = backup_sources()
         ret = make_portable()
         startpyinst = run_pyinst()
-        if ret:
+        if ret is True:
             restore_sources(backup)
         if startpyinst:
             sys.exit(startpyinst)
@@ -485,5 +538,5 @@ def main():
         print("\nType 'pyinstaller_setup.py -h' for help.\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
