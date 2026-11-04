@@ -29,6 +29,7 @@ import requests
 import wx
 
 from videomass.vdms_dialogs.widget_utils import PopupDialog
+from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads import generic_downloads
 from videomass.vdms_threads.check_bin import (
     ff_codecs,
@@ -107,13 +108,19 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
     Run thread to get audio peak level data
     showing a pop-up message dialog.
     """
+    get = wx.GetApp()
+    logfile = make_log_template(
+        "volumedetected.log", get.appset["logdir"], mode="w"
+    )
+
     if timeseq:
         splseq = timeseq.split()
         tseq = f"{splseq[0]} {splseq[1]}", f"{splseq[2]} {splseq[3]}"
     else:
         tseq = "", ""
 
-    thread = VolumeDetectThread(tseq, filelist, audiomap)
+    thread = VolumeDetectThread(tseq, filelist, audiomap, logfile)
+    thread.start()
     dlgload = PopupDialog(
         parent,
         _("Videomass - Loading..."),

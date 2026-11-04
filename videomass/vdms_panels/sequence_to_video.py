@@ -536,7 +536,12 @@ class SequenceToVideo(wx.Panel):
                 return
             pathname = fdlg.GetPath()
 
-        probe = ffprobe(pathname, self.ffprobe_cmd, hide_banner=None)
+        probe = ffprobe(
+            pathname,
+            self.appdata["ostype"],
+            self.ffprobe_cmd,
+            hide_banner=None,
+        )
 
         if probe[1]:  # some error
             msg = _("Invalid file: '{}'\n\n{}").format(pathname, probe[1])

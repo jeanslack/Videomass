@@ -27,11 +27,9 @@ This file is part of FFcuesplitter.
 """
 
 import json
-import platform
 import shlex
 import subprocess
-
-from videomass.vdms_utils.utils import Popen
+from sys import platform as ostype
 
 
 def from_kwargs_to_args(kwargs):
@@ -81,15 +79,17 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
         f"{' '.join(from_kwargs_to_args(kwargs))} "
         f'"{filename}"'
     )
-    args = shlex.split(args) if platform.system() != "Windows" else args
+    args = shlex.split(args) if ostype != "win32" else args
+    creationflags = subprocess.CREATE_NO_WINDOW if ostype == "win32" else 0
     try:
-        with Popen(
+        with subprocess.Popen(
             args,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             bufsize=1,
             text=True,
             encoding=txtenc,
+            creationflags=creationflags,
         ) as proc:
             output, error = proc.communicate()
 

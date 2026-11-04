@@ -3,14 +3,14 @@
 URGENCY: to do soon
 --------------------
 
-- rimuovere classe Popen e riscrivere condizioni per Windows
+- Testare fortemente slideshow thread
 
-- testare applicazione congelata pyinstaller e verificare i restart automatici con ps
+- [OK on LINUX] testare applicazione congelata pyinstaller e verificare i restart automatici con ps
     watch -n 0.5 "ps aux | grep -i python"
     o meglio:
     watch -n 0.5 "ps -ef | grep -i python"
     o gestore processi
-- testare gestione errori in OnExit() cancellazione file in chiusura
+- [NOT reproducible?] testare gestione errori in OnExit() cancellazione file in chiusura
 
 --------------
 URGENCY: high

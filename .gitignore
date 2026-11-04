@@ -8,10 +8,7 @@
 transforms.trf
 dist
 build
-videomass.egg-info
 deb_dist
-videomass.spec
-Videomass.spec
 *.tar.gz
 ENV
 env

@@ -233,18 +233,22 @@ class LogOut(wx.Panel):
             "Queue Processing",
         ):
             self.thread_type = FFmpeg(self.logfile, data)
+            self.thread_type.start()
 
         elif args[0] == "video_to_sequence":
             self.with_eta = False
             self.thread_type = PicturesFromVideo(self.logfile, **data)
+            self.thread_type.start()
 
         elif args[0] == "sequence_to_video":
             self.with_eta = False
             self.thread_type = SlideshowMaker(self.logfile, **data)
+            self.thread_type.start()
 
         elif args[0] == "concat_demuxer":
             self.with_eta = False
             self.thread_type = ConcatDemuxer(self.logfile, **data)
+            self.thread_type.start()
 
     # ----------------------------------------------------------------------
 

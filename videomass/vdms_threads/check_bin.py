@@ -27,8 +27,6 @@ This file is part of Videomass.
 
 import subprocess
 
-from videomass.vdms_utils.utils import Popen
-
 
 def subp(cmdargs: list, ostype: str):
     """
@@ -41,14 +39,15 @@ def subp(cmdargs: list, ostype: str):
 
     """
     cmd = " ".join(cmdargs) if ostype == "Windows" else cmdargs
-
+    creationflags = subprocess.CREATE_NO_WINDOW if ostype == "Windows" else 0
     try:
-        with Popen(
+        with subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,  # mod text
             encoding="utf-8",
+            creationflags=creationflags,
         ) as proc:
             out = proc.communicate()
 

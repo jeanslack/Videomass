@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.29.2026
+Rev: Nov.04.2026
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -32,39 +32,6 @@ import re
 import shutil
 import subprocess
 import sys
-
-
-class Popen(subprocess.Popen):
-    """
-    Inherit subprocess.Popen class to set startupinfo.
-    This avoids displaying a console window on MS-Windows
-    using GUI's.
-
-    NOTE MS Windows:
-
-    subprocess.STARTUPINFO()
-
-    https://stackoverflow.com/questions/1813872/running-
-    a-process-in-pythonw-with-popen-without-a-console?lq=1>
-
-    """
-
-    def __init__(self, *args, **kwargs):
-        """
-        On MSWindows, retrieves the existing startupinfo or creates
-        a new one if it is missing.
-        """
-        if sys.platform == "win32":
-            startupinfo = kwargs.get("startupinfo")
-            if startupinfo is None:
-                startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            kwargs["startupinfo"] = startupinfo
-
-        super().__init__(*args, **kwargs)
-
-
-# ------------------------------------------------------------------------
 
 
 def open_default_application(pathname):
@@ -99,7 +66,11 @@ def open_default_application(pathname):
         # It is asynchronous and does NOT block the GUI.
         # It redirects stdout and stderr to DEVNULL to prevent crashes
         # caused by full pipes or orphaned consoles.
-        Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.Popen(
+            cmd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
         return None
     except (OSError, subprocess.SubprocessError) as error:
         return str(error)

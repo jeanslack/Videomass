@@ -25,23 +25,22 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import platform
 import subprocess
+import sys
 import time
-from threading import Thread
 
 import wx
 from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
-from videomass.vdms_utils.utils import Popen
+from videomass.vdms_utils.thread_utils import BaseVideomassThread
 
 
-if platform.system() != "Windows":
+if sys.platform != "win32":
     import shlex
 
 
-class PicturesFromVideo(Thread):
+class PicturesFromVideo(BaseVideomassThread):
     """
     This class represents a separate thread for running simple
     single processes to save video sequences as pictures.
@@ -60,21 +59,16 @@ class PicturesFromVideo(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
+        super().__init__(logfile=args[0])
+
         get = wx.GetApp()  # get videomass wx.App attribute
         self.appdata = get.appset
-        self.stop_work_thread = False  # process terminate
         self.fname = kwargs["filename"]
         self.outputdir = kwargs["outputdir"]  # output directory
         self.cmd = kwargs["args"]  # comand set on single pass
         self.duration = kwargs["duration"][0]  # duration list
         self.count = 0  # count first for loop
-        self.logfile = args[0]  # log filename
         self.kwa = kwargs
-        self.fatal = None  # fatal error I/O flag before `communicate`
-        self.process = None  # process data set on context
-
-        Thread.__init__(self)
-        self.start()  # self.run()
 
     def run(self):
         """
@@ -106,16 +100,17 @@ class PicturesFromVideo(Thread):
         )
         tolog(com, self.logfile, sep=True, wdate=True)
 
-        if platform.system() != "Windows":
+        if sys.platform != "win32":
             cmd = shlex.split(cmd)
         try:
-            with Popen(
+            with subprocess.Popen(
                 cmd,
                 stderr=subprocess.PIPE,
                 stdin=subprocess.PIPE,
                 bufsize=1,
                 text=True,
                 encoding=self.appdata["encoding"],
+                creationflags=self.creationflags,
             ) as self.process:
                 for line in self.process.stderr:
                     wx.CallAfter(
@@ -181,63 +176,3 @@ class PicturesFromVideo(Thread):
 
         time.sleep(0.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
-
-    # --------------------------------------------------------------------#
-
-    def stop(self):
-        """
-        Sets the stop work thread to terminate the current process.
-        This method has been revised and expanded to make the GUI
-        more responsive and less dependent on the subprocess's output
-        messages during `readlines` loops. This speeds up the process
-        of closing the subprocess within the background thread while
-        also improving error handling, ensuring the GUI remains completely
-        free from potential blocks or freezes while waiting for termination
-        outputs.
-
-        `flush()` forces Python to immediately clear the write buffer
-         and send the 'q' char to the pipe connected to FFmpeg.
-
-        WARNING:
-        How catch ValueError for tests:
-            replaace `proc.stdin and not proc.stdin.closed` with:
-                if proc.stdin:  # WARNING ALERT  remove after test
-            place `proc.stdin.close()` on top `proc.stdin.write('q')`
-                proc.stdin.close()  # WARNING ALERT remove after test
-        """
-        self.stop_work_thread = True
-
-        try:
-            proc = self.process if self.process.poll() is None else None
-        except AttributeError:
-            proc = None
-
-        # Check if the process exists
-        if proc is not None:
-            try:
-                # Verify that stdin is open and available before writing
-                if proc.stdin and not proc.stdin.closed:
-                    proc.stdin.write("q")  # stop ffmpeg
-                    proc.stdin.flush()
-
-            # Make sure the process isn't already finished
-            except (
-                BrokenPipeError,
-                ValueError,
-                AttributeError,
-                OSError,
-            ) as err:
-                self.fatal = True
-                msg = "CRASH_STOP: forcing FFmpeg to terminate"
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "COUNT_EVT",
-                    count=f"{msg}: {err}",
-                    duration=0,
-                    end="ERROR",
-                )
-                tolog(f"[VIDEOMASS]: {msg}: {err}", self.logfile)
-
-                # Force event end notification to unlock GUI
-                time.sleep(0.5)
-                wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)

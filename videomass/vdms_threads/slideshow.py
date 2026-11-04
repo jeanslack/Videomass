@@ -26,20 +26,19 @@ This file is part of Videomass.
 """
 
 import os
-import platform
 import subprocess
+import sys
 import tempfile
 import time
-from threading import Thread
 
 import wx
 from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
-from videomass.vdms_utils.utils import Popen
+from videomass.vdms_utils.thread_utils import BaseVideomassThread
 
 
-if platform.system() != "Windows":
+if sys.platform != "win32":
     import shlex
 
 
@@ -52,6 +51,7 @@ def convert_images(*varargs, **kwargs):
     tmpdir = varargs[1]
     logfile = varargs[2]
     imagenames = varargs[3]
+    creationflags = varargs[4]
 
     count1 = (
         f"Preparing temporary files...\nSource: Imported file list\n"
@@ -79,15 +79,16 @@ def convert_images(*varargs, **kwargs):
         tmpf = os.path.join(tmpdir, f"{imagenames}{prognum}.bmp")
         cmd_1 = f'{args} -i "{files}" "{tmpf}"'
 
-        if platform.system() != "Windows":
+        if sys.platform != "win32":
             cmd_1 = shlex.split(cmd_1)
         try:
-            with Popen(
+            with subprocess.Popen(
                 cmd_1,
                 stderr=subprocess.PIPE,
                 bufsize=1,
                 text=True,
                 encoding=kwargs["encoding"],
+                creationflags=creationflags,
             ) as proc1:
                 error = proc1.communicate()[1]
 
@@ -143,6 +144,7 @@ def resizing_process(*varargs, **kwargs):
     tmpdir = varargs[1]
     cmdargs = varargs[2]
     logfile = varargs[3]
+    creationflags = varargs[4]
 
     count1 = (
         f"\n\nFile resizing...\nSource: Temporary directory\n"
@@ -167,15 +169,16 @@ def resizing_process(*varargs, **kwargs):
     )
     tolog(f"\nFile resizing...\n\n[COMMAND]:\n{cmd_1}", logfile)
 
-    if platform.system() != "Windows":
+    if sys.platform != "win32":
         cmd_1 = shlex.split(cmd_1)
     try:
-        with Popen(
+        with subprocess.Popen(
             cmd_1,
             stderr=subprocess.PIPE,
             bufsize=1,
             text=True,
             encoding=kwargs["encoding"],
+            creationflags=creationflags,
         ) as proc1:
             error = proc1.communicate()[1]
 
@@ -223,7 +226,7 @@ def resizing_process(*varargs, **kwargs):
     return None
 
 
-class SlideshowMaker(Thread):
+class SlideshowMaker(BaseVideomassThread):
     """
     Represents the ffmpeg subprocess to produce a video in
     mkv format from a sequence of images already converted
@@ -235,19 +238,15 @@ class SlideshowMaker(Thread):
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
         """
-        Thread.__init__(self)
+        super().__init__(logfile=args[0])
 
         get = wx.GetApp()  # get videomass wx.App attribute
         self.appdata = get.appset
-        self.stop_work_thread = False  # process terminate
         self.duration = kwargs["duration"]
         self.count = 0  # count first for loop
         self.countmax = kwargs["nmax"]
-        self.logfile = args[0]  # log filename
         self.destination = kwargs["destination"]
         self.kwa = kwargs
-
-        self.start()
 
     def run(self):
         """
@@ -261,6 +260,7 @@ class SlideshowMaker(Thread):
                 tempdir,
                 self.logfile,
                 imgtmpnames,
+                self.creationflags,
                 **self.appdata,
             )
             if tmpproc1 is not None or self.stop_work_thread:
@@ -280,6 +280,7 @@ class SlideshowMaker(Thread):
                     tempdir,
                     self.kwa["resize"],
                     self.logfile,
+                    self.creationflags,
                     **self.appdata,
                 )
 
@@ -321,19 +322,20 @@ class SlideshowMaker(Thread):
             tolog(log, self.logfile)
             time.sleep(1)
 
-            if self.appdata["ostype"] != "Windows":
+            if self.appdata["ostype"] != "win32":
                 cmd_2 = shlex.split(cmd_2)
 
             try:
-                with Popen(
+                with subprocess.Popen(
                     cmd_2,
                     stderr=subprocess.PIPE,
                     stdin=subprocess.PIPE,
                     bufsize=1,
                     text=True,
                     encoding=self.appdata["encoding"],
-                ) as proc2:
-                    for line in proc2.stderr:
+                    creationflags=self.creationflags,
+                ) as self.process:
+                    for line in self.process.stderr:
                         wx.CallAfter(
                             pub.sendMessage,
                             "UPDATE_EVT",
@@ -342,9 +344,10 @@ class SlideshowMaker(Thread):
                             status=0,
                         )
                         if self.stop_work_thread:
-                            proc2.stdin.write("q")  # stop ffmpeg
-                            out = proc2.communicate()[1]
-                            proc2.wait()
+                            if self.fatal:
+                                return
+                            out = self.process.communicate()[1]
+                            self.process.wait()
                             wx.CallAfter(
                                 pub.sendMessage,
                                 "UPDATE_EVT",
@@ -357,18 +360,18 @@ class SlideshowMaker(Thread):
                             self.end_process(None)
                             return
 
-                    if proc2.wait():  # error
-                        out = proc2.communicate()[1]
+                    if self.process.wait():  # error
+                        out = self.process.communicate()[1]
                         wx.CallAfter(
                             pub.sendMessage,
                             "UPDATE_EVT",
                             output="FAILED",
                             duration=self.kwa["duration"],
-                            status=proc2.wait(),
+                            status=self.process.wait(),
                         )
                         tolog(
                             f"[VIDEOMASS]: Error Exit Status: "
-                            f"{proc2.wait()} {out}",
+                            f"{self.process.wait()} {out}",
                             self.logfile,
                         )
                         time.sleep(1)
@@ -399,9 +402,3 @@ class SlideshowMaker(Thread):
         """
         time.sleep(0.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
-
-    def stop(self):
-        """
-        Sets the stop work thread to terminate the process
-        """
-        self.stop_work_thread = True

@@ -3,13 +3,16 @@
 # Purpose: Contains test cases for the ffprobe_parser object.
 # Rev: Oct.04.2020 *PEP8 compatible*
 
-import sys
 import os.path
+import sys
 import unittest
 
-if sys.version_info[0] != 3:
-    sys.exit('\nERROR: You are using an unsupported version of Python. '
-             'Python3 is required.\n')
+
+if sys.version_info[0] >= 3.11:
+    sys.exit(
+        "\nERROR: You are using an unsupported version of Python. "
+        "Python >= 3.11 is required.\n"
+    )
 
 PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
@@ -26,14 +29,12 @@ class FFprobeTestCase(unittest.TestCase):
     def setUp(self):
         """Method called to prepare the test fixture"""
 
-        filename_url = 'url'
-        ffprobe_url = ''
+        filename_url = "url"
+        ffprobe_url = ""
 
-        self.data = ffprobe(filename_url,
-                            ffprobe_url,
-                            hide_banner=None,
-                            pretty=None
-                            )
+        self.data = ffprobe(
+            filename_url, ffprobe_url, hide_banner=None, pretty=None
+        )
 
     def test_invalid_urls(self):
         """
@@ -62,5 +63,5 @@ def main():
     unittest.main()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

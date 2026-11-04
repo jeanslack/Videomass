@@ -31,7 +31,6 @@ import subprocess
 import wx
 
 from videomass.vdms_io.make_filelog import make_log_template, tolog
-from videomass.vdms_utils.utils import Popen
 
 
 def shutdown_system(password=None):
@@ -42,6 +41,7 @@ def shutdown_system(password=None):
     appdata = get.appset
     ostype = appdata["ostype"]
     logfile = make_log_template("Shutdown.log", appdata["logdir"], mode="w")
+    creationflags = subprocess.CREATE_NO_WINDOW if ostype == "Windows" else 0
 
     if ostype == "Linux":
         if password:
@@ -76,13 +76,14 @@ def shutdown_system(password=None):
         wdate=True,
     )
     try:
-        with Popen(
+        with subprocess.Popen(
             cmd,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             encoding="utf-8",
+            creationflags=creationflags,
         ) as proc:
             # Communicates input in an isolated manner and
             # safely extracts stdout and stderr

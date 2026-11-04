@@ -7,11 +7,11 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 31 October 2026 v6.1.24
+Wed, 04 November 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
-  * Backward compatibility with wxPython v4.0.7 has been dropped.
   * Requires wxPython >= 4.1.1 .
+  * Dropped Backward compatibility with wxPython v4.0.7.
   * Fixed debug messages in wxPython v4.3.2; this will make the application
     ready (and cleaner) for the latest versions of the toolkit.
   * Improved building package using hatchling. This removes `setuptools` from
@@ -46,7 +46,14 @@ Sat, 31 October 2026 v6.1.24
     within the background thread while also improving error handling,
     ensuring the GUI remains completely free from potential blocks or freezes
     while waiting for termination outputs.
+  * Fixed issue with orphaned processes remaining in the background if the user
+    closed Videomass while "Play File" or "Preview" functionalities were still
+    running. New, advanced functionality has been implemented for managing the
+    secondary ffplay thread, ensuring that all running instances are terminated
+    when the application's main window is closed.
   * Improved code for Python >= 3.11 compatibility using Ruff linter.
+  * Improved project.toml file to make linter rules more consistent and
+    centralized
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22
