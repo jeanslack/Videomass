@@ -538,7 +538,6 @@ class SequenceToVideo(wx.Panel):
 
         probe = ffprobe(
             pathname,
-            self.appdata["ostype"],
             self.ffprobe_cmd,
             hide_banner=None,
         )

@@ -41,7 +41,7 @@ class BaseVideomassThread(threading.Thread):
     This class encapsulates inheritable code for extending
     functionality common to multiple family members.
     In particular, it offers an interface for the instant
-    termination of running processes.
+    termination of running processes using ffmpeg.
     """
 
     def __init__(self, logfile=None):

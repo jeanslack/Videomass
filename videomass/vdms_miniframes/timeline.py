@@ -482,17 +482,21 @@ class Float_TL(wx.MiniFrame):
             )
             return
 
+        filesel = self.file_selection()[0]
+
         if self.parent.checktimestamp:
             scalef, tstamp = "scale=w=360:h=-1,", f"{self.parent.cmdtimestamp}"
         else:
             scalef, tstamp = "scale=w=360:h=-1", ""
 
-        filesel = self.file_selection()[0]
         args = (
+            f'"{Float_TL.get.appset["ffplay_cmd"]}" '
+            f"{Float_TL.get.appset['ffplay-default-args']} "
+            f"{Float_TL.get.appset['ffplay_loglev']} "
             f'-autoexit -i "{filesel}" '
-            f'{self.parent.time_seq} -vf "{scalef}{tstamp}"'
+            f"{self.parent.time_seq} "
+            f'-vf "{scalef}{tstamp}"'
         )
-
         try:
             with open(filesel, encoding="utf-8"):
                 playback = FilePlayback_GetOutput(self.GetParent(), args)

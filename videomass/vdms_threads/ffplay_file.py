@@ -54,7 +54,7 @@ class BaseFilePlay(Thread):
 
     # ----------------------------------------------------------------------
 
-    def __init__(self, parent, param=""):
+    def __init__(self, parent, cmdstr):
         """
         The main init thread
         It is better to wait for initialization to complete in
@@ -66,7 +66,7 @@ class BaseFilePlay(Thread):
         self.parent = parent  # is the top-level window (main_frame)
         get = wx.GetApp()
         self.appdata = get.appset
-        self.param = param  # additional parameters if present
+        self.cmdstr = cmdstr
         self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
         self.process = None
 
@@ -75,27 +75,20 @@ class BaseFilePlay(Thread):
 
     # ----------------------------------------------------------------------
 
-    def _prepare_command(self, extra_args=""):
+    def _prepare_command(self) -> list:
         """Prepare and format the command in a cross-platform way."""
 
-        cmd_parts = [
-            f'"{self.appdata["ffplay_cmd"]}"',
-            self.appdata.get("ffplay-default-args", ""),
-            self.appdata.get("ffplay_loglev", ""),
-            extra_args,
-            self.param,
-        ]
-        cmd = " ".join([str(part).strip() for part in cmd_parts if part])
+        cmdlist = shlex.split(str(self.cmdstr))
+        print(cmdlist)
+
         tolog(
-            f"INFO: VIDEOMASS COMMAND: {cmd}",
+            f"INFO: VIDEOMASS COMMAND: {shlex.join(cmdlist)}",
             self.logfile,
             sep=True,
             wdate=True,
         )
-
-        if self.appdata["ostype"] != "Windows":
-            return shlex.split(cmd)
-        return cmd
+        # print(cmdlist)
+        return cmdlist
 
     # ----------------------------------------------------------------------
 
@@ -176,17 +169,19 @@ class FilePlay(BaseFilePlay):
         Start thread. Executes ffplay command
         """
         cmd = self._prepare_command()  # Don't use the "-stats" arg here!
-        shell = self.appdata["ostype"] == "Windows"
-        creationflags = subprocess.CREATE_NO_WINDOW if shell else 0
+        is_windows = self.appdata["ostype"] == "Windows"
+        creationflags = subprocess.CREATE_NO_WINDOW if is_windows else 0
 
         try:
             self.process = subprocess.Popen(
                 cmd,
-                shell=shell,
-                stdout=subprocess.DEVNULL,
+                # shell=shell,
+                # stdout=subprocess.DEVNULL,
+                # stderr=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
                 encoding=self.appdata["encoding"],
+                errors="replace",  # do not crash if non-UTF-8 chars
                 creationflags=creationflags,
             )
 
@@ -242,13 +237,12 @@ class FilePlayback_GetOutput(BaseFilePlay):
         See the `finally` clause.
         """
         # -stats argument updates output messages progressively
-        cmd = self._prepare_command(extra_args="-stats")
+        # cmd = self._prepare_command(extra_args="-stats")
+        cmd = self._prepare_command()
         full_output = []
-        creationflags = (
-            subprocess.CREATE_NO_WINDOW
-            if self.appdata["ostype"] == "Windows"
-            else 0
-        )
+        is_windows = self.appdata["ostype"] == "Windows"
+        creationflags = subprocess.CREATE_NO_WINDOW if is_windows else 0
+
         try:
             self.process = subprocess.Popen(
                 cmd,
@@ -256,6 +250,7 @@ class FilePlayback_GetOutput(BaseFilePlay):
                 bufsize=1,
                 text=True,
                 encoding=self.appdata["encoding"],
+                errors="replace",  # do not crash if non-UTF-8 chars
                 creationflags=creationflags,
             )
 
