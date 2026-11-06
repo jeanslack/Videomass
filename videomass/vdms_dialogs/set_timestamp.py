@@ -225,22 +225,14 @@ class Set_Timestamp(wx.Dialog):
         This method return values via a getvalue() interface by
         the caller. See the caller for more infos and usage.
         """
+
+        tsfont = "Arial"
         ptshms = r"%{pts\:hms}"
-
-        if self.appdata["ostype"] == "Darwin":
-            tsfont = "/Library/Fonts/Arial.ttf"
-        elif self.appdata["ostype"] == "Windows":
-            tsfont = "C\\:/Windows/Fonts/Arial.ttf"
-        else:
-            tsfont = "Arial"
-        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # adaptative
-
+        fontsize = "fontsize=h/10"
         timestamp = (
-            f"drawtext=fontfile='{tsfont}':text='{ptshms}':"
-            f"fontcolor={self.fontcolor}:shadowcolor={self.shadowcolor}:"
-            f"shadowx=1:shadowy=1:{fontsize}:"
-            f"box={self.boxenabled}:boxcolor={self.boxcolor}:"
-            f"x=(w-tw)/2:y=h-(2*lh)"
+            f"drawtext=font='{tsfont}':text='{ptshms}':fontcolor={self.fontcolor}:"
+            f"shadowcolor={self.shadowcolor}:shadowx=1:shadowy=1:{fontsize}:"
+            f"box={self.boxenabled}:boxcolor={self.boxcolor}:x=(w-tw)/2:y=h-(2*lh)"
         )
 
         return timestamp

@@ -29,7 +29,6 @@ This file is part of Videomass.
 import os
 import shlex
 import subprocess
-import sys
 from threading import Lock, Thread
 from typing import ClassVar
 
@@ -87,7 +86,7 @@ class BaseFilePlay(Thread):
             sep=True,
             wdate=True,
         )
-        # print(cmdlist)
+        print(subprocess.list2cmdline(cmdlist))
         return cmdlist
 
     # ----------------------------------------------------------------------
@@ -115,46 +114,24 @@ class BaseFilePlay(Thread):
     @classmethod
     def stop_all(cls):
         """
-        If the user closes the Videomass app, this method
-        will also force close ALL open ffplay windows.
-        On MSWindows neither `proc.terminate()` nor `proc.kill()`
-        were effective in instantly closing ffplay windows, although
-        background processes were successfully closed by manually
-        closing them at the end. To succeed, I had to use `taskkill`:
-
-        /F forces the closure,
-        /T terminates the entire tree of child processes (`ffplay.exe`)
-        /PID specifies the process identifier.
+        If the user closes the Videomass app, this method will
+        also close any ffplay open windows, thus freeing up background
+        processes immediatly.
 
         """
         with cls._lock:  # block concurency access on closing app
             # Closing Videomass while ffplay is in execution
             cls._is_exiting = True
-            is_windows = sys.platform == "win32"
 
             for proc in list(cls._active_processes):
                 if proc.poll() is None:
                     try:
-                        if is_windows:
-                            subprocess.run(
-                                [
-                                    "taskkill",
-                                    "/F",
-                                    "/T",
-                                    "/PID",
-                                    str(proc.pid),
-                                ],
-                                stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL,
-                                creationflags=subprocess.CREATE_NO_WINDOW,
-                                check=False,  # Any errors will be ignored
-                            )
-                        else:
-                            proc.terminate()
-
+                        proc.terminate()
                         proc.wait(timeout=1)
+
                     except (OSError, subprocess.TimeoutExpired):
-                        pass
+                        proc.kill()
+                        # pass
             cls._active_processes.clear()
 
 
@@ -175,9 +152,7 @@ class FilePlay(BaseFilePlay):
         try:
             self.process = subprocess.Popen(
                 cmd,
-                # shell=shell,
-                # stdout=subprocess.DEVNULL,
-                # stderr=subprocess.PIPE,
+                stdout=subprocess.DEVNULL,
                 stderr=subprocess.PIPE,
                 text=True,
                 encoding=self.appdata["encoding"],
@@ -201,17 +176,9 @@ class FilePlay(BaseFilePlay):
             self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
             return
 
-        finally:
-            if self.process:
-                try:
-                    if self.process.stderr:
-                        self.process.stderr.close()
-                except OSError:
-                    pass
-
-            with BaseFilePlay._lock:
-                if self.process in BaseFilePlay._active_processes:
-                    BaseFilePlay._active_processes.remove(self.process)
+        with BaseFilePlay._lock:
+            if self.process in BaseFilePlay._active_processes:
+                BaseFilePlay._active_processes.remove(self.process)
 
         self._finalize_play()
 
@@ -219,12 +186,12 @@ class FilePlay(BaseFilePlay):
 # ----------------------------------------------------------------------
 
 
-class FilePlayback_GetOutput(BaseFilePlay):
+class FilePlayWithprogress(BaseFilePlay):
     """
     Playback local file executing ffplay media player.
-    This class differs from `FilePlay` in that it implements
-    capturing and redirecting output messages from stderr
-    in real time.
+    Unlike `FilePlay`, this class implements the
+    capture and redirection of output messages from `stderr`
+    in real time, in order to monitor playback progress.
     """
 
     def run(self):
@@ -236,8 +203,6 @@ class FilePlayback_GetOutput(BaseFilePlay):
         from the global set at the end of the thread.
         See the `finally` clause.
         """
-        # -stats argument updates output messages progressively
-        # cmd = self._prepare_command(extra_args="-stats")
         cmd = self._prepare_command()
         full_output = []
         is_windows = self.appdata["ostype"] == "Windows"
@@ -291,6 +256,121 @@ class FilePlayback_GetOutput(BaseFilePlay):
                 self._handle_error(
                     f"[FFPLAY] ERROR (Exit Code "
                     f"{return_code}):\n{error_context}"
+                )
+                return
+
+        except OSError as err:
+            self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
+            return
+
+        finally:
+            if self.process:
+                try:
+                    if self.process.stderr:
+                        self.process.stderr.close()
+                    if self.process.stdout:
+                        self.process.stdout.close()
+                except OSError:
+                    pass
+
+            with BaseFilePlay._lock:
+                if self.process in BaseFilePlay._active_processes:
+                    BaseFilePlay._active_processes.remove(self.process)
+
+        self._finalize_play()
+
+
+class FilePlayWithprogressWindows(BaseFilePlay):
+    """Playback local file executing ffplay media player (Windows Optimized).
+
+    Implements real-time stderr capturing on Windows by reading character-by-
+    character to properly intercept Carriage Returns ('\\r') used by ffplay for
+    progress updates.
+    """
+
+    def run(self):
+        """Start thread.
+
+        Executes ffplay command with safe character-based reading.
+        """
+        cmd = self._prepare_command()
+        full_output = []
+        # Forza la rimozione della finestra del terminale su Windows
+        creationflags = subprocess.CREATE_NO_WINDOW
+
+        try:
+            self.process = subprocess.Popen(
+                cmd,
+                stderr=subprocess.PIPE,
+                bufsize=0,  # Disabilita il buffering per ricevere i caratteri all'istante
+                text=True,
+                encoding=self.appdata["encoding"],
+                errors="replace",
+                creationflags=creationflags,
+            )
+
+            with BaseFilePlay._lock:
+                BaseFilePlay._active_processes.add(self.process)
+
+            try:
+                current_line = []
+                while True:
+                    # Legge un singolo carattere alla volta per non bloccarsi sul '\n'
+                    char = self.process.stderr.read(1)
+
+                    if (
+                        not char
+                    ):  # EOF (End Of File): ffplay ha chiuso lo stream
+                        break
+
+                    current_line.append(char)
+
+                    # Windows usa '\r' per aggiornare la stessa riga del counter
+                    if char in ("\r", "\n"):
+                        line = "".join(current_line)
+                        full_output.append(line)
+                        current_line = []
+
+                        if BaseFilePlay._is_exiting:
+                            return
+
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "UPDATE_PLAY_COUNTER",
+                            output=line,
+                            status=0,
+                        )
+
+                # Invia l'ultimo residuo di testo se presente alla chiusura
+                if current_line:
+                    line = "".join(current_line)
+                    full_output.append(line)
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "UPDATE_PLAY_COUNTER",
+                        output=line,
+                        status=0,
+                    )
+
+            except ValueError:
+                if BaseFilePlay._is_exiting:
+                    return
+
+            return_code = self.process.wait()
+
+            if BaseFilePlay._is_exiting:
+                return
+
+            if return_code != 0:
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "UPDATE_PLAY_COUNTER",
+                    output=None,
+                    status=return_code,
+                )
+                error_context = "".join(full_output[-5:])
+                self._handle_error(
+                    f"[FFPLAY] ERROR (Exit Code {return_code}):\n{error_context}"
                 )
                 return
 
