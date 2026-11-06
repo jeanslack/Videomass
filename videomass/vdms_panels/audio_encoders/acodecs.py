@@ -727,12 +727,18 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
         if self.maindata.checktimestamp:
             args = (
+                f'"{self.appdata["ffplay_cmd"]}" '
+                f"{self.appdata['ffplay-default-args']} "
+                f"{self.appdata['ffplay_loglev']} "
                 f'-showmode waves {autoexit} -i "{filepath}" '
                 f"{self.maindata.time_seq} "
                 f'-vf "{self.maindata.cmdtimestamp}" {afilter} {index}'
             )
         else:
             args = (
+                f'"{self.appdata["ffplay_cmd"]}" '
+                f"{self.appdata['ffplay-default-args']} "
+                f"{self.appdata['ffplay_loglev']} "
                 f'-showmode waves {autoexit} -i "{filepath}" '
                 f"{self.maindata.time_seq} "
                 f"{afilter} {index}"

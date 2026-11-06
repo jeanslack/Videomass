@@ -34,7 +34,7 @@ from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.ffplay_file import FilePlayback_GetOutput
+from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
@@ -282,9 +282,9 @@ class Float_TL(wx.MiniFrame):
             wx.RIGHT | wx.ALIGN_CENTRE_VERTICAL | wx.ALIGN_CENTRE_HORIZONTAL,
             20,
         )
-        if Float_TL.OS == "Windows":
-            self.counterplay.Hide()
-            self.btn_play.Hide()
+        # if Float_TL.OS == "Windows":
+        #     self.counterplay.Hide()
+        #     self.btn_play.Hide()
         self.btn_tstart = wx.Button(
             self.panelbase, wx.ID_ANY, "", size=(40, -1)
         )
@@ -482,20 +482,24 @@ class Float_TL(wx.MiniFrame):
             )
             return
 
+        filesel = self.file_selection()[0]
+
         if self.parent.checktimestamp:
             scalef, tstamp = "scale=w=360:h=-1,", f"{self.parent.cmdtimestamp}"
         else:
             scalef, tstamp = "scale=w=360:h=-1", ""
 
-        filesel = self.file_selection()[0]
         args = (
+            f'"{Float_TL.get.appset["ffplay_cmd"]}" '
+            f"{Float_TL.get.appset['ffplay-default-args']} "
+            f"{Float_TL.get.appset['ffplay_loglev']} "
             f'-autoexit -i "{filesel}" '
-            f'{self.parent.time_seq} -vf "{scalef}{tstamp}"'
+            f"{self.parent.time_seq} "
+            f'-vf "{scalef}{tstamp}"'
         )
-
         try:
             with open(filesel, encoding="utf-8"):
-                playback = FilePlayback_GetOutput(self.GetParent(), args)
+                playback = FilePlayWithprogress(self.GetParent(), args)
                 playback.start()
         except OSError:
             wx.MessageBox(

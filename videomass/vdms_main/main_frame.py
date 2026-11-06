@@ -122,18 +122,13 @@ class MainFrame(wx.Frame):
         self.ffmpegdecoders = False
         self.ffmpegformats = False
         self.audivolnormalize = False
-        # set fontconfig for timestamp
-        if self.appdata["ostype"] == "Darwin":
-            tsfont = "/Library/Fonts/Arial.ttf"
-        elif self.appdata["ostype"] == "Windows":
-            tsfont = "C\\:/Windows/Fonts/Arial.ttf"
-        else:
-            tsfont = "Arial"
-        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
+
         # set command line for timestamp
+        tsfont = "Arial"
         ptshms = r"%{pts\:hms}"
+        fontsize = "fontsize=h/10"
         self.cmdtimestamp = (
-            f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
+            f"drawtext=font='{tsfont}':text='{ptshms}':fontcolor=White:"
             f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
             f"box=1:boxcolor=DeepPink:x=(w-tw)/2:y=h-(2*lh)"
         )
