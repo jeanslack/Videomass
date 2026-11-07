@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.04.2026
-Code checker: flake8, pylint, Ruff
+Code checker: flake8, pylint, ruff, Ruff
 
 This file is part of Videomass.
 
@@ -41,7 +41,7 @@ class BaseVideomassThread(threading.Thread):
     This class encapsulates inheritable code for extending
     functionality common to multiple family members.
     In particular, it offers an interface for the instant
-    termination of running processes.
+    termination of running processes using ffmpeg.
     """
 
     def __init__(self, logfile=None):

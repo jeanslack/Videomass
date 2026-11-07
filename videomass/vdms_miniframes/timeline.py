@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.01.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -34,7 +34,10 @@ from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.ffplay_file import FilePlayback_GetOutput
+from videomass.vdms_threads.ffplay_file import (
+    FilePlayWithprogress,
+    FilePlayWithprogressWindows,
+)
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
@@ -187,18 +190,21 @@ class Float_TL(wx.MiniFrame):
     TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
 
-    # Used Colours
+    # Code Colours
     YELLOW = "#bd9f00"  # for warnings
     BLACK = "#060505"  # black for background status bar
     ORANGE = "#f28924"  # for errors and warnings
     LGREEN = "#52EE7D"
-    RULER_BKGRD = "#84D2C9"  # CYAN for ruler background
-    TEXTDEF = "#B1F2E8"  # Light CYAN
-    SELECTION = (100, 250, 144, 100)  # Light CYAN
-    # SELECTION = '#B1F2E8'  # Light CYAN
-    DELIMITER_COLOR = "#009DCB"  # Azure for margin selection
-    TEXT_PEN_COLOR = "#020D0F"  # black for draw lines
-    DURATION_START = "#E95420"  # Light orange for duration/start indicators
+    RULER_BKGRD = "#646d6f"  # GREY ruler background
+    DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
+    SELECTION = (0, 245, 212, 40)  # semi-transparent Mint Green, inner area
+    DURATION_RESET = "#E6FFFC"  # Cyan-white for the initial time text
+    DURATION_START = "#FF7A00"  # Neon orange for the time text (Start/End)
+    TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
+    # --- INVALID SELECTION HIGHLIGHTED
+    SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
+    TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
+    # --- BTN readme
     READMEGREEN = "#52ee7d"  # readme btn background
     READMEBLACK = "#1f1f1f"  # readme btn foreground
 
@@ -210,12 +216,12 @@ class Float_TL(wx.MiniFrame):
 
     def __init__(self, parent):
         """
-
         self.pix: scale pixels to milliseconds
         self.milliseconds: int(milliseconds)
         self.duration: see parent attr.
         self.bar_w: END point value in pixel
         self.bar_x: START point value in pixel
+
         """
         icons = Float_TL.ICONS
         bmp_reset = get_bmp(icons["clear"], ((16, 16)))
@@ -240,7 +246,7 @@ class Float_TL(wx.MiniFrame):
         self.filename = None  # selected filename on file list
         self.frame = None  # waveform image located on cache dir
         self.invalidselection = False  # booleaan reference
-        self.playpoint = 0  # `x` point pixel representation
+        self.playpoint = None  # `x` point pixel representation or None
 
         wx.MiniFrame.__init__(
             self,
@@ -282,9 +288,6 @@ class Float_TL(wx.MiniFrame):
             wx.RIGHT | wx.ALIGN_CENTRE_VERTICAL | wx.ALIGN_CENTRE_HORIZONTAL,
             20,
         )
-        if Float_TL.OS == "Windows":
-            self.counterplay.Hide()
-            self.btn_play.Hide()
         self.btn_tstart = wx.Button(
             self.panelbase, wx.ID_ANY, "", size=(40, -1)
         )
@@ -312,8 +315,21 @@ class Float_TL(wx.MiniFrame):
 
         # ----------------------Properties ----------------------#
         self.panelruler.SetBackgroundColour(wx.Colour(Float_TL.RULER_BKGRD))
-        # self.panelruler.SetBackgroundColour(wx.Colour(Float_TL.BLACK))
+        self.panelruler.SetBackgroundStyle(wx.BG_STYLE_PAINT)
+        if Float_TL.OS == "Windows":
+            self.panelruler.SetDoubleBuffered(
+                True
+            )  # Reduces the flickering only on windows
+        self.textcolor = wx.Colour(Float_TL.TEXT_PEN_COLOR)
+        self.selcolor = wx.Colour(Float_TL.SELECTION)
+
         self.SetTitle("Timeline Editor")
+        icon = wx.Icon()
+        icon.CopyFromBitmap(
+            wx.Bitmap(Float_TL.ICONS["videomass"], wx.BITMAP_TYPE_ANY)
+        )
+        self.SetIcon(icon)
+
         self.sb = self.CreateStatusBar(1)
         msg = _("{0} {1}  |  Segment Duration: {2}").format(
             self.sourcedur, self.overalltime, "00:00:00.000"
@@ -326,6 +342,7 @@ class Float_TL(wx.MiniFrame):
         self.Layout()
 
         self.SetMinSize((920, 190))
+        self.Move(tuple(Float_TL.get.appset["timeline_window_pos"]))
 
         if Float_TL.OS == "Linux":
             self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
@@ -412,13 +429,13 @@ class Float_TL(wx.MiniFrame):
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
 
-        arg = (
-            f'-i "{self.filename}" -filter_complex '
-            f'"showwavespic=s={Float_TL.RW + 10}x{Float_TL.PH}'
-            f':colors=white:split_channels=1" -update 1 '
-            f'-frames:v 1 "{self.frame}"'
+        args = (
+            f'-i "{self.filename}" -filter_complex "aformat=channel_layouts'
+            f"=mono,compand,showwavespic=s={Float_TL.RW + 10}x{Float_TL.PH}:"
+            f'colors=0x0A192F@0.70:split_channels=1:draw=full:filter=peak" '
+            f'-update 1 -frames:v 1 "{self.frame}"'
         )
-        thread = FFmpegGenericTask(arg, "Timeline Waveform", logfile)
+        thread = FFmpegGenericTask(args, "Timeline Waveform", logfile)
         thread.join()  # wait end thread
         error = thread.status
         if error:
@@ -447,7 +464,9 @@ class Float_TL(wx.MiniFrame):
 
     def on_play_segment(self, event):
         """
-        Plays a selected segment of a file.
+        Button play event. Plays a segment of a selected file.
+        IMPORTANT: To make this effective, set ffplay's loglevel
+        args to info: `-loglevel info.
         """
         if not self.file_selection():
             return
@@ -482,20 +501,30 @@ class Float_TL(wx.MiniFrame):
             )
             return
 
+        filesel = self.file_selection()[0]
+
         if self.parent.checktimestamp:
             scalef, tstamp = "scale=w=360:h=-1,", f"{self.parent.cmdtimestamp}"
         else:
             scalef, tstamp = "scale=w=360:h=-1", ""
 
-        filesel = self.file_selection()[0]
         args = (
+            f'"{Float_TL.get.appset["ffplay_cmd"]}" '
+            f"{Float_TL.get.appset['ffplay-default-args']} "
+            # f"{Float_TL.get.appset['ffplay_loglev']} "
+            f"-loglevel info "
             f'-autoexit -i "{filesel}" '
-            f'{self.parent.time_seq} -vf "{scalef}{tstamp}"'
+            f"{self.parent.time_seq} "
+            f'-vf "{scalef}{tstamp}"'
         )
-
         try:
             with open(filesel, encoding="utf-8"):
-                playback = FilePlayback_GetOutput(self.GetParent(), args)
+                if Float_TL.get.appset["ostype"] == "Windows":
+                    playback = FilePlayWithprogressWindows(
+                        self.GetParent(), args
+                    )
+                else:
+                    playback = FilePlayWithprogress(self.GetParent(), args)
                 playback.start()
         except OSError:
             wx.MessageBox(
@@ -517,29 +546,77 @@ class Float_TL(wx.MiniFrame):
 
     def update_counter_thread(self, output, status):
         """
+        Updates the counter, sets self.playpoint taking into account the
+        slice/segment offset, and requests thread-safe redraw.
+
         This method uses pub/sub protocol subscribing "UPDATE_PLAY_COUNTER"
         message. It is called by `FilePlay` class thread to update
-        the output lines of the ffplay stderr.
+        the output lines of the ffplay stderr (see `on_play_segment` def).
+
         """
         if status:
+            """
+            Set the timeline to be disabled while playing the file
+            """
             return
 
-        timemils = 0.0
         if output:
-            line = output.split()
-            try:
-                timemils = float(line[0]) * 1000
-                res = integer_to_time(round(timemils))
-                self.counterplay.SetLabel(res)
-                self.onRedraw(wx.ClientDC(self.panelruler))
-                scaletopix = round(
-                    self.pix / (Float_TL.RW / timemils) * Float_TL.RW
-                )
-                pixpos = scaletopix
-                self.playpoint = pixpos
+            # Cleans up whitespace at the beginning and end of the line
+            clean_line = output.strip()
+            if not clean_line:
+                return
+            # Check the diagnostic line from ffplay's actual counter
+            if not any(
+                x in clean_line for x in ("A-V:", "M-A:", "aq=", "vq=")
+            ):
+                return
 
-            except (ValueError, ZeroDivisionError):
-                self.counterplay.SetLabel("N/A")
+            # exclude lines unrelated to the number of seconds
+            line_parts = clean_line.split()
+            if not line_parts or len(line_parts) == 0:
+                return
+
+            try:
+                if line_parts[0] == "nan":
+                    return
+                # Extracts the current milliseconds from the ffplay output
+                timemils = float(line_parts[0]) * 1000
+                # Update the visual text counter
+                res = integer_to_time(round(timemils))
+                wx.CallAfter(self.counterplay.SetLabel, res)
+
+                # Checks whether playback is still in the "previous keyframe"
+                # phase before the actual slice start.
+                if timemils < self.mills_start:
+                    # Force the cursor to the start position of the segment
+                    pixpos = round(self.bar_x)
+
+                # Check whether the end of the set slice has been exceeded
+                elif timemils > self.mills_end:
+                    # Force the cursor to the end position of the segment
+                    pixpos = round(self.bar_w)
+                else:
+                    # when the video is at the very beginning
+                    if timemils == 0:
+                        pixpos = 0
+                    else:
+                        scaletopix = round(
+                            self.pix / (Float_TL.RW / timemils) * Float_TL.RW
+                        )
+                        pixpos = scaletopix
+
+                def safe_ui_update(px):
+                    """
+                    Safe graphical update on the main thread.
+                    Update the variable read by OnPaint and redraw.
+                    """
+                    self.playpoint = px
+                    self.panelruler.Refresh()
+
+                wx.CallAfter(safe_ui_update, pixpos)
+
+            except (ValueError, IndexError, ZeroDivisionError):
+                wx.CallAfter(self.counterplay.SetLabel, "N/A")
 
     # ----------------------------------------------------------------------
 
@@ -549,12 +626,22 @@ class Float_TL(wx.MiniFrame):
         It is called by `FilePlay` class thread to indicate the end of the
         thread.
         """
-        self.panelruler.Enable()
-        self.btn_play.Enable()
-        self.btn_tstart.Enable()
-        self.btn_reset.Enable()
-        self.btn_tend.Enable()
-        self.playpoint = 0
+
+        def reset_gui():
+            # Enables cmponents of the timeline
+            self.panelruler.Enable()
+            self.btn_play.Enable()
+            self.btn_tstart.Enable()
+            self.btn_reset.Enable()
+            self.btn_tend.Enable()
+
+            # Move the cursor back to the beginning of the segment (bar_x)
+            self.playpoint = round(self.bar_x)
+            self.panelruler.Refresh()
+
+        # Dispatch execution to the main GUI thread to avoid freezing
+        # on Windows
+        wx.CallAfter(reset_gui)
 
     # ----------------------------------------------------------------------
 
@@ -587,7 +674,7 @@ class Float_TL(wx.MiniFrame):
         else:
             self.frame = None
 
-        self.onRedraw(wx.ClientDC(self.panelruler))
+        self.onRedraw()
 
     # ----------------------------------------------------------------------
 
@@ -645,10 +732,12 @@ class Float_TL(wx.MiniFrame):
         msg = _("{0} {1}  |  Segment Duration: {2}").format(
             self.sourcedur, self.overalltime, "00:00:00.000"
         )
+        self.playpoint = None
         self.counterplay.SetLabel("00:00:00.000")
         self.statusbar_msg(msg, None)
         self.parent.time_seq = ""
-        self.onRedraw(wx.ClientDC(self.panelruler))
+
+        self.onRedraw()
 
     # ------------------------------------------------------------------#
 
@@ -710,13 +799,13 @@ class Float_TL(wx.MiniFrame):
             self.bar_w = self.pointpx[0]
             self.mills_end = round(self.bar_w / self.pix)
             self.clock_end = integer_to_time(self.mills_end)
-            self.onRedraw(wx.ClientDC(self.panelruler))
+            self.onRedraw()
 
         elif self.pointpx[1] < 30:
             self.bar_x = self.pointpx[0]
             self.mills_start = round(self.bar_x / self.pix)
             self.clock_start = integer_to_time(self.mills_start)
-            self.onRedraw(wx.ClientDC(self.panelruler))
+            self.onRedraw()
 
     # ------------------------------------------------------------------#
 
@@ -789,7 +878,7 @@ class Float_TL(wx.MiniFrame):
                     self.mills_end = data[1]
                     self.clock_end = data[0]
 
-                self.onRedraw(wx.ClientDC(self.panelruler))
+                self.onRedraw()
                 self.on_leftup(None)
 
     # ------------------------------------------------------------------#
@@ -813,61 +902,78 @@ class Float_TL(wx.MiniFrame):
             self.set_coordinates()
 
     # ------------------------------------------------------------------#
-
     def OnPaint(self, event):
         """
-        wx.PaintDC event
+        A centralized, cross-platform graphics manager protected by
+        double buffering. It unifies the `onRedraw` logic, the waveform
+        display (background), and the real-time red cursor.
         """
-        dc = wx.PaintDC(self.panelruler)  # draw window boundary
-        self.panelruler.Refresh()  # needed on wayland to make it work
-        self.onRedraw(dc)
+        # Initialize the multi-platforms graphics context
+        dc = wx.AutoBufferedPaintDC(self.panelruler)
 
-    # ------------------------------------------------------------------#
-
-    def onRedraw(self, dc):
-        """
-        Draw ruler and update the selection rectangle
-        (a semi-transparent background rectangle upon a ruler)
-        """
-        msg = _(
-            "Start by dragging the handles in the left corners or\n"
-            "click the Start/End adjustment buttons for fine tuning."
-        )
-        if Float_TL.OS == "Windows":
-            self.panelruler.SetDoubleBuffered(True)  # prevents flickers
+        # Manual background handling to avoid artifacts with BG_STYLE_PAINT
+        bg_color = self.panelruler.GetBackgroundColour()
+        dc.SetBackground(wx.Brush(bg_color))
         dc.Clear()
 
-        # set start/end text colors
+        # Waveform background, must be placed strictly BEFORE the indicators
+        if self.frame:
+            # try:
+            bmp = wx.Image(self.frame, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+            dc.DrawBitmap(bmp, 0, 0, True)
+            # except Exception as err:
+            # Prevents crashes if removed from the cache
+            # pass
+
+        # determination of the selection status and colors
+        show_help_msg = False
         if self.bar_w == 0 and self.bar_x == 0:
             self.invalidselection = False
-            selcolor, textcolor = Float_TL.SELECTION, Float_TL.TEXTDEF
-            dc.SetTextForeground(Float_TL.DURATION_START)
-            # w = dc.GetTextExtent(msg)[0]
-            dc.DrawText(msg, 310, 20)
+            selcolor = wx.Colour(*Float_TL.SELECTION)
+            textcolor = wx.Colour(Float_TL.DURATION_RESET)
+            show_help_msg = True  # Enable to draw msg afterwards
         elif (
             self.bar_x >= self.bar_w
             or self.pointpx[0] > Float_TL.RW
             or self.pointpx[0] < 0
         ):
             self.invalidselection = True
-            selcolor, textcolor = wx.RED, wx.YELLOW
+            selcolor = wx.Colour(*Float_TL.SELECTION_INVALID)
+            textcolor = wx.Colour(Float_TL.TEXT_INVALID)
         else:
             self.invalidselection = False
-            selcolor, textcolor = Float_TL.SELECTION, Float_TL.DURATION_START
+            selcolor = wx.Colour(*Float_TL.SELECTION)
+            textcolor = wx.Colour(Float_TL.DURATION_START)
 
-        if self.frame and Float_TL.OS != "Windows":
-            bmp = wx.Image(self.frame, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-            dc.DrawBitmap(bmp, 0, 0, True)
-
+        # design of indicators and notches
         self.text_time_indicator(dc, textcolor, selcolor)
         self.ruler_notches(dc)
 
-        if self.playpoint:
-            self.move_play_cursor(dc)
+        # help text
+        if show_help_msg:
+            msg = _(
+                "Start by dragging the handles in the left corners or\n"
+                "click the Start/End adjustment buttons for fine tuning."
+            )
+            dc.SetFont(self.font_med)
+            dc.SetTextForeground(wx.Colour(Float_TL.DURATION_START))
+            dc.DrawText(msg, 310, 20)
 
-        if self.frame and Float_TL.OS == "Windows":
-            bmp = wx.Image(self.frame, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-            dc.DrawBitmap(bmp, 0, 0, True)
+        # real-time red cursor drawing
+        if hasattr(self, "playpoint") and self.playpoint is not None:
+            dc.SetBrush(wx.Brush(wx.RED, wx.BRUSHSTYLE_SOLID))
+            dc.SetPen(wx.Pen(wx.RED))
+            dc.DrawRectangle(round(self.playpoint), 0, 3, Float_TL.PH)
+
+    # ------------------------------------------------------------------#
+
+    def onRedraw(self, dc=None):
+        """
+        Legacy method retained for compatibility with mouse handlers.
+        Requires safe redrawing of the panel.
+        """
+
+        self.panelruler.Refresh()
 
     # ------------------------------------------------------------------#
 
@@ -879,7 +985,7 @@ class Float_TL(wx.MiniFrame):
         dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 1, wx.PENSTYLE_SOLID))
         bar_w, bar_x = round(self.bar_w), round(self.bar_x)
         dc.SetBrush(wx.Brush(selcolor, wx.BRUSHSTYLE_SOLID))
-        dc.DrawRectangle(bar_x, -2, bar_w - bar_x, 80)
+        dc.DrawRectangle(bar_x, -2, bar_w - bar_x, 85)
 
         dc.SetFont(self.font_med)
         txt_s = _("Start")
@@ -928,23 +1034,19 @@ class Float_TL(wx.MiniFrame):
 
     # ------------------------------------------------------------------#
 
-    def move_play_cursor(self, dc):
+    def move_play_cursor(self, playpoint):
         """
-        Experimental, only for future implementations.
-        ------------------------------------------
-        This method should create a vertical colored cursor that
-        slides from the start position to the end position as a
-        file plays.
-        USAGE EXAMPLE:
-        self.playpoint = 100
-        for i in range(10):
-            self.onRedraw(wx.ClientDC(self.panelruler))
-            self.playpoint += 50
+        Updates the cursor position and requests a graphical update.
         """
-        dc.SetBrush(wx.Brush(wx.RED, wx.BRUSHSTYLE_SOLID))
-        dc.SetPen(wx.Pen(wx.RED))
-        dc.DrawRectangle(round(self.playpoint), 0, 3, 100)
-        self.Update()
+        self.playpoint = playpoint
+
+        # Requires a partial redraw of only the ruler panel, maximizing FPS
+        self.panelruler.Refresh()
+
+        # NOTE Su alcune versioni di Linux/GTK, potrebbe essere
+        # necessario forzare l'elaborazione immediata dell'evento
+        # di refresh se la riproduzione va a scatti:
+        # self.panelruler.Update()
 
     # ------------------------------------------------------------------#
 

@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.31.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -600,12 +600,20 @@ class AV_Conv(wx.Panel):
 
         if self.parent.checktimestamp:
             args = (
+                f'"{self.appdata["ffplay_cmd"]}" '
+                f"{self.appdata['ffplay-default-args']} "
+                f"{self.appdata['ffplay_loglev']} "
                 f'{autoexit} -i "{filesel}" '
                 f"{self.parent.time_seq} "
                 f'{flt},"{self.parent.cmdtimestamp}"'
             )
         else:
-            args = f'{autoexit} -i "{filesel}" {flt}'
+            args = (
+                f'"{self.appdata["ffplay_cmd"]}" '
+                f"{self.appdata['ffplay-default-args']} "
+                f"{self.appdata['ffplay_loglev']} "
+                f'{autoexit} -i "{filesel}" {flt}'
+            )
 
         try:
             with open(filesel, encoding="utf-8"):

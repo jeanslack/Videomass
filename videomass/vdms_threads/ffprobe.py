@@ -7,8 +7,8 @@ Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.30.2026
-Code checker: flake8, pylint
+Rev: Nov.05.2026
+Code checker: flake8, pylint, ruff
 
 This file is part of FFcuesplitter.
 
@@ -27,7 +27,6 @@ This file is part of FFcuesplitter.
 """
 
 import json
-import shlex
 import subprocess
 import sys
 
@@ -74,15 +73,14 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
         >>> else:
         >>>     probe[0]
     """
-    args = (
-        f'"{cmd}" -show_format -show_streams -of json '
-        f"{' '.join(from_kwargs_to_args(kwargs))} "
-        f'"{filename}"'
-    )
-    args = shlex.split(args) if sys.platform != "win32" else args
+    args = [cmd, "-show_format", "-show_streams", "-of", "json"]
+    args.extend(from_kwargs_to_args(kwargs))
+    args.append(filename)
+
     creationflags = (
         subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
     )
+
     try:
         with subprocess.Popen(
             args,
@@ -91,14 +89,18 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
             bufsize=1,
             text=True,
             encoding=txtenc,
+            errors="replace",  # do not crash if non-UTF-8 chars
             creationflags=creationflags,
         ) as proc:
             output, error = proc.communicate()
 
             if proc.returncode != 0:
-                return (None, f"ffprobe: {error}")
+                return (None, f"ffprobe error: {error.strip()}")
 
-    except (OSError, FileNotFoundError, UnicodeDecodeError) as excepterr:
-        return (None, excepterr)
+        return json.loads(output), None
 
-    return json.loads(output), None
+    except (OSError, FileNotFoundError) as excepterr:
+        return (None, str(excepterr))
+
+    except json.JSONDecodeError as jsonerr:
+        return (None, f"Failed to parse ffprobe JSON output: {jsonerr!s}")
