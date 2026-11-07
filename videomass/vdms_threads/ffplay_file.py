@@ -78,7 +78,6 @@ class BaseFilePlay(Thread):
         """Prepare and format the command in a cross-platform way."""
 
         cmdlist = shlex.split(str(self.cmdstr))
-        print(cmdlist)
 
         tolog(
             f"INFO: VIDEOMASS COMMAND: {shlex.join(cmdlist)}",
@@ -86,7 +85,6 @@ class BaseFilePlay(Thread):
             sep=True,
             wdate=True,
         )
-        print(subprocess.list2cmdline(cmdlist))
         return cmdlist
 
     # ----------------------------------------------------------------------
