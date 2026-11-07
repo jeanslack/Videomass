@@ -7,7 +7,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.03.2026
+Rev: Nov.07.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -280,29 +280,31 @@ class FilePlayWithprogress(BaseFilePlay):
         self._finalize_play()
 
 
-class FilePlayWithprogressWindows(BaseFilePlay):
-    """Playback local file executing ffplay media player (Windows Optimized).
+# ----------------------------------------------------------------------
 
+
+class FilePlayWithprogressWindows(BaseFilePlay):
+    """
+    Playback local file executing ffplay media player (Windows Optimized).
     Implements real-time stderr capturing on Windows by reading character-by-
-    character to properly intercept Carriage Returns ('\\r') used by ffplay for
-    progress updates.
+    character to properly intercept Carriage Returns ('\\r') used by ffplay
+    for progress updates.
     """
 
     def run(self):
-        """Start thread.
-
+        """
+        Start thread.
         Executes ffplay command with safe character-based reading.
         """
         cmd = self._prepare_command()
         full_output = []
-        # Forza la rimozione della finestra del terminale su Windows
         creationflags = subprocess.CREATE_NO_WINDOW
 
         try:
             self.process = subprocess.Popen(
                 cmd,
                 stderr=subprocess.PIPE,
-                bufsize=0,  # Disabilita il buffering per ricevere i caratteri all'istante
+                bufsize=0,  # Disable buffering to receive chars instantly
                 text=True,
                 encoding=self.appdata["encoding"],
                 errors="replace",
@@ -315,17 +317,16 @@ class FilePlayWithprogressWindows(BaseFilePlay):
             try:
                 current_line = []
                 while True:
-                    # Legge un singolo carattere alla volta per non bloccarsi sul '\n'
+                    # Reads one char at a time so as not to get stuck on
+                    # the '\n'
                     char = self.process.stderr.read(1)
 
-                    if (
-                        not char
-                    ):  # EOF (End Of File): ffplay ha chiuso lo stream
+                    if not char:  # EOF (End Of File): ffplay closed the stream
                         break
 
                     current_line.append(char)
 
-                    # Windows usa '\r' per aggiornare la stessa riga del counter
+                    # Windows uses '\r' to update the same line of the counter
                     if char in ("\r", "\n"):
                         line = "".join(current_line)
                         full_output.append(line)
@@ -341,7 +342,7 @@ class FilePlayWithprogressWindows(BaseFilePlay):
                             status=0,
                         )
 
-                # Invia l'ultimo residuo di testo se presente alla chiusura
+                # Send any remaining text, if present, upon closure
                 if current_line:
                     line = "".join(current_line)
                     full_output.append(line)
@@ -370,7 +371,8 @@ class FilePlayWithprogressWindows(BaseFilePlay):
                 )
                 error_context = "".join(full_output[-5:])
                 self._handle_error(
-                    f"[FFPLAY] ERROR (Exit Code {return_code}):\n{error_context}"
+                    f"[FFPLAY] ERROR (Exit Code "
+                    f"{return_code}):\n{error_context}"
                 )
                 return
 

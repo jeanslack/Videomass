@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.04.2026
-Code checker: flake8, pylint, Ruff
+Code checker: flake8, pylint, ruff, Ruff
 
 This file is part of Videomass.
 

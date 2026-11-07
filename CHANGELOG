@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 04 November 2026 v6.1.24
+Sat, 07 November 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -51,6 +51,12 @@ Wed, 04 November 2026 v6.1.24
     functionality has been implemented for managing the secondary ffplay thread
     in these scenarios, ensuring that all running instances are terminated
     when the application's main window is closed.
+  * Fixed a timeline portability issue; segment playback is now available on
+    Windows as well.
+  * Improved the timeline’s graphics engine; it is thread-safe, consumes very
+    few resources, and performs in a consistent and fluid manner.
+  * Improved waveform visualization in the timeline, in addition to other
+    cosmetic enhancements applied.
   * Improved code for Python >= 3.11 compatibility using Ruff linter.
   * Improved project.toml file to make linter rules more consistent and
     centralized

@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.31.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -152,7 +152,8 @@ class MainFrame(wx.Frame):
         self.toSlideshow = sequence_to_video.SequenceToVideo(self)
         # miniframes
         self.TimeLine = timeline.Float_TL(parent=wx.GetTopLevelParent(self))
-        self.TimeLine.Hide()
+        if self.appdata["timeline_window_show"]:
+            self.TimeLine.Show()
         # hide all panels
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -394,6 +395,10 @@ class MainFrame(wx.Frame):
         sett = confmanager.read_options()
         sett["main_window_size"] = list(self.GetSize())
         sett["main_window_pos"] = list(self.GetPosition())
+
+        sett["timeline_window_show"] = self.appdata["timeline_window_show"]
+        tpos = self.TimeLine.GetPosition()
+        sett["timeline_window_pos"] = list(tpos)
 
         prst = self.PrstsPanel.lctrl
         prstcw = [prst.GetColumnWidth(i) for i in range(prst.GetColumnCount())]
@@ -670,6 +675,7 @@ class MainFrame(wx.Frame):
         self.viewtimeline = viewButton.Append(
             wx.ID_ANY, dscrp[0], dscrp[1], kind=wx.ITEM_CHECK
         )
+        self.viewtimeline.Check(check=self.appdata["timeline_window_show"])
         self.menuBar.Append(viewButton, _("View"))
         self.menuBar.Check(self.exitplayback.GetId(), self.autoexit)
         self.menuBar.Check(self.viewtimestamp.GetId(), True)
@@ -1268,8 +1274,10 @@ class MainFrame(wx.Frame):
         """
         if self.viewtimeline.IsChecked():
             self.TimeLine.Show()
+            self.appdata["timeline_window_show"] = True
         else:
             self.TimeLine.Hide()
+            self.appdata["timeline_window_show"] = False
 
     # ------------------------------------------------------------------#
     # --------- Menu  Go  ###

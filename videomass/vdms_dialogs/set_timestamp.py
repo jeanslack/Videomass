@@ -8,7 +8,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.12.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -225,14 +225,22 @@ class Set_Timestamp(wx.Dialog):
         This method return values via a getvalue() interface by
         the caller. See the caller for more infos and usage.
         """
-
-        tsfont = "Arial"
         ptshms = r"%{pts\:hms}"
-        fontsize = "fontsize=h/10"
+
+        if self.appdata["ostype"] == "Darwin":
+            tsfont = "/Library/Fonts/Arial.ttf"
+        elif self.appdata["ostype"] == "Windows":
+            tsfont = "C\\:/Windows/Fonts/Arial.ttf"
+        else:
+            tsfont = "Arial"
+        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # adaptative
+
         timestamp = (
-            f"drawtext=font='{tsfont}':text='{ptshms}':fontcolor={self.fontcolor}:"
-            f"shadowcolor={self.shadowcolor}:shadowx=1:shadowy=1:{fontsize}:"
-            f"box={self.boxenabled}:boxcolor={self.boxcolor}:x=(w-tw)/2:y=h-(2*lh)"
+            f"drawtext=fontfile='{tsfont}':text='{ptshms}':"
+            f"fontcolor={self.fontcolor}:shadowcolor={self.shadowcolor}:"
+            f"shadowx=1:shadowy=1:{fontsize}:"
+            f"box={self.boxenabled}:boxcolor={self.boxcolor}:"
+            f"x=(w-tw)/2:y=h-(2*lh)"
         )
 
         return timestamp
