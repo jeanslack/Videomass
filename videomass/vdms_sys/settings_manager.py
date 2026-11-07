@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.31.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
  This file is part of Videomass.
 
@@ -153,7 +153,7 @@ class ConfigManager:
 
     """
 
-    VERSION = 8.5
+    VERSION = 8.6
     DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
         "confversion": VERSION,
         "shutdown": False,
@@ -184,6 +184,8 @@ class ConfigManager:
         "locale_name": "Default",
         "prstmng_column_width": [250, 350, 200, 220],
         "filedrop_column_width": [30, 200, 200, 200, 150, 200],
+        "timeline_window_show": True,
+        "timeline_window_pos": [2, 2],
     }
 
     def __init__(self, filename, makeportable=None):

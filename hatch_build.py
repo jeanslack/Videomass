@@ -8,7 +8,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.12.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -53,14 +53,9 @@ class VideomassLanguageBuildHook(BuildHookInterface):
         if not localedir.exists():
             return
 
-        print(f'\nCompiling directory: "{localedir}"\n')
-
         for po_path in localedir.rglob("*.po"):
             mo_path = po_path.with_suffix(".mo")
-            print(
-                f'Compiling "{po_path.replace(localedir, "")}" '
-                f'to "{mo_path.replace(localedir, "")}"...'
-            )
+
             with open(po_path, "r", encoding="utf-8") as po_file:
                 catalog = read_po(po_file)
 

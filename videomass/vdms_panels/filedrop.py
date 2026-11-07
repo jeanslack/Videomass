@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.31.2026
-Code checker: flake8, pylint
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -552,18 +552,22 @@ class FileDnD(wx.Panel):
                 self,
             )
             return
+
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
-
         autoexit = "-autoexit" if self.parent.autoexit else ""
-        if self.parent.checktimestamp:
-            args = (
-                f'{autoexit} -i "{item}" '
-                f"{self.parent.time_seq} "
-                f'-vf "{self.parent.cmdtimestamp}"'
-            )
-        else:
-            args = f'{autoexit} -i "{item}" {self.parent.time_seq}'
+        ts = self.parent.cmdtimestamp if self.parent.checktimestamp else None
+        tstamp = f'-vf "{ts}"' if ts is not None else ""
+
+        args = (
+            f'"{self.appdata["ffplay_cmd"]}" '
+            f"{self.appdata['ffplay-default-args']} "
+            f"{self.appdata['ffplay_loglev']} "
+            f'{autoexit} -i "{item}" '
+            f"{self.parent.time_seq} "
+            f"{tstamp}"
+        )
+
         try:
             with open(item, encoding="utf-8"):
                 playback = FilePlay(self.GetParent(), args)
