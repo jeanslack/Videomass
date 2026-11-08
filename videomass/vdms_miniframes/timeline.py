@@ -195,7 +195,7 @@ class Float_TL(wx.MiniFrame):
     BLACK = "#060505"  # black for background status bar
     ORANGE = "#f28924"  # for errors and warnings
     LGREEN = "#52EE7D"
-    RULER_BKGRD = "#646d6f"  # GREY ruler background
+    RULER_BKGRD = "#646D6F"  # GREY ruler background
     DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
     SELECTION = (0, 245, 212, 40)  # semi-transparent Mint Green, inner area
     DURATION_RESET = "#E6FFFC"  # Cyan-white for the initial time text
@@ -205,7 +205,7 @@ class Float_TL(wx.MiniFrame):
     SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
     TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
     # --- BTN readme
-    READMEGREEN = "#52ee7d"  # readme btn background
+    READMEGREEN = "#80C058"  # readme btn background
     READMEBLACK = "#1f1f1f"  # readme btn foreground
 
     # ruler and panel specifications constants
@@ -307,7 +307,7 @@ class Float_TL(wx.MiniFrame):
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
         sizer_btns.Add(self.btn_wave, 0, wx.LEFT | wx.CENTRE, 20)
         btn_readme = wx.Button(
-            self.panelbase, wx.ID_ANY, _("Read me"), size=(-1, -1)
+            self.panelbase, wx.ID_ANY, _("Quick Tip"), size=(-1, -1)
         )
         btn_readme.SetBackgroundColour(wx.Colour(Float_TL.READMEGREEN))
         btn_readme.SetForegroundColour(wx.Colour(Float_TL.READMEBLACK))
@@ -354,7 +354,7 @@ class Float_TL(wx.MiniFrame):
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
 
         # ---------------------- disable all controls by default
-        self.panelbase.Disable()
+        # self.panelbase.Disable()
 
         # ---------------------- Tooltips
         tip = _("End adjustment")
@@ -394,9 +394,32 @@ class Float_TL(wx.MiniFrame):
         self.panelruler.Bind(wx.EVT_MOTION, self.on_move)
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
+        self.set_ui_ctrl(state=False)
+        self.panelruler.Refresh()
+
         pub.subscribe(self.set_values, "RESET_ON_CHANGED_LIST")
         pub.subscribe(self.update_counter_thread, "UPDATE_PLAY_COUNTER")
         pub.subscribe(self.end_playback_thread, "END_PLAY")
+
+    def set_ui_ctrl(self, state=True):
+        """
+        Enable or disable the graphical user interface controls.
+        Accetta True per attivare o False per disattivare i widget.
+        """
+        # 2. Lista dei widget da aggiornare in blocco
+        widgets = [
+            self.btn_play,
+            self.btn_wave,
+            self.btn_tstart,
+            self.btn_reset,
+            self.btn_tend,
+            self.panelruler,
+        ]
+        for widget in widgets:
+            if widget:
+                widget.Enable(state)
+
+    # ------------------------------------------------------------------#
 
     def file_selection(self):
         """
@@ -511,8 +534,7 @@ class Float_TL(wx.MiniFrame):
         args = (
             f'"{Float_TL.get.appset["ffplay_cmd"]}" '
             f"{Float_TL.get.appset['ffplay-default-args']} "
-            # f"{Float_TL.get.appset['ffplay_loglev']} "
-            f"-loglevel info "
+            f"-loglevel info "  # this is mandatory here
             f'-autoexit -i "{filesel}" '
             f"{self.parent.time_seq} "
             f'-vf "{scalef}{tstamp}"'
@@ -535,11 +557,7 @@ class Float_TL(wx.MiniFrame):
             )
             return
 
-        self.btn_play.Disable()
-        self.btn_tstart.Disable()
-        self.btn_reset.Disable()
-        self.btn_tend.Disable()
-        self.panelruler.Disable()
+        self.set_ui_ctrl(False)
         self.playpoint = round(self.bar_x)
 
     # ----------------------------------------------------------------------
@@ -629,12 +647,7 @@ class Float_TL(wx.MiniFrame):
 
         def reset_gui():
             # Enables cmponents of the timeline
-            self.panelruler.Enable()
-            self.btn_play.Enable()
-            self.btn_tstart.Enable()
-            self.btn_reset.Enable()
-            self.btn_tend.Enable()
-
+            self.set_ui_ctrl(True)
             # Move the cursor back to the beginning of the segment (bar_x)
             self.playpoint = round(self.bar_x)
             self.panelruler.Refresh()
@@ -680,7 +693,7 @@ class Float_TL(wx.MiniFrame):
 
     def on_help(self, event):
         """
-        Event clicking on button Read me.
+        Event clicking on button Quick Tip.
         """
         msg = _(
             "The timeline editor allows you to trim slices of time on "
@@ -699,13 +712,7 @@ class Float_TL(wx.MiniFrame):
             "deselecting files."
         )
 
-        win = NormalTransientPopup(
-            self,
-            wx.SIMPLE_BORDER,
-            msg,
-            Float_TL.READMEGREEN,
-            Float_TL.READMEBLACK,
-        )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg)
 
         # Show the popup right below or above the button
         # depending on available screen space...
@@ -748,20 +755,22 @@ class Float_TL(wx.MiniFrame):
         subscribing "RESET_ON_CHANGED_LIST" by adding, selecting or
         removing imported files (see`filedrop.py`).
         """
+
         self.sourcedur = _("No source duration:")
         if msg is None:
             self.milliseconds = 86399999
             self.overalltime = "00:00:00.000"
-            self.panelbase.Disable()
+            self.set_ui_ctrl(False)
+
         else:
             if self.duration[msg] < 100:
                 self.milliseconds = 86399999
-                self.panelbase.Disable()
+                self.set_ui_ctrl(False)
                 self.overalltime = "00:00:00.000"
             else:
                 self.milliseconds = self.duration[msg]
                 self.sourcedur = _("Source duration:")
-                self.panelbase.Enable()
+                self.set_ui_ctrl(True)
                 self.overalltime = integer_to_time(self.milliseconds)
 
         self.btn_wave.SetValue(False)

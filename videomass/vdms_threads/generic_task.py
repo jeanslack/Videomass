@@ -118,6 +118,7 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
                 stdin=subprocess.PIPE,
                 text=True,
                 encoding=self.appdata["encoding"],
+                errors="replace",
                 creationflags=self.creationflags,
             ) as self.process:
                 for line in self.process.stderr:
@@ -228,6 +229,7 @@ class FFmpegGenericTask(Thread):
                 stderr=subprocess.PIPE,
                 text=True,
                 encoding=self.appdata["encoding"],
+                errors="replace",
                 creationflags=self.creationflags,
             ) as proc:
                 output = proc.communicate()[1]

@@ -92,7 +92,7 @@ class Conc_Demuxer(wx.Panel):
 
     """
 
-    LGREEN = "#52ee7d"
+    LGREEN = "#80C058"
     BLACK = "#1f1f1f"
     MSG_1 = _(
         "\n- The concatenation function is performed only with "
@@ -129,7 +129,7 @@ class Conc_Demuxer(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)
@@ -178,13 +178,7 @@ class Conc_Demuxer(wx.Panel):
         """
         event on button help
         """
-        win = NormalTransientPopup(
-            self,
-            wx.SIMPLE_BORDER,
-            Conc_Demuxer.MSG_1,
-            Conc_Demuxer.LGREEN,
-            Conc_Demuxer.BLACK,
-        )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, Conc_Demuxer.MSG_1)
 
         # Show the popup right below or above the button
         # depending on available screen space...

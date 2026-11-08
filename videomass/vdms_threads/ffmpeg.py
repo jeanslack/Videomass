@@ -405,6 +405,7 @@ class FFmpeg(BaseVideomassThread):
                     bufsize=1,
                     text=True,
                     encoding=self.appdata["encoding"],
+                    errors="replace",
                     creationflags=self.creationflags,
                 ) as self.process:
                     for line in self.process.stderr:
@@ -520,6 +521,7 @@ class FFmpeg(BaseVideomassThread):
                 bufsize=1,
                 text=True,
                 encoding=self.appdata["encoding"],
+                errors="replace",
                 creationflags=self.creationflags,
             ) as self.process:
                 for line2 in self.process.stderr:

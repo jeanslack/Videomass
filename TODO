@@ -11,6 +11,8 @@ URGENCY: to do soon
 
 - Make function to build arguments from string to list and vice-versa using `subprocess.list2cmdline`
 
+- Testare la corretta uscita dalle finestre videomass e ffplay usando il thread dedicato per Windows (riproduzione anteprima su timeline)
+
 
 --------------
 URGENCY: high

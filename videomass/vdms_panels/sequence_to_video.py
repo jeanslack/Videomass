@@ -77,7 +77,7 @@ class SequenceToVideo(wx.Panel):
     """
 
     VIOLET = "#D64E93"
-    LGREEN = "#52ee7d"
+    LGREEN = "#80C058"
     BLACK = "#1f1f1f"
     MSG_1 = _(
         "\n1. Import one or more image files such as JPG, PNG and BMP "
@@ -129,7 +129,7 @@ class SequenceToVideo(wx.Panel):
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        btn_help = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
         btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
         btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
         sizer.Add(btn_help, 0, wx.ALL, 5)
@@ -289,8 +289,6 @@ class SequenceToVideo(wx.Panel):
             self,
             wx.SIMPLE_BORDER,
             SequenceToVideo.MSG_1,
-            SequenceToVideo.LGREEN,
-            SequenceToVideo.BLACK,
         )
 
         # Show the popup right below or above the button

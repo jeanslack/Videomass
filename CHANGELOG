@@ -27,7 +27,7 @@ Sat, 07 November 2026 v6.1.24
   * Improved `NormalTransientPopup` class: it now supports automatic line
     wrapping - based on a width in pixels specified as an integer argument -
     for the text displayed in the popup.
-  * Updated help clicking on "Read me" button for Resize filter.
+  * Updated help clicking on "Quick Tip" button for Resize filter.
   * Code refactoring performed on the following files: gui_app.py [ OnExit(),
     auto_restart() ], utils.py [ open_default_application(),
     format_bytes(), to_bytes(), time_to_integer(), integer_to_time(),
@@ -57,6 +57,7 @@ Sat, 07 November 2026 v6.1.24
     few resources, and performs in a consistent and fluid manner.
   * Improved waveform visualization in the timeline, in addition to other
     cosmetic enhancements applied.
+  * Improved display of Quick Tips (formerly "Read me" buttons).
   * Improved code for Python >= 3.11 compatibility using Ruff linter.
   * Improved project.toml file to make linter rules more consistent and
     centralized

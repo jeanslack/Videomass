@@ -46,7 +46,7 @@ class FFmpegHelp(wx.Dialog):
 
     """
 
-    LGREEN = "#52ee7d"
+    LGREEN = "#80C058"
     BLACK = "#1f1f1f"
     HELPTOPIC = _(
         "Contextual help based on the argument entered in the "
@@ -131,7 +131,7 @@ class FFmpegHelp(wx.Dialog):
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(boxshow, 0, wx.ALL, 5)
 
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
         btn_readme.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
         btn_readme.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
         boxshow.Add(
@@ -308,9 +308,7 @@ class FFmpegHelp(wx.Dialog):
             "feature,\nit's likely that your version of FFmpeg is "
             "too old or not configured\nwith those features."
         )
-        win = NormalTransientPopup(
-            self, wx.SIMPLE_BORDER, msg, FFmpegHelp.LGREEN, FFmpegHelp.BLACK
-        )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg)
 
         # Show the popup right below or above the button
         # depending on available screen space...

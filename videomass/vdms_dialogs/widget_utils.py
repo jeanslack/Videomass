@@ -39,7 +39,13 @@ class NormalTransientPopup(wx.PopupTransientWindow):
     """
 
     def __init__(
-        self, parent, style, message, backgrdcol, foregrdcol, wrap=-1
+        self,
+        parent,
+        style,
+        message,
+        backgrdcol="#646D6F",
+        foregrdcol="#80C058",
+        wrap=-1,
     ):
         """
         Some word on these parameters:
@@ -50,18 +56,23 @@ class NormalTransientPopup(wx.PopupTransientWindow):
           for the text displayed in the popup.
         """
         wx.PopupTransientWindow.__init__(self, parent, style)
-        panel = wx.Panel(self)
+        panel = wx.Panel(self, style=wx.BORDER_SIMPLE)
         panel.SetBackgroundColour(backgrdcol)
         st = wx.StaticText(panel, -1, message)
+
         if wrap > -1:
             st.Wrap(wrap)
         st.SetForegroundColour(wx.Colour(foregrdcol))
+
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(st, 0, wx.ALL, 5)
         panel.SetSizer(sizer)
 
-        sizer.Fit(panel)
-        sizer.Fit(self)
+        popup_sizer = wx.BoxSizer(wx.VERTICAL)
+        popup_sizer.Add(panel, 1, wx.EXPAND | wx.ALL, 1)
+
+        self.SetSizer(popup_sizer)
+        popup_sizer.Fit(self)
         self.Layout()
 
 

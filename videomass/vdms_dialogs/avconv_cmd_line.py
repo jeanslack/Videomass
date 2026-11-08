@@ -42,7 +42,7 @@ class Raw_Cmd_Line(wx.Dialog):
     APPDATA = get.appset
     PASS_1 = _("First pass command")
     PASS_2 = _("Second pass command")
-    LGREEN = "#52ee7d"
+    LGREEN = "#80C058"
     BLACK = "#1f1f1f"
     # ------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ class Raw_Cmd_Line(wx.Dialog):
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(boxshow, 0, wx.ALL, 5)
 
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
         btn_readme.SetBackgroundColour(wx.Colour(Raw_Cmd_Line.LGREEN))
         btn_readme.SetForegroundColour(wx.Colour(Raw_Cmd_Line.BLACK))
         boxshow.Add(
@@ -266,13 +266,7 @@ class Raw_Cmd_Line(wx.Dialog):
             "markers highlighted in red should be replaced with the\n"
             "values given by the output of the first command."
         )
-        win = NormalTransientPopup(
-            self,
-            wx.SIMPLE_BORDER,
-            msg,
-            Raw_Cmd_Line.LGREEN,
-            Raw_Cmd_Line.BLACK,
-        )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg)
 
         # Show the popup right below or above the button
         # depending on available screen space...

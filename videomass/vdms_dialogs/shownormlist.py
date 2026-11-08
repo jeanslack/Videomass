@@ -100,7 +100,7 @@ class AudioVolNormal(wx.Dialog):
         sizer.Add(grid_list, 0, wx.ALL, 5)
 
         self.btn_red = wx.Button(
-            self.panel, wx.ID_ANY, _("Read me"), size=(-1, -1)
+            self.panel, wx.ID_ANY, _("Quick Tip"), size=(-1, -1)
         )
         self.btn_red.SetBackgroundColour(wx.Colour(self.red))
         grid_list.Add(self.btn_red, 1, wx.ALL, 5)
@@ -112,7 +112,7 @@ class AudioVolNormal(wx.Dialog):
             5,
         )
         self.btn_blue = wx.Button(
-            self.panel, wx.ID_ANY, _("Read me"), size=(-1, -1)
+            self.panel, wx.ID_ANY, _("Quick Tip"), size=(-1, -1)
         )
         self.btn_blue.SetBackgroundColour(wx.Colour(self.blue))
         grid_list.Add(self.btn_blue, 1, wx.ALL, 5)
@@ -124,7 +124,7 @@ class AudioVolNormal(wx.Dialog):
             5,
         )
         self.btn_yell = wx.Button(
-            self.panel, wx.ID_ANY, _("Read me"), size=(-1, -1)
+            self.panel, wx.ID_ANY, _("Quick Tip"), size=(-1, -1)
         )
         self.btn_yell.SetBackgroundColour(wx.Colour(self.yellow))
         grid_list.Add(self.btn_yell, 1, wx.ALL, 5)

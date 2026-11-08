@@ -110,6 +110,7 @@ class ConcatDemuxer(BaseVideomassThread):
                 bufsize=1,
                 text=True,
                 encoding=self.appdata["encoding"],
+                errors="replace",
                 creationflags=self.creationflags,
             ) as self.process:
                 for line in self.process.stderr:

@@ -185,18 +185,18 @@ def get_color_scheme(theme):
     """
     if theme == "Videomass-Colours":
         c_scheme = {
-            "BACKGRD": "#8dc6c2",  # Ciano: background color
-            "TXT0": "#d01d7a",  # Magenta: titles & end messages)
-            "TXT1": "#ae11db",  # Purple for debug and others
-            "ERR0": "#FF4A1B",  # ORANGE: errors 1 and others
-            "WARN": "#7b6e01",  # YELLOW: warnings
-            "ERR1": "#EA312D",  # LIGHTRED: errors 2
-            "SUCCESS": "#017001",  # Light GREEN: successful
-            "TXT3": "#333333",  # Dark grey: standard text
-            "INFO": "#194c7e",  # Blue: other info messages
-            "DEBUG": "#333333",  # light green
-            "FAILED": "#D21814",  # RED_DEEP if failed
-            "ABORT": "#A41EA4",  # RED_DEEP if abort
+            "BACKGRD": "#646D6F",  # GRAY: background color
+            "TXT0": "#00F5D4",  #  SAT.MINT GREEN: titles & end messages)
+            "TXT1": "#ae11db",  # PURPLE for debug and others
+            "ERR0": "#C40804",  # RED_DEEP: errors 1 and others
+            "WARN": "#C1AF16",  # YELLOW: warnings
+            "ERR1": "#C40804",  # RED_DEEP: errors 2
+            "SUCCESS": "#0DE40D",  # GREEN: successful
+            "TXT3": "#E6FFFC",  # CYAN-WHITE: standard text
+            "INFO": "#194c7e",  # BLUE: other info messages
+            "DEBUG": "#333333",  # LIGHT GREEN
+            "FAILED": "#C40804",  # RED_DEEP if failed
+            "ABORT": "#A41EA4",  # SAT.MAGENTA if abort
         }
     elif theme == "Videomass-Dark":
         c_scheme = {
@@ -206,10 +206,10 @@ def get_color_scheme(theme):
             "ERR0": "#FF4A1B",  # ORANGE for error text messages
             "WARN": "#dfb72f",  # YELLOW for warning text messages
             "ERR1": "#EA312D",  # LIGHTRED for errors 2
-            "SUCCESS": "#30ec30",  # Light GREEN when it is successful
+            "SUCCESS": "#30EC30",  # Light GREEN when it is successful
             "TXT3": "#11b584",  # medium green
-            "INFO": "#118db5",  # AZURE
-            "DEBUG": "#0ce3ac",  # light green
+            "INFO": "#118DB5",  # AZURE
+            "DEBUG": "#0CE3AC",  # light green
             "FAILED": "#D21814",  # RED_DEEP if failed
             "ABORT": "#A41EA4",  # VIOLET the user stops the processes
         }

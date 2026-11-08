@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 
 import os
+import re
 import time
 from shutil import move
 
@@ -266,7 +267,15 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f"{output}")
 
         elif [
-            x for x in ("Failed", "failed", "Error", "error") if x in output
+            x
+            for x in (
+                "Failed",
+                "failed",
+                "Conversion failed!",
+                "Error",
+                "error",
+            )
+            if x in output
         ]:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ERR0"]))
             self.txtout.AppendText(f"{output}")
@@ -299,37 +308,51 @@ class LogOut(wx.Panel):
             return  # must be return here
 
         if "time=" in output:  # ...in processing
-            i = output.index("time=") + 5
-            pos = output[i:].split()[0]
-            msec = time_to_integer(pos)
+            pairs = re.findall(r"(\w+)=\s*([^\s]+)", output)
+            data = dict(pairs)
+
+            t_str = data.get("time")
+            if not t_str:
+                return
+
+            try:
+                msec = time_to_integer(t_str)
+            except (ValueError, IndexError):
+                return
 
             if msec > duration:
                 self.barprog.SetValue(duration)
-            elif msec == 0:
-                self.barprog.SetValue(self.barprog.GetValue())
-            else:
+            elif msec > 0:
                 self.barprog.SetValue(msec)
 
             percentage = round(
                 (msec / duration) * 100 if duration != 0 else 100
             )
-            out = [a for a in "=".join(output.split()).split("=") if a]
-            ffprog = []
-            for key, val in pairwise(out):
-                ffprog.append(f"{key}: {val}")
+            ffprog = [f"{k}: {v}" for k, v in data.items()]
+
+            # ETA
+            eta = ""
             if self.with_eta:
-                if "speed=" in output:
-                    speed = output.split("speed=")[-1].strip().split("x")[0]
-                    if speed in ("N/A", "0") or "N/A" in speed:
-                        eta = "   ETA: N/A"
-                    else:  # is float
-                        rem = (duration - msec) / float(speed)
-                        remaining = integer_to_time(round(rem))
-                        eta = f"   ETA: {remaining}"
-                else:
+                speed_str = data.get("speed", "N/A").replace("x", "").strip()
+
+                if (
+                    speed_str in ("N/A", "0")
+                    or "N/A" in speed_str
+                    or not speed_str
+                ):
                     eta = "   ETA: N/A"
-            else:
-                eta = ""
+                else:
+                    try:
+                        speed_float = float(speed_str)
+                        if speed_float > 0:
+                            rem = (duration - msec) / speed_float
+                            remaining = integer_to_time(round(rem))
+                            eta = f"   ETA: {remaining}"
+                        else:
+                            eta = "   ETA: N/A"
+                    except ValueError:
+                        eta = "   ETA: N/A"
+
             self.labprog.SetLabel(f"Processing: {int(percentage)}% {eta}")
             self.labffmpeg.SetLabel(" | ".join(ffprog))
 

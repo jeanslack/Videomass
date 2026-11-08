@@ -118,6 +118,7 @@ class VolumeDetectThread(BaseVideomassThread):
                     bufsize=1,
                     text=True,
                     encoding=self.appdata["encoding"],
+                    errors="replace",
                     creationflags=self.creationflags,
                 ) as self.process:
                     meanv, maxv = "", ""

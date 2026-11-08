@@ -212,7 +212,9 @@ def to_bytes(string):
 # ------------------------------------------------------------------------
 
 
-def time_to_integer(timef: str = "0", sec=False, rnd=False) -> int:
+def time_to_integer(
+    timef: str = "0", sec: bool = False, rnd: bool = False
+) -> int:
     """
     Converts strings representing the 24-hour format to an
     integer equivalent to the time duration in milliseconds
@@ -246,6 +248,20 @@ def time_to_integer(timef: str = "0", sec=False, rnd=False) -> int:
     if not isinstance(timef, str):
         raise TypeError("Only a string (str) object is expected.")
 
+    # removes any whitespace at the sides of the string
+    timef = timef.strip()
+
+    # If the string does not contain ":" (e.g. "00.00")
+    if ":" not in timef:
+        try:
+            total_seconds = float(timef)
+            total_ms = total_seconds * 1000
+            if rnd:
+                return round(total_ms / 1000) if sec else round(total_ms)
+            return int(total_seconds) if sec else int(total_ms)
+        except ValueError:
+            return 0
+
     # adds leading zeros to fill up possibly non-existing fields.
     hours, minutes, seconds = (["0", "0"] + timef.split(":"))[-3:]
 
@@ -256,7 +272,7 @@ def time_to_integer(timef: str = "0", sec=False, rnd=False) -> int:
     except ValueError:
         return 0
 
-    # Calculates absolute total in millisenconds first
+    # Calculates absolute total in millisenconds
     total_ms = (h_val * 3600000) + (m_val * 60000) + (s_val * 1000)
 
     if rnd:
@@ -274,7 +290,9 @@ def time_to_integer(timef: str = "0", sec=False, rnd=False) -> int:
 # ------------------------------------------------------------------------
 
 
-def integer_to_time(integer: int = 0, mills=True, rnd=False) -> str:
+def integer_to_time(
+    integer: int = 0, mills: bool = True, rnd: bool = False
+) -> str:
     """
     Converts integers to 24-hour clock format calculating in
     sexagesimal format. Accept an `int` object, such as 2998.
@@ -318,14 +336,13 @@ def integer_to_time(integer: int = 0, mills=True, rnd=False) -> str:
     minutes, sec_remainder = divmod(integer, 60000)
     hours, minutes = divmod(minutes, 60)
 
-    if mills:
-        seconds_float = float(sec_remainder) / 1000
-        return f"{hours:02}:{minutes:02}:{seconds_float:06.3f}"
+    # avoid offset-related issues with floats
+    seconds_int, ms_int = divmod(sec_remainder, 1000)
 
-    # here, the value has already been rounded at an earlier
-    # stage (if rnd=True), or it should simply be truncated
-    seconds_int = int(sec_remainder / 1000)
-    return f"{hours:02}:{minutes:02}:{seconds_int:02}"
+    if mills:
+        return f"{hours:02d}:{minutes:02d}:{seconds_int:02d}.{ms_int:03d}"
+
+    return f"{hours:02d}:{minutes:02d}:{seconds_int:02d}"
 
 
 # ------------------------------------------------------------------------

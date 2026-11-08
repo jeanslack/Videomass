@@ -46,7 +46,7 @@ class Scale(wx.Dialog):
 
     """
 
-    LGREEN = "#52ee7d"
+    LGREEN = "#80C058"
     BLACK = "#1f1f1f"
     get = wx.GetApp()
     appdata = get.appset
@@ -77,7 +77,7 @@ class Scale(wx.Dialog):
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         grid_opt = wx.BoxSizer(wx.HORIZONTAL)
         sizerBase.Add(grid_opt, 0)
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
         btn_readme.SetBackgroundColour(wx.Colour(Scale.LGREEN))
         btn_readme.SetForegroundColour(wx.Colour(Scale.BLACK))
         grid_opt.Add(btn_readme, 0, wx.CENTER | wx.ALL, 5)
@@ -399,7 +399,7 @@ class Scale(wx.Dialog):
 
     def on_readme(self, event):
         """
-        event on button Read me
+        event on button Quick Tip
         """
         msg = _(
             "If you want to maintain the aspect ratio, select "
@@ -414,9 +414,7 @@ class Scale(wx.Dialog):
             "-2, so you should do some testing first.\n\nClick the Help "
             "button for full documentation on this filter."
         )
-        win = NormalTransientPopup(
-            self, wx.SIMPLE_BORDER, msg, Scale.LGREEN, Scale.BLACK, wrap=500
-        )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)
         # Show the popup right below or above the button
         # depending on available screen space...
         btn = event.GetEventObject()
