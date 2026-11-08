@@ -52,12 +52,15 @@ Sat, 07 November 2026 v6.1.24
     in these scenarios, ensuring that all running instances are terminated
     when the application's main window is closed.
   * Fixed a timeline portability issue; segment playback is now available on
-    Windows as well.
+    Windows as well (Testing on macOS still needs to be done by someone).
   * Improved the timeline’s graphics engine; it is thread-safe, consumes very
     few resources, and performs in a consistent and fluid manner.
   * Improved waveform visualization in the timeline, in addition to other
     cosmetic enhancements applied.
   * Improved display of Quick Tips (formerly "Read me" buttons).
+  * Improved the graphics engine in the Crop filter window in A/V Conversions.
+    Mouse actions will now be even smoother with significant CPU savings at the
+    end of events.
   * Improved code for Python >= 3.11 compatibility using Ruff linter.
   * Improved project.toml file to make linter rules more consistent and
     centralized

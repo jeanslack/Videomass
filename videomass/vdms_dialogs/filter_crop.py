@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.01.2026
+Rev: Nov.08.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -59,9 +59,9 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     """
     This class is useful for drawing a rubberband rectangle
     over a static bitmap using DC to select specific areas
-    on an image. Implements the ability to draw with mouse
-    movements or by dynamically passing the coordinates to the
-    `onRedraw` method.
+    on an image. Implements the ability to draw areas with mouse
+    movements and/or by dynamically set the coordinates to the
+    `self.rect` attribute.
 
     Inspired by an explanation by Robin Dunn, where he discusses
     how to rotate images with DC:
@@ -80,14 +80,20 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         a parent and a bitmap. First make sure you scale the
         image to fit on parent, e.g. a panel.
         """
-        self.rect = 0, 0, 0, 0  # x,y,w,h coords
+        get = wx.GetApp()
+        self.ostype = get.appset["ostype"]
+        self.rect = wx.Rect(0, 0, 0, 0)  # x,y,w,h coords
         self.startpos = 0, 0  # start x,y axis on initial clicked
-        self.bc = (255, 0, 0, 255)  # background color
+        self.bc = wx.Colour(255, 0, 0, 255)  # background color
 
         wx.lib.statbmp.GenStaticBitmap.__init__(
             self, parent, -1, bitmap, **kwargs
         )
         self.bitmap = bitmap
+
+        if self.ostype == "Windows":
+            # Reduces natively the flickering only on windows
+            self.SetDoubleBuffered(True)
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_MOTION, self.on_move)
@@ -105,6 +111,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         self.CaptureMouse()
         self.startpos = event.GetPosition()
+        event.Skip()
 
     # ------------------------------------------------------------------#
 
@@ -114,9 +121,10 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         coordinates points for drawing the rectangle.
         """
         if event.Dragging() and event.LeftIsDown():
-            rect = wx.Rect(self.startpos, event.GetPosition())
-            pub.sendMessage("TO_REAL_SCALE", msg=rect)
-            self.onRedraw(rect)
+            self.rect = wx.Rect(self.startpos, event.GetPosition())
+            pub.sendMessage("TO_REAL_SCALE", msg=self.rect)
+            self.Refresh()  # needed on wayland to make it work
+        event.Skip()
 
     # ------------------------------------------------------------------#
 
@@ -126,40 +134,43 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         if self.HasCapture():
             self.ReleaseMouse()
-        self.startpos = 0, 0
+        event.Skip()
 
     # ------------------------------------------------------------------#
 
-    def OnPaint(self, event=None):
+    def OnPaint(self, event):
         """
         This event is always needed to repaint the area
         during window changes, i.e. startup, reopening,
         resizing, and hiding.
-        """
-        wx.PaintDC(self)  # draw window boundary
-        self.Refresh()  # needed on wayland to make it work
-        self.onRedraw(self.rect)
-
-    # ------------------------------------------------------------------#
-
-    def onRedraw(self, rect):
-        """
         Updates the coordinates of the rectangle selection area
         redrawing the bitmap object. The brush color (for the box's
-        interior) it has the same colour as pen color but 40%
-        transparency.
+        interior) it has the same colour as pen color but 20%
+        transparency. You can change this value e.g: 102 (40%), 64 (25%),
+        51 (20%), 38 (15%) see `bcolor` below.
+
         """
-        self.rect = rect
-        dc = wx.ClientDC(self)
-        if "wxMac" not in wx.PlatformInfo:
-            self.SetDoubleBuffered(True)  # prevents flickers
+
+        # Initialize the multi-platforms graphics context
+        dc = wx.PaintDC(self)
+        if self.ostype != "Darwin":
             dc = wx.GCDC(dc)  # needed for brush transparency
+
         dc.Clear()
-        dc.DrawBitmap(self.bitmap, 0, 0, True)
-        dc.SetPen(wx.Pen(self.bc, 1, wx.PENSTYLE_SOLID))
-        bcolor = wx.Colour(self.bc[0], self.bc[1], self.bc[2], 40)
-        dc.SetBrush(wx.Brush(bcolor))
-        dc.DrawRectangle(self.rect)
+
+        # Draw the background bitmap
+        if self.bitmap and self.bitmap.IsOk():
+            dc.DrawBitmap(self.bitmap, 0, 0, True)
+
+        # Draw the selection rectangle
+        if self.rect.IsEmpty() is False:
+            dc.SetPen(wx.Pen(self.bc, 1, wx.PENSTYLE_SOLID))
+            # Fill color with 20% transparency (alpha = 51 out of 255)
+            bcolor = wx.Colour(
+                self.bc.Red(), self.bc.Green(), self.bc.Blue(), 51
+            )
+            dc.SetBrush(wx.Brush(bcolor))
+            dc.DrawRectangle(self.rect)
 
     # ------------------------------------------------------------------#
 
@@ -168,11 +179,11 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         Button event to get color from colourselect dialog
         """
         if color:
-            self.bc = color
+            self.bc = wx.Colour(color)
         else:
-            color = event.GetValue()
-            self.bc = color
-            self.onRedraw(self.rect)
+            # color = event.GetValue()
+            self.bc = wx.Colour(event.GetValue())
+        self.Refresh()  # needed on wayland to make it work
 
     # ------------------------------------------------------------------#
 
@@ -181,7 +192,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         Set a new bitmap object
         """
         self.bitmap = bitmap
-        self.onRedraw(self.rect)
+        self.Refresh()  # needed on wayland to make it work
 
 
 class Crop(wx.Dialog):
@@ -519,8 +530,18 @@ class Crop(wx.Dialog):
         else:
             self.x_dc = self.spin_x.GetValue() * x_scale
 
-        rect = (self.x_dc, self.y_dc, self.w_dc, self.h_dc)
-        self.bob.onRedraw([round(r) for r in rect])
+        # wx.Rect object with rounded float value corrections
+        rect = wx.Rect(
+            round(self.x_dc),
+            round(self.y_dc),
+            round(self.w_dc),
+            round(self.h_dc),
+        )
+        # Update the rect attribute within the Actor instance (self.bob)
+        self.bob.rect = rect
+
+        # redesign the Actor in a cross-platform way (wayland)
+        self.bob.Refresh()
 
     # ------------------------------------------------------------------#
 

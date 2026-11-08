@@ -918,8 +918,9 @@ class Float_TL(wx.MiniFrame):
         display (background), and the real-time red cursor.
         """
         # Initialize the multi-platforms graphics context
-        pdc = wx.PaintDC(self.panelruler)
-        dc = wx.GCDC(pdc)
+        dc = wx.PaintDC(self.panelruler)
+        if Float_TL.OS != "Darwin":
+            dc = wx.GCDC(dc)
 
         # Manual background handling to avoid artifacts with BG_STYLE_PAINT
         bg_color = self.panelruler.GetBackgroundColour()
