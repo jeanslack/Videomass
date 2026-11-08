@@ -186,7 +186,7 @@ def get_color_scheme(theme):
     if theme == "Videomass-Colours":
         c_scheme = {
             "BACKGRD": "#646D6F",  # GRAY: background color
-            "TXT0": "#00F5D4",  #  SAT.MINT GREEN: titles & end messages)
+            "TXT0": "#00F5D4",  # SAT.MINT GREEN: titles & end messages)
             "TXT1": "#ae11db",  # PURPLE for debug and others
             "ERR0": "#C40804",  # RED_DEEP: errors 1 and others
             "WARN": "#C1AF16",  # YELLOW: warnings
