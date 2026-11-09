@@ -306,12 +306,15 @@ class Float_TL(wx.MiniFrame):
         )
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
         sizer_btns.Add(self.btn_wave, 0, wx.LEFT | wx.CENTRE, 20)
-        btn_readme = wx.Button(
-            self.panelbase, wx.ID_ANY, _("Quick Tip"), size=(-1, -1)
+        btn_quicktip = wx.Button(
+            self.panelbase, wx.ID_ANY, _("?"), size=(40, -1)
         )
-        btn_readme.SetBackgroundColour(wx.Colour(Float_TL.READMEGREEN))
-        btn_readme.SetForegroundColour(wx.Colour(Float_TL.READMEBLACK))
-        sizer_btns.Add(btn_readme, 0, wx.LEFT | wx.CENTRE, 20)
+        font = btn_quicktip.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        btn_quicktip.SetFont(font)
+        btn_quicktip.SetBackgroundColour(wx.Colour(Float_TL.READMEGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(Float_TL.READMEBLACK))
+        sizer_btns.Add(btn_quicktip, 0, wx.LEFT | wx.CENTRE, 20)
 
         # ----------------------Properties ----------------------#
         self.panelruler.SetBackgroundColour(wx.Colour(Float_TL.RULER_BKGRD))
@@ -368,7 +371,7 @@ class Float_TL(wx.MiniFrame):
         tip = _("Reset segment on timeline")
         self.btn_reset.SetToolTip(tip)
         tip = _("Timeline Editor Usage")
-        btn_readme.SetToolTip(tip)
+        btn_quicktip.SetToolTip(tip)
         tip = _("Play segment")
         self.btn_play.SetToolTip(tip)
 
@@ -385,7 +388,7 @@ class Float_TL(wx.MiniFrame):
             self.btn_tstart,
         )
         self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_readme)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         self.Bind(wx.EVT_BUTTON, self.on_play_segment, self.btn_play)
         self.panelruler.Bind(wx.EVT_PAINT, self.OnPaint)
         self.panelruler.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)

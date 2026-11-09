@@ -66,11 +66,14 @@ class Raw_Cmd_Line(wx.Dialog):
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(boxshow, 0, wx.ALL, 5)
 
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
-        btn_readme.SetBackgroundColour(wx.Colour(Raw_Cmd_Line.LGREEN))
-        btn_readme.SetForegroundColour(wx.Colour(Raw_Cmd_Line.BLACK))
+        btn_quicktip = wx.Button(self, wx.ID_ANY, _("?"), size=(40, -1))
+        font = btn_quicktip.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        btn_quicktip.SetFont(font)
+        btn_quicktip.SetBackgroundColour(wx.Colour(Raw_Cmd_Line.LGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(Raw_Cmd_Line.BLACK))
         boxshow.Add(
-            btn_readme,
+            btn_quicktip,
             0,
         )
 
@@ -111,7 +114,7 @@ class Raw_Cmd_Line(wx.Dialog):
         self.Layout()
 
         # ----------------------Binder (EVT)----------------------#
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_readme)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # for caption
 

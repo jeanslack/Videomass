@@ -131,11 +131,14 @@ class FFmpegHelp(wx.Dialog):
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(boxshow, 0, wx.ALL, 5)
 
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1))
-        btn_readme.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
-        btn_readme.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
+        btn_quicktip = wx.Button(self, wx.ID_ANY, _("?"), size=(40, -1))
+        font = btn_quicktip.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        btn_quicktip.SetFont(font)
+        btn_quicktip.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
         boxshow.Add(
-            btn_readme,
+            btn_quicktip,
             0,
         )
 
@@ -253,7 +256,7 @@ class FFmpegHelp(wx.Dialog):
         self.Fit()
         self.Layout()
         # --------------- EVT
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_readme)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         if not hasattr(wx, "EVT_SEARCH"):
             self.Bind(
                 wx.EVT_SEARCHCTRL_SEARCH_BTN,

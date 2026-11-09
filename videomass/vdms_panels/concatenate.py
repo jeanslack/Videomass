@@ -129,12 +129,13 @@ class Conc_Demuxer(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(
-            self, wx.ID_ANY, _("Quick Tip"), size=(-1, -1)
-        )
-        self.btn_help.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
-        self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
-        sizer.Add(self.btn_help, 0, wx.ALL, 5)
+        btn_quicktip = wx.Button(self, wx.ID_ANY, _("?"), size=(40, -1))
+        font = btn_quicktip.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        btn_quicktip.SetFont(font)
+        btn_quicktip.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
+        sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link2)
@@ -172,7 +173,7 @@ class Conc_Demuxer(wx.Panel):
             self.lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
 
     # ---------------------------------------------------------
 
