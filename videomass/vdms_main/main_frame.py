@@ -2069,7 +2069,6 @@ class MainFrame(wx.Frame):
 
         [self.toolbar.EnableTool(x, True) for x in (3, 5, 7)]
         self.toolbar.EnableTool(8, False)
-        self.statusbar_msg(_("...Interrupted"), None)
 
         if self.emptylist:
             self.fileDnDTarget.delete_all(self)

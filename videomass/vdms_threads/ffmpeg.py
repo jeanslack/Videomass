@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.30.2026
+Rev: Nov.10.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -372,34 +372,174 @@ class FFmpeg(BaseVideomassThread):
         """
         Run the separated thread.
         """
+        last_gui_update = 0
+        last_file_flush = 0
+        throttle_interval = 0.1
+        flush_interval = 2.0
         filedone = []
-        for kwa in self.kwargs:
-            self.count += 1
-            if kwa["type"] == "One pass":
-                model = simple_one_pass(self.count, self.nargs, **kwa)
 
-            elif kwa["type"] == "Two pass EBU":
-                model = one_pass_ebu(self.count, self.nargs, **kwa)
+        with open(self.logfile, "a", encoding="utf-8") as logfile:
+            for kwa in self.kwargs:
+                self.count += 1
+                if kwa["type"] == "One pass":
+                    model = simple_one_pass(self.count, self.nargs, **kwa)
 
-            elif kwa["type"] == "Two pass VIDSTAB":
-                model = one_pass_stab(self.count, self.nargs, **kwa)
+                elif kwa["type"] == "Two pass EBU":
+                    model = one_pass_ebu(self.count, self.nargs, **kwa)
 
-            elif kwa["type"] == "Two pass":
-                model = one_pass(self.count, self.nargs, **kwa)
-            else:
-                return
+                elif kwa["type"] == "Two pass VIDSTAB":
+                    model = one_pass_stab(self.count, self.nargs, **kwa)
 
-            wx.CallAfter(
-                pub.sendMessage,
-                "COUNT_EVT",
-                count=model["count1"],
-                duration=kwa["duration"],
-                end="CONTINUE",
-            )
-            tolog(model["stamp1"], self.logfile, sep=True, wdate=True)
-            try:
+                elif kwa["type"] == "Two pass":
+                    model = one_pass(self.count, self.nargs, **kwa)
+                else:
+                    return
+
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "COUNT_EVT",
+                    count=model["count1"],
+                    duration=kwa["duration"],
+                    end="CONTINUE",
+                )
+                tolog(
+                    model["stamp1"], logfile, sep=True, wdate=True, openf=False
+                )
+                try:
+                    with subprocess.Popen(
+                        model["pass1"],
+                        stderr=subprocess.PIPE,
+                        stdin=subprocess.PIPE,
+                        bufsize=1,
+                        text=True,
+                        encoding=self.appdata["encoding"],
+                        errors="replace",
+                        creationflags=self.creationflags,
+                    ) as self.process:
+                        for line in self.process.stderr:
+                            logfile.write(f"[FFMPEG]: {line}")
+                            current_time = time.time()
+                            if (
+                                current_time - last_file_flush
+                            ) > flush_interval:
+                                logfile.flush()
+                                last_file_flush = current_time
+                            if (
+                                current_time - last_gui_update
+                            ) > throttle_interval:
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "UPDATE_EVT",
+                                    output=line,
+                                    duration=kwa["duration"],
+                                    status=0,
+                                )
+                                last_gui_update = current_time
+
+                            if kwa["type"] == "Two pass EBU":
+                                summary = model["summary"]
+                                for k in summary:
+                                    if line.startswith(k):
+                                        summary[k] = line.split(":")[
+                                            1
+                                        ].split()[0]
+
+                            if self.stop_work_thread:
+                                if self.fatal:
+                                    return
+                                out = self.process.communicate()[1]
+                                self.process.wait()
+                                stopstr = "[VIDEOMASS]: STOP command received."
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "ERROR_MSG_EVT",
+                                    msg="STOP",
+                                    output=stopstr,
+                                )
+                                logfile.write(f"{out}\n{stopstr}")
+
+                                time.sleep(0.5)
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "END_EVT",
+                                    filetotrash=None,
+                                )
+                                return
+                        time.sleep(2)  # WARNING need time here
+                        exit_code = self.process.poll()
+                        if exit_code is not None:
+                            if exit_code != 0:
+                                errstr = (
+                                    f"[VIDEOMASS]: Failed! Error "
+                                    f"Exit Code: {exit_code}"
+                                )
+                                logfile.write(errstr)
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "ERROR_MSG_EVT",
+                                    msg="FAILED",
+                                    output=errstr,
+                                )
+                                time.sleep(2)
+                                continue  # go to next file
+
+                            else:
+                                if not kwa["args"][1]:
+                                    filedone.append(kwa["source"])
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "COUNT_EVT",
+                                    count="",
+                                    duration=kwa["duration"],
+                                    end="DONE",
+                                )
+                except (OSError, FileNotFoundError) as err:
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "COUNT_EVT",
+                        count=err,
+                        duration=0,
+                        end="ERROR",
+                    )
+                    logfile.write(f"[PYTHON]: error: {err}")
+                    break  # completely exiting from loops
+
+                if not kwa["args"][1]:
+                    continue
+
+                # --------------- second pass ----------------#
+                if kwa["type"] == "Two pass EBU":
+                    filters = (
+                        f"{kwa['EBU']}"
+                        f":measured_I={summary['Input Integrated:']}"
+                        f":measured_LRA={summary['Input LRA:']}"
+                        f":measured_TP={summary['Input True Peak:']}"
+                        f":measured_thresh={summary['Input Threshold:']}"
+                        f":offset={summary['Target Offset:']}"
+                        f":linear=true:dual_mono=true"
+                    )
+                    model = two_pass_ebu(
+                        self.count, self.nargs, filters, **kwa
+                    )
+                    time.sleep(0.5)
+
+                elif kwa["type"] == "Two pass VIDSTAB":
+                    model = two_pass_stab(self.count, self.nargs, **kwa)
+
+                elif kwa["type"] == "Two pass":
+                    model = two_pass(self.count, self.nargs, **kwa)
+
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "COUNT_EVT",
+                    count=model["count2"],
+                    duration=kwa["duration"],
+                    end="CONTINUE",
+                )
+                tolog(model["stamp2"], logfile, openf=False)
+
                 with subprocess.Popen(
-                    model["pass1"],
+                    model["pass2"],
                     stderr=subprocess.PIPE,
                     stdin=subprocess.PIPE,
                     bufsize=1,
@@ -408,175 +548,70 @@ class FFmpeg(BaseVideomassThread):
                     errors="replace",
                     creationflags=self.creationflags,
                 ) as self.process:
-                    for line in self.process.stderr:
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_EVT",
-                            output=line,
-                            duration=kwa["duration"],
-                            status=0,
-                        )
+                    for line2 in self.process.stderr:
+                        logfile.write(f"[FFMPEG]: {line2}")
+                        current_time = time.time()
+                        if (current_time - last_file_flush) > flush_interval:
+                            logfile.flush()
+                            last_file_flush = current_time
+                        if (
+                            current_time - last_gui_update
+                        ) > throttle_interval:
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "UPDATE_EVT",
+                                output=line2,
+                                duration=kwa["duration"],
+                                status=0,
+                            )
+                            last_gui_update = current_time
+
                         if self.stop_work_thread:
                             if self.fatal:
                                 return
                             out = self.process.communicate()[1]
                             self.process.wait()
-
+                            stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "UPDATE_EVT",
-                                output="STOP",
-                                duration=kwa["duration"],
-                                status=1,
+                                "ERROR_MSG_EVT",
+                                msg="STOP",
+                                output=stopstr,
                             )
-                            tolog(out, self.logfile)
+                            logfile.write(f"{out}\n{stopstr}")
 
                             time.sleep(0.5)
                             wx.CallAfter(
                                 pub.sendMessage, "END_EVT", filetotrash=None
                             )
                             return
+                    time.sleep(2)  # WARNING need time here
+                    exit_code = self.process.poll()
+                    if exit_code is not None:
+                        if exit_code != 0:
+                            errstr = (
+                                f"[VIDEOMASS]: Failed! Error "
+                                f"Exit Code: {exit_code}"
+                            )
+                            logfile.write(errstr)
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "ERROR_MSG_EVT",
+                                msg="FAILED",
+                                output=errstr,
+                            )
+                            time.sleep(2)
+                            continue  # go to next file
 
-                        if kwa["type"] == "Two pass EBU":
-                            summary = model["summary"]
-                            for k in summary:
-                                if line.startswith(k):
-                                    summary[k] = line.split(":")[1].split()[0]
-
-                    if self.process.wait():  # ..Failed
-                        out = self.process.communicate()[1]
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_EVT",
-                            output="FAILED",
-                            duration=kwa["duration"],
-                            status=self.process.wait(),
-                        )
-                        tolog(
-                            f"[VIDEOMASS]: Error Exit Status: "
-                            f"{self.process.wait()} {out}",
-                            self.logfile,
-                        )
-                        time.sleep(1)
-                        continue
-
-            except (OSError, FileNotFoundError) as err:
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "COUNT_EVT",
-                    count=err,
-                    duration=0,
-                    end="ERROR",
-                )
-                tolog(err, self.logfile)
-                break
-
-            if self.process.wait() == 0:  # ..Finished
-                if not kwa["args"][1]:
-                    filedone.append(kwa["source"])
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "COUNT_EVT",
-                    count="",
-                    duration=kwa["duration"],
-                    end="DONE",
-                )
-
-            if not kwa["args"][1]:
-                continue
-
-            # --------------- second pass ----------------#
-            if kwa["type"] == "Two pass EBU":
-                filters = (
-                    f"{kwa['EBU']}"
-                    f":measured_I={summary['Input Integrated:']}"
-                    f":measured_LRA={summary['Input LRA:']}"
-                    f":measured_TP={summary['Input True Peak:']}"
-                    f":measured_thresh={summary['Input Threshold:']}"
-                    f":offset={summary['Target Offset:']}"
-                    f":linear=true:dual_mono=true"
-                )
-                model = two_pass_ebu(self.count, self.nargs, filters, **kwa)
-                time.sleep(0.5)
-
-            elif kwa["type"] == "Two pass VIDSTAB":
-                model = two_pass_stab(self.count, self.nargs, **kwa)
-
-            elif kwa["type"] == "Two pass":
-                model = two_pass(self.count, self.nargs, **kwa)
-
-            wx.CallAfter(
-                pub.sendMessage,
-                "COUNT_EVT",
-                count=model["count2"],
-                duration=kwa["duration"],
-                end="CONTINUE",
-            )
-            tolog(model["stamp2"], self.logfile)
-
-            with subprocess.Popen(
-                model["pass2"],
-                stderr=subprocess.PIPE,
-                stdin=subprocess.PIPE,
-                bufsize=1,
-                text=True,
-                encoding=self.appdata["encoding"],
-                errors="replace",
-                creationflags=self.creationflags,
-            ) as self.process:
-                for line2 in self.process.stderr:
-                    wx.CallAfter(
-                        pub.sendMessage,
-                        "UPDATE_EVT",
-                        output=line2,
-                        duration=kwa["duration"],
-                        status=0,
-                    )
-                    if self.stop_work_thread:
-                        if self.fatal:
-                            return
-                        out = self.process.communicate()[1]
-                        self.process.wait()
-
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_EVT",
-                            output="STOP",
-                            duration=kwa["duration"],
-                            status=1,
-                        )
-                        tolog(out, self.logfile)
-                        time.sleep(0.5)
-                        wx.CallAfter(
-                            pub.sendMessage, "END_EVT", filetotrash=None
-                        )
-                        return
-
-                if self.process.wait():  # ..Failed
-                    out = self.process.communicate()[1]
-                    wx.CallAfter(
-                        pub.sendMessage,
-                        "UPDATE_EVT",
-                        output="FAILED",
-                        duration=kwa["duration"],
-                        status=self.process.wait(),
-                    )
-                    tolog(
-                        f"[VIDEOMASS]: Error Exit Status: "
-                        f"{self.process.wait()} {out}",
-                        self.logfile,
-                    )
-                    time.sleep(1)
-                    continue
-
-            if self.process.wait() == 0:  # ..Finished
-                filedone.append(kwa["source"])
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "COUNT_EVT",
-                    count="",
-                    duration=kwa["duration"],
-                    end="DONE",
-                )
-        time.sleep(0.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
+                        else:
+                            if not kwa["args"][1]:
+                                filedone.append(kwa["source"])
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "COUNT_EVT",
+                                count="",
+                                duration=kwa["duration"],
+                                end="DONE",
+                            )
+            time.sleep(0.5)
+            wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
