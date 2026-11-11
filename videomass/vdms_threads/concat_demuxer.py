@@ -85,12 +85,17 @@ class ConcatDemuxer(BaseVideomassThread):
         )
         stamp = f"{count}\n\n[COMMAND]:\n{cmd}"
 
+        # countevt = (
+        #     f"{self.kwa['nmax']} Items in progress...\n...for "
+        #     f"details see Current Log.\nDestination: "
+        #     f'"{self.kwa["destination"]}"'
+        # )
+        strsrc = "\n".join(self.kwa["source"])
         countevt = (
             f"{self.kwa['nmax']} Items in progress...\n...for "
-            f"details see Current Log.\nDestination: "
+            f"details see Current Log.\n\nSource:\n{strsrc}\n\nDestination: "
             f'"{self.kwa["destination"]}"'
         )
-
         wx.CallAfter(
             pub.sendMessage,
             "COUNT_EVT",
@@ -121,6 +126,7 @@ class ConcatDemuxer(BaseVideomassThread):
                             duration=self.kwa["duration"],
                             status=0,
                         )
+                        logfile.write(line)
                         if self.stop_work_thread:
                             if self.fatal:
                                 return
@@ -129,7 +135,7 @@ class ConcatDemuxer(BaseVideomassThread):
                             stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "ERROR_MSG_EVT",
+                                "NOTIFICATIONS_MSG_EVT",
                                 msg="STOP",
                                 output=stopstr,
                             )
@@ -152,7 +158,7 @@ class ConcatDemuxer(BaseVideomassThread):
                         logfile.write(errstr)
                         wx.CallAfter(
                             pub.sendMessage,
-                            "ERROR_MSG_EVT",
+                            "NOTIFICATIONS_MSG_EVT",
                             msg="FAILED",
                             output=errstr,
                         )

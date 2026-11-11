@@ -194,7 +194,7 @@ class LogOut(wx.Panel):
         # ------------------------------------------
         self.Bind(wx.EVT_BUTTON, self.view_log, self.btn_viewlog)
 
-        pub.subscribe(self.append_messages, "ERROR_MSG_EVT")
+        pub.subscribe(self.append_messages, "NOTIFICATIONS_MSG_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -258,21 +258,23 @@ class LogOut(wx.Panel):
 
     def append_messages(self, msg, output):
         """
+        Receive message from thread by pubsub NOTIFICATIONS_MSG_EVT protocol.
         Add brief informative messages regarding the status of processes.
         """
         if msg == "STOP":
-            # msg, color = LogOut.MSG_stop, self.clr["ABORT"]
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ABORT"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_stop}")
             self.parent.statusbar_msg(_("...Interrupted"), None)
-        else:
-            # msg, color = LogOut.MSG_failed, self.clr["ERR1"]
+            self.result.append("failed")
+        elif msg in ("ERROR", "FAILED"):
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ERR1"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_failed}")
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["DEBUG"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_logread}\n")
-
-        self.result.append("failed")
+            self.result.append("failed")
+        elif msg == "INFO":
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["INFO"]))
+            self.txtout.AppendText(output)
 
     # ----------------------------------------------------------------------
 
@@ -344,7 +346,7 @@ class LogOut(wx.Panel):
         if end == "DONE":
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["SUCCESS"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_done}")
-            self.barprog.SetValue(duration)  # fallback if less than duration
+            # self.barprog.SetValue(duration)  # fallback if less than duration
             # set end values for percentage and ETA
             if self.with_eta:
                 newlab = self.labprog.GetLabel().split()

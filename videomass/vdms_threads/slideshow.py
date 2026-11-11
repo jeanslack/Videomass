@@ -47,7 +47,7 @@ def convert_images(*varargs, **kwargs):
     Convert images to PNG format and assign
     progressive digits to them.
     """
-    flist = varargs[0]
+    flist = varargs[0]  # list
     tmpdir = varargs[1]
     logfile = varargs[2]
     imagenames = varargs[3]
@@ -69,63 +69,66 @@ def convert_images(*varargs, **kwargs):
         f"{kwargs['ffmpeg-default-args']} "
         f"{kwargs['ffmpeg_loglev']} "
     )
-    tolog(
-        f"Preparing temporary files...\n\n[COMMAND:]\n{args}",
-        logfile,
-        sep=True,
-        wdate=True,
-    )
-    for prognum, files in enumerate(flist, start=1):
-        tmpf = os.path.join(tmpdir, f"{imagenames}{prognum}.bmp")
-        cmd_1 = f'{args} -i "{files}" "{tmpf}"'
-        cmd_1 = shlex.split(cmd_1) if sys.platform != "win32" else cmd_1
+    with open(logfile, "a", encoding="utf-8") as logf:
+        tolog(
+            f"Preparing temporary files...\n\n[COMMAND:]\n{args}",
+            logf,
+            sep=True,
+            wdate=True,
+            openf=False,
+        )
+        for prognum, files in enumerate(flist, start=1):
+            tmpf = os.path.join(tmpdir, f"{imagenames}{prognum}.bmp")
+            cmd_1 = f'{args} -i "{files}" "{tmpf}"'
+            cmd_1 = shlex.split(cmd_1) if sys.platform != "win32" else cmd_1
 
-        try:
-            with subprocess.Popen(
-                cmd_1,
-                stderr=subprocess.PIPE,
-                bufsize=1,
-                text=True,
-                encoding=kwargs["encoding"],
-                errors="replace",
-                creationflags=creationflags,
-            ) as proc1:
-                error = proc1.communicate()[1]
+            try:
+                with subprocess.Popen(
+                    cmd_1,
+                    stderr=subprocess.PIPE,
+                    bufsize=1,
+                    text=True,
+                    encoding=kwargs["encoding"],
+                    errors="replace",
+                    creationflags=creationflags,
+                ) as proc1:
+                    error = proc1.communicate()[1]
 
-            if proc1.returncode:  # ffmpeg error
-                if error:
+                if proc1.returncode:  # ffmpeg error
+                    if error:
+                        status = (
+                            f"[VIDEOMASS]: Error Exit Status: "
+                            f"{proc1.returncode} {error}"
+                        )
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "NOTIFICATIONS_MSG_EVT",
+                            msg="FAILED",
+                            output=status,
+                        )
+                        logf.write(status)
+                        time.sleep(1)
+                        return error
+
+                else:  # ok
                     wx.CallAfter(
                         pub.sendMessage,
-                        "UPDATE_EVT",
-                        output="FAILED",
-                        duration=0,
-                        status=proc1.wait(),
+                        "NOTIFICATIONS_MSG_EVT",
+                        msg="INFO",
+                        output=f" |{prognum}|  {files}  >  {tmpf}\n",
                     )
-                    tolog(
-                        f"[VIDEOMASS]: Error Exit Status: "
-                        f"{proc1.wait()} {error}",
-                        logfile,
-                    )
-                    time.sleep(1)
-                    return error
+                    logf.write(f" |{prognum}|  {files}  >  {tmpf}\n")
 
-            else:  # ok
+            except (OSError, FileNotFoundError) as err:  # cmd not found
                 wx.CallAfter(
                     pub.sendMessage,
-                    "UPDATE_EVT",
-                    output=f" |{prognum}|  {files}  >  {tmpf}\n",
+                    "COUNT_EVT",
+                    count=err,
                     duration=0,
-                    status=0,
+                    end="ERROR",
                 )
-        except (OSError, FileNotFoundError) as err:  # cmd not found
-            wx.CallAfter(
-                pub.sendMessage,
-                "COUNT_EVT",
-                count=err,
-                duration=0,
-                end="ERROR",
-            )
-            return f"[PYTHON]: error: {err}"
+                logf.write(f"[PYTHON]: error: {err}")
+                return f"[PYTHON]: error: {err}"
 
     time.sleep(0.5)
     wx.CallAfter(
@@ -184,28 +187,28 @@ def resizing_process(*varargs, **kwargs):
 
         if proc1.returncode:  # ffmpeg error
             if error:
+                status = (
+                    f"[VIDEOMASS]: Error Exit Status: "
+                    f"{proc1.returncode} {error}"
+                )
                 wx.CallAfter(
                     pub.sendMessage,
-                    "UPDATE_EVT",
-                    output="FAILED",
-                    duration=0,
-                    status=proc1.wait(),
+                    "NOTIFICATIONS_MSG_EVT",
+                    msg="FAILED",
+                    output=status,
                 )
-                tolog(
-                    f"[VIDEOMASS]: Error Exit Status: {proc1.wait()} {error}",
-                    logfile,
-                )
+                tolog(status, logfile)
                 time.sleep(1)
                 return error
 
         else:  # ok
             wx.CallAfter(
                 pub.sendMessage,
-                "UPDATE_EVT",
-                output="",
-                duration=0,
-                status=0,
+                "NOTIFICATIONS_MSG_EVT",
+                msg="INFO",
+                output="\nResizing completed successfully.\n",
             )
+
             tolog(error, logfile)
             time.sleep(1)
 
@@ -217,6 +220,7 @@ def resizing_process(*varargs, **kwargs):
             duration=0,
             end="ERROR",
         )
+        tolog(f"[PYTHON]: error: {err}", logfile)
         return f"[PYTHON]: error: {err}"
 
     time.sleep(0.5)
@@ -271,7 +275,7 @@ class SlideshowMaker(BaseVideomassThread):
 
                 wx.CallAfter(
                     pub.sendMessage,
-                    "ERROR_MSG_EVT",
+                    "NOTIFICATIONS_MSG_EVT",
                     msg=msg,
                     output=out,
                 )
@@ -298,7 +302,7 @@ class SlideshowMaker(BaseVideomassThread):
 
                     wx.CallAfter(
                         pub.sendMessage,
-                        "ERROR_MSG_EVT",
+                        "NOTIFICATIONS_MSG_EVT",
                         msg=msg,
                         output=out,
                     )
@@ -329,48 +333,50 @@ class SlideshowMaker(BaseVideomassThread):
                 duration=self.duration,
                 end="CONTINUE",
             )
-            tolog(log, self.logfile)
-            time.sleep(1)
+            with open(self.logfile, "a", encoding="utf-8") as logfile:
+                logfile.write(log)
+                time.sleep(1)
 
-            if self.appdata["ostype"] != "win32":
-                cmd_2 = shlex.split(cmd_2)
+                if self.appdata["ostype"] != "win32":
+                    cmd_2 = shlex.split(cmd_2)
 
-            try:
-                with subprocess.Popen(
-                    cmd_2,
-                    stderr=subprocess.PIPE,
-                    stdin=subprocess.PIPE,
-                    bufsize=1,
-                    text=True,
-                    encoding=self.appdata["encoding"],
-                    errors="replace",
-                    creationflags=self.creationflags,
-                ) as self.process:
-                    for line in self.process.stderr:
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_EVT",
-                            output=line,
-                            duration=self.duration,
-                            status=0,
-                        )
-                        if self.stop_work_thread:
-                            if self.fatal:
-                                return
-                            out = self.process.communicate()[1]
-                            self.process.wait()
-
-                            stopstr = "[VIDEOMASS]: STOP command received."
+                try:
+                    with subprocess.Popen(
+                        cmd_2,
+                        stderr=subprocess.PIPE,
+                        stdin=subprocess.PIPE,
+                        bufsize=1,
+                        text=True,
+                        encoding=self.appdata["encoding"],
+                        errors="replace",
+                        creationflags=self.creationflags,
+                    ) as self.process:
+                        for line in self.process.stderr:
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "ERROR_MSG_EVT",
-                                msg="STOP",
-                                output=stopstr,
+                                "UPDATE_EVT",
+                                output=line,
+                                duration=self.duration,
+                                status=0,
                             )
-                            tolog(f"{out}\n{stopstr}", self.logfile)
-                            time.sleep(1)
-                            self.end_process(None)
-                            return
+                            logfile.write(line)
+                            if self.stop_work_thread:
+                                if self.fatal:
+                                    return
+                                out = self.process.communicate()[1]
+                                self.process.wait()
+
+                                stopstr = "[VIDEOMASS]: STOP command received."
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "NOTIFICATIONS_MSG_EVT",
+                                    msg="STOP",
+                                    output=stopstr,
+                                )
+                                logfile.write(f"{out}\n{stopstr}")
+                                time.sleep(1)
+                                self.end_process(None)
+                                return
 
                     exit_code = self.process.wait()
                     if exit_code != 0:  # ffmpeg error
@@ -379,14 +385,10 @@ class SlideshowMaker(BaseVideomassThread):
                             f"[VIDEOMASS]: Failed! Error "
                             f"Exit Code: {exit_code}"
                         )
-                        tolog(
-                            f"[VIDEOMASS]: Error Exit Status: "
-                            f"{exit_code} {out}",
-                            self.logfile,
-                        )
+                        logfile.write(errstr)
                         wx.CallAfter(
                             pub.sendMessage,
-                            "ERROR_MSG_EVT",
+                            "NOTIFICATIONS_MSG_EVT",
                             msg="FAILED",
                             output=errstr,
                         )
@@ -401,15 +403,16 @@ class SlideshowMaker(BaseVideomassThread):
                             duration=self.duration,
                             end="DONE",
                         )
-            except (OSError, FileNotFoundError) as err:
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "COUNT_EVT",
-                    count=err,
-                    duration=0,
-                    end="ERROR",
-                )
-                tolog(f"[PYTHON]: error: {err}", self.logfile)
+                except (OSError, FileNotFoundError) as err:
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "COUNT_EVT",
+                        count=err,
+                        duration=0,
+                        end="ERROR",
+                    )
+                    logfile.write(f"[PYTHON]: error: {err}", self.logfile)
+
         self.end_process(filedone)
 
     def end_process(self, filedone):

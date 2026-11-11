@@ -101,7 +101,7 @@ class PicturesFromVideo(BaseVideomassThread):
         cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
 
         with open(self.logfile, "a", encoding="utf-8") as logfile:
-            tolog(com, self.logfile, sep=True, wdate=True, openf=False)
+            tolog(com, logfile, sep=True, wdate=True, openf=False)
             try:
                 with subprocess.Popen(
                     cmd,
@@ -121,6 +121,7 @@ class PicturesFromVideo(BaseVideomassThread):
                             duration=self.duration,
                             status=0,
                         )
+                        logfile.write(line)
                         if self.stop_work_thread:
                             if self.fatal:
                                 return
@@ -130,7 +131,7 @@ class PicturesFromVideo(BaseVideomassThread):
                             stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "ERROR_MSG_EVT",
+                                "NOTIFICATIONS_MSG_EVT",
                                 msg="STOP",
                                 output=stopstr,
                             )
@@ -153,7 +154,7 @@ class PicturesFromVideo(BaseVideomassThread):
                         logfile.write(errstr)
                         wx.CallAfter(
                             pub.sendMessage,
-                            "ERROR_MSG_EVT",
+                            "NOTIFICATIONS_MSG_EVT",
                             msg="FAILED",
                             output=errstr,
                         )

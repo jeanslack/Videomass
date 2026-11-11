@@ -452,7 +452,7 @@ class FFmpeg(BaseVideomassThread):
                                 stopstr = "[VIDEOMASS]: STOP command received."
                                 wx.CallAfter(
                                     pub.sendMessage,
-                                    "ERROR_MSG_EVT",
+                                    "NOTIFICATIONS_MSG_EVT",
                                     msg="STOP",
                                     output=stopstr,
                                 )
@@ -475,7 +475,7 @@ class FFmpeg(BaseVideomassThread):
                             logfile.write(errstr)
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "ERROR_MSG_EVT",
+                                "NOTIFICATIONS_MSG_EVT",
                                 msg="FAILED",
                                 output=errstr,
                             )
@@ -572,7 +572,7 @@ class FFmpeg(BaseVideomassThread):
                             stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "ERROR_MSG_EVT",
+                                "NOTIFICATIONS_MSG_EVT",
                                 msg="STOP",
                                 output=stopstr,
                             )
@@ -593,7 +593,7 @@ class FFmpeg(BaseVideomassThread):
                         logfile.write(errstr)
                         wx.CallAfter(
                             pub.sendMessage,
-                            "ERROR_MSG_EVT",
+                            "NOTIFICATIONS_MSG_EVT",
                             msg="FAILED",
                             output=errstr,
                         )
