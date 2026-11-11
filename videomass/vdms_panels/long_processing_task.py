@@ -269,7 +269,7 @@ class LogOut(wx.Panel):
             # msg, color = LogOut.MSG_failed, self.clr["ERR1"]
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ERR1"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_failed}")
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["TXT1"]))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["DEBUG"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_logread}\n")
 
         self.result.append("failed")

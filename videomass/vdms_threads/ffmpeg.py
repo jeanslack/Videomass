@@ -373,8 +373,8 @@ class FFmpeg(BaseVideomassThread):
         Run the separated thread.
         """
         last_gui_update = 0
-        last_file_flush = 0
         throttle_interval = 0.1
+        last_file_flush = 0
         flush_interval = 2.0
         filedone = []
 
@@ -465,34 +465,32 @@ class FFmpeg(BaseVideomassThread):
                                     filetotrash=None,
                                 )
                                 return
-                        time.sleep(2)  # WARNING need time here
-                        exit_code = self.process.poll()
-                        if exit_code is not None:
-                            if exit_code != 0:
-                                errstr = (
-                                    f"[VIDEOMASS]: Failed! Error "
-                                    f"Exit Code: {exit_code}"
-                                )
-                                logfile.write(errstr)
-                                wx.CallAfter(
-                                    pub.sendMessage,
-                                    "ERROR_MSG_EVT",
-                                    msg="FAILED",
-                                    output=errstr,
-                                )
-                                time.sleep(2)
-                                continue  # go to next file
 
-                            else:
-                                if not kwa["args"][1]:
-                                    filedone.append(kwa["source"])
-                                wx.CallAfter(
-                                    pub.sendMessage,
-                                    "COUNT_EVT",
-                                    count="",
-                                    duration=kwa["duration"],
-                                    end="DONE",
-                                )
+                        exit_code = self.process.wait()
+                        if exit_code != 0:  # ffmpeg error
+                            errstr = (
+                                f"[VIDEOMASS]: Failed! Error "
+                                f"Exit Code: {exit_code}"
+                            )
+                            logfile.write(errstr)
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "ERROR_MSG_EVT",
+                                msg="FAILED",
+                                output=errstr,
+                            )
+                            time.sleep(2)
+                            continue  # go to next file
+
+                        if not kwa["args"][1]:
+                            filedone.append(kwa["source"])
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "COUNT_EVT",
+                            count="",
+                            duration=kwa["duration"],
+                            end="DONE",
+                        )
                 except (OSError, FileNotFoundError) as err:
                     wx.CallAfter(
                         pub.sendMessage,
@@ -585,33 +583,31 @@ class FFmpeg(BaseVideomassThread):
                                 pub.sendMessage, "END_EVT", filetotrash=None
                             )
                             return
-                    time.sleep(2)  # WARNING need time here
-                    exit_code = self.process.poll()
-                    if exit_code is not None:
-                        if exit_code != 0:
-                            errstr = (
-                                f"[VIDEOMASS]: Failed! Error "
-                                f"Exit Code: {exit_code}"
-                            )
-                            logfile.write(errstr)
-                            wx.CallAfter(
-                                pub.sendMessage,
-                                "ERROR_MSG_EVT",
-                                msg="FAILED",
-                                output=errstr,
-                            )
-                            time.sleep(2)
-                            continue  # go to next file
 
-                        else:
-                            if not kwa["args"][1]:
-                                filedone.append(kwa["source"])
-                            wx.CallAfter(
-                                pub.sendMessage,
-                                "COUNT_EVT",
-                                count="",
-                                duration=kwa["duration"],
-                                end="DONE",
-                            )
+                    exit_code = self.process.wait()
+                    if exit_code != 0:  # ffmpeg error
+                        errstr = (
+                            f"[VIDEOMASS]: Failed! Error "
+                            f"Exit Code: {exit_code}"
+                        )
+                        logfile.write(errstr)
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "ERROR_MSG_EVT",
+                            msg="FAILED",
+                            output=errstr,
+                        )
+                        time.sleep(2)
+                        continue  # go to next file
+
+                    if not kwa["args"][1]:
+                        filedone.append(kwa["source"])
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "COUNT_EVT",
+                        count="",
+                        duration=kwa["duration"],
+                        end="DONE",
+                    )
             time.sleep(0.5)
             wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)

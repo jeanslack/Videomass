@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.30.2026
+Rev: Nov.11.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -87,6 +87,7 @@ def convert_images(*varargs, **kwargs):
                 bufsize=1,
                 text=True,
                 encoding=kwargs["encoding"],
+                errors="replace",
                 creationflags=creationflags,
             ) as proc1:
                 error = proc1.communicate()[1]
@@ -124,7 +125,7 @@ def convert_images(*varargs, **kwargs):
                 duration=0,
                 end="ERROR",
             )
-            return err
+            return f"[PYTHON]: error: {err}"
 
     time.sleep(0.5)
     wx.CallAfter(
@@ -176,6 +177,7 @@ def resizing_process(*varargs, **kwargs):
             bufsize=1,
             text=True,
             encoding=kwargs["encoding"],
+            errors="replace",
             creationflags=creationflags,
         ) as proc1:
             error = proc1.communicate()[1]
@@ -215,7 +217,7 @@ def resizing_process(*varargs, **kwargs):
             duration=0,
             end="ERROR",
         )
-        return err
+        return f"[PYTHON]: error: {err}"
 
     time.sleep(0.5)
     wx.CallAfter(
@@ -262,12 +264,16 @@ class SlideshowMaker(BaseVideomassThread):
                 **self.appdata,
             )
             if tmpproc1 is not None or self.stop_work_thread:
+                msg = "STOP" if self.stop_work_thread else "FAILED"
+                stopcmd = "[VIDEOMASS]: STOP command received."
+                errstr = f"[VIDEOMASS]: Failed! Error Exit Code: {tmpproc1}"
+                out = stopcmd if self.stop_work_thread else errstr
+
                 wx.CallAfter(
                     pub.sendMessage,
-                    "UPDATE_EVT",
-                    output="ERROR",
-                    duration=self.kwa["duration"],
-                    status=1,
+                    "ERROR_MSG_EVT",
+                    msg=msg,
+                    output=out,
                 )
                 self.end_process(None)
                 return
@@ -283,12 +289,18 @@ class SlideshowMaker(BaseVideomassThread):
                 )
 
                 if tmpproc2 is not None or self.stop_work_thread:
+                    msg = "STOP" if self.stop_work_thread else "FAILED"
+                    stopcmd = "[VIDEOMASS]: STOP command received."
+                    errstr = (
+                        f"[VIDEOMASS]: Failed! Error Exit Code: {tmpproc2}"
+                    )
+                    out = stopcmd if self.stop_work_thread else errstr
+
                     wx.CallAfter(
                         pub.sendMessage,
-                        "UPDATE_EVT",
-                        output="ERROR",
-                        duration=self.kwa["duration"],
-                        status=1,
+                        "ERROR_MSG_EVT",
+                        msg=msg,
+                        output=out,
                     )
                     self.end_process(None)
                     return
@@ -347,31 +359,36 @@ class SlideshowMaker(BaseVideomassThread):
                                 return
                             out = self.process.communicate()[1]
                             self.process.wait()
+
+                            stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,
-                                "UPDATE_EVT",
-                                output="STOP",
-                                duration=self.kwa["duration"],
-                                status=1,
+                                "ERROR_MSG_EVT",
+                                msg="STOP",
+                                output=stopstr,
                             )
-                            tolog(out, self.logfile)
+                            tolog(f"{out}\n{stopstr}", self.logfile)
                             time.sleep(1)
                             self.end_process(None)
                             return
 
-                    if self.process.wait():  # error
+                    exit_code = self.process.wait()
+                    if exit_code != 0:  # ffmpeg error
                         out = self.process.communicate()[1]
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_EVT",
-                            output="FAILED",
-                            duration=self.kwa["duration"],
-                            status=self.process.wait(),
+                        errstr = (
+                            f"[VIDEOMASS]: Failed! Error "
+                            f"Exit Code: {exit_code}"
                         )
                         tolog(
                             f"[VIDEOMASS]: Error Exit Status: "
-                            f"{self.process.wait()} {out}",
+                            f"{exit_code} {out}",
                             self.logfile,
+                        )
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "ERROR_MSG_EVT",
+                            msg="FAILED",
+                            output=errstr,
                         )
                         time.sleep(1)
 
@@ -392,7 +409,7 @@ class SlideshowMaker(BaseVideomassThread):
                     duration=0,
                     end="ERROR",
                 )
-                tolog(err, self.logfile)
+                tolog(f"[PYTHON]: error: {err}", self.logfile)
         self.end_process(filedone)
 
     def end_process(self, filedone):

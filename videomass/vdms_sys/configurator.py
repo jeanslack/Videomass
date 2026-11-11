@@ -194,7 +194,7 @@ def get_color_scheme(theme):
             "SUCCESS": "#0DE40D",  # GREEN: successful
             "TXT3": "#E6FFFC",  # CYAN-WHITE: standard text
             "INFO": "#194c7e",  # BLUE: other info messages
-            "DEBUG": "#333333",  # LIGHT GREEN
+            "DEBUG": "#333333",  # LIGHT BLACK
             "FAILED": "#C40804",  # RED_DEEP if failed
             "ABORT": "#A41EA4",  # SAT.MAGENTA if abort
         }
