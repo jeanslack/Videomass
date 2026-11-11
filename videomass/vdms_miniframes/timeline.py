@@ -541,11 +541,6 @@ class Float_TL(wx.MiniFrame):
         )
         try:
             with open(filesel, encoding="utf-8"):
-                # if Float_TL.get.appset["ostype"] == "Windows":
-                #     playback = FilePlayWithprogressWindows(
-                #         self.GetParent(), args
-                #     )
-                # else:
                 playback = FilePlayWithprogress(self.GetParent(), args)
                 playback.start()
         except OSError:
