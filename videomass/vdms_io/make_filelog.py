@@ -34,10 +34,11 @@ def tolog(info, logfile, sep=False, wdate=False, openf=True, txtenc="utf-8"):
     This function writes log events as information messages
     to a given `logfile` during the processes.
     info: message string to write
-    logfile: pathname of the log file
+    logfile: pathname of the log file or object for writting
     sep: inserts a separator between the pieces of information
     wdate: inserts a formatted date
     openf: if True, opens the file using the `with` context
+    newl: if True inserts newline char at the end line.
     txtenc: tipo di codifica del file
     """
     if sep:

@@ -34,10 +34,7 @@ from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.ffplay_file import (
-    FilePlayWithprogress,
-    FilePlayWithprogressWindows,
-)
+from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
@@ -544,12 +541,12 @@ class Float_TL(wx.MiniFrame):
         )
         try:
             with open(filesel, encoding="utf-8"):
-                if Float_TL.get.appset["ostype"] == "Windows":
-                    playback = FilePlayWithprogressWindows(
-                        self.GetParent(), args
-                    )
-                else:
-                    playback = FilePlayWithprogress(self.GetParent(), args)
+                # if Float_TL.get.appset["ostype"] == "Windows":
+                #     playback = FilePlayWithprogressWindows(
+                #         self.GetParent(), args
+                #     )
+                # else:
+                playback = FilePlayWithprogress(self.GetParent(), args)
                 playback.start()
         except OSError:
             wx.MessageBox(
@@ -586,6 +583,7 @@ class Float_TL(wx.MiniFrame):
             clean_line = output.strip()
             if not clean_line:
                 return
+
             # Check the diagnostic line from ffplay's actual counter
             if not any(
                 x in clean_line for x in ("A-V:", "M-A:", "aq=", "vq=")

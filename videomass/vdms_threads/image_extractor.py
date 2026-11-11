@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.11.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
