@@ -131,7 +131,6 @@ class ConcatDemuxer(BaseVideomassThread):
                             if self.fatal:
                                 return
                             out = self.process.communicate()[1]
-                            self.process.wait()
                             stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,

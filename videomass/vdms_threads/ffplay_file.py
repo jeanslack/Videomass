@@ -69,6 +69,7 @@ class BaseFilePlay(Thread):
         self.cmdstr = cmdstr
         self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
         self.process = None
+        self.stopped_by_user = None
 
         # set initial log file:
         make_log_template("ffplay.log", self.appdata["logdir"], mode="w")
@@ -109,6 +110,50 @@ class BaseFilePlay(Thread):
 
     # ----------------------------------------------------------------------
 
+    def stop(self, classname):
+        """
+        This method provides an interface for the orderly termination
+        of the active ffplay process.
+        Note that, unlike ffmpeg, ffplay does not support exiting by
+        writing "q" to stdin; consequently, this implementation forces
+        a call to terminate(), or, in extreme cases, kill().
+
+        The `classname` parameter accepts a string representing the
+        exact name of one of the child classes.
+
+        Let’s let `communicate()` in the `FilePlay` class handle
+        the closing of `stderr`.
+        """
+        if self.process and self.process.poll() is None:
+            if classname == "FilePlay":
+                # NON chiudere stderr qui! Lascia che sia communicate() a farlo
+                self.stopped_by_user = True
+                try:
+                    self.process.terminate()
+                except (OSError, subprocess.TimeoutExpired):
+                    self.process.kill()
+
+            if classname == "FilePlayWithprogress":
+                self.stopped_by_user = True
+                try:
+                    self.process.terminate()
+                    self.process.wait(timeout=2)
+
+                except (OSError, subprocess.TimeoutExpired):
+                    self.process.kill()
+                    self.process.wait()
+
+                finally:
+                    try:
+                        if self.process.stderr:
+                            self.process.stderr.close()
+                        if self.process.stdout:
+                            self.process.stdout.close()
+                    except OSError:
+                        pass
+
+    # ----------------------------------------------------------------------
+
     @classmethod
     def stop_all(cls):
         """
@@ -137,7 +182,12 @@ class BaseFilePlay(Thread):
 
 
 class FilePlay(BaseFilePlay):
-    """Simple file playback using ffplay, without progress tracking."""
+    """
+    Simple file playback using ffplay, without progress tracking.
+
+    NOTE: If you want to obtain the output of ffplay from stderr,
+    you need to set its loglevel to "info".
+    """
 
     def run(self):
         """
@@ -163,14 +213,23 @@ class FilePlay(BaseFilePlay):
 
             __, error = self.process.communicate()
 
+            tolog(error, self.logfile)
+
             if BaseFilePlay._is_exiting:
                 return
 
             if self.process.returncode != 0 and error:
-                self._handle_error(f"[FFPLAY] OUTPUT ERROR:\n{error}")
+                ret = f"[FFPLAY] ERROR (Exit Code) {self.process.returncode}"
+                if self.stopped_by_user is None:
+                    self._handle_error(ret)
+                else:
+                    self.stopped_by_user = None
+
+                tolog(ret, self.logfile)
                 return
 
         except OSError as err:
+            tolog(err, self.logfile)
             self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
             return
 
@@ -190,6 +249,9 @@ class FilePlayWithprogress(BaseFilePlay):
     Unlike `FilePlay`, this class implements the
     capture and redirection of output messages from `stderr`
     in real time, in order to monitor playback progress.
+
+    NOTE: If you want to obtain the output of ffplay from stderr,
+    you need to set its loglevel to "info".
     """
 
     def run(self):
@@ -225,7 +287,7 @@ class FilePlayWithprogress(BaseFilePlay):
 
                 try:
                     for line in self.process.stderr:
-                        logfile.write(line)  # write without newline (tolog)
+                        logfile.write(line)  # write without newline (no tolog)
                         # check if 2 seconds have passed since the last flush
                         now = time.monotonic()
                         if now - last_flush >= FLUSH_INTERVAL:
@@ -260,7 +322,10 @@ class FilePlayWithprogress(BaseFilePlay):
                     )
                     err = f"[FFPLAY] ERROR (Exit Code {return_code})"
                     tolog(err, logfile, openf=False)
-                    self._handle_error(err)
+                    if self.stopped_by_user is None:
+                        self._handle_error(err)
+                    else:
+                        self.stopped_by_user = None
                     return
 
             except OSError as err:

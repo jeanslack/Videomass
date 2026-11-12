@@ -244,6 +244,7 @@ class Float_TL(wx.MiniFrame):
         self.frame = None  # waveform image located on cache dir
         self.invalidselection = False  # booleaan reference
         self.playpoint = None  # `x` point pixel representation or None
+        self.playback = None  # playback thread
 
         wx.MiniFrame.__init__(
             self,
@@ -541,8 +542,8 @@ class Float_TL(wx.MiniFrame):
         )
         try:
             with open(filesel, encoding="utf-8"):
-                playback = FilePlayWithprogress(self.GetParent(), args)
-                playback.start()
+                self.playback = FilePlayWithprogress(self.GetParent(), args)
+                self.playback.start()
         except OSError:
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filesel),
@@ -751,6 +752,9 @@ class Float_TL(wx.MiniFrame):
         subscribing "RESET_ON_CHANGED_LIST" by adding, selecting or
         removing imported files (see`filedrop.py`).
         """
+        if self.playback is not None:  # name of thread
+            self.playback.stop("FilePlayWithprogress")
+            self.playback = None
 
         self.sourcedur = _("No source duration:")
         if msg is None:

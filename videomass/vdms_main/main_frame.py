@@ -136,7 +136,7 @@ class MainFrame(wx.Frame):
         self.cmdtimestamp = (
             f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
             f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
-            f"box=1:boxcolor=DeepPink:x=(w-tw)/2:y=h-(2*lh)"
+            f"box=1:boxcolor=DeepPink"
         )
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)

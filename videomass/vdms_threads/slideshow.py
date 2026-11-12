@@ -364,7 +364,6 @@ class SlideshowMaker(BaseVideomassThread):
                                 if self.fatal:
                                     return
                                 out = self.process.communicate()[1]
-                                self.process.wait()
 
                                 stopstr = "[VIDEOMASS]: STOP command received."
                                 wx.CallAfter(
@@ -379,6 +378,7 @@ class SlideshowMaker(BaseVideomassThread):
                                 return
 
                     exit_code = self.process.wait()
+                    print("exit code: ", exit_code)
                     if exit_code != 0:  # ffmpeg error
                         out = self.process.communicate()[1]
                         errstr = (

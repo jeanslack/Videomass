@@ -375,7 +375,7 @@ class FFmpeg(BaseVideomassThread):
         last_gui_update = 0
         throttle_interval = 0.1
         last_file_flush = 0
-        flush_interval = 2.0
+        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro (constant)
         filedone = []
 
         with open(self.logfile, "a", encoding="utf-8") as logfile:
@@ -421,7 +421,7 @@ class FFmpeg(BaseVideomassThread):
                             current_time = time.time()
                             if (
                                 current_time - last_file_flush
-                            ) > flush_interval:
+                            ) > FLUSH_INTERVAL:
                                 logfile.flush()
                                 last_file_flush = current_time
                             if (
@@ -448,7 +448,6 @@ class FFmpeg(BaseVideomassThread):
                                 if self.fatal:
                                     return
                                 out = self.process.communicate()[1]
-                                self.process.wait()
                                 stopstr = "[VIDEOMASS]: STOP command received."
                                 wx.CallAfter(
                                     pub.sendMessage,
@@ -549,7 +548,7 @@ class FFmpeg(BaseVideomassThread):
                     for line2 in self.process.stderr:
                         logfile.write(f"[FFMPEG]: {line2}")
                         current_time = time.time()
-                        if (current_time - last_file_flush) > flush_interval:
+                        if (current_time - last_file_flush) > FLUSH_INTERVAL:
                             logfile.flush()
                             last_file_flush = current_time
                         if (
@@ -568,7 +567,6 @@ class FFmpeg(BaseVideomassThread):
                             if self.fatal:
                                 return
                             out = self.process.communicate()[1]
-                            self.process.wait()
                             stopstr = "[VIDEOMASS]: STOP command received."
                             wx.CallAfter(
                                 pub.sendMessage,

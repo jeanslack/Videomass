@@ -127,7 +127,6 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
                             if self.fatal:
                                 return
                             output = self.process.communicate()[1]
-                            self.process.wait()
                             tolog(
                                 FFmpegGenericTaskOutLines.STOP
                                 + f"with PID {self.process.pid}",
@@ -136,7 +135,7 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
                             )
                             break
 
-                        if self.process.wait():
+                        if self.process.poll():
                             output = self.process.communicate()[1]
                             tolog(
                                 f"[FFMPEG] ERROR:\n{output}",
