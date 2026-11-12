@@ -465,6 +465,7 @@ class DataSource:
             "end_time",
             "waveform",
             "paypaldon",
+            "playstop",
         )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc["icodir"]
@@ -554,6 +555,7 @@ class DataSource:
             f"{choose.get('x16')}/end_time.{ext}",
             f"{choose.get('x16')}/waveform.{ext}",
             f"{choose.get('x48')}/paypaldon.{ext}",
+            f"{choose.get('x16')}/playstop.{ext}",
         )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

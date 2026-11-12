@@ -372,9 +372,9 @@ class FFmpeg(BaseVideomassThread):
         """
         Run the separated thread.
         """
-        last_gui_update = 0
-        throttle_interval = 0.1
-        last_file_flush = 0
+        last_gui_update = time.monotonic()
+        THROTTLE_INTERVAL = 0.1
+        last_file_flush = time.monotonic()
         FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro (constant)
         filedone = []
 
@@ -418,15 +418,13 @@ class FFmpeg(BaseVideomassThread):
                     ) as self.process:
                         for line in self.process.stderr:
                             logfile.write(f"[FFMPEG]: {line}")
-                            current_time = time.time()
-                            if (
-                                current_time - last_file_flush
-                            ) > FLUSH_INTERVAL:
+
+                            now = time.monotonic()
+                            if (now - last_file_flush) > FLUSH_INTERVAL:
                                 logfile.flush()
-                                last_file_flush = current_time
-                            if (
-                                current_time - last_gui_update
-                            ) > throttle_interval:
+                                last_file_flush = now
+
+                            if (now - last_gui_update) > THROTTLE_INTERVAL:
                                 wx.CallAfter(
                                     pub.sendMessage,
                                     "UPDATE_EVT",
@@ -434,7 +432,7 @@ class FFmpeg(BaseVideomassThread):
                                     duration=kwa["duration"],
                                     status=0,
                                 )
-                                last_gui_update = current_time
+                                last_gui_update = now
 
                             if kwa["type"] == "Two pass EBU":
                                 summary = model["summary"]
@@ -547,13 +545,13 @@ class FFmpeg(BaseVideomassThread):
                 ) as self.process:
                     for line2 in self.process.stderr:
                         logfile.write(f"[FFMPEG]: {line2}")
-                        current_time = time.time()
-                        if (current_time - last_file_flush) > FLUSH_INTERVAL:
+
+                        now = time.monotonic()
+                        if (now - last_file_flush) > FLUSH_INTERVAL:
                             logfile.flush()
-                            last_file_flush = current_time
-                        if (
-                            current_time - last_gui_update
-                        ) > throttle_interval:
+                            last_file_flush = now
+
+                        if (now - last_gui_update) > THROTTLE_INTERVAL:
                             wx.CallAfter(
                                 pub.sendMessage,
                                 "UPDATE_EVT",
@@ -561,7 +559,7 @@ class FFmpeg(BaseVideomassThread):
                                 duration=kwa["duration"],
                                 status=0,
                             )
-                            last_gui_update = current_time
+                            last_gui_update = now
 
                         if self.stop_work_thread:
                             if self.fatal:

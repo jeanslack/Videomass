@@ -266,8 +266,11 @@ class FilePlayWithprogress(BaseFilePlay):
         cmd = self._prepare_command()
         is_windows = self.appdata["ostype"] == "Windows"
         creationflags = subprocess.CREATE_NO_WINDOW if is_windows else 0
+
         FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro
         last_flush = time.monotonic()
+        THROTTLE_INTERVAL = 0.1
+        last_gui_update = time.monotonic()
 
         with open(
             self.logfile, "a", newline="\n", encoding="utf-8"
@@ -297,12 +300,15 @@ class FilePlayWithprogress(BaseFilePlay):
                         if BaseFilePlay._is_exiting:
                             return
 
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_PLAY_COUNTER",
-                            output=line,
-                            status=0,
-                        )
+                        if now - last_gui_update > THROTTLE_INTERVAL:
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "UPDATE_PLAY_COUNTER",
+                                output=line,
+                                status=0,
+                            )
+                            last_gui_update = now
+
                 except ValueError:
                     # file descriptor is forcibly closed from the outside
                     if BaseFilePlay._is_exiting:
