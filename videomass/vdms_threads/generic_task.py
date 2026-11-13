@@ -76,10 +76,6 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
                    nor ffmpeg-default-args.
         self.procname: any task name for identification.
         self.logfile: filename to redirect text string log
-        self.status: If the exit status is true (which can be an
-                     exception or error message given by returncode)
-                     it must be handled appropriately, in the other
-                     case it is None.
         """
         super().__init__(logfile=logfile)
 
@@ -87,7 +83,6 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
         self.appdata = get.appset
         self.procname = procname
         self.args = args
-        self.status = None
 
     # ----------------------------------------------------------------#
 
@@ -96,59 +91,61 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
         Start thread
 
         """
-        outlist = []
         cmd = (
             f'"{self.appdata["ffmpeg_cmd"]}" '
             f"{self.appdata['ffmpeg-default-args']} "
             f"{self.appdata['ffmpeg_loglev']} "
             f"{self.args}"
         )
-        tolog(
-            f"INFO: VIDEOMASS TASK: {self.procname}\n"
-            f"INFO: VIDEOMASS COMMAND: {cmd}",
-            self.logfile,
-            sep=True,
-            wdate=True,
-        )
-        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
-        try:
-            with subprocess.Popen(
-                cmd,
-                stderr=subprocess.PIPE,
-                stdin=subprocess.PIPE,
-                text=True,
-                encoding=self.appdata["encoding"],
-                errors="replace",
-                creationflags=self.creationflags,
-            ) as self.process:
-                for line in self.process.stderr:
-                    outlist.append(line)
-                    if self.stop_work_thread:
-                        if self.fatal:
-                            return
-                        output = self.process.communicate()[1]
-                        self.process.wait()
+        with open(self.logfile, "a", encoding="utf-8") as logfile:
+            tolog(
+                f"INFO: VIDEOMASS TASK: {self.procname}\n"
+                f"INFO: VIDEOMASS COMMAND: {cmd}",
+                logfile,
+                sep=True,
+                wdate=True,
+                openf=False,
+            )
+            cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
+            try:
+                with subprocess.Popen(
+                    cmd,
+                    stderr=subprocess.PIPE,
+                    stdin=subprocess.PIPE,
+                    text=True,
+                    encoding=self.appdata["encoding"],
+                    errors="replace",
+                    creationflags=self.creationflags,
+                ) as self.process:
+                    for line in self.process.stderr:
                         tolog(
-                            FFmpegGenericTaskOutLines.STOP
-                            + f"with PID {self.process.pid}",
-                            self.logfile,
+                            line,
+                            logfile,
+                            openf=False,
                         )
-                        self.status = "STOP"
-                        break
+                        if self.stop_work_thread:
+                            if self.fatal:
+                                return
+                            output = self.process.communicate()[1]
+                            tolog(
+                                FFmpegGenericTaskOutLines.STOP
+                                + f"with PID {self.process.pid}",
+                                logfile,
+                                openf=False,
+                            )
+                            break
 
-                    if self.process.wait():
-                        output = self.process.communicate()[1]
-                        tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
-                        self.status = "ERROR"
-                        break
+                        if self.process.poll():
+                            output = self.process.communicate()[1]
+                            tolog(
+                                f"[FFMPEG] ERROR:\n{output}",
+                                logfile,
+                                openf=False,
+                            )
+                            break
 
-        except (OSError, FileNotFoundError) as err:
-            tolog(f"[VIDEOMASS]: ERROR: {err}", self.logfile)
-            self.status = "ERROR"
-
-        if not self.status:
-            output = "".join(outlist)
-            tolog(f"INFO: [FFMPEG] OUTPUT:\n{output}", self.logfile)
+            except (OSError, FileNotFoundError) as err:
+                tolog(f"[VIDEOMASS]: ERROR: {err}", logfile, openf=False)
 
         wx.CallAfter(pub.sendMessage, "RESULT_EVT", status="")
 

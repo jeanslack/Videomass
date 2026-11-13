@@ -29,6 +29,7 @@ This file is part of Videomass.
 import os
 import shlex
 import subprocess
+import time
 from threading import Lock, Thread
 from typing import ClassVar
 
@@ -68,6 +69,7 @@ class BaseFilePlay(Thread):
         self.cmdstr = cmdstr
         self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
         self.process = None
+        self.stopped_by_user = None
 
         # set initial log file:
         make_log_template("ffplay.log", self.appdata["logdir"], mode="w")
@@ -91,7 +93,6 @@ class BaseFilePlay(Thread):
 
     def _handle_error(self, error_msg):
         """Centralized error handling."""
-        tolog(error_msg, self.logfile)
 
         if BaseFilePlay._is_exiting:
             return
@@ -106,6 +107,50 @@ class BaseFilePlay(Thread):
             return
 
         wx.CallAfter(pub.sendMessage, "END_PLAY")
+
+    # ----------------------------------------------------------------------
+
+    def stop(self, classname):
+        """
+        This method provides an interface for the orderly termination
+        of the active ffplay process.
+        Note that, unlike ffmpeg, ffplay does not support exiting by
+        writing "q" to stdin; consequently, this implementation forces
+        a call to terminate(), or, in extreme cases, kill().
+
+        The `classname` parameter accepts a string representing the
+        exact name of one of the child classes.
+
+        Let’s let `communicate()` in the `FilePlay` class handle
+        the closing of `stderr`.
+        """
+        if self.process and self.process.poll() is None:
+            if classname == "FilePlay":
+                # NON chiudere stderr qui! Lascia che sia communicate() a farlo
+                self.stopped_by_user = True
+                try:
+                    self.process.terminate()
+                except (OSError, subprocess.TimeoutExpired):
+                    self.process.kill()
+
+            if classname == "FilePlayWithprogress":
+                self.stopped_by_user = True
+                try:
+                    self.process.terminate()
+                    self.process.wait(timeout=2)
+
+                except (OSError, subprocess.TimeoutExpired):
+                    self.process.kill()
+                    self.process.wait()
+
+                finally:
+                    try:
+                        if self.process.stderr:
+                            self.process.stderr.close()
+                        if self.process.stdout:
+                            self.process.stdout.close()
+                    except OSError:
+                        pass
 
     # ----------------------------------------------------------------------
 
@@ -137,7 +182,12 @@ class BaseFilePlay(Thread):
 
 
 class FilePlay(BaseFilePlay):
-    """Simple file playback using ffplay, without progress tracking."""
+    """
+    Simple file playback using ffplay, without progress tracking.
+
+    NOTE: If you want to obtain the output of ffplay from stderr,
+    you need to set its loglevel to "info".
+    """
 
     def run(self):
         """
@@ -163,14 +213,23 @@ class FilePlay(BaseFilePlay):
 
             __, error = self.process.communicate()
 
+            tolog(error, self.logfile)
+
             if BaseFilePlay._is_exiting:
                 return
 
             if self.process.returncode != 0 and error:
-                self._handle_error(f"[FFPLAY] OUTPUT ERROR:\n{error}")
+                ret = f"[FFPLAY] ERROR (Exit Code) {self.process.returncode}"
+                if self.stopped_by_user is None:
+                    self._handle_error(ret)
+                else:
+                    self.stopped_by_user = None
+
+                tolog(ret, self.logfile)
                 return
 
         except OSError as err:
+            tolog(err, self.logfile)
             self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
             return
 
@@ -190,6 +249,9 @@ class FilePlayWithprogress(BaseFilePlay):
     Unlike `FilePlay`, this class implements the
     capture and redirection of output messages from `stderr`
     in real time, in order to monitor playback progress.
+
+    NOTE: If you want to obtain the output of ffplay from stderr,
+    you need to set its loglevel to "info".
     """
 
     def run(self):
@@ -202,194 +264,93 @@ class FilePlayWithprogress(BaseFilePlay):
         See the `finally` clause.
         """
         cmd = self._prepare_command()
-        full_output = []
         is_windows = self.appdata["ostype"] == "Windows"
         creationflags = subprocess.CREATE_NO_WINDOW if is_windows else 0
 
-        try:
-            self.process = subprocess.Popen(
-                cmd,
-                stderr=subprocess.PIPE,
-                bufsize=1,
-                text=True,
-                encoding=self.appdata["encoding"],
-                errors="replace",  # do not crash if non-UTF-8 chars
-                creationflags=creationflags,
-            )
+        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro
+        last_flush = time.monotonic()
+        THROTTLE_INTERVAL = 0.1
+        last_gui_update = time.monotonic()
 
-            with BaseFilePlay._lock:
-                BaseFilePlay._active_processes.add(self.process)
-
+        with open(
+            self.logfile, "a", newline="\n", encoding="utf-8"
+        ) as logfile:
             try:
-                for line in self.process.stderr:
-                    full_output.append(line)  # for the log in case of errors
-
-                    if BaseFilePlay._is_exiting:
-                        return
-
-                    wx.CallAfter(
-                        pub.sendMessage,
-                        "UPDATE_PLAY_COUNTER",
-                        output=line,
-                        status=0,
-                    )
-            except ValueError:
-                # file descriptor is forcibly closed from the outside
-                if BaseFilePlay._is_exiting:
-                    return
-
-            return_code = self.process.wait()
-
-            if BaseFilePlay._is_exiting:
-                return
-
-            if return_code != 0:
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "UPDATE_PLAY_COUNTER",
-                    output=None,
-                    status=return_code,
+                self.process = subprocess.Popen(
+                    cmd,
+                    stderr=subprocess.PIPE,
+                    bufsize=1,
+                    text=True,
+                    encoding=self.appdata["encoding"],
+                    errors="replace",  # do not crash if non-UTF-8 chars
+                    creationflags=creationflags,
                 )
-                error_context = "".join(full_output[-5:])
-                self._handle_error(
-                    f"[FFPLAY] ERROR (Exit Code "
-                    f"{return_code}):\n{error_context}"
-                )
-                return
+                with BaseFilePlay._lock:
+                    BaseFilePlay._active_processes.add(self.process)
 
-        except OSError as err:
-            self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
-            return
-
-        finally:
-            if self.process:
                 try:
-                    if self.process.stderr:
-                        self.process.stderr.close()
-                    if self.process.stdout:
-                        self.process.stdout.close()
-                except OSError:
-                    pass
-
-            with BaseFilePlay._lock:
-                if self.process in BaseFilePlay._active_processes:
-                    BaseFilePlay._active_processes.remove(self.process)
-
-        self._finalize_play()
-
-
-# ----------------------------------------------------------------------
-
-
-class FilePlayWithprogressWindows(BaseFilePlay):
-    """
-    Playback local file executing ffplay media player (Windows Optimized).
-    Implements real-time stderr capturing on Windows by reading character-by-
-    character to properly intercept Carriage Returns ('\\r') used by ffplay
-    for progress updates.
-    """
-
-    def run(self):
-        """
-        Start thread.
-        Executes ffplay command with safe character-based reading.
-        """
-        cmd = self._prepare_command()
-        full_output = []
-        creationflags = subprocess.CREATE_NO_WINDOW
-
-        try:
-            self.process = subprocess.Popen(
-                cmd,
-                stderr=subprocess.PIPE,
-                bufsize=0,  # Disable buffering to receive chars instantly
-                text=True,
-                encoding=self.appdata["encoding"],
-                errors="replace",
-                creationflags=creationflags,
-            )
-
-            with BaseFilePlay._lock:
-                BaseFilePlay._active_processes.add(self.process)
-
-            try:
-                current_line = []
-                while True:
-                    # Reads one char at a time so as not to get stuck on
-                    # the '\n'
-                    char = self.process.stderr.read(1)
-
-                    if not char:  # EOF (End Of File): ffplay closed the stream
-                        break
-
-                    current_line.append(char)
-
-                    # Windows uses '\r' to update the same line of the counter
-                    if char in ("\r", "\n"):
-                        line = "".join(current_line)
-                        full_output.append(line)
-                        current_line = []
+                    for line in self.process.stderr:
+                        logfile.write(line)  # write without newline (no tolog)
+                        # check if 2 seconds have passed since the last flush
+                        now = time.monotonic()
+                        if now - last_flush >= FLUSH_INTERVAL:
+                            logfile.flush()
+                            last_flush = now
 
                         if BaseFilePlay._is_exiting:
                             return
 
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_PLAY_COUNTER",
-                            output=line,
-                            status=0,
-                        )
+                        if now - last_gui_update > THROTTLE_INTERVAL:
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "UPDATE_PLAY_COUNTER",
+                                output=line,
+                                status=0,
+                            )
+                            last_gui_update = now
 
-                # Send any remaining text, if present, upon closure
-                if current_line:
-                    line = "".join(current_line)
-                    full_output.append(line)
-                    wx.CallAfter(
-                        pub.sendMessage,
-                        "UPDATE_PLAY_COUNTER",
-                        output=line,
-                        status=0,
-                    )
+                except ValueError:
+                    # file descriptor is forcibly closed from the outside
+                    if BaseFilePlay._is_exiting:
+                        return
 
-            except ValueError:
+                return_code = self.process.wait()
+
                 if BaseFilePlay._is_exiting:
                     return
 
-            return_code = self.process.wait()
+                if return_code != 0:
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "UPDATE_PLAY_COUNTER",
+                        output=None,
+                        status=return_code,
+                    )
+                    err = f"[FFPLAY] ERROR (Exit Code {return_code})"
+                    tolog(err, logfile, openf=False)
+                    if self.stopped_by_user is None:
+                        self._handle_error(err)
+                    else:
+                        self.stopped_by_user = None
+                    return
 
-            if BaseFilePlay._is_exiting:
+            except OSError as err:
+                tolog(err, logfile, openf=False)
+                self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
                 return
 
-            if return_code != 0:
-                wx.CallAfter(
-                    pub.sendMessage,
-                    "UPDATE_PLAY_COUNTER",
-                    output=None,
-                    status=return_code,
-                )
-                error_context = "".join(full_output[-5:])
-                self._handle_error(
-                    f"[FFPLAY] ERROR (Exit Code "
-                    f"{return_code}):\n{error_context}"
-                )
-                return
+            finally:
+                if self.process:
+                    try:
+                        if self.process.stderr:
+                            self.process.stderr.close()
+                        if self.process.stdout:
+                            self.process.stdout.close()
+                    except OSError:
+                        pass
 
-        except OSError as err:
-            self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
-            return
-
-        finally:
-            if self.process:
-                try:
-                    if self.process.stderr:
-                        self.process.stderr.close()
-                    if self.process.stdout:
-                        self.process.stdout.close()
-                except OSError:
-                    pass
-
-            with BaseFilePlay._lock:
-                if self.process in BaseFilePlay._active_processes:
-                    BaseFilePlay._active_processes.remove(self.process)
+                with BaseFilePlay._lock:
+                    if self.process in BaseFilePlay._active_processes:
+                        BaseFilePlay._active_processes.remove(self.process)
 
         self._finalize_play()

@@ -187,14 +187,14 @@ def get_color_scheme(theme):
         c_scheme = {
             "BACKGRD": "#646D6F",  # GRAY: background color
             "TXT0": "#00F5D4",  # SAT.MINT GREEN: titles & end messages)
-            "TXT1": "#ae11db",  # PURPLE for debug and others
+            "TXT1": "#030303",  # DEEP BLACK for debug and others
             "ERR0": "#C40804",  # RED_DEEP: errors 1 and others
             "WARN": "#C1AF16",  # YELLOW: warnings
             "ERR1": "#C40804",  # RED_DEEP: errors 2
             "SUCCESS": "#0DE40D",  # GREEN: successful
             "TXT3": "#E6FFFC",  # CYAN-WHITE: standard text
             "INFO": "#194c7e",  # BLUE: other info messages
-            "DEBUG": "#333333",  # LIGHT GREEN
+            "DEBUG": "#333333",  # LIGHT BLACK
             "FAILED": "#C40804",  # RED_DEEP if failed
             "ABORT": "#A41EA4",  # SAT.MAGENTA if abort
         }
@@ -465,6 +465,7 @@ class DataSource:
             "end_time",
             "waveform",
             "paypaldon",
+            "playstop",
         )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc["icodir"]
@@ -554,6 +555,7 @@ class DataSource:
             f"{choose.get('x16')}/end_time.{ext}",
             f"{choose.get('x16')}/waveform.{ext}",
             f"{choose.get('x48')}/paypaldon.{ext}",
+            f"{choose.get('x16')}/playstop.{ext}",
         )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.01.2026
+Rev: Nov.12.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -30,6 +30,7 @@ import webbrowser
 from math import pi as pigreco
 
 import wx
+from pubsub import pub
 
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
@@ -40,7 +41,6 @@ from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 class Transpose(wx.Dialog):
     """
     A dialog tool to get video transpose data based on FFmpeg syntax.
-
     """
 
     get = wx.GetApp()
@@ -55,6 +55,7 @@ class Transpose(wx.Dialog):
         """
         args[0]: transpose data if any.
         args[1]: label rotate indicator
+        args[2]: reset button bitmap
         v_width: source video width
         v_height: source video height
         filename: matches with the only one video file dragged
@@ -70,12 +71,15 @@ class Transpose(wx.Dialog):
         self.current_angle = 0
         self.center = int(self.w_ratio / 2), int(self.h_ratio / 2)
         self.transpose = {"degrees": ["", 0]}
+        self.initial_args = (args[0], args[1])
         self.video = kwa["filename"]
         name = os.path.splitext(os.path.basename(self.video))[0]
         self.frame = os.path.join(Transpose.TMPSRC, f"{name}.png")
         self.stbitmap = None
-        self.bmp = None
+        self.scaled_img = None  # Cache per l'immagine pre-scalata
         self.mills = time_to_integer(kwa["duration"].split(".")[0])
+        self.thread = None
+        self.logfile = None
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(
@@ -88,7 +92,7 @@ class Transpose(wx.Dialog):
         self.statictxt = wx.StaticText(
             self,
             wx.ID_ANY,
-            label=_("Default position"),
+            label=_("Loading preview..."),
             style=wx.ST_NO_AUTORESIZE | wx.ALIGN_CENTRE_HORIZONTAL,
         )
         sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
@@ -100,16 +104,12 @@ class Transpose(wx.Dialog):
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         grid_sizerBase = wx.GridSizer(1, 2, 0, 0)
-        self.button_left = wx.Button(
-            sbox, wx.ID_ANY, (_("90° (left)"))
-        )  # ruota sx
+        self.button_left = wx.Button(sbox, wx.ID_ANY, (_("90° (left)")))
         grid_sizerBase.Add(self.button_left, 0, wx.ALL | wx.CENTRE, 5)
         self.button_right = wx.Button(sbox, wx.ID_ANY, (_("90° (right)")))
         grid_sizerBase.Add(self.button_right, 0, wx.ALL | wx.CENTRE, 5)
         boxctrl.Add(grid_sizerBase, 0, wx.EXPAND)
-        self.button_down = wx.Button(
-            sbox, wx.ID_ANY, (_("180°"))
-        )  # capovolgi sotto
+        self.button_down = wx.Button(sbox, wx.ID_ANY, (_("180°")))
         boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
 
         # ----- confirm buttons section
@@ -121,11 +121,11 @@ class Transpose(wx.Dialog):
         boxaff = wx.BoxSizer(wx.HORIZONTAL)
         btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
         boxaff.Add(btn_cancel, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(args[2], wx.LEFT)
-        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        self.btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(self.btn_ok, 0, wx.LEFT, 5)
+        self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        self.btn_reset.SetBitmap(args[2], wx.LEFT)
+        boxaff.Add(self.btn_reset, 0, wx.LEFT, 5)
         gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
@@ -136,45 +136,45 @@ class Transpose(wx.Dialog):
             self.statictxt.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
             self.statictxt.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+
+        # Disabilita i controlli finché l'anteprima non è pronta
+        self._set_controls_enabled(False)
+
         # ----- Set layout
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
 
-        self.image_loader()
-        if args[0]:  # transpose
-            self.statictxt.SetLabel(args[1])
-
-            if args[0] == "transpose=1":
-                self.transpose["degrees"] = ["transpose=1", 90]
-                self.rotate90(90)
-
-            elif args[0] == "transpose=2,transpose=2":
-                self.transpose["degrees"] = ["transpose=2,transpose=2", 180]
-                self.rotate90(180)
-
-            elif args[0] == "transpose=2":
-                self.transpose["degrees"] = ["transpose=2", 270]
-                self.rotate90(270)
+        # Avvia l'estrazione asincrona tramite pubsub
+        self.process()
 
         # ----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_BUTTON, self.on_left, self.button_left)
         self.Bind(wx.EVT_BUTTON, self.on_right, self.button_right)
         self.Bind(wx.EVT_BUTTON, self.on_down, self.button_down)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+
+    # ------------------------------------------------------------------#
+
+    def _set_controls_enabled(self, state):
+        """Abilita o disabilita i pulsanti durante il caricamento."""
+        self.button_left.Enable(state)
+        self.button_right.Enable(state)
+        self.button_down.Enable(state)
+        self.btn_reset.Enable(state)
+        self.btn_ok.Enable(state)
 
     # ------------------------------------------------------------------#
 
     def process(self):
         """
-        Generate a new frame. Note that the trim start point
-        on this process is set to the total length of the
-        movie divided by two.
+        Avvia FFmpegGenericTask senza join() e si iscrive a RESULT_EVT.
         """
-        logfile = make_log_template(
+        self.logfile = make_log_template(
             "generic_task.log",
             Transpose.LOGDIR,
             mode="w",
@@ -188,50 +188,108 @@ class Transpose(wx.Dialog):
             f'{sseg} -i "{self.video}" -f image2 '
             f'-update 1 -frames:v 1 "{self.frame}"'
         )
-        thread = FFmpegGenericTask(arg, "Transpose", logfile)
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(logfile)
-            )
-            return error
-        return None
+        pub.subscribe(self.on_frame_ready, "RESULT_EVT")
+        self.thread = FFmpegGenericTask(arg, "Transpose", self.logfile)
 
-    # ------------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
 
-    def image_loader(self):
+    def on_frame_ready(self, status):
         """
-        Loads initial StaticBitmap on panel
+        Callback invocata da pubsub sul thread GUI al termine di FFmpeg.
         """
-        error = self.process()
-        if error:
+        pub.unsubscribe(self.on_frame_ready, "RESULT_EVT")
+        if not self or self.thread is None:
             return
 
-        bitmap = wx.Bitmap(self.frame)
-        img = bitmap.ConvertToImage()
-        img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        self.bmp = img.ConvertToBitmap()
-        self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.bmp)
-        self.panelimg.Layout()
-        self.on_reset(self)  # make default position
+        if self.thread.status:
+            self.statictxt.SetLabel(_("Preview unavailable"))
+            show_msg_notify(
+                self.GetParent(), logname=os.path.basename(self.logfile)
+            )
+            return
+
+        # Carica, scala e salva in cache la wx.Image una sola volta
+        img = wx.Image(self.frame, wx.BITMAP_TYPE_PNG)
+        if not img.IsOk():
+            self.statictxt.SetLabel(_("Preview unavailable"))
+            return
+
+        self.scaled_img = img.Scale(
+            self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL
+        )
+        bmp = wx.Bitmap(self.scaled_img)
+        self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, bmp)
+        self._center_bitmap(bmp)
+
+        self._set_controls_enabled(True)
+        self.on_reset(None)
+
+        # Ripristina lo stato precedente se passato in args
+        arg_filter, arg_label = self.initial_args
+        presets = {
+            "transpose=1": 90,
+            "transpose=2,transpose=2": 180,
+            "transpose=2": 270,
+        }
+        if arg_filter in presets:
+            self._apply_rotation(arg_filter, presets[arg_filter], arg_label)
+        else:
+            self.on_reset(None)
+
+        self.Layout()
+
+    # ------------------------------------------------------------------#
+
+    def _center_bitmap(self, bmp):
+        """Centra la bitmap all'interno del pannello 270x270."""
+        pw, ph = self.panelimg.GetSize()
+        bw, bh = bmp.GetSize()
+        self.stbitmap.SetPosition(((pw - bw) // 2, (ph - bh) // 2))
 
     # ------------------------------------------------------------------#
 
     def rotate90(self, degrees):
         """
-        Rotates image to a specified `degrees`
+        Ruota l'immagine pre-scalata in cache senza ricaricarla o riscalarla.
         """
-        self.current_angle += degrees
-        # neg. value rot. clockwise:
+        if self.scaled_img is None:
+            return
+
+        self.current_angle = (self.current_angle + degrees) % 360
+        # val negativo per rotazione oraria in wx.Image.Rotate
         val = float(self.current_angle * -pigreco / 180)
-        image = self.bmp.ConvertToImage()
-        image = image.Scale(
-            self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL
-        )
-        image = image.Rotate(val, self.center)
-        self.stbitmap.SetBitmap(wx.Bitmap(image))
+        rotated_img = self.scaled_img.Rotate(val, self.center)
+        bmp = wx.Bitmap(rotated_img)
+        self.stbitmap.SetBitmap(bmp)
+        self._center_bitmap(bmp)
         self.panelimg.Layout()
+
+    # ----------------------Event handler (callback)--------------------------#
+
+    def _apply_rotation(self, ffmpeg_filter, degrees, label):
+        """
+        Imposta l'orientamento assoluto, aggiorna l'etichetta
+        e ruota l'anteprima.
+        """
+        if self.scaled_img is None:
+            return
+
+        if self.current_angle == degrees and self.stbitmap is not None:
+            self.statictxt.SetLabel(label)
+            return
+
+        self.current_angle = degrees
+        self.transpose["degrees"] = [ffmpeg_filter, degrees]
+        self.statictxt.SetLabel(label)
+
+        # val negativo per rotazione oraria in wx.Image.Rotate
+        val = float(degrees * -pigreco / 180)
+        rotated_img = self.scaled_img.Rotate(val, self.center)
+        bmp = wx.Bitmap(rotated_img)
+        self.stbitmap.SetBitmap(bmp)
+        self._center_bitmap(bmp)
+        self.panelimg.Layout()
+        self.Layout()
 
     # ----------------------Event handler (callback)--------------------------#
 
@@ -239,22 +297,7 @@ class Transpose(wx.Dialog):
         """
         Rotate 90 degrees right
         """
-        if self.transpose["degrees"][1] == 0:
-            self.rotate90(90)
-
-        elif self.transpose["degrees"][1] == 90:
-            return
-
-        elif self.transpose["degrees"][1] == 180:
-            self.rotate90(270)
-
-        elif self.transpose["degrees"][1] == 270:
-            self.rotate90(180)
-
-        self.transpose["degrees"] = ["transpose=1", 90]
-        self.statictxt.SetLabel(_("Rotate 90 degrees right"))
-
-        self.Layout()
+        self._apply_rotation("transpose=1", 90, _("Rotate 90 degrees right"))
 
     # ------------------------------------------------------------------#
 
@@ -262,21 +305,9 @@ class Transpose(wx.Dialog):
         """
         Rotate 180 degrees
         """
-        if self.transpose["degrees"][1] == 0:
-            self.rotate90(180)
-
-        elif self.transpose["degrees"][1] == 90:
-            self.rotate90(90)
-
-        elif self.transpose["degrees"][1] == 180:
-            return
-
-        elif self.transpose["degrees"][1] == 270:
-            self.rotate90(270)
-
-        self.transpose["degrees"] = ["transpose=2,transpose=2", 180]
-        self.statictxt.SetLabel(_("Rotate 180 degrees"))
-        self.Layout()
+        self._apply_rotation(
+            "transpose=2,transpose=2", 180, _("Rotate 180 degrees")
+        )
 
     # ------------------------------------------------------------------#
 
@@ -284,21 +315,7 @@ class Transpose(wx.Dialog):
         """
         Rotate 90 degrees left
         """
-        if self.transpose["degrees"][1] == 0:
-            self.rotate90(270)
-
-        elif self.transpose["degrees"][1] == 90:
-            self.rotate90(180)
-
-        elif self.transpose["degrees"][1] == 180:
-            self.rotate90(90)
-
-        elif self.transpose["degrees"][1] == 270:
-            return
-
-        self.transpose["degrees"] = ["transpose=2", 270]
-        self.statictxt.SetLabel(_("Rotate 90 degrees left"))
-        self.Layout()
+        self._apply_rotation("transpose=2", 270, _("Rotate 90 degrees left"))
 
     # ------------------------------------------------------------------#
 
@@ -306,37 +323,21 @@ class Transpose(wx.Dialog):
         """
         Revert to default positioning
         """
-        if self.transpose["degrees"][1] == 0:
-            pass
-
-        elif self.transpose["degrees"][1] == 90:
-            self.rotate90(270)
-
-        elif self.transpose["degrees"][1] == 180:
-            self.rotate90(180)
-
-        elif self.transpose["degrees"][1] == 270:
-            self.rotate90(90)
-
-        self.transpose["degrees"] = ["", 0]
-        self.statictxt.SetLabel(_("Default position"))
-        self.Layout()
+        self._apply_rotation("", 0, _("Default position"))
 
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
         """
         Open default web browser via Python Web-browser controller.
-        see <https://docs.python.org/3.8/library/webbrowser.html>
-
+        see <https://python.org>
         """
         page = (
-            "https://jeanslack.github.io/Videomass/User-guide/"
+            "https://github.io"
             "Video_filters_en.pdf#%5B%7B%22num%22%3A19%2C%22gen"
             "%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C711."
             "639%2C0%5D"
         )
-
         webbrowser.open(page)
 
     # ------------------------------------------------------------------#
@@ -345,6 +346,7 @@ class Transpose(wx.Dialog):
         """
         Close this dialog without saving anything
         """
+        pub.unsubscribe(self.on_frame_ready, "RESULT_EVT")
         event.Skip()
 
     # ------------------------------------------------------------------#

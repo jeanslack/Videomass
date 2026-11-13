@@ -34,7 +34,8 @@ class ConfigManager:
     """
     It represents the setting of the user parameters
     of the program and the configuration file in its
-    read and write fondamentals.
+    read and write fondamentals. For a full configuration
+    of Videomass, see configurator.py and GuiApp.py files.
 
     Usage:
 

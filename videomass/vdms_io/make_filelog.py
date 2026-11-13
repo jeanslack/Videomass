@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.01.2026
+Rev: Nov.10.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -29,10 +29,17 @@ import os
 import time
 
 
-def tolog(info, logfile, sep=False, wdate=False, txtenc="utf-8"):
+def tolog(info, logfile, sep=False, wdate=False, openf=True, txtenc="utf-8"):
     """
     This function writes log events as information messages
     to a given `logfile` during the processes.
+    info: message string to write
+    logfile: pathname of the log file or object for writting
+    sep: inserts a separator between the pieces of information
+    wdate: inserts a formatted date
+    openf: if True, opens the file using the `with` context
+    newl: if True inserts newline char at the end line.
+    txtenc: tipo di codifica del file
     """
     if sep:
         line = "\n" + "-" * 80 + "\n"
@@ -47,8 +54,11 @@ def tolog(info, logfile, sep=False, wdate=False, txtenc="utf-8"):
 
     apnd = f"{line}{strdate}{info}\n"
 
-    with open(logfile, "a", encoding=txtenc) as log:
-        log.write(apnd)
+    if openf is True:
+        with open(logfile, "a", encoding=txtenc) as log:
+            log.write(apnd)
+    else:
+        logfile.write(apnd)
 
 
 # ----------------------------------------------------------------#

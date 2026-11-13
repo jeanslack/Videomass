@@ -239,8 +239,7 @@ class Set_Timestamp(wx.Dialog):
             f"drawtext=fontfile='{tsfont}':text='{ptshms}':"
             f"fontcolor={self.fontcolor}:shadowcolor={self.shadowcolor}:"
             f"shadowx=1:shadowy=1:{fontsize}:"
-            f"box={self.boxenabled}:boxcolor={self.boxcolor}:"
-            f"x=(w-tw)/2:y=h-(2*lh)"
+            f"box={self.boxenabled}:boxcolor={self.boxcolor}"
         )
 
         return timestamp

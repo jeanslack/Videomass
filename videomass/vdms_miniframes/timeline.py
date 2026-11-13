@@ -34,10 +34,7 @@ from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.ffplay_file import (
-    FilePlayWithprogress,
-    FilePlayWithprogressWindows,
-)
+from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
@@ -228,7 +225,8 @@ class Float_TL(wx.MiniFrame):
         bmp_tstart = get_bmp(icons["start_time"], ((16, 16)))
         bmp_tend = get_bmp(icons["end_time"], ((16, 16)))
         bmp_wave = get_bmp(icons["waveform"], ((16, 16)))
-        bmp_play = get_bmp(icons["playback"], ((16, 16)))
+        self.bmp_play = get_bmp(icons["playback"], ((16, 16)))
+        self.bmp_stop = get_bmp(icons["playstop"], ((16, 16)))
 
         self.parent = parent
         self.duration = self.parent.duration
@@ -247,6 +245,7 @@ class Float_TL(wx.MiniFrame):
         self.frame = None  # waveform image located on cache dir
         self.invalidselection = False  # booleaan reference
         self.playpoint = None  # `x` point pixel representation or None
+        self.playback = None  # playback thread
 
         wx.MiniFrame.__init__(
             self,
@@ -273,9 +272,8 @@ class Float_TL(wx.MiniFrame):
         sizer_btns = wx.FlexGridSizer(0, 7, 0, 0)
         sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 8)
         self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
-        self.btn_play.SetBitmap(bmp_play, wx.LEFT)
+        self.btn_play.SetBitmap(self.bmp_play, wx.LEFT)
         sizer_btns.Add(self.btn_play, 0, wx.RIGHT | wx.CENTRE, 20)
-
         self.counterplay = wx.StaticText(
             self.panelbase, wx.ID_ANY, ("00:00:00.000")
         )
@@ -372,7 +370,7 @@ class Float_TL(wx.MiniFrame):
         self.btn_reset.SetToolTip(tip)
         tip = _("Timeline Editor Usage")
         btn_quicktip.SetToolTip(tip)
-        tip = _("Play segment")
+        tip = _("Play/Stop segment")
         self.btn_play.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
@@ -418,9 +416,11 @@ class Float_TL(wx.MiniFrame):
             self.btn_tend,
             self.panelruler,
         ]
+        if self.playback is not None and self.playback.is_alive():
+            del widgets[0]  # del btn_play
+
         for widget in widgets:
-            if widget:
-                widget.Enable(state)
+            widget.Enable(state)
 
     # ------------------------------------------------------------------#
 
@@ -486,6 +486,17 @@ class Float_TL(wx.MiniFrame):
             return True
         return None
 
+    # ------------------------------------------------------------------#
+
+    def stop_playback(self):
+        """
+        Extension of the btn_play event when the user clicks
+        the button to stop playback.
+        """
+        self.playback.stop("FilePlayWithprogress")
+        self.playback = None
+        self.end_playback_thread()
+
     # ----------------------Event handler (callbacks)----------------------#
 
     def on_play_segment(self, event):
@@ -527,6 +538,12 @@ class Float_TL(wx.MiniFrame):
             )
             return
 
+        if self.playback is not None and self.playback.is_alive():
+            self.stop_playback()
+            return
+
+        self.btn_play.SetBitmap(self.bmp_stop)
+
         filesel = self.file_selection()[0]
 
         if self.parent.checktimestamp:
@@ -544,13 +561,8 @@ class Float_TL(wx.MiniFrame):
         )
         try:
             with open(filesel, encoding="utf-8"):
-                if Float_TL.get.appset["ostype"] == "Windows":
-                    playback = FilePlayWithprogressWindows(
-                        self.GetParent(), args
-                    )
-                else:
-                    playback = FilePlayWithprogress(self.GetParent(), args)
-                playback.start()
+                self.playback = FilePlayWithprogress(self.GetParent(), args)
+                self.playback.start()
         except OSError:
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filesel),
@@ -586,6 +598,7 @@ class Float_TL(wx.MiniFrame):
             clean_line = output.strip()
             if not clean_line:
                 return
+
             # Check the diagnostic line from ffplay's actual counter
             if not any(
                 x in clean_line for x in ("A-V:", "M-A:", "aq=", "vq=")
@@ -651,6 +664,7 @@ class Float_TL(wx.MiniFrame):
         def reset_gui():
             # Enables cmponents of the timeline
             self.set_ui_ctrl(True)
+            self.btn_play.SetBitmap(self.bmp_play)
             # Move the cursor back to the beginning of the segment (bar_x)
             self.playpoint = round(self.bar_x)
             self.panelruler.Refresh()
@@ -758,6 +772,10 @@ class Float_TL(wx.MiniFrame):
         subscribing "RESET_ON_CHANGED_LIST" by adding, selecting or
         removing imported files (see`filedrop.py`).
         """
+        if self.playback is not None and self.playback.is_alive():
+            self.playback.stop("FilePlayWithprogress")
+            self.playback = None
+            self.btn_play.SetBitmap(self.bmp_play)
 
         self.sourcedur = _("No source duration:")
         if msg is None:

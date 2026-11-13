@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 07 November 2026 v6.1.24
+Tue, 10 November 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -61,12 +61,29 @@ Sat, 07 November 2026 v6.1.24
   * Improved the graphics engine in the Crop filter window in A/V Conversions.
     Mouse actions will now be even smoother with significant CPU savings at the
     end of events.
+  * Fixed (flushing) a potential slowdown in log display when performing
+    intensive FFmpeg operations. The `append_messages` function opened and
+    closed the log file for each line of output, updated the text interface
+    element line by line, and created temporary lists to check message
+    categories. A high volume of output from FFmpeg could cause excessive I/O
+    and user interface processing.
+  * Fixed (throttling) UI event backlog: FFmpeg worker schedules a wx.CallAfter
+    for every line of stderr. If FFmpeg outputs faster than the UI can process
+    it, queued UI updates may pile up. Batch processing or limiting the
+    frequency of updates might help.
   * Improved code for Python >= 3.11 compatibility using Ruff linter.
   * Improved project.toml file to make linter rules more consistent and
     centralized
   * Fixed portability issues on ffprobe.py wrapper.
   * Removed Popen wrapper on utils.py file, in favor of a more modern interface
     to subprocess.
+  * The timeline editor now features a "stop preview" button; if the "play"
+    button is pressed, it will turn into a "stop" button.
+  * Fixed a UI freezing issue in the "Transpose" filter that occurred while
+    loading the preview, and improved the overall appearance of the window.
+  * Fixed Preview rotations rescale the image each time on Transpose filter.
+  * Fixed Queue duplicate validation quadratic.
+  * Fixed Queue merging compares every pair of items.
 
 
 +------------------------------------+

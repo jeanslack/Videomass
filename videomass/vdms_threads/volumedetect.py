@@ -137,11 +137,10 @@ class VolumeDetectThread(BaseVideomassThread):
                                 + f"with PID {self.process.pid}"
                             )
                             tolog(out, self.logfile)
-                            self.process.wait()
                             self.status = "STOP"
                             break
 
-                        if self.process.wait():
+                        if self.process.poll():
                             output = self.process.communicate()[1]
                             tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
                             self.status = "ERROR"
