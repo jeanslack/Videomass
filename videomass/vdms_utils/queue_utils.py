@@ -105,22 +105,24 @@ def load_json_file_queue(newincoming=None):
                     None,
                 )
                 return None
-    occurences = []
-    msg = _(
-        "ERROR: invalid data found loading queue file.\n"
-        "«{0}»\n\nCannot contain multiple occurrences "
-        "in `destination` keys value."
-    ).format(newincoming)
+
+    seen_destinations = set()
     for item in newdata:
-        occurences.append(item["destination"])
-    if any(occurences.count(x) > 1 for x in occurences):
-        wx.MessageBox(
-            msg,
-            _("Videomass - Error!"),
-            wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
-            None,
-        )
-        return None
+        dest = item["destination"]
+        if dest in seen_destinations:
+            msg = _(
+                "ERROR: invalid data found loading queue file.\n"
+                "«{0}»\n\nCannot contain multiple occurrences "
+                "in `destination` keys value."
+            ).format(newincoming)
+            wx.MessageBox(
+                msg,
+                _("Videomass - Error!"),
+                wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
+                None,
+            )
+            return None
+        seen_destinations.add(dest)
     return newdata
 
 
@@ -134,15 +136,11 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
     The result varies based on the index of a specific
     selection given by the `selected` object.
     """
-    indx_orig = []
-    indx_new = []
-    for indx1, olditem in enumerate(currentqueue):
-        for indx2, newitem in enumerate(newqueue):
-            if olditem["destination"] == newitem["destination"]:
-                indx_orig.append(indx1)
-                indx_new.append(indx2)
+    orig_dests = {item["destination"] for item in currentqueue}
+    new_dests = {item["destination"] for item in newqueue}
+    has_conflicts = not orig_dests.isdisjoint(new_dests)
 
-    if indx_orig and indx_new:
+    if has_conflicts:
         caption = _("Videomass - Add Items to Queue")
         message = _(
             "Multiple items with identical names and destination "
@@ -169,18 +167,20 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
                 selected = dlg.getvalue()
 
         if selected == 0:
-            indx_orig.sort(reverse=True)  # IMPORTANT before iterate
-            for idx in indx_orig:
-                del currentqueue[idx]
+            currentqueue[:] = [
+                item
+                for item in currentqueue
+                if item["destination"] not in new_dests
+            ]
             currentqueue.extend(newqueue)
         elif selected == 1:
-            indx_new.sort(reverse=True)  # IMPORTANT before iterate
-            for idx in indx_new:
-                del newqueue[idx]
-            currentqueue.extend(newqueue)
+            currentqueue.extend(
+                item
+                for item in newqueue
+                if item["destination"] not in orig_dests
+            )
         elif selected == 2:
-            currentqueue.clear()
-            currentqueue.extend(newqueue)
+            currentqueue[:] = newqueue
         else:
             return None
     else:

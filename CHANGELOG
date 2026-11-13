@@ -77,6 +77,14 @@ Tue, 10 November 2026 v6.1.24
   * Fixed portability issues on ffprobe.py wrapper.
   * Removed Popen wrapper on utils.py file, in favor of a more modern interface
     to subprocess.
+  * The timeline editor now features a "stop preview" button; if the "play"
+    button is pressed, it will turn into a "stop" button.
+  * Fixed a UI freezing issue in the "Transpose" filter that occurred while
+    loading the preview, and improved the overall appearance of the window.
+  * Fixed Preview rotations rescale the image each time on Transpose filter.
+  * Fixed Queue duplicate validation quadratic.
+  * Fixed Queue merging compares every pair of items.
+
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22
