@@ -27,6 +27,7 @@ This file is part of Videomass.
 
 import os
 import time
+import uuid
 import webbrowser
 
 import wx
@@ -74,13 +75,13 @@ class Scale(wx.Dialog):
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         grid_opt = wx.BoxSizer(wx.HORIZONTAL)
         sizerBase.Add(grid_opt, 0)
-        btn_quicktip = wx.Button(self, wx.ID_ANY, _("?"), size=(40, -1))
-        font = btn_quicktip.GetFont()
+        self.btn_quicktip = wx.Button(self, wx.ID_ANY, _("?"), size=(40, -1))
+        font = self.btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
-        btn_quicktip.SetFont(font)
-        btn_quicktip.SetBackgroundColour(wx.Colour(Scale.LGREEN))
-        btn_quicktip.SetForegroundColour(wx.Colour(Scale.BLACK))
-        grid_opt.Add(btn_quicktip, 0, wx.CENTER | wx.ALL, 5)
+        self.btn_quicktip.SetFont(font)
+        self.btn_quicktip.SetBackgroundColour(wx.Colour(Scale.LGREEN))
+        self.btn_quicktip.SetForegroundColour(wx.Colour(Scale.BLACK))
+        grid_opt.Add(self.btn_quicktip, 0, wx.CENTER | wx.ALL, 5)
 
         btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
         grid_opt.Add(btn_view, 0, wx.ALL, 5)
@@ -228,12 +229,12 @@ class Scale(wx.Dialog):
         # ----- confirm buttons section
         gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(self.btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridbtns.Add(gridhelp)
         boxaff = wx.BoxSizer(wx.HORIZONTAL)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        boxaff.Add(btn_cancel, 0)
+        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(self.btn_cancel, 0)
         btn_ok = wx.Button(self, wx.ID_OK)
         boxaff.Add(btn_ok, 0, wx.LEFT, 5)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
@@ -272,11 +273,11 @@ class Scale(wx.Dialog):
         self.Bind(wx.EVT_TEXT, self.on_negative_height, self.spin_scale_height)
         self.Bind(wx.EVT_CHECKBOX, self.on_constrain, self.ckbx_keep)
         self.Bind(wx.EVT_RADIOBOX, self.on_dimension, self.rdb_scale)
-        self.Bind(wx.EVT_BUTTON, self.on_readme, btn_quicktip)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_readme, self.btn_quicktip)
+        self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
 
         # Set previous changes
         if args[0]:  # scale
@@ -377,6 +378,12 @@ class Scale(wx.Dialog):
             stime = integer_to_time(int(self.mills / 2), False)
             sseg = f"-ss {stime}"
         scale = "" if not concat else f'-vf "{concat}"'
+
+        unique_id = uuid.uuid4().hex[:6]
+        dname = os.path.dirname(self.frame)
+        fname, __ = os.path.splitext(os.path.basename(self.filename))
+        self.frame = os.path.join(dname, f"{fname}_{unique_id}.png")
+
         arg = (
             f'{sseg} -i "{self.filename}" -f image2 -update 1 '
             f'-frames:v 1 {scale} "{self.frame}"'
@@ -425,14 +432,36 @@ class Scale(wx.Dialog):
         """
         Open the image file (frame) with default OS image viewer.
         """
-        concat = self.concat_filter(self.getvalue())
-        error = self.process(concat)
-        if error:
-            return
+        # Disabling all dialog children controls
+        enabled_children = [c for c in self.GetChildren() if c.IsEnabled()]
+        for c in enabled_children:
+            c.Disable()
+        self.btn_cancel.Enable()
+        self.btn_help.Enable()
+        self.btn_quicktip.Enable()
 
-        if os.path.exists(self.frame) and os.path.isfile(self.frame):
-            time.sleep(0.5)  # to ensure correct size in default image viewer
-            io_tools.openpath(self.frame)
+        wx.BeginBusyCursor()
+
+        try:
+            concat = self.concat_filter(self.getvalue())
+            error = self.process(concat)
+            if error:
+                return
+
+            if os.path.exists(self.frame) and os.path.isfile(self.frame):
+                time.sleep(
+                    0.5
+                )  # to ensure correct size in default image viewer
+                io_tools.openpath(self.frame)
+
+        finally:
+            # Eseguito SEMPRE prima di restituire il controllo al chiamante
+            if wx.IsBusy():
+                wx.EndBusyCursor()
+            if self:
+                for c in enabled_children:
+                    c.Enable()
+        return
 
     # ------------------------------------------------------------------#
 

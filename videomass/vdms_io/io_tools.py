@@ -165,44 +165,6 @@ def generic_operation_process(
     return status
 
 
-# def generic_operation_process(
-#     args, editor="", msg="", parent=None, show_popup=True, callback=None
-# ):
-#     get = wx.GetApp()
-#     logfile = make_log_template(
-#         "generic_task.log", get.appset["logdir"], mode="w"
-#     )
-#     thread = FFmpegGenericTask(args, editor, logfile)
-#
-#     if show_popup:
-#         dlgload = PopupDialog(
-#             parent,
-#             _("Videomass - Loading..."),
-#             msg=msg,
-#             thread=thread,
-#         )
-#         thread.start()
-#         dlgload.ShowModal()
-#         status = thread.status
-#         dlgload.Destroy()
-#
-#         if status and status != "STOP":
-#             show_msg_notify(parent, logname="generic_task.log")
-#         return status
-#
-#     # Modalità silenziosa (senza popup) con callback asincrona
-#     def _on_done(status):
-#         pub.unsubscribe(_on_done, "RESULT_EVT")
-#         if thread.status and thread.status != "STOP":
-#             show_msg_notify(parent, logname="generic_task.log")
-#         if callback:
-#             callback(thread.status)
-#
-#     pub.subscribe(_on_done, "RESULT_EVT")
-#     thread.start()
-#     return None
-
-
 # def generic_operation_process(args, editor="", msg="", parent=None):
 #     """
 #     Executes a generic FFmpeg task, displaying a po-pup dialog
