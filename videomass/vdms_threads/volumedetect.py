@@ -150,13 +150,14 @@ class VolumeDetectThread(BaseVideomassThread):
                             if self.stop_work_thread:
                                 if self.fatal:
                                     return
-                                self.process.communicate()[1]
-                                out = (
-                                    f"[VIDEOMASS]: STOP command received "
-                                    f"(PID {self.process.pid})\n[FFMPEG]: "
-                                    f"Exit Code: {self.process.returncode}"
+                                out = self.process.communicate()[1]
+                                msgerr = (
+                                    f"{out}\n[VIDEOMASS]: STOP command "
+                                    f"received (PID {self.process.pid})\n"
+                                    f"[FFMPEG]: Exit Code: "
+                                    f"{self.process.returncode}"
                                 )
-                                tolog(out, logf, openf=False)
+                                tolog(msgerr, logf, openf=False)
                                 self.status = "STOP"
                                 break
 
