@@ -27,6 +27,7 @@ This file is part of Videomass.
 
 import requests
 import wx
+from pubsub import pub
 
 from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io.make_filelog import make_log_template
@@ -37,6 +38,7 @@ from videomass.vdms_threads.check_bin import (
     ff_formats,
     ff_topics,
 )
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_utils.utils import open_default_application
 
@@ -103,6 +105,135 @@ def show_msg_notify(
 # ----------------------------------------------------------------#
 
 
+def generic_operation_process(
+    args, editor="", msg="", parent=None, showlog=True, delay_ms=600
+):
+    """
+    Run FFmpegGenericTask and return its exit status (`None`, `"STOP"`, or
+    an error string). Shows `PopupDialog` only if the task takes longer
+    than `delay_ms` milliseconds, avoiding dialog flicker on fast operations.
+    """
+    get = wx.GetApp()
+    logfile = make_log_template(
+        "generic_task.log", get.appset["logdir"], mode="w"
+    )
+
+    thread = FFmpegGenericTask(args, editor, logfile)
+    state = {"done": False, "show_popup": False}
+    loop = wx.GUIEventLoop()
+
+    def _on_fast_done(status):
+        state["done"] = True
+        if loop.IsRunning():
+            loop.Exit()
+
+    def _on_timeout():
+        if not state["done"]:
+            state["show_popup"] = True
+            if loop.IsRunning():
+                loop.Exit()
+
+    pub.subscribe(_on_fast_done, "RESULT_EVT")
+    timer = wx.CallLater(delay_ms, _on_timeout)
+    thread.start()
+
+    if not state["done"]:
+        loop.Run()
+
+    timer.Stop()
+    pub.unsubscribe(_on_fast_done, "RESULT_EVT")
+
+    if state["show_popup"] and not state["done"]:
+        dlgload = PopupDialog(
+            parent,
+            _("Videomass - Loading..."),
+            msg=msg,
+            thread=thread,
+        )
+
+        if thread.is_alive():
+            dlgload.ShowModal()
+        else:
+            pub.unsubscribe(dlgload.getMessage, "RESULT_EVT")
+        dlgload.Destroy()
+
+    status = thread.status
+    if status and status != "STOP":
+        show_msg_notify(
+            parent, logname="generic_task.log", showlogdialog=showlog
+        )
+    return status
+
+
+# def generic_operation_process(
+#     args, editor="", msg="", parent=None, show_popup=True, callback=None
+# ):
+#     get = wx.GetApp()
+#     logfile = make_log_template(
+#         "generic_task.log", get.appset["logdir"], mode="w"
+#     )
+#     thread = FFmpegGenericTask(args, editor, logfile)
+#
+#     if show_popup:
+#         dlgload = PopupDialog(
+#             parent,
+#             _("Videomass - Loading..."),
+#             msg=msg,
+#             thread=thread,
+#         )
+#         thread.start()
+#         dlgload.ShowModal()
+#         status = thread.status
+#         dlgload.Destroy()
+#
+#         if status and status != "STOP":
+#             show_msg_notify(parent, logname="generic_task.log")
+#         return status
+#
+#     # Modalità silenziosa (senza popup) con callback asincrona
+#     def _on_done(status):
+#         pub.unsubscribe(_on_done, "RESULT_EVT")
+#         if thread.status and thread.status != "STOP":
+#             show_msg_notify(parent, logname="generic_task.log")
+#         if callback:
+#             callback(thread.status)
+#
+#     pub.subscribe(_on_done, "RESULT_EVT")
+#     thread.start()
+#     return None
+
+
+# def generic_operation_process(args, editor="", msg="", parent=None):
+#     """
+#     Executes a generic FFmpeg task, displaying a po-pup dialog
+#     and returning the final status (None, "STOP", or an error message)
+#     """
+#     get = wx.GetApp()
+#     logfile = make_log_template(
+#         "generic_task.log", get.appset["logdir"], mode="w"
+#     )
+#
+#     thread = FFmpegGenericTask(args, editor, logfile)
+#     dlgload = PopupDialog(
+#         parent,
+#         _("Videomass - Loading..."),
+#         msg=msg,
+#         thread=thread,
+#     )
+#     thread.start()
+#     dlgload.ShowModal()
+#     status = thread.status
+#     dlgload.Destroy()
+#
+#     if status and status != "STOP":
+#         show_msg_notify(parent, logname="generic_task.log")
+#
+#     return status
+
+
+# ----------------------------------------------------------------#
+
+
 def volume_detect_process(filelist, timeseq, audiomap, parent=None):
     """
     Run thread to get audio peak level data
@@ -120,31 +251,29 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
         tseq = "", ""
 
     thread = VolumeDetectThread(tseq, filelist, audiomap, logfile)
-    thread.start()
     dlgload = PopupDialog(
         parent,
         _("Videomass - Loading..."),
         _("Wait....\nAudio peak analysis."),
         thread,
     )
+    thread.start()
     dlgload.ShowModal()
-    # thread.join()
     data = thread.data
     dlgload.Destroy()
 
-    if data[1]:
-        if data[1] == "ERROR":
-            show_msg_notify(parent, logname="volumedetected.log")
+    if data[1] and data[1] != "STOP":
+        show_msg_notify(parent, logname="volumedetected.log")
 
-        elif data[1] == "STOP":
-            msg = "volumedetect: STOP command event received."
-            show_msg_notify(
-                parent,
-                warnlev="info",
-                logname="volumedetected.log",
-                addmsg=msg,
-                showlogdialog=False,
-            )
+    elif data[1] == "STOP":
+        msg = "volumedetect: STOP command event received."
+        show_msg_notify(
+            parent,
+            warnlev="info",
+            logname="volumedetected.log",
+            addmsg=msg,
+            showlogdialog=False,
+        )
 
     return data
 

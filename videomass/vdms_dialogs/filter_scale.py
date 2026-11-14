@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.01.2026
+Rev: Nov.13.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -33,9 +33,7 @@ import wx
 
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io import io_tools
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
@@ -50,7 +48,6 @@ class Scale(wx.Dialog):
     BLACK = "#1f1f1f"
     get = wx.GetApp()
     appdata = get.appset
-    LOGDIR = appdata["logdir"]
     TMPROOT = os.path.join(appdata["cachedir"], "tmp", "Scale")
     TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
@@ -374,11 +371,6 @@ class Scale(wx.Dialog):
         filter. Note that the trim start point on this process is
         set to the total length of the movie divided by two.
         """
-        logfile = make_log_template(
-            "generic_task.log",
-            Scale.LOGDIR,
-            mode="w",
-        )
         if not self.mills:
             sseg = ""
         else:
@@ -389,13 +381,13 @@ class Scale(wx.Dialog):
             f'{sseg} -i "{self.filename}" -f image2 -update 1 '
             f'-frames:v 1 {scale} "{self.frame}"'
         )
-        thread = FFmpegGenericTask(arg, "Scale", logfile)
-        error = thread.status
-        if error:
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(logfile)
-            )
-            return error
+        msg = _("Please wait...\nLoading image.")
+        parent = self.GetParent()
+        data = generic_operation_process(
+            arg, editor="Scale", msg=msg, parent=parent, showlog=False
+        )
+        if data:
+            return data
         return None
 
     # ----------------------Event handler (callback)---------------------#

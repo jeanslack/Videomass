@@ -32,10 +32,8 @@ import wx.adv
 from pubsub import pub
 
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
@@ -447,11 +445,9 @@ class Float_TL(wx.MiniFrame):
         """
         This method is responsible for making available
         an audio waveform frame from a selected file.
-        Return None type if error, str(frame) as pathname otherwise.
+        Return None on success, error string or 'STOP' otherwise
         """
-        logfile = make_log_template(
-            "generic_task.log", Float_TL.LOGDIR, mode="w"
-        )
+
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
 
@@ -461,15 +457,12 @@ class Float_TL(wx.MiniFrame):
             f'colors=0x0A192F@0.70:split_channels=1:draw=full:filter=peak" '
             f'-update 1 -frames:v 1 "{self.frame}"'
         )
-        thread = FFmpegGenericTask(args, "Timeline Waveform", logfile)
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            self.frame = None
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(logfile)
-            )
-        return self.frame
+        msg = _("Please wait...\nLoading waveform.")
+        data = generic_operation_process(
+            args, editor="Timeline Waveform", msg=msg, parent=self.GetParent()
+        )
+
+        return data
 
     # ------------------------------------------------------------------#
 
@@ -698,9 +691,9 @@ class Float_TL(wx.MiniFrame):
                 self.btn_wave.SetValue(False)
                 return
 
-            if not self.make_frame_from_file():
+            if self.make_frame_from_file():
                 self.btn_wave.SetValue(False)
-                return
+                self.frame = None
         else:
             self.frame = None
 

@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.20.2026
+Rev: Nov.13.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -146,9 +146,9 @@ class PopupDialog(wx.Dialog):
             # show button stop
             gridbtn = wx.GridSizer(1, 1, 0, 0)
             boxv.Add(gridbtn, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-            button_stop = wx.Button(self, wx.ID_ANY, _("Stop"))
-            gridbtn.Add(button_stop, 1, wx.ALL, 5)
-            self.Bind(wx.EVT_BUTTON, self.on_stop, button_stop)
+            self.button_stop = wx.Button(self, wx.ID_ANY, _("Stop"))
+            gridbtn.Add(self.button_stop, 1, wx.ALL, 5)
+            self.Bind(wx.EVT_BUTTON, self.on_stop, self.button_stop)
 
         # Handle layout
         self.SetAutoLayout(True)
@@ -165,6 +165,7 @@ class PopupDialog(wx.Dialog):
         If thread is not None, you can call the thread stop
         method here.
         """
+        self.button_stop.Disable()
         self.thread.stop()
 
     def getMessage(self, status):
@@ -181,12 +182,12 @@ class PopupDialog(wx.Dialog):
         Destroy() dopo ShowModal() nel chiamante.
         vedi: https://github.com/wxWidgets/Phoenix/issues/672
         Penso sia fattibile anche implementare un'interfaccia GetValue
-        su questo dialogo, ma si perderebbe un po' di portabilità.
+        su questo dialogo, ma si perderebbe un po' di portabilità (jeanslack)
 
         """
-        # self.Destroy() # do not work
-        # self.ai.Stop()
-        self.EndModal(1)
+        pub.unsubscribe(self.getMessage, "RESULT_EVT")
+        if self and self.IsModal():
+            self.EndModal(1)
 
 
 class CountDownDlg(wx.Dialog):

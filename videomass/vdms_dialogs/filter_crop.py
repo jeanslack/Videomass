@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.08.2026
+Rev: Nov.13.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -33,9 +33,7 @@ import wx.lib.colourselect as csel
 import wx.lib.statbmp
 from pubsub import pub
 
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
@@ -204,7 +202,6 @@ class Crop(wx.Dialog):
 
     get = wx.GetApp()
     OS = get.appset["ostype"]
-    LOGDIR = get.appset["logdir"]
     TMPROOT = os.path.join(get.appset["cachedir"], "tmp", "Crop")
     TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
@@ -256,13 +253,13 @@ class Crop(wx.Dialog):
         msg = _("Source size: {0} x {1} pixels").format(
             self.width, self.height
         )
-        label1 = wx.StaticText(
+        self.label1 = wx.StaticText(
             self,
             wx.ID_ANY,
             label=msg,
             style=wx.ST_NO_AUTORESIZE | wx.ALIGN_CENTRE_HORIZONTAL,
         )
-        sizersize.Add(label1, 0, wx.CENTER | wx.EXPAND)
+        sizersize.Add(self.label1, 0, wx.CENTER | wx.EXPAND)
         self.btn_color = csel.ColourSelect(
             self, -1, _("Crop color"), self.pencolor
         )
@@ -360,18 +357,22 @@ class Crop(wx.Dialog):
         boxaff = wx.BoxSizer(wx.HORIZONTAL)
         btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
         boxaff.Add(btn_cancel, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(args[2], wx.LEFT)
-        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        self.btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(self.btn_ok, 0, wx.LEFT, 5)
+        self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        self.btn_reset.SetBitmap(args[2], wx.LEFT)
+        boxaff.Add(self.btn_reset, 0, wx.LEFT, 5)
         gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridbtns, 0, wx.EXPAND)
+
+        # Disabilita i controlli finché l'anteprima non è pronta
+        self._set_controls_enabled(False)
 
         # instance to Actor widget
         if os.path.exists(self.frame):
             bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
             self.bob = Actor(self.panelrect, bmp, 1, "")
+            self._set_controls_enabled(True)
         else:  # make a temporary empty bitmap
             bmp = wx.Bitmap(self.w_scaled, self.h_scaled)
             self.bob = Actor(self.panelrect, bmp, 1, "")
@@ -380,9 +381,9 @@ class Crop(wx.Dialog):
         # ----------------------Properties-----------------------#
         self.panelrect.SetBackgroundColour(wx.Colour(Crop.BACKGROUND))
         if Crop.OS == "Darwin":
-            label1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.label1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            label1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.label1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         self.SetTitle(_("Crop Tool"))
         self.btn_color.SetToolTip(
@@ -412,8 +413,8 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.make_frame_from_file, self.btn_load)
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.btn_color.Bind(csel.EVT_COLOURSELECT, self.bob.oncolor)
 
@@ -424,6 +425,20 @@ class Crop(wx.Dialog):
 
         if args[0]:  # fcrop previusly values
             self.default(args[0], args[1])
+
+    # ------------------------------------------------------------------#
+
+    def _set_controls_enabled(self, state):
+        """Abilita o disabilita i pulsanti durante il caricamento."""
+        self.spin_w.Enable(state)
+        self.spin_h.Enable(state)
+        self.spin_x.Enable(state)
+        self.spin_y.Enable(state)
+        self.btn_centre.Enable(state)
+        self.sld_time.Enable(state)
+        self.btn_load.Enable(state)
+        self.btn_reset.Enable(state)
+        self.btn_ok.Enable(state)
 
     # ------------------------------------------------------------------#
 
@@ -465,7 +480,6 @@ class Crop(wx.Dialog):
         greater than the max time nor less than the min time
         (see the `seek` callback above)
         """
-        logfile = make_log_template("generic_task.log", Crop.LOGDIR, mode="w")
         if not self.mills:
             sseg = ""
         else:
@@ -477,20 +491,27 @@ class Crop(wx.Dialog):
             f'{sseg} -i "{self.filename}" -f image2 '
             f'-update 1 -frames:v 1 "{self.frame}"'
         )
-        thread = FFmpegGenericTask(arg, "Crop", logfile)
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(logfile)
-            )
-            return
+
+        msg = _("Please wait...\nLoading image.")
+        parent = self.GetParent()
+        data = generic_operation_process(
+            arg, editor="Crop", msg=msg, parent=parent, showlog=False
+        )
+        if data:
+            self._set_controls_enabled(False)
+            self.label1.SetLabel(_("Preview unavailable"))
+            return True
+
+        self._set_controls_enabled(True)
+
         if sseg:
             with open(self.fileclock, "w", encoding="utf-8") as atime:
                 atime.write(self.clock)
         self.btn_load.Disable()
         bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
         self.bob.setbitmap(bmp)
+
+        return None
 
     # ------------------------------------------------------------------#
 
