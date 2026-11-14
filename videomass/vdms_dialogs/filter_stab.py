@@ -26,16 +26,14 @@ This file is part of Videomass.
 """
 
 import os
+import uuid
 import webbrowser
 
 import wx
 import wx.lib.agw.floatspin as FS
 
-from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io import io_tools
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
@@ -72,14 +70,14 @@ class VidstabSet(wx.Dialog):
         self.makeduo = args[3]
 
         self.filename = kwa["filename"]
-        name = os.path.splitext(os.path.basename(self.filename))[0]
-        self.framesrc = os.path.join(VidstabSet.TMPSRC, f"{name}.mkv")
-        self.frameduo = os.path.join(VidstabSet.TMPSRC, f"{name}_DUO.mkv")
-        self.fileclock = os.path.join(VidstabSet.TMPROOT, f"{name}.clock")
+        fname, __ = os.path.splitext(os.path.basename(self.filename))
+        self.framesrc = os.path.join(VidstabSet.TMPSRC, f"{fname}.mkv")
+        self.frameduo = os.path.join(VidstabSet.TMPSRC, f"{fname}_DUO.mkv")
+        self.fileclock = os.path.join(VidstabSet.TMPROOT, f"{fname}.clock")
         tcheck = clockset(kwa["duration"], self.fileclock)
         self.clock = tcheck["duration"]
         self.mills = tcheck["millis"]
-        self.logfile = None
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         boxenable = wx.BoxSizer(wx.HORIZONTAL)
@@ -249,7 +247,7 @@ class VidstabSet(wx.Dialog):
             wx.ID_ANY,
             "-1",
             min=-1,
-            max=360,
+            max=3,
             style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
             size=(-1, -1),
         )
@@ -366,17 +364,17 @@ class VidstabSet(wx.Dialog):
         # ----- confirm buttons section
         gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(self.btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridbtns.Add(gridhelp)
         boxaff = wx.BoxSizer(wx.HORIZONTAL)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        boxaff.Add(btn_cancel, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(args[4], wx.LEFT)
-        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(self.btn_cancel, 0)
+        self.btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(self.btn_ok, 0, wx.LEFT, 5)
+        self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        self.btn_reset.SetBitmap(args[4], wx.LEFT)
+        boxaff.Add(self.btn_reset, 0, wx.LEFT, 5)
         gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
@@ -515,16 +513,26 @@ class VidstabSet(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.on_optzoom, self.spin_optzoom)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod1, self.ckbx_tripod1)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod2, self.ckbx_tripod2)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.set_default, btn_reset)
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_cancel)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.set_default, self.btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
 
         if self.vidstabdetect:
             self.set_values()  # Set previous changes
         else:
             self.set_default(self)
             self.on_activate(self)
+
+    # ------------------------------------------------------------------#
+
+    def _set_controls_enabled(self, state):
+        """
+        Helper method, enable or disable all dialog children controls.
+        """
+        for child in self.GetChildren():
+            child.Enable(state)
 
     # ------------------------------------------------------------------#
 
@@ -558,46 +566,47 @@ class VidstabSet(wx.Dialog):
     def on_load_at_time(self, event):
         """
         Reloads processes at a given time clock point
+
         """
-        data = self.getvalue()
-        detect = f"-vf {data[0]}"
-        trasform = self.concat_filter((data[1], data[2]))
-        self.logfile = make_log_template(
-            "generic_task.log",
-            VidstabSet.LOGDIR,
-            mode="w",
-        )
-        error = self.process(self.filename, args=detect, mode="detect")
-        if error:
-            return
+        # Disabling all dialog children controls
+        self._set_controls_enabled(False)
+        self.btn_cancel.Enable(), self.btn_help.Enable()
+        wx.BeginBusyCursor()
 
-        error = self.process(
-            self.filename,
-            self.framesrc,
-            args=trasform,
-            mode="trasform",
-        )
-        if error:
-            return
+        try:
+            data = self.getvalue()
+            detect = f"-vf {data[0]}"
+            trasform = self.concat_filter((data[1], data[2]))
 
-        if self.ckbx_duo.IsChecked():
-            error = self.process(
-                self.filename,
-                self.frameduo,
-                args="",
-                mode="makeduo",
-            )
+            error = self.process(args=detect, mode="detect")
             if error:
                 return
-            io_tools.openpath(self.frameduo)
-            return
 
-        io_tools.openpath(self.framesrc)
+            error = self.process(args=trasform, mode="trasform")
+            if error:
+                return
+
+            if self.ckbx_duo.IsChecked():
+                error = self.process(args="", mode="makeduo")
+                if error:
+                    return
+                io_tools.openpath(self.frameduo)
+
+                return
+
+            io_tools.openpath(self.framesrc)
+
+        finally:
+            # Eseguito SEMPRE prima di restituire il controllo al chiamante
+            if wx.IsBusy():
+                wx.EndBusyCursor()
+            if self:
+                self._set_controls_enabled(True)
         return
 
     # ------------------------------------------------------------------#
 
-    def process(self, infile, outfile=None, args="", mode=None):
+    def process(self, args="", mode=None):
         """
         Generate a new frame at the clock position using
         ffmpeg `eq` filter.
@@ -622,37 +631,36 @@ class VidstabSet(wx.Dialog):
                 if VidstabSet.appdata["ostype"] == "Windows"
                 else "/dev/null"
             )
-            argstr = f'{sseg} -i "{infile}" {tseg} {args} -f null {nul}'
+            argstr = f'{sseg} -i "{self.filename}" {tseg} {args} -f null {nul}'
 
         elif mode == "trasform":
-            argstr = f'{sseg} -i "{infile}" {tseg} {args} "{outfile}"'
+            unique_id = uuid.uuid4().hex[:6]
+            dname = os.path.dirname(self.framesrc)
+            fname, __ = os.path.splitext(os.path.basename(self.filename))
+            self.framesrc = os.path.join(dname, f"{fname}_{unique_id}.mkv")
+            argstr = (
+                f'{sseg} -i "{self.filename}" {tseg} {args} "{self.framesrc}"'
+            )
 
         elif mode == "makeduo":
+            unique_id = uuid.uuid4().hex[:6]
+            dname = os.path.dirname(self.frameduo)
+            fname, __ = os.path.splitext(os.path.basename(self.filename))
+            self.frameduo = os.path.join(dname, f"{fname}_{unique_id}_DUO.mkv")
             argstr = (
-                f'{sseg} -i "{infile}" {tseg} -i "{self.framesrc}" '
-                f'{tseg} -filter_complex hstack "{outfile}"'
+                f'{sseg} -i "{self.filename}" {tseg} -i "{self.framesrc}" '
+                f'{tseg} -filter_complex hstack "{self.frameduo}"'
             )
         else:
             return None
 
-        thread = FFmpegGenericTask(
-            argstr,
-            procname=f"VidStab - {mode}",
-            logfile=self.logfile,
-        )
-        caption = _("Videomass - Loading...")
         msg = _("Please wait,\nThis process will take a few seconds.")
-        dlgload = PopupDialog(self, caption, msg)
-        dlgload.ShowModal()
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            dlgload.Destroy()
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(self.logfile)
-            )
-            return error
-        dlgload.Destroy()
+        parent = self.GetParent()
+        data = generic_operation_process(
+            argstr, editor=mode, msg=msg, parent=parent, showlog=False
+        )
+        if data:
+            return data
         return None
 
     # ------------------------------------------------------------------#
@@ -827,34 +835,7 @@ class VidstabSet(wx.Dialog):
 
         """
         if self.ckbx_enable.IsChecked():
-            self.spin_shake.Enable()
-            self.spin_accuracy.Enable()
-            self.spin_stepsize.Enable()
-            self.spin_mincontr.Enable()
-            self.ckbx_tripod1.Enable()
-            self.spin_smooth.Enable()
-            self.rdb_optalgo.Enable()
-            self.spin_maxangle.Enable()
-            self.rdb_crop.Enable()
-            self.ckbx_invert.Enable()
-            self.ckbx_relative.Enable()
-            self.spin_zoom.Enable()
-            self.spin_optzoom.Enable()
-            self.lab_shake.Enable()
-            self.lab_accuracy.Enable()
-            self.lab_stepsize.Enable()
-            self.lab_mincontr.Enable()
-            self.lab_smooth.Enable()
-            self.lab_maxangle.Enable()
-            self.lab_zoom.Enable()
-            self.lab_optzoom.Enable()
-            self.lab_unsharp.Enable()
-            # self.spin_zoomspeed.Enable(), self.lab_zoomspeed.Enable()
-            self.rdb_interpol.Enable()
-            # self.ckbx_tripod2.Enable()
-            self.txt_unsharp.Enable()
-            self.ckbx_duo.Enable()
-            # enable preview only if greater than 3 seconds
+            self._set_controls_enabled(True)
             if self.mills > 3000:
                 self.btn_snap.Enable()
                 self.sld_time.Enable()
@@ -862,42 +843,13 @@ class VidstabSet(wx.Dialog):
                 self.lab_dur.Enable()
                 self.spin_dur.Enable()
         else:
-            self.spin_shake.Disable()
-            self.spin_accuracy.Disable()
-            self.spin_stepsize.Disable()
-            self.spin_mincontr.Disable()
-            self.ckbx_tripod1.Disable()
-            self.spin_smooth.Disable()
-            self.rdb_optalgo.Disable()
-            self.spin_maxangle.Disable()
-            self.rdb_crop.Disable()
-            self.ckbx_invert.Disable()
-            self.ckbx_relative.Disable()
-            self.spin_zoom.Disable()
-            self.spin_optzoom.Disable()
-            self.spin_zoomspeed.Disable()
-            self.rdb_interpol.Disable()
-            self.ckbx_tripod2.Disable()
-            self.txt_unsharp.Disable()
-            self.lab_shake.Disable()
-            self.lab_accuracy.Disable()
-            self.lab_stepsize.Disable()
-            self.lab_mincontr.Disable()
-            self.lab_smooth.Disable()
-            self.lab_maxangle.Disable()
-            self.lab_zoom.Disable()
-            self.lab_optzoom.Disable()
-            self.lab_zoomspeed.Disable()
-            self.lab_unsharp.Disable()
-            # disable makeduo
+            self._set_controls_enabled(False)
+            self.btn_cancel.Enable()
+            self.btn_help.Enable()
+            self.btn_ok.Enable()
+            self.btn_reset.Enable()
             self.ckbx_duo.SetValue(False)
-            self.ckbx_duo.Disable()
-            # disable preview
-            self.btn_snap.Disable()
-            self.sld_time.Disable()
-            self.lab_time.Disable()
-            self.lab_dur.Disable()
-            self.spin_dur.Disable()
+            self.ckbx_enable.Enable()
 
     # ------------------------------------------------------------------#
 

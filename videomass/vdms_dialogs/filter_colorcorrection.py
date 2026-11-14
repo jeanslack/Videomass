@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.01.2026
+Rev: Nov.13.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -30,9 +30,7 @@ import webbrowser
 
 import wx
 
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
@@ -51,7 +49,6 @@ class ColorEQ(wx.Dialog):
 
     get = wx.GetApp()
     OS = get.appset["ostype"]
-    LOGDIR = get.appset["logdir"]
     TMPROOT = os.path.join(get.appset["cachedir"], "tmp", "ColorEQ")
     TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     TMPEDIT = os.path.join(TMPROOT, "tmpedit")
@@ -97,20 +94,20 @@ class ColorEQ(wx.Dialog):
             self, wx.ID_ANY, size=(self.w_ratio, self.h_ratio)
         )
         sizerpanels.Add(self.panel_img2, 0, wx.ALL | wx.CENTER, 5)
-        lab_imgsrc = wx.StaticText(
+        self.lab_imgsrc = wx.StaticText(
             self,
             wx.ID_ANY,
             label=_("Before"),
             style=wx.ST_NO_AUTORESIZE | wx.ALIGN_CENTRE_HORIZONTAL,
         )
-        sizerpanels.Add(lab_imgsrc, 0, wx.CENTER | wx.EXPAND)
-        lab_imgedit = wx.StaticText(
+        sizerpanels.Add(self.lab_imgsrc, 0, wx.CENTER | wx.EXPAND)
+        self.lab_imgedit = wx.StaticText(
             self,
             wx.ID_ANY,
             label=_("After"),
             style=wx.ST_NO_AUTORESIZE | wx.ALIGN_CENTRE_HORIZONTAL,
         )
-        sizerpanels.Add(lab_imgedit, 0, wx.CENTER | wx.EXPAND)
+        sizerpanels.Add(self.lab_imgedit, 0, wx.CENTER | wx.EXPAND)
         sizerBase.Add(10, 10)
         msg = _("Search for a specific frame")
         stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
@@ -249,25 +246,35 @@ class ColorEQ(wx.Dialog):
         gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridbtns.Add(gridhelp)
         boxaff = wx.BoxSizer(wx.HORIZONTAL)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        boxaff.Add(btn_cancel, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(iconreset, wx.LEFT)
-        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(self.btn_cancel, 0)
+        self.btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(self.btn_ok, 0, wx.LEFT, 5)
+        self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        self.btn_reset.SetBitmap(iconreset, wx.LEFT)
+        boxaff.Add(self.btn_reset, 0, wx.LEFT, 5)
         gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
         # ----------------------Properties-----------------------#
         if ColorEQ.OS == "Darwin":
-            lab_imgsrc.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            lab_imgedit.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.lab_imgsrc.SetFont(
+                wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL)
+            )
+            self.lab_imgedit.SetFont(
+                wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL)
+            )
         else:
-            lab_imgsrc.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            lab_imgedit.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.lab_imgsrc.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.lab_imgedit.SetFont(
+                wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL)
+            )
 
         self.SetTitle(_("Color Correction EQ Tool"))
+
+        # Disabilita i controlli finché l'anteprima non è pronta
+        self._set_controls_enabled(False)
+
         # ----- Set layout
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
@@ -335,9 +342,9 @@ class ColorEQ(wx.Dialog):
             )
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_gamma, self.sld_gamma)
 
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
         if not self.mills:
@@ -345,22 +352,40 @@ class ColorEQ(wx.Dialog):
 
         if colorset:  # previus values
             self.set_default(colorset)
-        self.process(self.framesrc)
-        self.loader_initial_source()
-        self.equalize_image(self.concat_filter())
+
+        if (
+            self.process(self.framesrc)
+            or self.loader_initial_source()
+            or self.equalize_image(self.concat_filter())
+        ):
+            self.lab_imgsrc.SetLabel(_("Preview unavailable"))
+            self.lab_imgedit.SetLabel(_("Preview unavailable"))
+            return
+
+        self._set_controls_enabled(True)
+
+    # ------------------------------------------------------------------#
+
+    def _set_controls_enabled(self, state):
+        """Abilita o disabilita i pulsanti durante il caricamento."""
+
+        self.sld_time.Enable(state)
+        self.btn_load.Enable(state)
+        self.sld_contrast.Enable(state)
+        self.sld_brightness.Enable(state)
+        self.sld_saturation.Enable(state)
+        self.sld_gamma.Enable(state)
+        self.btn_reset.Enable(state)
+        self.btn_ok.Enable(state)
 
     # -----------------------------------------------------------------------#
 
     def process(self, pathtosave, equalizer=""):
         """
+        Initializing conversion command for previews.
         Generate a new frame at the clock position using
         ffmpeg `eq` filter.
         """
-        logfile = make_log_template(
-            "generic_task.log",
-            ColorEQ.LOGDIR,
-            mode="w",
-        )
         if not self.mills:
             sseg = ""
         else:
@@ -370,14 +395,15 @@ class ColorEQ(wx.Dialog):
             f'{sseg} -i "{self.filename}" -f image2 '
             f'-update 1 -frames:v 1 {eql} "{pathtosave}"'
         )
-        thread = FFmpegGenericTask(arg, "ColorEQ", logfile)
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(logfile)
-            )
-            return error
+
+        msg = _("Please wait...\nLoading image.")
+        parent = self.GetParent()
+        data = generic_operation_process(
+            arg, editor="ColorEQ", msg=msg, parent=parent, showlog=False
+        )
+        if data:
+            return True
+
         return None
 
     # -----------------------------------------------------------------------#
@@ -387,9 +413,16 @@ class ColorEQ(wx.Dialog):
         Loads initial StaticBitmaps on panels 1 (source).
         """
         img = wx.Image(self.framesrc, wx.BITMAP_TYPE_ANY)
-        img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        bitmap = img.ConvertToBitmap()
-        wx.StaticBitmap(self.panel_img1, wx.ID_ANY, bitmap)
+        if not img.IsOk():
+            self.lab_imgsrc.SetLabel(_("Preview unavailable"))
+            return True
+
+        scal = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
+        bmp = wx.Bitmap(scal)
+        wx.StaticBitmap(self.panel_img1, wx.ID_ANY, bmp)
+        # self._center_bitmap(bmp)
+
+        return None
 
     # -----------------------------------------------------------------------#
 
@@ -398,9 +431,15 @@ class ColorEQ(wx.Dialog):
         Loads initial StaticBitmaps on panels 2 (edit)
         """
         img = wx.Image(self.frameedit, wx.BITMAP_TYPE_ANY)
-        img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        bitmap = img.ConvertToBitmap()
-        wx.StaticBitmap(self.panel_img2, wx.ID_ANY, bitmap)
+        if not img.IsOk():
+            self.lab_imgedit.SetLabel(_("Preview unavailable"))
+            return True
+
+        scal = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
+        bmp = wx.Bitmap(scal)
+        wx.StaticBitmap(self.panel_img2, wx.ID_ANY, bmp)
+
+        return None
 
     # -----------------------------------------------------------------------#
 
@@ -441,8 +480,10 @@ class ColorEQ(wx.Dialog):
         """
         error = self.process(self.frameedit, equalizer=equalizer)
         if error:
-            return
+            return True
         self.loader_initial_edit()
+
+        return None
 
     # -----------------------------------------------------------------------#
 

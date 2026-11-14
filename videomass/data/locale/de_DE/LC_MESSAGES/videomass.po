@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 14:42+0100\n"
+"POT-Creation-Date: 2026-11-14 12:03+0100\n"
 "PO-Revision-Date: 2026-04-30 08:43+0200\n"
 "Last-Translator: schenklklopfer <https://github.com/schenklklopfer>\n"
 "Language: de_DE\n"
@@ -74,7 +74,7 @@ msgstr "Befehl für den zweiten Durchgang"
 msgid "Videomass - RAW Commands"
 msgstr "Videomass - RAW Kommandos"
 
-#: videomass/vdms_dialogs/avconv_cmd_line.py:69 videomass/vdms_dialogs/ffmpeg_help.py:134 videomass/vdms_dialogs/filter_scale.py:80 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:310 videomass/vdms_panels/concatenate.py:132 videomass/vdms_panels/sequence_to_video.py:132
+#: videomass/vdms_dialogs/avconv_cmd_line.py:69 videomass/vdms_dialogs/ffmpeg_help.py:134 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:306 videomass/vdms_panels/concatenate.py:132 videomass/vdms_panels/sequence_to_video.py:132
 #: videomass/vdms_panels/video_to_sequence.py:84
 msgid "?"
 msgstr ""
@@ -368,117 +368,127 @@ msgstr ""
 "\n"
 "  ..Nicht gefunden"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:103
+#: videomass/vdms_dialogs/filter_colorcorrection.py:100
 msgid "Before"
 msgstr "Davor"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:110
+#: videomass/vdms_dialogs/filter_colorcorrection.py:107
 msgid "After"
 msgstr "Danach"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:115 videomass/vdms_dialogs/filter_crop.py:270
+#: videomass/vdms_dialogs/filter_colorcorrection.py:112 videomass/vdms_dialogs/filter_crop.py:267
 msgid "Search for a specific frame"
 msgstr "Suche nach einem spezifischen Frame"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:131 videomass/vdms_dialogs/filter_crop.py:286
+#: videomass/vdms_dialogs/filter_colorcorrection.py:128 videomass/vdms_dialogs/filter_crop.py:283
 msgid "Load"
 msgstr "Laden"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:134
+#: videomass/vdms_dialogs/filter_colorcorrection.py:131
 msgid "Color EQ"
 msgstr "Farb EQ"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:140
+#: videomass/vdms_dialogs/filter_colorcorrection.py:137
 msgid "Contrast:"
 msgstr "Kontrast:"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:156 videomass/vdms_dialogs/filter_colorcorrection.py:180
+#: videomass/vdms_dialogs/filter_colorcorrection.py:153 videomass/vdms_dialogs/filter_colorcorrection.py:177
 msgid "-100 to +100, default value 0"
 msgstr "-100 bis +100, Standardwert: 0"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:164
+#: videomass/vdms_dialogs/filter_colorcorrection.py:161
 msgid "Brightness:"
 msgstr "Helligkeit:"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:197
+#: videomass/vdms_dialogs/filter_colorcorrection.py:194
 msgid "Saturation:"
 msgstr "Sättigung:"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:213
+#: videomass/vdms_dialogs/filter_colorcorrection.py:210
 msgid "0 to 300, default value 100"
 msgstr "0 bis 300, Standardwert: 100"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:220
+#: videomass/vdms_dialogs/filter_colorcorrection.py:217
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:236
+#: videomass/vdms_dialogs/filter_colorcorrection.py:233
 msgid "0 to 100, default value 10"
 msgstr "0 bis 100, Standardwert: 10"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:256 videomass/vdms_dialogs/filter_crop.py:365 videomass/vdms_dialogs/filter_deinterlace.py:252 videomass/vdms_dialogs/filter_denoisers.py:132 videomass/vdms_dialogs/filter_scale.py:242 videomass/vdms_dialogs/filter_stab.py:377 videomass/vdms_dialogs/filter_transpose.py:126
+#: videomass/vdms_dialogs/filter_colorcorrection.py:253 videomass/vdms_dialogs/filter_crop.py:362 videomass/vdms_dialogs/filter_deinterlace.py:252 videomass/vdms_dialogs/filter_denoisers.py:132 videomass/vdms_dialogs/filter_scale.py:239 videomass/vdms_dialogs/filter_stab.py:373 videomass/vdms_dialogs/filter_transpose.py:120
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:270
+#: videomass/vdms_dialogs/filter_colorcorrection.py:273
 msgid "Color Correction EQ Tool"
 msgstr "Farbkorrektur EQ Werkzeug"
 
-#: videomass/vdms_dialogs/filter_colorcorrection.py:486 videomass/vdms_dialogs/filter_colorcorrection.py:494 videomass/vdms_dialogs/filter_scale.py:321 videomass/vdms_dialogs/mediainfo.py:250 videomass/vdms_dialogs/mediainfo.py:274 videomass/vdms_dialogs/mediainfo.py:298 videomass/vdms_dialogs/mediainfo.py:322 videomass/vdms_dialogs/setting_profiles.py:329
-#: videomass/vdms_dialogs/setting_profiles.py:344 videomass/vdms_io/checkup.py:49 videomass/vdms_io/checkup.py:104 videomass/vdms_io/io_tools.py:87 videomass/vdms_io/io_tools.py:222 videomass/vdms_main/main_frame.py:1117 videomass/vdms_main/main_frame.py:1159 videomass/vdms_main/main_frame.py:1185 videomass/vdms_main/main_frame.py:1208 videomass/vdms_main/main_frame.py:1233
-#: videomass/vdms_miniframes/timeline.py:524 videomass/vdms_panels/concatenate.py:208 videomass/vdms_panels/long_processing_task.py:64 videomass/vdms_panels/presets_manager.py:471 videomass/vdms_panels/presets_manager.py:542 videomass/vdms_panels/presets_manager.py:640 videomass/vdms_panels/presets_manager.py:695 videomass/vdms_panels/presets_manager.py:719
+#: videomass/vdms_dialogs/filter_colorcorrection.py:361 videomass/vdms_dialogs/filter_colorcorrection.py:362 videomass/vdms_dialogs/filter_colorcorrection.py:417 videomass/vdms_dialogs/filter_colorcorrection.py:435 videomass/vdms_dialogs/filter_crop.py:502 videomass/vdms_dialogs/filter_transpose.py:199
+msgid "Preview unavailable"
+msgstr ""
+
+#: videomass/vdms_dialogs/filter_colorcorrection.py:399 videomass/vdms_dialogs/filter_crop.py:495 videomass/vdms_dialogs/filter_scale.py:384 videomass/vdms_dialogs/filter_transpose.py:180
+msgid ""
+"Please wait...\n"
+"Loading image."
+msgstr ""
+
+#: videomass/vdms_dialogs/filter_colorcorrection.py:527 videomass/vdms_dialogs/filter_colorcorrection.py:535 videomass/vdms_dialogs/filter_scale.py:318 videomass/vdms_dialogs/mediainfo.py:250 videomass/vdms_dialogs/mediainfo.py:274 videomass/vdms_dialogs/mediainfo.py:298 videomass/vdms_dialogs/mediainfo.py:322 videomass/vdms_dialogs/setting_profiles.py:329
+#: videomass/vdms_dialogs/setting_profiles.py:344 videomass/vdms_io/checkup.py:49 videomass/vdms_io/checkup.py:104 videomass/vdms_io/io_tools.py:89 videomass/vdms_io/io_tools.py:351 videomass/vdms_main/main_frame.py:1117 videomass/vdms_main/main_frame.py:1159 videomass/vdms_main/main_frame.py:1185 videomass/vdms_main/main_frame.py:1208 videomass/vdms_main/main_frame.py:1233
+#: videomass/vdms_miniframes/timeline.py:528 videomass/vdms_panels/concatenate.py:208 videomass/vdms_panels/long_processing_task.py:64 videomass/vdms_panels/presets_manager.py:471 videomass/vdms_panels/presets_manager.py:542 videomass/vdms_panels/presets_manager.py:640 videomass/vdms_panels/presets_manager.py:695 videomass/vdms_panels/presets_manager.py:719
 #: videomass/vdms_panels/presets_manager.py:772 videomass/vdms_panels/presets_manager.py:831 videomass/vdms_panels/presets_manager.py:846 videomass/vdms_panels/presets_manager.py:854 videomass/vdms_panels/presets_manager.py:906 videomass/vdms_panels/presets_manager.py:944 videomass/vdms_panels/presets_manager.py:951 videomass/vdms_panels/sequence_to_video.py:548
 #: videomass/vdms_panels/sequence_to_video.py:555 videomass/vdms_panels/sequence_to_video.py:656 videomass/vdms_panels/sequence_to_video.py:681 videomass/vdms_panels/sequence_to_video.py:707 videomass/vdms_panels/sequence_to_video.py:727 videomass/vdms_panels/sequence_to_video.py:736 videomass/vdms_panels/sequence_to_video.py:780 videomass/vdms_panels/sequence_to_video.py:839
-#: videomass/vdms_panels/video_to_sequence.py:613 videomass/vdms_panels/video_to_sequence.py:701 videomass/vdms_utils/presets_manager_utils.py:93 videomass/vdms_utils/presets_manager_utils.py:107 videomass/vdms_utils/queue_utils.py:76 videomass/vdms_utils/queue_utils.py:103 videomass/vdms_utils/queue_utils.py:119
+#: videomass/vdms_panels/video_to_sequence.py:613 videomass/vdms_panels/video_to_sequence.py:701 videomass/vdms_utils/presets_manager_utils.py:93 videomass/vdms_utils/presets_manager_utils.py:107 videomass/vdms_utils/queue_utils.py:76 videomass/vdms_utils/queue_utils.py:103 videomass/vdms_utils/queue_utils.py:120
 msgid "Videomass - Error!"
 msgstr "Videomass - Fehler!"
 
-#: videomass/vdms_dialogs/filter_crop.py:256 videomass/vdms_dialogs/filter_scale.py:122
+#: videomass/vdms_dialogs/filter_crop.py:253 videomass/vdms_dialogs/filter_scale.py:119
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Quellauflösung: {0} x {1} Pixel"
 
-#: videomass/vdms_dialogs/filter_crop.py:267
+#: videomass/vdms_dialogs/filter_crop.py:264
 msgid "Crop color"
 msgstr "Farbe der Schnittfläche"
 
-#: videomass/vdms_dialogs/filter_crop.py:289
+#: videomass/vdms_dialogs/filter_crop.py:286
 msgid "Cropping area selection "
 msgstr "Auswahl der Schnittfläche "
 
-#: videomass/vdms_dialogs/filter_crop.py:294 videomass/vdms_dialogs/filter_scale.py:137
+#: videomass/vdms_dialogs/filter_crop.py:291 videomass/vdms_dialogs/filter_scale.py:134
 msgid "Height"
 msgstr "Höhe"
 
-#: videomass/vdms_dialogs/filter_crop.py:322
+#: videomass/vdms_dialogs/filter_crop.py:319
 msgid "Center"
 msgstr "Mitte"
 
-#: videomass/vdms_dialogs/filter_crop.py:337 videomass/vdms_dialogs/filter_scale.py:137
+#: videomass/vdms_dialogs/filter_crop.py:334 videomass/vdms_dialogs/filter_scale.py:134
 msgid "Width"
 msgstr "Breite"
 
-#: videomass/vdms_dialogs/filter_crop.py:387
+#: videomass/vdms_dialogs/filter_crop.py:388
 msgid "Crop Tool"
 msgstr "Ausschneidewerkzeug"
 
-#: videomass/vdms_dialogs/filter_crop.py:389
+#: videomass/vdms_dialogs/filter_crop.py:390
 msgid "Choose the color to draw the cropping area"
 msgstr "Wähle die Farbe, in der die Schnittfläche gezeichnet werden soll"
 
-#: videomass/vdms_dialogs/filter_crop.py:391
+#: videomass/vdms_dialogs/filter_crop.py:392
 msgid "Crop to width"
 msgstr "Schneide auf Breite"
 
-#: videomass/vdms_dialogs/filter_crop.py:393
+#: videomass/vdms_dialogs/filter_crop.py:394
 msgid "Move vertically (set to -1 to center the vertical axis)"
 msgstr "Vertikal bewegen (auf -1 setzen, um die vertikale Achse zu zentrieren)"
 
-#: videomass/vdms_dialogs/filter_crop.py:396
+#: videomass/vdms_dialogs/filter_crop.py:397
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr "Horizontal bewegen (auf -1 setzen, um die horizontale Achse zu zentrieren)"
 
-#: videomass/vdms_dialogs/filter_crop.py:398
+#: videomass/vdms_dialogs/filter_crop.py:399
 msgid "Crop to height"
 msgstr "Schneide auf Höhe"
 
@@ -597,63 +607,63 @@ msgstr ""
 "hqdn3d:\n"
 "Dies ist ein hoch genauer und hochqualitativer 3D Entrauschungsfilter. Sein Ziel ist es Bildrauschen zu reduzieren, um u.a. qualitativ hochwertige Standbilder erzeugen zu können. Die verbessert auch die Komprimierbarkeit."
 
-#: videomass/vdms_dialogs/filter_scale.py:88
+#: videomass/vdms_dialogs/filter_scale.py:85
 msgid "View result"
 msgstr "Zeige Ergebnis"
 
-#: videomass/vdms_dialogs/filter_scale.py:91
+#: videomass/vdms_dialogs/filter_scale.py:88
 msgid "New size in pixels"
 msgstr "Neue Größe in Pixeln"
 
-#: videomass/vdms_dialogs/filter_scale.py:96
+#: videomass/vdms_dialogs/filter_scale.py:93
 msgid "Width:"
 msgstr "Breite:"
 
-#: videomass/vdms_dialogs/filter_scale.py:109
+#: videomass/vdms_dialogs/filter_scale.py:106
 msgid "Height:"
 msgstr "Höhe:"
 
-#: videomass/vdms_dialogs/filter_scale.py:129
+#: videomass/vdms_dialogs/filter_scale.py:126
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr "Proportionen behalten (Seitenverhältnis)"
 
-#: videomass/vdms_dialogs/filter_scale.py:136
+#: videomass/vdms_dialogs/filter_scale.py:133
 msgid "Which dimension to adjust?"
 msgstr "Welche Dimension angepassen?"
 
-#: videomass/vdms_dialogs/filter_scale.py:145
+#: videomass/vdms_dialogs/filter_scale.py:142
 msgid "Aspect Ratio"
 msgstr "Seitenverhältnis"
 
-#: videomass/vdms_dialogs/filter_scale.py:148
+#: videomass/vdms_dialogs/filter_scale.py:145
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr "Setdar Filter (Monitor Seitenverhältnisse) bspw. 16/9, 3/4 "
 
-#: videomass/vdms_dialogs/filter_scale.py:153 videomass/vdms_dialogs/filter_scale.py:195
+#: videomass/vdms_dialogs/filter_scale.py:150 videomass/vdms_dialogs/filter_scale.py:192
 msgid "Numerator"
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_scale.py:186 videomass/vdms_dialogs/filter_scale.py:228
+#: videomass/vdms_dialogs/filter_scale.py:183 videomass/vdms_dialogs/filter_scale.py:225
 msgid "Denominator"
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_scale.py:190
+#: videomass/vdms_dialogs/filter_scale.py:187
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "Setsar Filter (genaue Seitenverhältnisse) bspw. 1/1"
 
-#: videomass/vdms_dialogs/filter_scale.py:249
+#: videomass/vdms_dialogs/filter_scale.py:246
 msgid "Resize Tool"
 msgstr "Vergrößerungswerkzeug"
 
-#: videomass/vdms_dialogs/filter_scale.py:250
+#: videomass/vdms_dialogs/filter_scale.py:247
 msgid "Scale filter, set to 0 to disable"
 msgstr "Skailierungsfilter, auf \"0\" setzen zum deaktivieren"
 
-#: videomass/vdms_dialogs/filter_scale.py:253
+#: videomass/vdms_dialogs/filter_scale.py:250
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr "Monitor Seitenverhältnis. Auf \"0\" setzen zum deaktivieren"
 
-#: videomass/vdms_dialogs/filter_scale.py:256
+#: videomass/vdms_dialogs/filter_scale.py:253
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
@@ -661,7 +671,7 @@ msgstr ""
 "Pixelgenaues Seitenverhältnis\n"
 "Auf \"0\" setzen zum deaktivieren"
 
-#: videomass/vdms_dialogs/filter_scale.py:408
+#: videomass/vdms_dialogs/filter_scale.py:400
 msgid ""
 "If you want to maintain the aspect ratio, select \"Constrain proportions\" below and specify only one dimension, width or height, and set the other dimension to -1 or -2.\n"
 "\n"
@@ -674,157 +684,153 @@ msgid ""
 "Click the Help button for full documentation on this filter."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:87
+#: videomass/vdms_dialogs/filter_stab.py:83
 msgid "Enable stabilizer"
 msgstr "Stabilisation aktivieren"
 
-#: videomass/vdms_dialogs/filter_stab.py:90
+#: videomass/vdms_dialogs/filter_stab.py:86
 msgid "Create a side-by-side comparison video"
 msgstr "Erstelle ein Seite-an-Seite Vergleichsvideo"
 
-#: videomass/vdms_dialogs/filter_stab.py:95
+#: videomass/vdms_dialogs/filter_stab.py:91
 msgid "Create a snapshot"
 msgstr "Erstelle eine Vorschau"
 
-#: videomass/vdms_dialogs/filter_stab.py:115 videomass/vdms_panels/audio_encoders/acodecs.py:339
+#: videomass/vdms_dialogs/filter_stab.py:111 videomass/vdms_panels/audio_encoders/acodecs.py:339
 msgid "Preview"
 msgstr "Vorschau"
 
-#: videomass/vdms_dialogs/filter_stab.py:119
+#: videomass/vdms_dialogs/filter_stab.py:115
 msgid "Duration seconds:"
 msgstr "Länge in Sekunden:"
 
-#: videomass/vdms_dialogs/filter_stab.py:132
+#: videomass/vdms_dialogs/filter_stab.py:128
 msgid "Video Detect"
 msgstr "Video Erkennung"
 
-#: videomass/vdms_dialogs/filter_stab.py:204
+#: videomass/vdms_dialogs/filter_stab.py:200
 msgid "[TRIPOD] Enable tripod mode if checked"
 msgstr "Aktiviert den Stativ-Modus"
 
-#: videomass/vdms_dialogs/filter_stab.py:211
+#: videomass/vdms_dialogs/filter_stab.py:207
 msgid "Video transform"
 msgstr "Video Transformierung"
 
-#: videomass/vdms_dialogs/filter_stab.py:235
+#: videomass/vdms_dialogs/filter_stab.py:231
 msgid "[OPTALGO] optimization algorithm"
 msgstr "Optimierungsalgorithmus"
 
-#: videomass/vdms_dialogs/filter_stab.py:264
+#: videomass/vdms_dialogs/filter_stab.py:260
 msgid "[CROP] Specify how to deal with borders at movement compensation"
 msgstr "Einstellen wie mit Kanten bei Bewegung umgegangen werden soll"
 
-#: videomass/vdms_dialogs/filter_stab.py:273
+#: videomass/vdms_dialogs/filter_stab.py:269
 msgid "[INVERT] Invert transforms if checked"
 msgstr "Invertierung der Transformierung"
 
-#: videomass/vdms_dialogs/filter_stab.py:277
+#: videomass/vdms_dialogs/filter_stab.py:273
 msgid "[RELATIVE] Consider transforms as relative to previous frame if checked, absolute if unchecked"
 msgstr "Bewerte Veränderungen als 'relativ' zum vorherigen Bild wenn aktiviert, 'absolut' wenn deaktiviert"
 
-#: videomass/vdms_dialogs/filter_stab.py:336
+#: videomass/vdms_dialogs/filter_stab.py:332
 msgid "Specify type of interpolation"
 msgstr "Typ der Interpolation"
 
-#: videomass/vdms_dialogs/filter_stab.py:344
+#: videomass/vdms_dialogs/filter_stab.py:340
 msgid "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr "Virtueller Stativ-Modus, Äquivalent zu relative=unchecked:smoothing=0"
 
-#: videomass/vdms_dialogs/filter_stab.py:352
+#: videomass/vdms_dialogs/filter_stab.py:348
 msgid "Unsharp filter:"
 msgstr "Unscharf Filter:"
 
-#: videomass/vdms_dialogs/filter_stab.py:384
+#: videomass/vdms_dialogs/filter_stab.py:380
 msgid "Seek to a position on the video."
 msgstr "Spule zu einer bestimmten Position im Video."
 
-#: videomass/vdms_dialogs/filter_stab.py:386
+#: videomass/vdms_dialogs/filter_stab.py:382
 msgid "Make a snapshot of the video with the settings made."
 msgstr "Erstelle ein Standbild des Videos mit den getroffenen Einstellungen."
 
-#: videomass/vdms_dialogs/filter_stab.py:389
+#: videomass/vdms_dialogs/filter_stab.py:385
 msgid "Set the snapshot duration from 3 to 15 seconds from the seek position, default is 5 seconds."
 msgstr "Setze die Standbildlänge zwischen 3 und 15 Sekunden von der Such-Position, Standardwert: 5 Sekunden."
 
-#: videomass/vdms_dialogs/filter_stab.py:395
+#: videomass/vdms_dialogs/filter_stab.py:391
 msgid "Set how shaky the video is and how quick the camera is. A value of 1 means little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:401
+#: videomass/vdms_dialogs/filter_stab.py:397
 msgid "Set the accuracy of the detection process. A value of 1 means low accuracy, a value of 15 means high accuracy. Default value is 15."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:407
+#: videomass/vdms_dialogs/filter_stab.py:403
 msgid "Set stepsize of the search process. The region around minimum is scanned with 1 pixel resolution. Default value is 6."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:413
+#: videomass/vdms_dialogs/filter_stab.py:409
 msgid "Set minimum contrast. Below this value a local measurement field is discarded. The range is 0-1. Default value is 0.25."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:418
+#: videomass/vdms_dialogs/filter_stab.py:414
 msgid "Set reference frame number for tripod mode. If enabled, the motion of the frames is compared to a reference frame in the filtered stream, identified by the specified number. The idea is to compensate all movements in a more-or-less static scene and keep the camera view absolutely still. The frames are counted starting from 1."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:429
+#: videomass/vdms_dialogs/filter_stab.py:425
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is "
 "simulated."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:439
+#: videomass/vdms_dialogs/filter_stab.py:435
 msgid "Set the camera path optimization algorithm. Values are: `gauss`: gaussian kernel low-pass filter on camera motion (default), and `avg`: averaging on transformations"
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:445
+#: videomass/vdms_dialogs/filter_stab.py:441
 msgid "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value is -1, meaning no limit."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:450
+#: videomass/vdms_dialogs/filter_stab.py:446
 msgid "Specify how to deal with borders that may be visible due to movement compensation. Values are: `keep` keep image information from previous frame (default), `black` fill the border black"
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:456
+#: videomass/vdms_dialogs/filter_stab.py:452
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:459
+#: videomass/vdms_dialogs/filter_stab.py:455
 msgid "Consider transforms as relative to previous frame if checked, absolute if unchecked. Default is checked."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:464
+#: videomass/vdms_dialogs/filter_stab.py:460
 msgid "Set percentage to zoom. A positive value will result in a zoom-in effect, a negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:470
+#: videomass/vdms_dialogs/filter_stab.py:466
 msgid "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` optimal static zoom value is determined (only very strong movements will lead to visible borders) (default), `2` optimal adaptive zoom value is determined (no borders will be visible), see zoomspeed. Note that the value given at zoom is added to the one calculated here."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:479
+#: videomass/vdms_dialogs/filter_stab.py:475
 msgid "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). Range is from 0 to 5, default value is 0.25."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:485
+#: videomass/vdms_dialogs/filter_stab.py:481
 msgid "Specify type of interpolation. Available values are: `no` no interpolation, `linear` linear only horizontal, `bilinear` linear in both directions (default), `bicubic` cubic in both directions (slow)"
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:492
+#: videomass/vdms_dialogs/filter_stab.py:488
 msgid "Enable virtual tripod mode if checked, which is equivalent to relative=0:smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:499
+#: videomass/vdms_dialogs/filter_stab.py:495
 msgid "Sharpen or blur the input video. Note the use of the unsharp filter which is always recommended."
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_stab.py:504
+#: videomass/vdms_dialogs/filter_stab.py:500
 msgid "Video Stabilizer Tool"
 msgstr "Video Stabilisierungswerkzeug"
 
-#: videomass/vdms_dialogs/filter_stab.py:643 videomass/vdms_io/io_tools.py:126
-msgid "Videomass - Loading..."
-msgstr "Videomass - Laden..."
-
-#: videomass/vdms_dialogs/filter_stab.py:644
+#: videomass/vdms_dialogs/filter_stab.py:651
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
@@ -832,41 +838,45 @@ msgstr ""
 "Bitte warten,\n"
 "Dieser Prozess dauert einige Sekunden."
 
-#: videomass/vdms_dialogs/filter_transpose.py:91 videomass/vdms_dialogs/filter_transpose.py:322
-msgid "Default position"
-msgstr "Standard Position"
+#: videomass/vdms_dialogs/filter_transpose.py:89
+msgid "Loading preview..."
+msgstr ""
 
-#: videomass/vdms_dialogs/filter_transpose.py:96
+#: videomass/vdms_dialogs/filter_transpose.py:94
 msgid "Rotation setting"
 msgstr "Dreh Einstellungen"
 
-#: videomass/vdms_dialogs/filter_transpose.py:104
+#: videomass/vdms_dialogs/filter_transpose.py:101
 msgid "90° (left)"
 msgstr "90° (links)"
 
-#: videomass/vdms_dialogs/filter_transpose.py:107
+#: videomass/vdms_dialogs/filter_transpose.py:103
 msgid "90° (right)"
 msgstr "90° (rechs)"
 
-#: videomass/vdms_dialogs/filter_transpose.py:111
+#: videomass/vdms_dialogs/filter_transpose.py:106
 msgid "180°"
 msgstr ""
 
-#: videomass/vdms_dialogs/filter_transpose.py:133
+#: videomass/vdms_dialogs/filter_transpose.py:127
 msgid "Transpose Tool"
 msgstr "Austauschwerkzeug"
 
-#: videomass/vdms_dialogs/filter_transpose.py:255
+#: videomass/vdms_dialogs/filter_transpose.py:285
 msgid "Rotate 90 degrees right"
 msgstr "Drehe um 90 Grad nach rechts"
 
-#: videomass/vdms_dialogs/filter_transpose.py:278
+#: videomass/vdms_dialogs/filter_transpose.py:294
 msgid "Rotate 180 degrees"
 msgstr "Drehe um 180 Grad"
 
-#: videomass/vdms_dialogs/filter_transpose.py:300
+#: videomass/vdms_dialogs/filter_transpose.py:303
 msgid "Rotate 90 degrees left"
 msgstr "Drehe um 90 Grad nach links"
+
+#: videomass/vdms_dialogs/filter_transpose.py:311
+msgid "Default position"
+msgstr "Standard Position"
 
 #: videomass/vdms_dialogs/mediainfo.py:83
 msgid "Format"
@@ -1129,8 +1139,8 @@ msgstr "Wähle das Zielverzeichnis"
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
 msgstr "Ausschließlich alphanumerische Zeichen erlaubt. Es können nur Bindestriche (\"-\") und Unterstriche (\"_\") verwendet werden. Leerzeichen sind nicht erlaubt."
 
-#: videomass/vdms_dialogs/preferences.py:713 videomass/vdms_dialogs/setting_profiles.py:293 videomass/vdms_dialogs/setting_profiles.py:304 videomass/vdms_dialogs/setting_profiles.py:337 videomass/vdms_dialogs/setting_profiles.py:366 videomass/vdms_io/io_tools.py:85 videomass/vdms_main/main_frame.py:445 videomass/vdms_main/main_frame.py:480 videomass/vdms_miniframes/timeline.py:503
-#: videomass/vdms_miniframes/timeline.py:512 videomass/vdms_miniframes/timeline.py:680 videomass/vdms_panels/av_conversions.py:716 videomass/vdms_panels/av_conversions.py:731 videomass/vdms_panels/sequence_to_video.py:418 videomass/vdms_panels/video_to_sequence.py:468
+#: videomass/vdms_dialogs/preferences.py:713 videomass/vdms_dialogs/setting_profiles.py:293 videomass/vdms_dialogs/setting_profiles.py:304 videomass/vdms_dialogs/setting_profiles.py:337 videomass/vdms_dialogs/setting_profiles.py:366 videomass/vdms_io/io_tools.py:87 videomass/vdms_main/main_frame.py:445 videomass/vdms_main/main_frame.py:480 videomass/vdms_miniframes/timeline.py:507
+#: videomass/vdms_miniframes/timeline.py:516 videomass/vdms_miniframes/timeline.py:687 videomass/vdms_panels/av_conversions.py:716 videomass/vdms_panels/av_conversions.py:731 videomass/vdms_panels/sequence_to_video.py:418 videomass/vdms_panels/video_to_sequence.py:468
 msgid "Videomass - Warning!"
 msgstr "Videomass - Warnung!"
 
@@ -1614,12 +1624,16 @@ msgstr "Fehlerliste"
 msgid "File(s) not found"
 msgstr "Datei(en) nicht gefunden"
 
-#: videomass/vdms_io/io_tools.py:78
+#: videomass/vdms_io/io_tools.py:80
 #, python-brace-format
 msgid "Please, see «{0}» file for details."
 msgstr "Für mehr Details sehen Sie sich die «{0}» Datei an."
 
-#: videomass/vdms_io/io_tools.py:127
+#: videomass/vdms_io/io_tools.py:149 videomass/vdms_io/io_tools.py:256
+msgid "Videomass - Loading..."
+msgstr "Videomass - Laden..."
+
+#: videomass/vdms_io/io_tools.py:257
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1627,7 +1641,7 @@ msgstr ""
 "Bitte warten...\n"
 "Audio Peak Analyse."
 
-#: videomass/vdms_io/io_tools.py:255
+#: videomass/vdms_io/io_tools.py:384
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Es wird heruntergeladen..."
 
@@ -2136,7 +2150,7 @@ msgstr "Videomass - Von Video zu Bildern"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Standbild Erstellung"
 
-#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:435 videomass/vdms_panels/av_conversions.py:681 videomass/vdms_panels/av_conversions.py:1453 videomass/vdms_panels/filedrop.py:549 videomass/vdms_panels/filedrop.py:695 videomass/vdms_panels/sequence_to_video.py:379 videomass/vdms_panels/video_to_sequence.py:429 videomass/vdms_panels/video_to_sequence.py:598
+#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:433 videomass/vdms_panels/av_conversions.py:681 videomass/vdms_panels/av_conversions.py:1453 videomass/vdms_panels/filedrop.py:549 videomass/vdms_panels/filedrop.py:695 videomass/vdms_panels/sequence_to_video.py:379 videomass/vdms_panels/video_to_sequence.py:429 videomass/vdms_panels/video_to_sequence.py:598
 msgid "Have to select an item in the file list first"
 msgstr "Sie müssen zuerst ein Objekt in der Liste der Dateien auswählen"
 
@@ -2158,106 +2172,109 @@ msgstr "Videomass - FFmpeg Status"
 msgid "Please wait... interruption in progress"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2072
-msgid "...Interrupted"
-msgstr ""
-
-#: videomass/vdms_main/main_frame.py:2125
+#: videomass/vdms_main/main_frame.py:2124
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr "Das Betriebssystem wird in {0} Sekunden abgeschaltet"
 
-#: videomass/vdms_main/main_frame.py:2126
+#: videomass/vdms_main/main_frame.py:2125
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - Herunterfahren!"
 
-#: videomass/vdms_main/main_frame.py:2140
+#: videomass/vdms_main/main_frame.py:2139
 msgid "Error while shutting down. Please see file log for details."
 msgstr "Es ist ein Fehler aufgetreten beim Versuch das System herunterzufahren. Bitte prüfen Sie die Logs für mehr Informationen."
 
-#: videomass/vdms_main/main_frame.py:2155
+#: videomass/vdms_main/main_frame.py:2154
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr "Die Anwendung wird in {0} Sekunden geschlossen"
 
-#: videomass/vdms_main/main_frame.py:2156
+#: videomass/vdms_main/main_frame.py:2155
 msgid "Videomass - Exiting!"
 msgstr "Videomass - Beenden!"
 
-#: videomass/vdms_miniframes/timeline.py:60
+#: videomass/vdms_miniframes/timeline.py:55
 msgid "Start point adjustment"
 msgstr "Anpassung Startzeitpunkt"
 
-#: videomass/vdms_miniframes/timeline.py:62
+#: videomass/vdms_miniframes/timeline.py:57
 msgid "End point adjustment"
 msgstr "Anpassung Endzeitpunkt"
 
-#: videomass/vdms_miniframes/timeline.py:135
+#: videomass/vdms_miniframes/timeline.py:130
 msgid "Hours"
 msgstr "Stunden"
 
-#: videomass/vdms_miniframes/timeline.py:136
+#: videomass/vdms_miniframes/timeline.py:131
 msgid "Minutes"
 msgstr "Minuten"
 
-#: videomass/vdms_miniframes/timeline.py:137
+#: videomass/vdms_miniframes/timeline.py:132
 msgid "Seconds"
 msgstr "Sekunden"
 
-#: videomass/vdms_miniframes/timeline.py:138
+#: videomass/vdms_miniframes/timeline.py:133
 msgid "Milliseconds"
 msgstr "Millisekunden"
 
-#: videomass/vdms_miniframes/timeline.py:245 videomass/vdms_miniframes/timeline.py:500 videomass/vdms_miniframes/timeline.py:762
+#: videomass/vdms_miniframes/timeline.py:241 videomass/vdms_miniframes/timeline.py:504 videomass/vdms_miniframes/timeline.py:773
 #, fuzzy
 msgid "No source duration:"
 msgstr "Keine Dauer der Quelle:"
 
-#: videomass/vdms_miniframes/timeline.py:305
+#: videomass/vdms_miniframes/timeline.py:301
 #, fuzzy
 msgid "Wave"
 msgstr "Welle"
 
-#: videomass/vdms_miniframes/timeline.py:337 videomass/vdms_miniframes/timeline.py:742 videomass/vdms_miniframes/timeline.py:792 videomass/vdms_miniframes/timeline.py:798 videomass/vdms_miniframes/timeline.py:910
+#: videomass/vdms_miniframes/timeline.py:333 videomass/vdms_miniframes/timeline.py:749 videomass/vdms_miniframes/timeline.py:803 videomass/vdms_miniframes/timeline.py:809 videomass/vdms_miniframes/timeline.py:921
 #, fuzzy, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Dauer des Abschnitts: {2}"
 
-#: videomass/vdms_miniframes/timeline.py:363
+#: videomass/vdms_miniframes/timeline.py:359
 msgid "End adjustment"
 msgstr "Anpassung Ende"
 
-#: videomass/vdms_miniframes/timeline.py:365
+#: videomass/vdms_miniframes/timeline.py:361
 msgid "Start adjustment"
 msgstr "Anpassung Start"
 
-#: videomass/vdms_miniframes/timeline.py:368
+#: videomass/vdms_miniframes/timeline.py:364
 #, fuzzy
 msgid "Toggles the display of the audio waveform in the background ruler"
 msgstr "Aktiviert die Anzeige der Audiovisualisierung im Hintergrundlineal"
 
-#: videomass/vdms_miniframes/timeline.py:371
+#: videomass/vdms_miniframes/timeline.py:367
 msgid "Reset segment on timeline"
 msgstr "Abschnitt im Zeitstrahl zurücksetzen"
 
-#: videomass/vdms_miniframes/timeline.py:373
+#: videomass/vdms_miniframes/timeline.py:369
 #, fuzzy
 msgid "Timeline Editor Usage"
 msgstr "Zeitstrahl Editor Benutzung"
 
-#: videomass/vdms_miniframes/timeline.py:375
-msgid "Play segment"
+#: videomass/vdms_miniframes/timeline.py:371
+#, fuzzy
+msgid "Play/Stop segment"
 msgstr "Wiedergabe des Abschnitts"
 
-#: videomass/vdms_miniframes/timeline.py:502
+#: videomass/vdms_miniframes/timeline.py:460
+msgid ""
+"Please wait...\n"
+"Loading waveform."
+msgstr ""
+
+#: videomass/vdms_miniframes/timeline.py:506
 msgid "Invalid file format for playback."
 msgstr "Ungültiges Dateiformat für Wiedergabe."
 
-#: videomass/vdms_miniframes/timeline.py:511
+#: videomass/vdms_miniframes/timeline.py:515
 msgid "No segment selected in the timeline yet."
 msgstr "Bisher kein Abschnitt im Zeitstrahl ausgewählt."
 
-#: videomass/vdms_miniframes/timeline.py:521
+#: videomass/vdms_miniframes/timeline.py:525
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
@@ -2265,12 +2282,12 @@ msgstr ""
 "Ungültige Abschnitt Auswahl!\n"
 "Die «Ende» Markierung muss sich auf der rechten Seite der «Start» Markierung befinden."
 
-#: videomass/vdms_miniframes/timeline.py:556 videomass/vdms_panels/audio_encoders/acodecs.py:752 videomass/vdms_panels/av_conversions.py:624 videomass/vdms_panels/filedrop.py:577
+#: videomass/vdms_miniframes/timeline.py:561 videomass/vdms_panels/audio_encoders/acodecs.py:752 videomass/vdms_panels/av_conversions.py:624 videomass/vdms_panels/filedrop.py:577
 #, python-format
 msgid "Invalid or unsupported file:  %s"
 msgstr "Ungültige oder nicht unterstützte Datei:  %s"
 
-#: videomass/vdms_miniframes/timeline.py:676
+#: videomass/vdms_miniframes/timeline.py:683
 #, python-brace-format
 msgid ""
 "Unable to create waveform.\n"
@@ -2281,7 +2298,7 @@ msgstr ""
 "Die ausgewählte Quell-Datei enthhält keine Audio Streams:\n"
 "\"{}\""
 
-#: videomass/vdms_miniframes/timeline.py:702
+#: videomass/vdms_miniframes/timeline.py:709
 #, fuzzy
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
@@ -2318,15 +2335,15 @@ msgstr ""
 "\n"
 "Übersetzt mit DeepL.com (kostenlose Version)"
 
-#: videomass/vdms_miniframes/timeline.py:775
+#: videomass/vdms_miniframes/timeline.py:786
 msgid "Source duration:"
 msgstr "Dauer der Quelle:"
 
-#: videomass/vdms_miniframes/timeline.py:854
+#: videomass/vdms_miniframes/timeline.py:865
 msgid "WARNING: Invalid segment selection, out of range."
 msgstr "WARNUNG: Ungültige Auswahl an Abschnitten. (Out of Range)"
 
-#: videomass/vdms_miniframes/timeline.py:969
+#: videomass/vdms_miniframes/timeline.py:980
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
@@ -2334,11 +2351,11 @@ msgstr ""
 "Beginnen Sie die Einzüge in den linken Ecken zu bewegen\n"
 "oder benutzen Sie die Start/Ende Anpassungs Knöpfe für die Feineinstellung."
 
-#: videomass/vdms_miniframes/timeline.py:1005
+#: videomass/vdms_miniframes/timeline.py:1016
 msgid "Start"
 msgstr "Start"
 
-#: videomass/vdms_miniframes/timeline.py:1006
+#: videomass/vdms_miniframes/timeline.py:1017
 msgid "End"
 msgstr "Ende"
 
@@ -2736,47 +2753,55 @@ msgid "New Name #"
 msgstr "Neuer Name #"
 
 #: videomass/vdms_panels/long_processing_task.py:122
+msgid "For details, please read the log file by clicking the \"Current Log\" button at the bottom, if available, or consult the complete activity logs now (Ctrl+L)."
+msgstr ""
+
+#: videomass/vdms_panels/long_processing_task.py:127
 msgid "Sorry, all task failed !"
 msgstr "Sorry, alle Aufgaben fehlgeschlagen!"
 
-#: videomass/vdms_panels/long_processing_task.py:123
+#: videomass/vdms_panels/long_processing_task.py:128
 msgid "The process was stopped due to a fatal error."
 msgstr "Der Prozess ist wegen eines fatalen Fehlers abgebrochen."
 
-#: videomass/vdms_panels/long_processing_task.py:124
+#: videomass/vdms_panels/long_processing_task.py:129
 msgid "Interrupted Process !"
 msgstr "Prozess unterbrochen!"
 
-#: videomass/vdms_panels/long_processing_task.py:125
+#: videomass/vdms_panels/long_processing_task.py:130
 msgid "Successfully completed !"
 msgstr "Erfolgreich abgeschlossen!"
 
-#: videomass/vdms_panels/long_processing_task.py:126
+#: videomass/vdms_panels/long_processing_task.py:131
 msgid "Not everything was successful."
 msgstr "Nicht alles war erfolgreich."
 
-#: videomass/vdms_panels/long_processing_task.py:152
+#: videomass/vdms_panels/long_processing_task.py:157
 msgid "Encoding Status"
 msgstr "Status der Encodierung"
 
-#: videomass/vdms_panels/long_processing_task.py:157
+#: videomass/vdms_panels/long_processing_task.py:162
 msgid "Current Log"
 msgstr "Akutelles Log"
 
-#: videomass/vdms_panels/long_processing_task.py:404
+#: videomass/vdms_panels/long_processing_task.py:267
+msgid "...Interrupted"
+msgstr ""
+
+#: videomass/vdms_panels/long_processing_task.py:383
 msgid "Fatal Error !"
 msgstr "Fataler Fehler!"
 
-#: videomass/vdms_panels/long_processing_task.py:415
+#: videomass/vdms_panels/long_processing_task.py:394
 #, fuzzy
 msgid "Get your files at the destination you specified"
 msgstr "Sie bekommen Ihre Datei dort, wo Sie es spezifiziert haben"
 
-#: videomass/vdms_panels/long_processing_task.py:430
+#: videomass/vdms_panels/long_processing_task.py:411
 msgid "For more details please read the Current Log."
 msgstr ""
 
-#: videomass/vdms_panels/long_processing_task.py:434
+#: videomass/vdms_panels/long_processing_task.py:415
 msgid "...Finished"
 msgstr ""
 
@@ -3598,7 +3623,7 @@ msgstr ""
 msgid "Import queue file"
 msgstr ""
 
-#: videomass/vdms_utils/queue_utils.py:110
+#: videomass/vdms_utils/queue_utils.py:114
 #, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
@@ -3607,25 +3632,25 @@ msgid ""
 "Cannot contain multiple occurrences in `destination` keys value."
 msgstr ""
 
-#: videomass/vdms_utils/queue_utils.py:146
+#: videomass/vdms_utils/queue_utils.py:144
 msgid "Videomass - Add Items to Queue"
 msgstr ""
 
-#: videomass/vdms_utils/queue_utils.py:148
+#: videomass/vdms_utils/queue_utils.py:146
 msgid ""
 "Multiple items with identical names and destination paths cannot coexist.\n"
 "Please choose one of the following actions:"
 msgstr ""
 
-#: videomass/vdms_utils/queue_utils.py:153
+#: videomass/vdms_utils/queue_utils.py:151
 msgid "Replace occurrences with items from the imported queue."
 msgstr ""
 
-#: videomass/vdms_utils/queue_utils.py:154
+#: videomass/vdms_utils/queue_utils.py:152
 msgid "Add only the currently missing items to the queue."
 msgstr ""
 
-#: videomass/vdms_utils/queue_utils.py:156
+#: videomass/vdms_utils/queue_utils.py:154
 msgid "Remove the current queue and replace it with the imported one."
 msgstr ""
 
