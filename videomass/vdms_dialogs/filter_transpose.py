@@ -30,11 +30,8 @@ import webbrowser
 from math import pi as pigreco
 
 import wx
-from pubsub import pub
 
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
@@ -45,7 +42,6 @@ class Transpose(wx.Dialog):
 
     get = wx.GetApp()
     appdata = get.appset
-    LOGDIR = appdata["logdir"]
     TMPROOT = os.path.join(get.appset["cachedir"], "tmp", "Transpose")
     TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
@@ -78,8 +74,6 @@ class Transpose(wx.Dialog):
         self.stbitmap = None
         self.scaled_img = None  # Cache per l'immagine pre-scalata
         self.mills = time_to_integer(kwa["duration"].split(".")[0])
-        self.thread = None
-        self.logfile = None
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(
@@ -145,7 +139,7 @@ class Transpose(wx.Dialog):
         sizerBase.Fit(self)
         self.Layout()
 
-        # Avvia l'estrazione asincrona tramite pubsub
+        # Avvia l'estrazione asincrona
         self.process()
 
         # ----------------------Binding (EVT)---------------------------------#
@@ -172,13 +166,8 @@ class Transpose(wx.Dialog):
 
     def process(self):
         """
-        Avvia FFmpegGenericTask senza join() e si iscrive a RESULT_EVT.
+        Initializing conversion command for preview.
         """
-        self.logfile = make_log_template(
-            "generic_task.log",
-            Transpose.LOGDIR,
-            mode="w",
-        )
         if not self.mills:
             sseg = ""
         else:
@@ -188,25 +177,21 @@ class Transpose(wx.Dialog):
             f'{sseg} -i "{self.video}" -f image2 '
             f'-update 1 -frames:v 1 "{self.frame}"'
         )
-        pub.subscribe(self.on_frame_ready, "RESULT_EVT")
-        self.thread = FFmpegGenericTask(arg, "Transpose", self.logfile)
+        msg = _("Please wait...\nLoading image.")
+        parent = self.GetParent()
+        data = generic_operation_process(
+            arg, editor="Transpose", msg=msg, parent=parent, showlog=False
+        )
+        if data:
+            return
+        self.on_frame_ready()
 
     # ------------------------------------------------------------------#
 
-    def on_frame_ready(self, status):
+    def on_frame_ready(self):
         """
-        Callback invocata da pubsub sul thread GUI al termine di FFmpeg.
+        Callback invocata da process() al termine del flusso.
         """
-        pub.unsubscribe(self.on_frame_ready, "RESULT_EVT")
-        if not self or self.thread is None:
-            return
-
-        if self.thread.status:
-            self.statictxt.SetLabel(_("Preview unavailable"))
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(self.logfile)
-            )
-            return
 
         # Carica, scala e salva in cache la wx.Image una sola volta
         img = wx.Image(self.frame, wx.BITMAP_TYPE_PNG)
@@ -346,7 +331,6 @@ class Transpose(wx.Dialog):
         """
         Close this dialog without saving anything
         """
-        pub.unsubscribe(self.on_frame_ready, "RESULT_EVT")
         event.Skip()
 
     # ------------------------------------------------------------------#

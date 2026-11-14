@@ -57,6 +57,9 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
         >>> if error:
         >>>     error
 
+        If your interface allows it, you can stop the process with:
+        >>> self.thread.stop()
+
     Raise: `OSError` if not FFmpeg
     Return: None
 
@@ -160,10 +163,13 @@ class FFmpegGenericTask(Thread):
 
     USAGE:
         >>> thread = FFmpegGenericTask(args)
-        >>> thread.join()
+        >>> thread.start()
         >>> error = thread.status
         >>> if error:
         >>>     error
+
+        If your interface allows it, you can stop the process using:
+        >>> self.thread.stop()
 
     Raise: `OSError` if not FFmpeg
     Return: None
@@ -190,6 +196,8 @@ class FFmpegGenericTask(Thread):
         self.procname = procname
         self.args = args
         self.status = None
+        self.stop_work_thread = None
+        self.proc = None
         self.creationflags = (
             subprocess.CREATE_NO_WINDOW
             if self.appdata["ostype"] == "Windows"
@@ -197,7 +205,6 @@ class FFmpegGenericTask(Thread):
         )
 
         Thread.__init__(self)
-        self.start()
 
     # ----------------------------------------------------------------#
 
@@ -228,16 +235,32 @@ class FFmpegGenericTask(Thread):
                 encoding=self.appdata["encoding"],
                 errors="replace",
                 creationflags=self.creationflags,
-            ) as proc:
-                output = proc.communicate()[1]
+            ) as self.proc:
+                output = self.proc.communicate()[1]
                 tolog(f"INFO: [FFMPEG] OUTPUT:\n{output}", self.logfile)
-                if proc.returncode:  # ffmpeg error
-                    self.status = f"[FFMPEG] OUTPUT ERROR:\n{output}"
+
+                exit_code = self.proc.returncode
+                if exit_code:  # ffmpeg error
+                    if self.stop_work_thread:
+                        self.status = "STOP"
+                    else:
+                        self.status = f"[FFMPEG]: (Exit Code): {exit_code}"
 
         except OSError as err:  # command not found
             self.status = f"[VIDEOMASS]: ERROR:\n{err}"
-
-        if self.status:
             tolog(f"{self.status}", self.logfile)
 
         wx.CallAfter(pub.sendMessage, "RESULT_EVT", status="")
+
+    # ----------------------------------------------------------------#
+
+    def stop(self):
+        """
+        Terminate the running FFmpeg subprocess immediately.
+        """
+        self.stop_work_thread = True
+        if self.proc is not None:
+            try:
+                self.proc.terminate()
+            except OSError:
+                pass

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 10 November 2026 v6.1.24
+Fri, 13 November 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -84,7 +84,8 @@ Tue, 10 November 2026 v6.1.24
   * Fixed Preview rotations rescale the image each time on Transpose filter.
   * Fixed Queue duplicate validation quadratic.
   * Fixed Queue merging compares every pair of items.
-
+  * Fixed issue with synchronous processes in quick conversion tasks for
+    previews. All processes are now all asynchronous from GUI to worker thread.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

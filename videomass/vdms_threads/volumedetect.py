@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.14.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -27,6 +27,7 @@ This file is part of Videomass.
 
 import subprocess
 import sys
+import time
 
 import wx
 from pubsub import pub
@@ -41,31 +42,36 @@ if sys.platform != "win32":
 
 class VolumeDetectThread(BaseVideomassThread):
     """
-    This class represents a separate subprocess thread to get
-    audio volume peak level when required for audio normalization
+    Run FFmpeg subprocess as a separate thread to get
+    audio volume peak level data required for audio normalization
     process.
 
-    NOTE: all error handling (including verification of the
-    existence of files) is entrusted to ffmpeg, except for the
-    lack of ffmpeg of course.
+    USAGE:
+        >>> thread = VolumeDetectThread(args)
+        >>> thread.start()
+        >>> if thread.data[1]:
+        >>>     error
+        >>>
+
+        If your interface allows it, you can stop the process using:
+        >>> self.thread.stop()
+
+    Raise: `OSError` if not FFmpeg
+    Return: tuple (list(volume), None or str(errors))
 
     """
-
-    STOP = (
-        "WARNING: [VIDEOMASS]: STOP command received by signal "
-        "event.\nTerminated process "
-    )
 
     def __init__(self, timeseq, filelist, audiomap, logfile):
         """
         Replace /dev/null with NUL on Windows.
 
-        self.status: None, if nothing error,
-                     tuple(str(message), str(info/error/warn)) if errors.
-        self.data: it is a tuple containing the list of audio volume
-                   parameters and the self.status of the output error,
-                   in the form:
-                   ([[maxvol, medvol], [etc,etc]], None or "str errors")
+        parameters defined here:
+        -----------------------
+                timeseq: list["", ""] only two elements (from -ss to -t)
+                filelist: list["file1", "file2", ...]
+                audiomap: str(AudioIndex)
+                logfile: str(pathname) to logfile
+
         """
         super().__init__(logfile=logfile)
 
@@ -83,78 +89,92 @@ class VolumeDetectThread(BaseVideomassThread):
 
     def run(self):
         """
-        Audio volume data is getted by the thread's caller using
-        the thread.data method (see io_tools).
+        See `io_tools.py` for more details on caller.
+
         NOTE: wx.callafter(pub...) do not send data to pop-up
               dialog, but a empty string that is useful to get
               the end of the process to close of the pop-up
 
         """
         volume = []
-        for files in self.filelist:
-            cmd = (
-                f'"{self.appdata["ffmpeg_cmd"]}" '
-                f"{self.appdata['ffmpeg-default-args']} "
-                f"{self.appdata['ffmpeg_loglev']} "
-                f"{self.time_seq[0]} "
-                f'-i "{files}" '
-                f"{self.time_seq[1]} "
-                f"{self.audiomap} "
-                f"-af volumedetect -vn -sn -dn -f null "
-                f"{self.nul}"
-            )
-            tolog(
-                f"INFO: VIDEOMASS COMMAND: {cmd}",
-                self.logfile,
-                sep=True,
-                wdate=True,
-            )
-            cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
-            try:
-                with subprocess.Popen(
-                    cmd,
-                    stderr=subprocess.PIPE,
-                    stdin=subprocess.PIPE,
-                    bufsize=1,
-                    text=True,
-                    encoding=self.appdata["encoding"],
-                    errors="replace",
-                    creationflags=self.creationflags,
-                ) as self.process:
-                    meanv, maxv = "", ""
-                    for line in self.process.stderr:
-                        if "max_volume:" in line:
-                            maxv = line.split(":")[1].strip()
-                        if "mean_volume:" in line:
-                            meanv = line.split(":")[1].strip()
+        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro
+        last_flush = time.monotonic()
 
-                        if self.stop_work_thread:
-                            if self.fatal:
-                                return
-                            self.process.communicate()[1]
-                            out = (
-                                VolumeDetectThread.STOP
-                                + f"with PID {self.process.pid}"
-                            )
-                            tolog(out, self.logfile)
-                            self.status = "STOP"
-                            break
+        with open(self.logfile, "a", newline="\n", encoding="utf-8") as logf:
+            for files in self.filelist:
+                cmd = (
+                    f'"{self.appdata["ffmpeg_cmd"]}" '
+                    f"{self.appdata['ffmpeg-default-args']} "
+                    f"{self.appdata['ffmpeg_loglev']} "
+                    f"{self.time_seq[0]} "
+                    f'-i "{files}" '
+                    f"{self.time_seq[1]} "
+                    f"{self.audiomap} "
+                    f"-af volumedetect -vn -sn -dn -f null "
+                    f"{self.nul}"
+                )
+                tolog(
+                    f"INFO: VIDEOMASS COMMAND: {cmd}",
+                    logf,
+                    sep=True,
+                    wdate=True,
+                    openf=False,
+                )
+                cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
+                meanv, maxv = "", ""
 
-                        if self.process.poll():
-                            output = self.process.communicate()[1]
-                            tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
-                            self.status = "ERROR"
-                            break
+                try:
+                    with subprocess.Popen(
+                        cmd,
+                        stderr=subprocess.PIPE,
+                        stdin=subprocess.PIPE,
+                        bufsize=1,
+                        text=True,
+                        encoding=self.appdata["encoding"],
+                        errors="replace",
+                        creationflags=self.creationflags,
+                    ) as self.process:
+                        for line in self.process.stderr:
+                            logf.write(line)
+                            # 2 from the last flush
+                            now = time.monotonic()
+                            if now - last_flush >= FLUSH_INTERVAL:
+                                logf.flush()
+                                last_flush = now
 
-                    volume.append((maxv, meanv))
+                            if "max_volume:" in line:
+                                maxv = line.split("max_volume:")[1].strip()
+                            if "mean_volume:" in line:
+                                meanv = line.split("mean_volume:")[1].strip()
 
-            except (OSError, FileNotFoundError) as err:
-                tolog(f"[VIDEOMASS]: ERROR: {err}", self.logfile)
-                self.status = "ERROR"
+                            if self.stop_work_thread:
+                                if self.fatal:
+                                    return
+                                self.process.communicate()[1]
+                                out = (
+                                    f"[VIDEOMASS]: STOP command received "
+                                    f"(PID {self.process.pid})\n[FFMPEG]: "
+                                    f"Exit Code: {self.process.returncode}"
+                                )
+                                tolog(out, logf, openf=False)
+                                self.status = "STOP"
+                                break
 
-            if self.status:
-                break
+                        exit_code = self.process.wait()
+                        if exit_code != 0 and self.status != "STOP":
+                            msgerr = f"[FFMPEG]: (Exit Code): {exit_code}"
+                            tolog(msgerr, logf, openf=False)
+                            self.status = msgerr
+                        else:
+                            volume.append((maxv, meanv))
 
-        self.data = (volume, self.status)
+                except (OSError, FileNotFoundError) as err:
+                    tolog(f"[VIDEOMASS]: ERROR: {err}", logf, openf=False)
+                    self.status = "ERROR"
+
+                if self.status:  # Any ERROR or "STOP" string
+                    break  # exit from files loop
+
+            self.data = (volume, self.status)
 
         wx.CallAfter(pub.sendMessage, "RESULT_EVT", status="")

@@ -31,11 +31,8 @@ import webbrowser
 import wx
 import wx.lib.agw.floatspin as FS
 
-from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io import io_tools
-from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
@@ -79,7 +76,6 @@ class VidstabSet(wx.Dialog):
         tcheck = clockset(kwa["duration"], self.fileclock)
         self.clock = tcheck["duration"]
         self.mills = tcheck["millis"]
-        self.logfile = None
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         boxenable = wx.BoxSizer(wx.HORIZONTAL)
@@ -366,12 +362,12 @@ class VidstabSet(wx.Dialog):
         # ----- confirm buttons section
         gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(self.btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridbtns.Add(gridhelp)
         boxaff = wx.BoxSizer(wx.HORIZONTAL)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        boxaff.Add(btn_cancel, 0)
+        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(self.btn_cancel, 0)
         btn_ok = wx.Button(self, wx.ID_OK)
         boxaff.Add(btn_ok, 0, wx.LEFT, 5)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
@@ -515,16 +511,21 @@ class VidstabSet(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.on_optzoom, self.spin_optzoom)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod1, self.ckbx_tripod1)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod2, self.ckbx_tripod2)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.set_default, btn_reset)
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
 
         if self.vidstabdetect:
             self.set_values()  # Set previous changes
         else:
             self.set_default(self)
             self.on_activate(self)
+
+    def _set_controls_enabled(self, state):
+        """Helper method, enable or disable all dialog children controls."""
+        for child in self.GetChildren():
+            child.Enable(state)
 
     # ------------------------------------------------------------------#
 
@@ -559,40 +560,52 @@ class VidstabSet(wx.Dialog):
         """
         Reloads processes at a given time clock point
         """
-        data = self.getvalue()
-        detect = f"-vf {data[0]}"
-        trasform = self.concat_filter((data[1], data[2]))
-        self.logfile = make_log_template(
-            "generic_task.log",
-            VidstabSet.LOGDIR,
-            mode="w",
-        )
-        error = self.process(self.filename, args=detect, mode="detect")
-        if error:
-            return
+        enabled_children = [c for c in self.GetChildren() if c.IsEnabled()]
+        for c in enabled_children:
+            c.Disable()
+        self.btn_cancel.Enable(), self.btn_help.Enable()
+        wx.BeginBusyCursor()
 
-        error = self.process(
-            self.filename,
-            self.framesrc,
-            args=trasform,
-            mode="trasform",
-        )
-        if error:
-            return
+        try:
+            data = self.getvalue()
+            detect = f"-vf {data[0]}"
+            trasform = self.concat_filter((data[1], data[2]))
 
-        if self.ckbx_duo.IsChecked():
+            error = self.process(self.filename, args=detect, mode="detect")
+            if error:
+                return
+
             error = self.process(
                 self.filename,
-                self.frameduo,
-                args="",
-                mode="makeduo",
+                self.framesrc,
+                args=trasform,
+                mode="trasform",
             )
             if error:
                 return
-            io_tools.openpath(self.frameduo)
-            return
 
-        io_tools.openpath(self.framesrc)
+            if self.ckbx_duo.IsChecked():
+                error = self.process(
+                    self.filename,
+                    self.frameduo,
+                    args="",
+                    mode="makeduo",
+                )
+                if error:
+                    return
+                io_tools.openpath(self.frameduo)
+
+                return
+
+            io_tools.openpath(self.framesrc)
+
+        finally:
+            # Eseguito SEMPRE prima di restituire il controllo al chiamante
+            if wx.IsBusy():
+                wx.EndBusyCursor()
+            if self:
+                for c in enabled_children:
+                    c.Enable()
         return
 
     # ------------------------------------------------------------------#
@@ -635,24 +648,13 @@ class VidstabSet(wx.Dialog):
         else:
             return None
 
-        thread = FFmpegGenericTask(
-            argstr,
-            procname=f"VidStab - {mode}",
-            logfile=self.logfile,
-        )
-        caption = _("Videomass - Loading...")
         msg = _("Please wait,\nThis process will take a few seconds.")
-        dlgload = PopupDialog(self, caption, msg)
-        dlgload.ShowModal()
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            dlgload.Destroy()
-            show_msg_notify(
-                self.GetParent(), logname=os.path.basename(self.logfile)
-            )
-            return error
-        dlgload.Destroy()
+        parent = self.GetParent()
+        data = generic_operation_process(
+            argstr, editor=mode, msg=msg, parent=parent, showlog=False
+        )
+        if data:
+            return data
         return None
 
     # ------------------------------------------------------------------#
