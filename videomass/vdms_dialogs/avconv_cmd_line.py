@@ -42,8 +42,7 @@ class Raw_Cmd_Line(wx.Dialog):
     APPDATA = get.appset
     PASS_1 = _("First pass command")
     PASS_2 = _("Second pass command")
-    LGREEN = "#80C058"
-    BLACK = "#1f1f1f"
+    TIPGREEN = "#80C058"
     # ------------------------------------------------------------------
 
     def __init__(self, parent, *args):
@@ -70,8 +69,7 @@ class Raw_Cmd_Line(wx.Dialog):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetBackgroundColour(wx.Colour(Raw_Cmd_Line.LGREEN))
-        btn_quicktip.SetForegroundColour(wx.Colour(Raw_Cmd_Line.BLACK))
+        btn_quicktip.SetForegroundColour(wx.Colour(Raw_Cmd_Line.TIPGREEN))
         boxshow.Add(
             btn_quicktip,
             0,

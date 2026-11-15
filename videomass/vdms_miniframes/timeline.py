@@ -200,8 +200,7 @@ class Float_TL(wx.MiniFrame):
     SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
     TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
     # --- BTN readme
-    READMEGREEN = "#80C058"  # readme btn background
-    READMEBLACK = "#1f1f1f"  # readme btn foreground
+    TIPGREEN = "#80C058"  # readme btn foreground
 
     # ruler and panel specifications constants
     RW = 900  # ruler width
@@ -308,8 +307,7 @@ class Float_TL(wx.MiniFrame):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetBackgroundColour(wx.Colour(Float_TL.READMEGREEN))
-        btn_quicktip.SetForegroundColour(wx.Colour(Float_TL.READMEBLACK))
+        btn_quicktip.SetForegroundColour(wx.Colour(Float_TL.TIPGREEN))
         sizer_btns.Add(btn_quicktip, 0, wx.LEFT | wx.CENTRE, 20)
 
         # ----------------------Properties ----------------------#

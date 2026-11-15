@@ -5,7 +5,7 @@
    enable-background="new 0 0 48 48"
    id="svg12"
    sodipodi:docname="waveform.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
    width="16"
    height="16"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -59,7 +59,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="32.300638"
-     inkscape:cx="3.2507098"
+     inkscape:cx="3.2661894"
      inkscape:cy="7.2599185"
      inkscape:window-x="24"
      inkscape:window-y="41"
@@ -70,10 +70,15 @@
      inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
-       id="grid4510" />
+       id="grid4510"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
   </sodipodi:namedview>
   <rect
-     style="fill:#73d216;stroke-width:0.154942;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.154942;paint-order:fill markers stroke;fill-opacity:1"
      id="rect391"
      width="1.165072"
      height="4.103384"
@@ -81,7 +86,7 @@
      y="5.948308"
      ry="0.0096189734" />
   <rect
-     style="fill:#73d216;stroke-width:0.199385;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.199385;paint-order:fill markers stroke;fill-opacity:1"
      id="rect393"
      width="1.165072"
      height="6.7949848"
@@ -89,7 +94,7 @@
      y="4.6025076"
      ry="0.015928505" />
   <rect
-     style="fill:#73d216;stroke-width:0.292154;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.292154;paint-order:fill markers stroke;fill-opacity:1"
      id="rect397"
      width="1.165072"
      height="14.589063"
@@ -97,7 +102,7 @@
      y="0.70546865"
      ry="0.03419904" />
   <rect
-     style="fill:#73d216;stroke-width:0.178325;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.178325;paint-order:fill markers stroke;fill-opacity:1"
      id="rect399"
      width="1.165072"
      height="5.4353781"
@@ -105,7 +110,7 @@
      y="5.2823105"
      ry="0.012741374" />
   <rect
-     style="fill:#73d216;stroke-width:0.220887;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.220887;paint-order:fill markers stroke;fill-opacity:1"
      id="rect414"
      width="1.165072"
      height="8.3395967"
@@ -113,7 +118,7 @@
      y="3.8302019"
      ry="0.019549314" />
   <rect
-     style="fill:#73d216;stroke-width:0.273529;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.273529;paint-order:fill markers stroke;fill-opacity:1"
      id="rect416"
      width="1.165072"
      height="12.788325"
@@ -121,7 +126,7 @@
      y="1.6058373"
      ry="0.029977828" />
   <rect
-     style="fill:#73d216;stroke-width:0.16771;paint-order:fill markers stroke;fill-opacity:1"
+     style="fill:#32aa32;stroke-width:0.16771;paint-order:fill markers stroke;fill-opacity:1"
      id="rect418"
      width="1.165072"
      height="4.80757"
@@ -129,7 +134,7 @@
      y="5.5962148"
      ry="0.011269695" />
   <rect
-     style="fill:#73d216;fill-opacity:1;stroke-width:0.107776;paint-order:fill markers stroke"
+     style="fill:#32aa32;fill-opacity:1;stroke-width:0.107776;paint-order:fill markers stroke"
      id="rect422"
      width="1.165072"
      height="1.9854093"

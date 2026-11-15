@@ -92,8 +92,7 @@ class Conc_Demuxer(wx.Panel):
 
     """
 
-    LGREEN = "#80C058"
-    BLACK = "#1f1f1f"
+    TIPGREEN = "#80C058"
     MSG_1 = _(
         "\n- The concatenation function is performed only with "
         "Audio files or only with Video files."
@@ -133,8 +132,7 @@ class Conc_Demuxer(wx.Panel):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
-        btn_quicktip.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
+        btn_quicktip.SetForegroundColour(wx.Colour(Conc_Demuxer.TIPGREEN))
         sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)

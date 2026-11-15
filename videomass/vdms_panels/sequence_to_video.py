@@ -77,8 +77,7 @@ class SequenceToVideo(wx.Panel):
     """
 
     VIOLET = "#D64E93"
-    LGREEN = "#80C058"
-    BLACK = "#1f1f1f"
+    TIPGREEN = "#80C058"
     MSG_1 = _(
         "\n1. Import one or more image files such as JPG, PNG and BMP "
         "formats (even in mixed mode),\nthen select one as your "
@@ -133,8 +132,7 @@ class SequenceToVideo(wx.Panel):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
-        btn_quicktip.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
+        btn_quicktip.SetForegroundColour(wx.Colour(SequenceToVideo.TIPGREEN))
         sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         # sizer.Add((5, 5))

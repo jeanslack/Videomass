@@ -79,17 +79,14 @@
        units="px" />
   </sodipodi:namedview>
   <rect
-     style="fill:#dcb028;stroke-width:0.25364;fill-opacity:1"
-     id="rect1"
-     width="14.086409"
-     height="13.931613"
-     x="0.95679569"
-     y="1.0341935" />
-  <rect
      style="fill:#ef2929;fill-opacity:1;stroke-width:0.263775"
      id="rect2"
      width="7.7800317"
      height="7.4095535"
      x="4.1099844"
      y="4.2952237" />
+  <path
+     id="rect3"
+     style="fill:#daa520;fill-opacity:1;stroke-width:0.25364"
+     d="M 0.957031,1.0351562 V 14.964844 H 15.042969 V 1.0351562 Z M 2.333984,2.3964844 H 13.666016 V 13.603516 H 2.333984 Z" />
 </svg>

@@ -50,8 +50,7 @@ class VideoToSequence(wx.Panel):
     """
 
     VIOLET = "#D64E93"
-    LGREEN = "#80C058"
-    BLACK = "#1f1f1f"
+    TIPGREEN = "#80C058"
     MSG_1 = _(
         "\n1. Import one or more video files, then select one."
         "\n\n2. To select a slice of time use the Timeline editor "
@@ -85,8 +84,7 @@ class VideoToSequence(wx.Panel):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetBackgroundColour(wx.Colour(VideoToSequence.LGREEN))
-        btn_quicktip.SetForegroundColour(wx.Colour(VideoToSequence.BLACK))
+        btn_quicktip.SetForegroundColour(wx.Colour(VideoToSequence.TIPGREEN))
         sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         choices = [
