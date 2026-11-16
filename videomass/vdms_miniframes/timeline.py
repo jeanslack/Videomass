@@ -178,7 +178,8 @@ class Float_TL(wx.MiniFrame):
 
     get = wx.GetApp()
     ICONS = get.iconset
-    # COLORSCHEME = get.appset['colorscheme']
+    COLORSCHEME = get.appset["colorscheme"]
+    ICONTHEME = get.appset["icontheme"]
     OS = get.appset["ostype"]
     LOGDIR = get.appset["logdir"]
     TMPROOT = os.path.join(get.appset["cachedir"], "tmp", "Waveforms")
@@ -186,19 +187,66 @@ class Float_TL(wx.MiniFrame):
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
 
     # Code Colours
-    YELLOW = "#bd9f00"  # for warnings
-    BLACK = "#060505"  # black for background status bar
-    ORANGE = "#f28924"  # for errors and warnings
-    LGREEN = "#52EE7D"
-    RULER_BKGRD = "#646D6F"  # GREY ruler background
-    DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
-    SELECTION = (0, 245, 212, 40)  # semi-transparent Mint Green, inner area
-    DURATION_RESET = "#E6FFFC"  # Cyan-white for the initial time text
-    DURATION_START = "#FF7A00"  # Neon orange for the time text (Start/End)
-    TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
-    # --- INVALID SELECTION HIGHLIGHTED
-    SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
-    TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
+    if ICONTHEME == "Videomass-Light":
+        YELLOW = "#BD9F00"  # for warnings
+        BLACK = "#060505"  # black for background status bar
+        ORANGE = "#F28924"  # orange light for errors and warnings
+        COLORWAVE = "0x0A192F@0.55"  # see ffmpeg cmd line color wave
+        RULER_BKGRD = "#8C8777"  # beige, ruller background
+        DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
+        SELECTION = (0, 245, 212, 40)  # semi-transp Mint Green, inner area
+        DURATION_RESET = "#060505"  # Black for the initial time text
+        DURATION_START = "#E6FFFC"  # Cyan-white for the time text (Start/End)
+        TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
+        # --- INVALID SELECTION HIGHLIGHTED
+        SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
+        TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
+
+    if ICONTHEME == "Videomass-Dark":
+        YELLOW = "#BD9F00"  # for warnings
+        BLACK = "#060505"  # black for background status bar
+        ORANGE = "#F28924"  # for errors and warnings
+        COLORWAVE = "0xFFF8F0@0.30"  # "0x9E6B8B@0.50"
+        RULER_BKGRD = "#233224"  # Dark green: ruler background
+        DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
+        SELECTION = (0, 245, 212, 55)  # semi-tr. vivid turquoise, inner area
+        DURATION_RESET = "#A7AEAE"  # grey-white for the initial time text
+        DURATION_START = "#E6FFFC"  # Cyan-white for the time text (Start/End)
+        TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
+        # --- INVALID SELECTION HIGHLIGHTED
+        SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
+        TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
+
+    if ICONTHEME == "Videomass-Colours":
+        YELLOW = "#BD9F00"  # for warnings
+        BLACK = "#060505"  # black for background status bar
+        ORANGE = "#F28924"  # orange light for errors and warnings
+        COLORWAVE = "0x0A192F@0.70"  # see ffmpeg cmd line color wave
+        RULER_BKGRD = COLORSCHEME["BACKGRD"]  # medium grey ruller background
+        DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
+        SELECTION = (0, 245, 212, 40)  # semi-transp. Mint Green, inner area
+        DURATION_RESET = "#E6FFFC"  # Cyan-white for the initial time text
+        DURATION_START = "#FF7A00"  # Neon orange for the time text (Start/End)
+        TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
+        # --- INVALID SELECTION HIGHLIGHTED
+        SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
+        TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
+
+    if ICONTHEME in ("Ubuntu-Dark-Aubergine", "Ubuntu-Light-Aubergine"):
+        YELLOW = "#BD9F00"  # for warnings
+        BLACK = "#060505"  # black for background status bar
+        ORANGE = "#F28924"  # for errors and warnings
+        COLORWAVE = "0xFFF8F0@0.30"  # "0x9E6B8B@0.50"
+        RULER_BKGRD = "#411934"  # Dark Aubergine 90%: ruler background
+        DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
+        SELECTION = (0, 245, 212, 55)  # semi-tr. vivid turquoise, inner area
+        DURATION_RESET = "#A7AEAE"  # grey-white for the initial time text
+        DURATION_START = "#E6FFFC"  # Cyan-white for the time text (Start/End)
+        TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
+        # --- INVALID SELECTION HIGHLIGHTED
+        SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
+        TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
+
     # --- BTN readme
     TIPGREEN = "#80C058"  # readme btn foreground
 
@@ -448,11 +496,10 @@ class Float_TL(wx.MiniFrame):
 
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
-
         args = (
             f'-i "{self.filename}" -filter_complex "aformat=channel_layouts'
             f"=mono,compand,showwavespic=s={Float_TL.RW + 10}x{Float_TL.PH}:"
-            f'colors=0x0A192F@0.70:split_channels=1:draw=full:filter=peak" '
+            f'colors={Float_TL.COLORWAVE}:split_channels=1:draw=full:filter=peak" '
             f'-update 1 -frames:v 1 "{self.frame}"'
         )
         msg = _("Please wait...\nLoading waveform.")

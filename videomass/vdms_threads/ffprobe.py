@@ -7,7 +7,7 @@ Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.05.2026
+Rev: Nov.16.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of FFcuesplitter.
@@ -72,15 +72,31 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
                 raise Exception(probe[1])
         >>> else:
         >>>     probe[0]
+
+    Update:
+        Added `-count_frames` argument to args. This causes
+        "nb_read_frames" to appear in the ffprobe output; for image
+        files, this value is always 1.
+        The argument `-read_intervals "%+#5"` has also been added to
+        prevent long wait times with large files. Reads the first 5 frames.
+
     """
-    args = [cmd, "-show_format", "-show_streams", "-of", "json"]
+    args = [
+        cmd,
+        "-count_frames",
+        "-read_intervals",
+        "%+#5",
+        "-show_format",
+        "-show_streams",
+        "-of",
+        "json",
+    ]
     args.extend(from_kwargs_to_args(kwargs))
     args.append(filename)
 
     creationflags = (
         subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
     )
-
     try:
         with subprocess.Popen(
             args,

@@ -192,13 +192,13 @@ class Choose_Topic(wx.Panel):
             version.SetForegroundColour("#E95420")  # Ubuntu orange
             donations.SetForegroundColour("#E95420")  # Ubuntu orange
         elif self.appdata["IS_DARK_THEME"] is False:
+            # if icontheme in (
+            #     "Videomass-Colours",
+            #     "Videomass-Dark",
+            #     "Videomass-Light",
+            # ):
+            #     self.SetBackgroundColour("#4eada5")  # blue
             if icontheme in (
-                "Videomass-Colours",
-                "Videomass-Dark",
-                "Videomass-Light",
-            ):
-                self.SetBackgroundColour("#4eada5")  # blue
-            elif icontheme in (
                 "Ubuntu-Dark-Aubergine",
                 "Ubuntu-Light-Aubergine",
             ):
