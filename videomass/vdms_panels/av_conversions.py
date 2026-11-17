@@ -47,6 +47,7 @@ from videomass.vdms_io.checkup import check_files
 from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import get_video_stream
 from videomass.vdms_utils.utils import update_timeseq_duration
 
 from .audio_encoders.acodecs import AudioEncoders
@@ -674,7 +675,7 @@ class AV_Conv(wx.Panel):
 
         """
         if len(self.parent.file_src) == 1:
-            return (self.parent.file_src[0], 0)
+            return (0, self.parent.file_src[0])
 
         if not self.parent.filedropselected:
             wx.MessageBox(
@@ -685,55 +686,34 @@ class AV_Conv(wx.Panel):
             )
             return None
 
-        clicked = self.parent.filedropselected
-        return (clicked, self.parent.file_src.index(clicked))
+        selected = self.parent.filedropselected
+        index = self.parent.file_src.index(selected)
+        return (index, selected)
 
     # ------------------------------------------------------------------#
 
-    def get_video_stream(self):
+    def video_stream_info(self):
         """
         Given a frame or a video file, it returns a dict object
         containing required video parameters as width, height, etc.
         """
-        fget = self.file_selection()
-        if not fget:
+        selected = self.file_selection()
+        if not selected:
             return None
 
-        index = self.parent.data_files[fget[1]]
-
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = int(index["streams"][0]["width"])
-            height = int(index["streams"][0]["height"])
-            filename = index["format"]["filename"]
-            duration = index["format"].get("time", "00:00:00.000")
-            if not width or not height:
-                wx.MessageBox(
-                    _(
-                        "Unsupported file:\n"
-                        "Missing decoder or library? "
-                        "Check FFmpeg configuration."
-                    ),
-                    _("Videomass - Warning!"),
-                    wx.ICON_WARNING,
-                    self,
-                )
-                self.on_vfilters_clear(self)
-                return None
-            return dict(
-                zip(
-                    ["width", "height", "filename", "duration"],
-                    [width, height, filename, duration],
-                )
+        itemdata = self.parent.data_files[selected[0]]
+        streaminfo = get_video_stream(itemdata)
+        if not streaminfo:
+            wx.MessageBox(
+                _("The selected file is not a frame or a video file"),
+                _("Videomass - Warning!"),
+                wx.ICON_WARNING,
+                self,
             )
+            self.on_vfilters_clear(self)
+            return None
 
-        wx.MessageBox(
-            _("The file is not a frame or a video file"),
-            _("Videomass - Warning!"),
-            wx.ICON_WARNING,
-            self,
-        )
-        self.on_vfilters_clear(self)
-        return None
+        return streaminfo
 
     # ------------------------------------------------------------------#
 
@@ -770,7 +750,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        kwa = self.get_video_stream()
+        kwa = self.video_stream_info()
         if not kwa:
             return
         with Scale(
@@ -804,7 +784,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable transpose filter for frame rotations
         """
-        kwa = self.get_video_stream()
+        kwa = self.video_stream_info()
         if not kwa:
             return
         with Transpose(
@@ -832,7 +812,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable crop filter
         """
-        kwa = self.get_video_stream()
+        kwa = self.video_stream_info()
         if not kwa:
             return
         with Crop(
@@ -859,7 +839,7 @@ class AV_Conv(wx.Panel):
         Enable or disable filter for deinterlacing
         (w3fdif and yadif) and interlace filter.
         """
-        sdf = self.get_video_stream()
+        sdf = self.video_stream_info()
         if not sdf:
             return
         with Deinterlace(
@@ -895,7 +875,7 @@ class AV_Conv(wx.Panel):
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        sdf = self.get_video_stream()
+        sdf = self.video_stream_info()
         if not sdf:
             return
         with Denoisers(self, self.opt["Denoiser"], self.bmpreset) as den:
@@ -919,7 +899,7 @@ class AV_Conv(wx.Panel):
         Note, this filter is incompatible with two-pass encoding that
         includes `-pass 1` and` -pass 2` ffmpeg args/options.
         """
-        sdf = self.get_video_stream()
+        sdf = self.video_stream_info()
         if not sdf:
             return
         with VidstabSet(
@@ -956,7 +936,7 @@ class AV_Conv(wx.Panel):
         Enable or disable color correction filter like
         contrast, brightness, saturation, gamma.
         """
-        kwa = self.get_video_stream()
+        kwa = self.video_stream_info()
         if not kwa:
             return
         with ColorEQ(

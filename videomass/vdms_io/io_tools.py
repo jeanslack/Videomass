@@ -29,7 +29,6 @@ import requests
 import wx
 from pubsub import pub
 
-from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads import generic_downloads
 from videomass.vdms_threads.check_bin import (
@@ -41,6 +40,7 @@ from videomass.vdms_threads.check_bin import (
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_utils.utils import open_default_application
+from videomass.vdms_utils.widget_utils import PopupDialog
 
 
 def show_msg_notify(

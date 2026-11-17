@@ -32,60 +32,55 @@ import wx.lib.agw.hyperlink as hpl
 
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import get_video_stream
 from videomass.vdms_utils.utils import (
     integer_to_time,
     time_to_integer,
     trailing_name_with_prog_digit,
 )
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
-def check_images_size(flist):
+def compare_video_dimension(flist):
     """
-    Check for images size, if not equal return True,
-    None otherwise.
+    Compare image sizes in a list of video files, If they are
+    not equal to each other, it returns `True`, `None` otherwise.
     """
     sizes = []
     for index in flist:
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = index["streams"][0]["width"]
-            height = index["streams"][0]["height"]
+        streams = index.get("streams", [])
+        video_stream = next(
+            (
+                s
+                for s in streams
+                if s.get("codec_type") == "video"
+                and not s.get("disposition", {}).get("attached_pic", 0)
+            ),
+            None,
+        )
+        # Fallback: se non trova video reali, controlla se c'è almeno
+        # uno stream video generico (es. immagine singola)
+        # if not video_stream:
+        #     video_stream = next(
+        #         (s for s in streams if s.get("codec_type") == "video"),
+        #         None,
+        #     )
+
+        if (
+            video_stream
+            and "width" in video_stream
+            and "height" in video_stream
+        ):
+            width = video_stream["width"]
+            height = video_stream["height"]
             sizes.append(f"{width}x{height}")
 
     if len(set(sizes)) > 1:
-        wx.MessageBox(
-            _("Images need to be resized, please use Resize function."),
-            "Videomass",
-            wx.ICON_INFORMATION,
-        )
         return True
 
     return None
-
-
-def is_supported_image(path):
-    """
-    Check if file input extension format is supported.
-    return tuple(), first item boolean, second item
-    unsupported str(extension).
-    """
-    supported = SequenceToVideo.SUPPORTED_IMAGE_EXTS
-    ext = os.path.splitext(path)[1].lower()
-    return ext in supported, ext
-
-
-def is_single_frame(stream):
-    """
-    Check if file is a static image using `nb_read_frames`
-    key.
-    """
-    value = stream.get("nb_read_frames")
-    try:
-        return int(value) == 1
-    except (TypeError, ValueError):
-        return False
 
 
 # -------------------------------------------------------------------------
@@ -102,6 +97,7 @@ class SequenceToVideo(wx.Panel):
     VIOLET = "#D64E93"
     TIPGREEN = "#80C058"
     SUPPORTED_IMAGE_EXTS = (".jpeg", ".jpg", ".png", ".tif", ".tiff", ".bmp")
+    SUPPORTED_FORMAT_NAME = ("image2", "bmp_pipe", "tiff_pipe", "png_pipe")
     # ---------------------------------------------------------------------
 
     def __init__(self, parent):
@@ -391,7 +387,7 @@ class SequenceToVideo(wx.Panel):
 
         """
         if len(self.parent.file_src) == 1:
-            return (self.parent.file_src[0], 0)
+            return (0, self.parent.file_src[0])
 
         if not self.parent.filedropselected:
             wx.MessageBox(
@@ -402,52 +398,29 @@ class SequenceToVideo(wx.Panel):
             )
             return None
 
-        clicked = self.parent.filedropselected
-        return (clicked, self.parent.file_src.index(clicked))
+        selected = self.parent.filedropselected
+        index = self.parent.file_src.index(selected)
+        return (index, selected)
 
-    # ------------------------------------------------------------------#
-
-    def get_video_stream(self):
-        """
-        Given a frame or a video file, it returns a tuple of data
-        containing information on the streams required by some video
-        filters.
-
-        """
-        fget = self.file_selection()
-        if not fget:
-            return None
-
-        index = self.parent.data_files[fget[1]]
-
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = int(index["streams"][0]["width"])
-            height = int(index["streams"][0]["height"])
-            filename = index["format"]["filename"]
-            duration = index["format"].get("time", "00:00:00.000")
-            return dict(
-                zip(
-                    ["width", "height", "filename", "duration"],
-                    [width, height, filename, duration],
-                )
-            )
-
-        wx.MessageBox(
-            _("The file is not a frame or a video file"),
-            _("Videomass - Warning!"),
-            wx.ICON_WARNING,
-        )
-        return None
-
-    # ------------------------------------------------------------------#
+        # ------------------------------------------------------------------#
 
     def on_resizing(self, event):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        kwa = self.get_video_stream()
-        if not kwa:
+        indx = self.file_selection()
+        if not indx:
             return
+
+        kwa = get_video_stream(self.parent.data_files[indx[0]])
+        if not kwa:
+            wx.MessageBox(
+                _("The selected file is not a frame or a video file"),
+                _("Videomass - Warning!"),
+                wx.ICON_WARNING,
+            )
+            return
+
         with Scale(
             self,
             self.opt["Scale"],
@@ -665,31 +638,18 @@ class SequenceToVideo(wx.Panel):
     def check_to_slide(self):
         """
         Check compatibility of loaded images and check files existence.
-        Multi file images slaidshow.
+        for slaidshow usage.
         """
         for item in self.parent.data_files:
-            fname = item["format"]["filename"]
-            video_streams = [
-                stream
-                for stream in item.get("streams", [])
-                if stream.get("codec_type") == "video"
-            ]
+            fname = item.get("format", {})["filename"]
 
-            if not video_streams or any(
-                not is_single_frame(stream) for stream in video_streams
+            video_format = item.get("format", {}).get("format_name", "")
+            if (
+                not video_format
+                or video_format not in SequenceToVideo.SUPPORTED_FORMAT_NAME
             ):
                 wx.MessageBox(
                     _("Invalid file: '{}'").format(fname),
-                    _("Videomass - Error!"),
-                    wx.ICON_ERROR,
-                    self,
-                )
-                return True
-
-            supported, ext = is_supported_image(fname)
-            if not supported:
-                wx.MessageBox(
-                    _("Unsupported format '{}'").format(ext),
                     _("Videomass - Error!"),
                     wx.ICON_ERROR,
                     self,
@@ -709,34 +669,20 @@ class SequenceToVideo(wx.Panel):
 
     # ---------------------------------------------------------
 
-    def check_to_loop(self, fname, index):
+    def check_to_loop(self, index):
         """
-        Verify the compatibility and the existence on disk of the
-        selected image file. This method is for a single static image (loop).
+        Verify the compatibility and the existence of the
+        selected image file for a single static image (loop) usage.
         """
         item = self.parent.data_files[index]
-
-        video_streams = [
-            stream
-            for stream in item.get("streams", [])
-            if stream.get("codec_type") == "video"
-        ]
-
-        if not video_streams or any(
-            not is_single_frame(stream) for stream in video_streams
+        fname = item.get("format", {})["filename"]
+        video_format = item.get("format", {}).get("format_name", "")
+        if (
+            not video_format
+            or video_format not in SequenceToVideo.SUPPORTED_FORMAT_NAME
         ):
             wx.MessageBox(
                 _("Invalid file: '{}'").format(fname),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
-                self,
-            )
-            return True
-
-        supported, ext = is_supported_image(fname)
-        if not supported:
-            wx.MessageBox(
-                _("Unsupported format '{}'").format(ext),
                 _("Videomass - Error!"),
                 wx.ICON_ERROR,
                 self,
@@ -775,17 +721,16 @@ class SequenceToVideo(wx.Panel):
         """
         Redirect to `switch_to_processing`
         """
-
         fget = self.file_selection()
         if not fget:
             return
 
         if self.appdata["outputdir_asinput"]:
-            destdir = os.path.dirname(fget[0])
+            destdir = os.path.dirname(fget[1])
         else:
             destdir = self.appdata["outputdir"]
 
-        name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 5)
+        name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[0], 5)
         outputdir = trailing_name_with_prog_digit(destdir, "Still_Images")
 
         if outputdir[0] == "ERROR":
@@ -798,10 +743,8 @@ class SequenceToVideo(wx.Panel):
 
         if self.ckbx_static_img.IsChecked():
             countmax = 1
-            files = (fget[0],)
-            # prop = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 3)
-            # if self.check_to_loop(prop, fget[0]):
-            if self.check_to_loop(fget[0], fget[1]):
+            files = (fget[1],)
+            if self.check_to_loop(fget[0]):
                 return
         else:
             files = self.parent.file_src
@@ -811,8 +754,16 @@ class SequenceToVideo(wx.Panel):
             if (
                 not self.opt["RESIZE"]
                 and countmax != 1
-                and check_images_size(self.parent.data_files)
+                and compare_video_dimension(self.parent.data_files)
             ):
+                wx.MessageBox(
+                    _(
+                        "Images need to be resized, please use Resize "
+                        "function."
+                    ),
+                    "Videomass",
+                    wx.ICON_INFORMATION,
+                )
                 return
 
         args = self.get_args_line()  # get args for command line

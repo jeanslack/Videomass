@@ -27,7 +27,7 @@
 ../../vdms_dialogs/singlechoicedlg.py
 ../../vdms_dialogs/videomass_check_version.py
 ../../vdms_dialogs/while_playing.py
-../../vdms_dialogs/widget_utils.py
+../../vdms_utils/widget_utils.py
 ../../vdms_dialogs/wizard_dlg.py
 ../../vdms_io/checkup.py
 ../../vdms_io/io_tools.py

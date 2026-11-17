@@ -154,7 +154,7 @@ class ConfigManager:
 
     """
 
-    VERSION = 8.6
+    VERSION = 8.7
     DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
         "confversion": VERSION,
         "shutdown": False,
@@ -187,6 +187,7 @@ class ConfigManager:
         "filedrop_column_width": [30, 200, 200, 200, 150, 200],
         "timeline_window_show": True,
         "timeline_window_pos": [2, 2],
+        "timeline_window_size": [920, 190],
     }
 
     def __init__(self, filename, makeportable=None):

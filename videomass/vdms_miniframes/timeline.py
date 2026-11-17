@@ -31,11 +31,11 @@ import wx
 import wx.adv
 from pubsub import pub
 
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 class Time_Selector(wx.Dialog):
@@ -207,7 +207,7 @@ class Float_TL(wx.MiniFrame):
         BLACK = "#060505"  # black for background status bar
         ORANGE = "#F28924"  # for errors and warnings
         COLORWAVE = "0xFFF8F0@0.30"  # "0x9E6B8B@0.50"
-        RULER_BKGRD = "#233224"  # Dark green: ruler background
+        RULER_BKGRD = "#414343"  # Mid Dark brown: ruler background
         DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
         SELECTION = (0, 245, 212, 55)  # semi-tr. vivid turquoise, inner area
         DURATION_RESET = "#A7AEAE"  # grey-white for the initial time text
@@ -387,7 +387,10 @@ class Float_TL(wx.MiniFrame):
         self.Layout()
 
         self.SetMinSize((920, 190))
+
+        self.SetSize(tuple(Float_TL.get.appset["timeline_window_size"]))
         self.Move(tuple(Float_TL.get.appset["timeline_window_pos"]))
+        wx.CallAfter(self._restore_geometry)
 
         if Float_TL.OS == "Linux":
             self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
@@ -438,6 +441,7 @@ class Float_TL(wx.MiniFrame):
         self.panelruler.Bind(wx.EVT_LEFT_DCLICK, self.on_set_pos)
         self.panelruler.Bind(wx.EVT_MOTION, self.on_move)
         self.Bind(wx.EVT_CLOSE, self.on_close)
+        # self.Bind(wx.EVT_SHOW, self._on_show)
 
         self.set_ui_ctrl(state=False)
         self.panelruler.Refresh()
@@ -445,6 +449,17 @@ class Float_TL(wx.MiniFrame):
         pub.subscribe(self.set_values, "RESET_ON_CHANGED_LIST")
         pub.subscribe(self.update_counter_thread, "UPDATE_PLAY_COUNTER")
         pub.subscribe(self.end_playback_thread, "END_PLAY")
+
+    def _restore_geometry(self):
+        """
+        Workaround to correctly restore the last position
+        on some operating systems
+        """
+        if not self or not self.IsShown():
+            return
+        x, y = Float_TL.get.appset["timeline_window_pos"]
+        w, h = Float_TL.get.appset["timeline_window_size"]
+        self.SetRect((max(0, x), max(0, y), w, h))
 
     def set_ui_ctrl(self, state=True):
         """
@@ -499,8 +514,8 @@ class Float_TL(wx.MiniFrame):
         args = (
             f'-i "{self.filename}" -filter_complex "aformat=channel_layouts'
             f"=mono,compand,showwavespic=s={Float_TL.RW + 10}x{Float_TL.PH}:"
-            f'colors={Float_TL.COLORWAVE}:split_channels=1:draw=full:filter=peak" '
-            f'-update 1 -frames:v 1 "{self.frame}"'
+            f"colors={Float_TL.COLORWAVE}:split_channels=1:draw=full:"
+            f'filter=peak" -update 1 -frames:v 1 "{self.frame}"'
         )
         msg = _("Please wait...\nLoading waveform.")
         data = generic_operation_process(

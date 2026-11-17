@@ -3,6 +3,14 @@ VIDEOMASS INSTALLATION INSTRUCTIONS AND BUILDINGS
 
 Notes: Some systems need to replace "python3" with "py" or "python".
 
+IMPORTANT NOTE:
+--------------
+    Linux Wayland Issues - On some Wayland-based Linux desktop environments,
+    tooltips or some interface elements may not appear or function properly.
+    Launch Videomass by forcing the X11 backend:
+
+        GDK_BACKEND=x11 videomass or GDK_BACKEND=x11 python3 launcher.py
+
 ==============================
 Executable packages availables
 ==============================

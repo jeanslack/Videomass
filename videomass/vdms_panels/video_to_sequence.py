@@ -33,13 +33,14 @@ import wx.lib.agw.hyperlink as hpl
 
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import get_video_stream
 from videomass.vdms_utils.utils import (
     trailing_name_with_prog_digit,
     update_timeseq_duration,
 )
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 class VideoToSequence(wx.Panel):
@@ -420,7 +421,7 @@ class VideoToSequence(wx.Panel):
 
         """
         if len(self.parent.file_src) == 1:
-            return (self.parent.file_src[0], 0)
+            return (0, self.parent.file_src[0])
 
         if not self.parent.filedropselected:
             wx.MessageBox(
@@ -431,42 +432,12 @@ class VideoToSequence(wx.Panel):
             )
             return None
 
-        clicked = self.parent.filedropselected
-        return (clicked, self.parent.file_src.index(clicked))
+        selected = self.parent.filedropselected
+        index = self.parent.file_src.index(selected)
+        return (index, selected)
 
-    # ------------------------------------------------------------------#
-
-    def get_video_stream(self):
-        """
-        Given a frame or a video file, it returns a tuple of data
-        containing information on the streams required by some video
-        filters.
-
-        """
-        fget = self.file_selection()
-        if not fget:
-            return None
-
-        index = self.parent.data_files[fget[1]]
-
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = int(index["streams"][0]["width"])
-            height = int(index["streams"][0]["height"])
-            filename = index["format"]["filename"]
-            duration = index["format"].get("time", "00:00:00.000")
-            return dict(
-                zip(
-                    ["width", "height", "filename", "duration"],
-                    [width, height, filename, duration],
-                )
-            )
-
-        wx.MessageBox(
-            _("The file is not a frame or a video file"),
-            _("Videomass - Warning!"),
-            wx.ICON_WARNING,
-        )
-        return None
+        # clicked = self.parent.filedropselected
+        # return (clicked, self.parent.file_src.index(clicked))
 
     # ------------------------------------------------------------------#
 
@@ -474,9 +445,19 @@ class VideoToSequence(wx.Panel):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        kwa = self.get_video_stream()
-        if not kwa:
+        selected = self.file_selection()
+        if not selected:
             return
+
+        kwa = get_video_stream(self.parent.data_files[selected[0]])
+        if not kwa:
+            wx.MessageBox(
+                _("The selected file is not a frame or a video file"),
+                _("Videomass - Warning!"),
+                wx.ICON_WARNING,
+            )
+            return
+
         with Scale(
             self,
             self.opt["Scale"],
@@ -491,7 +472,7 @@ class VideoToSequence(wx.Panel):
                     self.btn_resize.SetBackgroundColour(wx.NullColour)
                     self.opt["Setdar"] = ""
                     self.opt["Setsar"] = ""
-                    self.opt["Scale"] = "scale=w=320:h=-1"
+                    self.opt["Scale"] = "scale=w=320:h=-2"
                 else:
                     self.btn_resize.SetBackgroundColour(
                         wx.Colour(VideoToSequence.VIOLET)
@@ -602,10 +583,10 @@ class VideoToSequence(wx.Panel):
         else:
             clicked = self.parent.filedropselected
 
-        getclk = fsource.index(clicked)
-        typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(getclk, 3)
+        index = fsource.index(clicked)
+        item = self.parent.data_files[index]
 
-        if "video" not in typemedia or "sequence" in typemedia:
+        if not get_video_stream(item):
             wx.MessageBox(
                 _("Invalid file: '{}'").format(clicked),
                 _("Videomass - Error!"),

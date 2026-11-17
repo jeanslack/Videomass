@@ -31,9 +31,9 @@ import wx
 import wx.lib.agw.hyperlink as hpl
 
 from videomass.vdms_dialogs.epilogue import Formula
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_utils.utils import integer_to_time
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 def compare_media_param(data):

@@ -32,10 +32,10 @@ import webbrowser
 
 import wx
 
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io import io_tools
 from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 class Scale(wx.Dialog):
@@ -295,8 +295,8 @@ class Scale(wx.Dialog):
                 self.keep_aspect_ratio_on()
                 self.on_dimension(self)
 
-            self.spin_scale_width.SetValue(self.width)
-            self.spin_scale_height.SetValue(self.height)
+            self.spin_scale_width.SetValue(int(self.width))
+            self.spin_scale_height.SetValue(int(self.height))
 
         if args[1]:  # dar
             self.darNum = args[1].split("/")[0][7:]

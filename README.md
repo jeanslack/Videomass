@@ -23,6 +23,11 @@ written in [Python3](https://www.python.org/) using the
 * [Downloads](https://github.com/jeanslack/Videomass/releases)
 * [Installation](https://jeanslack.github.io/Videomass/download_installation.html#downloads-and-installation)
 
+# Linux Wayland Issues
+On some Wayland-based Linux desktop environments, tooltips or some interface elements may not appear or function properly. Launch Videomass by forcing the X11 backend:
+
+`GDK_BACKEND=x11 videomass` or `GDK_BACKEND=x11 python3 launcher.py`
+
 # Help translate the program into other languages
 DISCLAIMER: By sending a translation you agree to publish your work under the GPL3 license!
 - [Localization_Guidelines](https://jeanslack.github.io/Videomass/Pages/Localization_Guidelines)

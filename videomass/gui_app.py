@@ -92,6 +92,11 @@ class Videomass(wx.App):
             )
             return False
 
+        # Global tooltips configuration
+        wx.ToolTip.Enable(True)
+        wx.ToolTip.SetDelay(500)  # Set delay before display (ms)
+        wx.ToolTip.SetAutoPop(120000)  # Duration (ms)
+
         self.appset["DISPLAY_SIZE"] = wx.GetDisplaySize()  # get monitor res
         if hasattr(wx.SystemSettings, "GetAppearance"):
             appear = wx.SystemSettings.GetAppearance()

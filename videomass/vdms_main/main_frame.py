@@ -45,7 +45,6 @@ from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.queuedlg import QueueManager
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.while_playing import WhilePlaying
-from videomass.vdms_dialogs.widget_utils import CountDownDlg
 from videomass.vdms_io import io_tools
 from videomass.vdms_miniframes import timeline
 from videomass.vdms_panels import (
@@ -69,6 +68,7 @@ from videomass.vdms_utils.queue_utils import (
     write_json_file_queue,
 )
 from videomass.vdms_utils.utils import copydir_recursively
+from videomass.vdms_utils.widget_utils import CountDownDlg
 
 
 class MainFrame(wx.Frame):
@@ -103,7 +103,7 @@ class MainFrame(wx.Frame):
         self.data_files = []  # list of items in list control
         self.outputnames = []  # output file basenames (even renames)
         self.file_src = []  # input full file names list
-        self.filedropselected = None  # int(index) or None filedrop selected
+        self.filedropselected = None  # selected file str() or None type
         self.time_seq = ""  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
         self.topicname = None  # shown panel name
@@ -190,8 +190,7 @@ class MainFrame(wx.Frame):
         self.SetMinSize((1070, 685))  # ideal minsize (1140, 800)
         self.SetSizer(self.mainSizer)
         self.Fit()
-        self.SetSize(tuple(self.appdata["main_window_size"]))
-        self.Move(tuple(self.appdata["main_window_pos"]))
+
         # create menu bar
         self.videomass_menu_bar()
         # cretae tool bar
@@ -206,6 +205,9 @@ class MainFrame(wx.Frame):
         ]
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.Layout()
+
+        self.SetSize(tuple(self.appdata["main_window_size"]))
+        self.Move(tuple(self.appdata["main_window_pos"]))
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_destpath_setup)
         self.Bind(wx.EVT_CLOSE, self.on_close)
@@ -405,6 +407,8 @@ class MainFrame(wx.Frame):
         sett["timeline_window_show"] = self.appdata["timeline_window_show"]
         tpos = self.TimeLine.GetPosition()
         sett["timeline_window_pos"] = list(tpos)
+        tsize = self.TimeLine.GetSize()
+        sett["timeline_window_size"] = list(tsize)
 
         prst = self.PrstsPanel.lctrl
         prstcw = [prst.GetColumnWidth(i) for i in range(prst.GetColumnCount())]

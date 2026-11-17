@@ -72,20 +72,9 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
                 raise Exception(probe[1])
         >>> else:
         >>>     probe[0]
-
-    Update:
-        Added `-count_frames` argument to args. This causes
-        "nb_read_frames" to appear in the ffprobe output; for image
-        files, this value is always 1.
-        The argument `-read_intervals "%+#5"` has also been added to
-        prevent long wait times with large files. Reads the first 5 frames.
-
     """
     args = [
         cmd,
-        "-count_frames",
-        "-read_intervals",
-        "%+#5",
         "-show_format",
         "-show_streams",
         "-of",

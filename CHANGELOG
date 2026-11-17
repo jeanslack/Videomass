@@ -91,8 +91,12 @@ Sun, 15 November 2026 v6.1.24
     see the Stabilize and Resize filter.
   * Fixed the Maxangle parameter setting in the vidstab (Stabilize) filter
     being set to out-of-range maximum values.
-  * Improved "Still Image Maker" for input file check, and added ".tif", ".tiff"
-    formats (no multi-page) to supported file list.
+  * Fixed "Still Image Maker" check file, and added ".tiff" formats
+    (no multi-page) to supported file list.
+  * Fixed "From Movies to Pictures" check file. Some video files were
+    incorrectly not recognized.
+  * Fixed "A/V Conversions" check file. Some video files were incorrectly not
+    recognized.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

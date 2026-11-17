@@ -7,6 +7,15 @@ URGENCY: to do soon
 
 The application still needs to be tested on macOS. If anyone is available to carry out some tests and checks, please let me know.
 
+- Make ffprobe thread safe
+
+- Probabile che su textctrl valuti alcuni file video come audio (urge una funzione che analizzi tutti i flussi indipendentemente dalla posizione stream (vedi get_video_streams()
+
+- Migliorare i messasggi di warning error. molti sono troppo severi meglio info.
+- Lingua russa su wizard, sono stati riportati errori di formattazione. Risolvere con Wrap(500)?
+- Filtro stabilizer, quando abilitato abilita anche OK e Reset.
+- Still image make has transictions ?
+
 --------------
 URGENCY: high
 --------------
