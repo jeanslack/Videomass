@@ -56,33 +56,6 @@ def compare_video_dimension(flist):
             height = video_stream["height"]
             sizes.append(f"{width}x{height}")
 
-        # streams = index.get("streams", [])
-        # video_stream = next(
-        #     (
-        #         s
-        #         for s in streams
-        #         if s.get("codec_type") == "video"
-        #         and not s.get("disposition", {}).get("attached_pic", 0)
-        #     ),
-        #     None,
-        # )
-        # Fallback: se non trova video reali, controlla se c'è almeno
-        # uno stream video generico (es. immagine singola)
-        # if not video_stream:
-        #     video_stream = next(
-        #         (s for s in streams if s.get("codec_type") == "video"),
-        #         None,
-        #     )
-
-        # if (
-        #     video_stream
-        #     and "width" in video_stream
-        #     and "height" in video_stream
-        # ):
-        #     width = video_stream["width"]
-        #     height = video_stream["height"]
-        #     sizes.append(f"{width}x{height}")
-
     if len(set(sizes)) > 1:
         return True
 

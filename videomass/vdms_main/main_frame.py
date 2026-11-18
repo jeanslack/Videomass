@@ -904,10 +904,8 @@ class MainFrame(wx.Frame):
                 return
 
             self.switch_file_import(self)
-            paths = filedlg.GetPaths()
-            for path in paths:
-                self.fileDnDTarget.flCtrl.dropUpdate(path)
-            self.fileDnDTarget.flCtrl.rejected_files()
+            items = [(path, None) for path in filedlg.GetPaths()]
+            self.fileDnDTarget.flCtrl.dropUpdateBatch(items)
 
     # -------------------------------------------------------------------#
 

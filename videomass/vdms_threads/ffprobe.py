@@ -10,14 +10,14 @@ license: GPL3
 Rev: Nov.16.2026
 Code checker: flake8, pylint, ruff
 
-This file is part of FFcuesplitter.
+This file is part of Videomass.
 
-   FFcuesplitter is free software: you can redistribute it and/or modify
+   Videomass is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   FFcuesplitter is distributed in the hope that it will be useful,
+   Videomass is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.

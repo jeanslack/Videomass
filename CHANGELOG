@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sun, 15 November 2026 v6.1.24
+Wed, 18 November 2026 v6.1.30
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -91,12 +91,18 @@ Sun, 15 November 2026 v6.1.24
     see the Stabilize and Resize filter.
   * Fixed the Maxangle parameter setting in the vidstab (Stabilize) filter
     being set to out-of-range maximum values.
-  * Fixed "Still Image Maker" check file, and added ".tiff" formats
-    (no multi-page) to supported file list.
-  * Fixed "From Movies to Pictures" check file. Some video files were
-    incorrectly not recognized.
-  * Fixed "A/V Conversions" check file. Some video files were incorrectly not
-    recognized.
+  * Fixed "Still Image Maker" comparing image dimensions.
+  * Added ".tiff" format (no multi-page) to "Still Image Maker".
+  * Fixed stream inspection assuming the video stream is always at index 0,
+    preventing false warnings on files where audio or subtitle tracks precede
+    the video stream.
+  * Ignored embedded cover art (attached_pic) when detecting primary
+    video/audio streams.
+  * Run ffprobe asynchronously in a background worker thread during file
+    import and drag-and-drop to prevent UI freezes.
+  * Reuse cached ffprobe metadata when sorting columns in the file list instead
+    of re-probing files.
+
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22
