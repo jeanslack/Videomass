@@ -38,6 +38,52 @@ from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import time_to_integer, to_bytes
 
 
+def get_primary_codec_type(index):
+    """
+    Inspect main streams (ignoring attached pictures) and return the primary
+    'codec_type' with format long name (prioritizing 'video', then 'audio',
+    then other streams). Falls back to format information or 'Unknown'.
+    """
+    if not isinstance(index, dict):
+        return _("Unknown")
+
+    fmt = index.get("format") if isinstance(index.get("format"), dict) else {}
+    streams = (
+        index.get("streams") if isinstance(index.get("streams"), list) else []
+    )
+    format_name = fmt.get("format_long_name") or fmt.get("format_name")
+
+    main_streams = [
+        s
+        for s in streams
+        if isinstance(s, dict)
+        and s.get("codec_type")
+        and not s.get("disposition", {}).get("attached_pic", 0)
+    ]
+
+    primary_type = None
+    for target in ("video", "audio"):
+        if any(s.get("codec_type") == target for s in main_streams):
+            primary_type = target
+            break
+
+    if not primary_type and main_streams:
+        primary_type = main_streams["codec_type"]
+
+    if primary_type:
+        return (
+            f"{primary_type}: {format_name}" if format_name else primary_type
+        )
+
+    if format_name:
+        return f"format: {format_name}"
+
+    return _("Unknown")
+
+
+# ----------------------------------------------------------------------#
+
+
 def fullpathname_sanitize(fullpathfilename):
     """
     Check for 'full path file name' sanitize.
@@ -187,9 +233,8 @@ class MyListCtrl(wx.ListCtrl):
                 time = time_to_integer(probe.get("format")["time"])
                 probe["format"]["duration"] = time
 
-            media = probe["streams"][0]["codec_type"]
-            formatname = probe["format"]["format_long_name"]
-            self.SetItem(self.index, 3, f"{media}: {formatname}")
+            codectype = get_primary_codec_type(probe)
+            self.SetItem(self.index, 3, f"{codectype}")
             self.SetItem(self.index, 4, probe["format"]["size"])
             if newname:
                 self.SetItem(self.index, 5, newname)

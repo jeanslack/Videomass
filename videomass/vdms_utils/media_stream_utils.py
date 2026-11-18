@@ -26,18 +26,21 @@ This file is part of Videomass.
 """
 
 
-def get_video_stream(dstreams):
+def extract_video_stream(index):
     """
     Receives a list object derived from an index of `data_files`,
-    finds the first actual video stream, excluding any cover art
-    or attached pictures.
 
-    returns a dictionary containing video dimension, filename
-    and duration of video file.
+    Return the first valid video stream dictionary from ffprobe data,
+    containing video dimension, filename and duration of video file,
+    prioritizing real video streams over attached pictures (cover art).
+    Returns None if no valid video stream is found.
 
     """
-    streams = dstreams.get("streams", [])
-    frmat = dstreams.get("format", {})
+    streams = index.get("streams", [])
+    frmat = index.get("format", {})
+
+    if not isinstance(streams, list):
+        return None
 
     video_stream = next(
         (

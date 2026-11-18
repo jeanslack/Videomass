@@ -34,7 +34,7 @@ from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_utils.media_stream_utils import get_video_stream
+from videomass.vdms_utils.media_stream_utils import extract_video_stream
 from videomass.vdms_utils.utils import (
     integer_to_time,
     time_to_integer,
@@ -50,16 +50,22 @@ def compare_video_dimension(flist):
     """
     sizes = []
     for index in flist:
-        streams = index.get("streams", [])
-        video_stream = next(
-            (
-                s
-                for s in streams
-                if s.get("codec_type") == "video"
-                and not s.get("disposition", {}).get("attached_pic", 0)
-            ),
-            None,
-        )
+        video_stream = extract_video_stream(index)
+        if video_stream:
+            width = video_stream["width"]
+            height = video_stream["height"]
+            sizes.append(f"{width}x{height}")
+
+        # streams = index.get("streams", [])
+        # video_stream = next(
+        #     (
+        #         s
+        #         for s in streams
+        #         if s.get("codec_type") == "video"
+        #         and not s.get("disposition", {}).get("attached_pic", 0)
+        #     ),
+        #     None,
+        # )
         # Fallback: se non trova video reali, controlla se c'è almeno
         # uno stream video generico (es. immagine singola)
         # if not video_stream:
@@ -68,14 +74,14 @@ def compare_video_dimension(flist):
         #         None,
         #     )
 
-        if (
-            video_stream
-            and "width" in video_stream
-            and "height" in video_stream
-        ):
-            width = video_stream["width"]
-            height = video_stream["height"]
-            sizes.append(f"{width}x{height}")
+        # if (
+        #     video_stream
+        #     and "width" in video_stream
+        #     and "height" in video_stream
+        # ):
+        #     width = video_stream["width"]
+        #     height = video_stream["height"]
+        #     sizes.append(f"{width}x{height}")
 
     if len(set(sizes)) > 1:
         return True
@@ -412,7 +418,7 @@ class SequenceToVideo(wx.Panel):
         if not indx:
             return
 
-        kwa = get_video_stream(self.parent.data_files[indx[0]])
+        kwa = extract_video_stream(self.parent.data_files[indx[0]])
         if not kwa:
             wx.MessageBox(
                 _("The selected file is not a frame or a video file"),

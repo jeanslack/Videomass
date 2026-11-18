@@ -9,12 +9,14 @@ The application still needs to be tested on macOS. If anyone is available to car
 
 - Make ffprobe thread safe
 
-- Probabile che su textctrl valuti alcuni file video come audio (urge una funzione che analizzi tutti i flussi indipendentemente dalla posizione stream (vedi get_video_streams()
+- Probabile che su textctrl valuti alcuni file video come audio (urge una funzione che analizzi tutti i flussi indipendentemente dalla posizione stream (vedi extract_video_streams()
 
 - Migliorare i messasggi di warning error. molti sono troppo severi meglio info.
 - Lingua russa su wizard, sono stati riportati errori di formattazione. Risolvere con Wrap(500)?
 - Filtro stabilizer, quando abilitato abilita anche OK e Reset.
 - Still image make has transictions ?
+- Still Image Maker-Concatenate-From Movie to Pictures Add to Queue features.
+
 
 --------------
 URGENCY: high

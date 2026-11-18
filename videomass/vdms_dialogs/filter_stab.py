@@ -846,8 +846,8 @@ class VidstabSet(wx.Dialog):
             self._set_controls_enabled(False)
             self.btn_cancel.Enable()
             self.btn_help.Enable()
-            self.btn_ok.Enable()
-            self.btn_reset.Enable()
+            self.btn_ok.Disable()
+            self.btn_reset.Disable()
             self.ckbx_duo.SetValue(False)
             self.ckbx_enable.Enable()
 

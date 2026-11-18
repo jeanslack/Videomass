@@ -35,7 +35,7 @@ from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_utils.media_stream_utils import get_video_stream
+from videomass.vdms_utils.media_stream_utils import extract_video_stream
 from videomass.vdms_utils.utils import (
     trailing_name_with_prog_digit,
     update_timeseq_duration,
@@ -449,7 +449,7 @@ class VideoToSequence(wx.Panel):
         if not selected:
             return
 
-        kwa = get_video_stream(self.parent.data_files[selected[0]])
+        kwa = extract_video_stream(self.parent.data_files[selected[0]])
         if not kwa:
             wx.MessageBox(
                 _("The selected file is not a frame or a video file"),
@@ -586,7 +586,7 @@ class VideoToSequence(wx.Panel):
         index = fsource.index(clicked)
         item = self.parent.data_files[index]
 
-        if not get_video_stream(item):
+        if not extract_video_stream(item):
             wx.MessageBox(
                 _("Invalid file: '{}'").format(clicked),
                 _("Videomass - Error!"),
