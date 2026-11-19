@@ -32,34 +32,31 @@ import wx.lib.agw.hyperlink as hpl
 
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import extract_video_stream
 from videomass.vdms_utils.utils import (
     integer_to_time,
     time_to_integer,
     trailing_name_with_prog_digit,
 )
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
-def check_images_size(flist):
+def compare_video_dimension(flist):
     """
-    Check for images size, if not equal return True,
-    None otherwise.
+    Compare image sizes in a list of video files, If they are
+    not equal to each other, it returns `True`, `None` otherwise.
     """
     sizes = []
     for index in flist:
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = index["streams"][0]["width"]
-            height = index["streams"][0]["height"]
+        video_stream = extract_video_stream(index)
+        if video_stream:
+            width = video_stream["width"]
+            height = video_stream["height"]
             sizes.append(f"{width}x{height}")
 
     if len(set(sizes)) > 1:
-        wx.MessageBox(
-            _("Images need to be resized, please use Resize function."),
-            "Videomass",
-            wx.ICON_INFORMATION,
-        )
         return True
 
     return None
@@ -78,22 +75,8 @@ class SequenceToVideo(wx.Panel):
 
     VIOLET = "#D64E93"
     TIPGREEN = "#80C058"
-    MSG_1 = _(
-        "\n1. Import one or more image files such as JPG, PNG and BMP "
-        "formats (even in mixed mode),\nthen select one as your "
-        "starting point."
-        "\n\n2. Use the Resize tool if your images have different width "
-        "and height dimensions.\nYou only need to do this once for the "
-        "selected file to automatically resize the other images.\n"
-        "Otherwise, it's optional."
-        "\n\n3. Set a time interval between images, or for a single "
-        "image if you\n«Enable a single still image» option."
-        "\n\n4. Run the conversion."
-        "\n\n\nThe produced video will have the name of the selected "
-        "file in the 'File List' panel, which\nwill be saved in a "
-        "folder named 'Still_Images' with a progressive digit, "
-        "in the path you specify."
-    )
+    SUPPORTED_IMAGE_EXTS = (".jpeg", ".jpg", ".png", ".tif", ".tiff", ".bmp")
+    SUPPORTED_FORMAT_NAME = ("image2", "bmp_pipe", "tiff_pipe", "png_pipe")
     # ---------------------------------------------------------------------
 
     def __init__(self, parent):
@@ -280,17 +263,30 @@ class SequenceToVideo(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_fps, self.cmb_fps)
         self.Bind(wx.EVT_BUTTON, self.on_resizing, self.btn_resize)
 
-    # ---------------------------------------------------------
-
     def on_help(self, event):
         """
         event on button help
         """
-        win = NormalTransientPopup(
-            self,
-            wx.SIMPLE_BORDER,
-            SequenceToVideo.MSG_1,
-        )
+        helpmetxt = SequenceToVideo.SUPPORTED_IMAGE_EXTS
+        tostr = [e.replace(".", "").upper() for e in helpmetxt]
+        msg = _(
+            "1. Import one or more image files such as {} "
+            "formats (even in mixed mode), then select one as your "
+            "starting point."
+            "\n\n2. Use the Resize tool if your images have different width "
+            "and height dimensions. You only need to do this once for the "
+            "selected file to automatically resize the other images. "
+            "Otherwise, it's optional."
+            "\n\n3. Set a time interval between images, or for a single "
+            "image if you «Enable a single still image» option."
+            "\n\n4. Run the conversion."
+            "\n\nThe produced video will have the name of the selected "
+            "file in the 'File List' panel, which will be saved in a "
+            "folder named 'Still_Images' with a progressive digit, "
+            "in the path you specify."
+        ).format(", ".join(tostr))
+
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)
 
         # Show the popup right below or above the button
         # depending on available screen space...
@@ -365,12 +361,12 @@ class SequenceToVideo(wx.Panel):
     def file_selection(self):
         """
         Gets the selected file on files list and returns an object
-        of type list [str('selected file name'), int(index)].
+        of type list [int(index)), (str('selected file name')].
         Returns None if no files are selected.
 
         """
         if len(self.parent.file_src) == 1:
-            return (self.parent.file_src[0], 0)
+            return (0, self.parent.file_src[0])
 
         if not self.parent.filedropselected:
             wx.MessageBox(
@@ -381,52 +377,29 @@ class SequenceToVideo(wx.Panel):
             )
             return None
 
-        clicked = self.parent.filedropselected
-        return (clicked, self.parent.file_src.index(clicked))
+        selected = self.parent.filedropselected
+        index = self.parent.file_src.index(selected)
+        return (index, selected)
 
-    # ------------------------------------------------------------------#
-
-    def get_video_stream(self):
-        """
-        Given a frame or a video file, it returns a tuple of data
-        containing information on the streams required by some video
-        filters.
-
-        """
-        fget = self.file_selection()
-        if not fget:
-            return None
-
-        index = self.parent.data_files[fget[1]]
-
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = int(index["streams"][0]["width"])
-            height = int(index["streams"][0]["height"])
-            filename = index["format"]["filename"]
-            duration = index["format"].get("time", "00:00:00.000")
-            return dict(
-                zip(
-                    ["width", "height", "filename", "duration"],
-                    [width, height, filename, duration],
-                )
-            )
-
-        wx.MessageBox(
-            _("The file is not a frame or a video file"),
-            _("Videomass - Warning!"),
-            wx.ICON_WARNING,
-        )
-        return None
-
-    # ------------------------------------------------------------------#
+        # ------------------------------------------------------------------#
 
     def on_resizing(self, event):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        kwa = self.get_video_stream()
-        if not kwa:
+        indx = self.file_selection()
+        if not indx:
             return
+
+        kwa = extract_video_stream(self.parent.data_files[indx[0]])
+        if not kwa:
+            wx.MessageBox(
+                _("The selected file is not a frame or a video file"),
+                "Videomass",
+                wx.ICON_INFORMATION,
+            )
+            return
+
         with Scale(
             self,
             self.opt["Scale"],
@@ -543,14 +516,14 @@ class SequenceToVideo(wx.Panel):
 
         if probe[1]:  # some error
             msg = _("Invalid file: '{}'\n\n{}").format(pathname, probe[1])
-            wx.MessageBox(msg, _("Videomass - Error!"), wx.ICON_ERROR, self)
+            wx.MessageBox(msg, "Videomass", wx.ICON_ERROR, self)
             return
 
         if probe[0]["streams"][0]["codec_type"] != "audio":
             msg = _(
                 "Invalid file: '{}'\n\nIt doesn't appear to be an audio file."
             ).format(pathname)
-            wx.MessageBox(msg, _("Videomass - Error!"), wx.ICON_ERROR, self)
+            wx.MessageBox(msg, "Videomass", wx.ICON_ERROR, self)
             return
 
         self.btn_openaudio.SetBackgroundColour(
@@ -641,101 +614,69 @@ class SequenceToVideo(wx.Panel):
 
     # ---------------------------------------------------------
 
-    def check_to_slide(self, fsource):
+    def check_to_slide(self):
         """
-        Check compatibility between loaded images and files exist.
+        Check compatibility of loaded images and check files existence.
+        for slaidshow usage.
         """
-        itemcount = self.parent.fileDnDTarget.flCtrl.GetItemCount()
-        for itc in range(itemcount):
-            typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(itc, 3)
-            if "video" not in typemedia or "sequence" not in typemedia:
+        for item in self.parent.data_files:
+            fname = item.get("format", {})["filename"]
+
+            video_format = item.get("format", {}).get("format_name", "")
+            if (
+                not video_format
+                or video_format not in SequenceToVideo.SUPPORTED_FORMAT_NAME
+            ):
                 wx.MessageBox(
-                    _("Invalid file: '{}'").format(fsource[itc]),
-                    _("Videomass - Error!"),
+                    _("Invalid file: '{}'").format(fname),
+                    "Videomass",
+                    wx.ICON_INFORMATION,
+                    self,
+                )
+                return True
+
+            if not os.path.isfile(os.path.abspath(fname)):
+                wx.MessageBox(
+                    _('File does not exist:\n\n"{}"\n').format(fname),
+                    "Videomass",
                     wx.ICON_ERROR,
                     self,
                 )
                 return True
 
-        unsupp = [
-            f
-            for f in fsource
-            if os.path.splitext(f)[1]
-            not in (
-                ".jpeg",
-                ".jpg",
-                ".png",
-                ".bmp",
-                ".JPEG",
-                ".JPG",
-                ".PNG",
-                ".BMP",
-            )
-        ]
-        if unsupp:
-            ext = os.path.splitext(unsupp[0])[1]
-            wx.MessageBox(
-                _("Unsupported format '{}'").format(ext),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
-                self,
-            )
-            return True
-
-        for fsrc in fsource:
-            if not os.path.isfile(os.path.abspath(fsrc)):
-                wx.MessageBox(
-                    _('File does not exist:\n\n"{}"\n').format(fsrc),
-                    _("ERROR"),
-                    wx.ICON_ERROR,
-                    self,
-                )
-                return True
         return None
 
     # ---------------------------------------------------------
 
-    def check_to_loop(self, typemedia, clicked):
+    def check_to_loop(self, index):
         """
-        Check the compatibility of the selected image and file exist.
+        Verify the compatibility and the existence of the
+        selected image file for a single static image (loop) usage.
         """
-        if "video" not in typemedia or "sequence" not in typemedia:
+        item = self.parent.data_files[index]
+        fname = item.get("format", {})["filename"]
+        video_format = item.get("format", {}).get("format_name", "")
+        if (
+            not video_format
+            or video_format not in SequenceToVideo.SUPPORTED_FORMAT_NAME
+        ):
             wx.MessageBox(
-                _("Invalid file: '{}'").format(clicked),
-                _("Videomass - Error!"),
+                _("Invalid file: '{}'").format(fname),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
+            return True
+
+        if not os.path.isfile(os.path.abspath(fname)):
+            wx.MessageBox(
+                _('File does not exist:\n\n"{}"\n').format(fname),
+                "Videomass",
                 wx.ICON_ERROR,
                 self,
             )
             return True
 
-        supp = (
-            ".jpeg",
-            ".jpg",
-            ".png",
-            ".bmp",
-            ".JPEG",
-            ".JPG",
-            ".PNG",
-            ".BMP",
-        )
-        ext = os.path.splitext(clicked)[1]
-        if ext not in supp:
-            wx.MessageBox(
-                _("Unsupported format '{}'").format(ext),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
-                self,
-            )
-            return True
-
-        if not os.path.isfile(os.path.abspath(clicked)):
-            wx.MessageBox(
-                _('File does not exist:\n\n"{}"\n').format(clicked),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
-                self,
-            )
-            return True
         return None
 
     # ---------------------------------------------------------
@@ -763,40 +704,43 @@ class SequenceToVideo(wx.Panel):
         if not fget:
             return
 
-        fsource = self.parent.file_src
-
         if self.appdata["outputdir_asinput"]:
-            destdir = os.path.dirname(fget[0])
+            destdir = os.path.dirname(fget[1])
         else:
             destdir = self.appdata["outputdir"]
 
-        name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 5)
+        name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[0], 5)
         outputdir = trailing_name_with_prog_digit(destdir, "Still_Images")
 
         if outputdir[0] == "ERROR":
-            wx.MessageBox(
-                f"{outputdir[1]}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{outputdir[1]}", "Videomass", wx.ICON_ERROR, self)
             return
 
         destdir = os.path.join(outputdir, f"{name}.mkv")
 
         if self.ckbx_static_img.IsChecked():
             countmax = 1
-            files = (fget[0],)
-            prop = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 3)
-            if self.check_to_loop(prop, fget[0]):
+            files = (fget[1],)
+            if self.check_to_loop(fget[0]):
                 return
         else:
-            files = fsource
+            files = self.parent.file_src
             countmax = len(files)
-            if self.check_to_slide(files):
+            if self.check_to_slide():
                 return
             if (
                 not self.opt["RESIZE"]
                 and countmax != 1
-                and check_images_size(self.parent.data_files)
+                and compare_video_dimension(self.parent.data_files)
             ):
+                wx.MessageBox(
+                    _(
+                        "Images need to be resized, please use Resize "
+                        "function."
+                    ),
+                    "Videomass",
+                    wx.ICON_INFORMATION,
+                )
                 return
 
         args = self.get_args_line()  # get args for command line
@@ -833,9 +777,7 @@ class SequenceToVideo(wx.Panel):
         try:
             os.makedirs(outputdir, mode=0o777)
         except (OSError, FileExistsError) as err:
-            wx.MessageBox(
-                f"{err}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
             return
 
         self.parent.switch_to_processing(

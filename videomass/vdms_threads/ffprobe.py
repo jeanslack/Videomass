@@ -7,17 +7,17 @@ Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.05.2026
+Rev: Nov.16.2026
 Code checker: flake8, pylint, ruff
 
-This file is part of FFcuesplitter.
+This file is part of Videomass.
 
-   FFcuesplitter is free software: you can redistribute it and/or modify
+   Videomass is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   FFcuesplitter is distributed in the hope that it will be useful,
+   Videomass is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
@@ -73,14 +73,19 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
         >>> else:
         >>>     probe[0]
     """
-    args = [cmd, "-show_format", "-show_streams", "-of", "json"]
+    args = [
+        cmd,
+        "-show_format",
+        "-show_streams",
+        "-of",
+        "json",
+    ]
     args.extend(from_kwargs_to_args(kwargs))
     args.append(filename)
 
     creationflags = (
         subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
     )
-
     try:
         with subprocess.Popen(
             args,

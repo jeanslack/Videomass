@@ -33,7 +33,6 @@ from shutil import move
 import wx
 from pubsub import pub
 
-from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io import io_tools
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
@@ -41,6 +40,7 @@ from videomass.vdms_threads.ffmpeg import FFmpeg
 from videomass.vdms_threads.image_extractor import PicturesFromVideo
 from videomass.vdms_threads.slideshow import SlideshowMaker
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.widget_utils import notification_area
 
 
 def delete_file_source(flist, trashdir):
@@ -60,9 +60,7 @@ def delete_file_source(flist, trashdir):
             filenotfounderror = err
 
     if filenotfounderror is not None:
-        wx.MessageBox(
-            f"{filenotfounderror}", _("Videomass - Error!"), wx.ICON_ERROR
-        )
+        wx.MessageBox(f"{filenotfounderror}", "Videomass", wx.ICON_ERROR)
     else:
         date = time.strftime("%H%M%S-%a_%d_%B_%Y")
         for name in set(flist):

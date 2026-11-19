@@ -45,7 +45,6 @@ from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.queuedlg import QueueManager
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.while_playing import WhilePlaying
-from videomass.vdms_dialogs.widget_utils import CountDownDlg
 from videomass.vdms_io import io_tools
 from videomass.vdms_miniframes import timeline
 from videomass.vdms_panels import (
@@ -69,6 +68,7 @@ from videomass.vdms_utils.queue_utils import (
     write_json_file_queue,
 )
 from videomass.vdms_utils.utils import copydir_recursively
+from videomass.vdms_utils.widget_utils import CountDownDlg
 
 
 class MainFrame(wx.Frame):
@@ -103,7 +103,7 @@ class MainFrame(wx.Frame):
         self.data_files = []  # list of items in list control
         self.outputnames = []  # output file basenames (even renames)
         self.file_src = []  # input full file names list
-        self.filedropselected = None  # int(index) or None filedrop selected
+        self.filedropselected = None  # selected file str() or None type
         self.time_seq = ""  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
         self.topicname = None  # shown panel name
@@ -190,8 +190,7 @@ class MainFrame(wx.Frame):
         self.SetMinSize((1070, 685))  # ideal minsize (1140, 800)
         self.SetSizer(self.mainSizer)
         self.Fit()
-        self.SetSize(tuple(self.appdata["main_window_size"]))
-        self.Move(tuple(self.appdata["main_window_pos"]))
+
         # create menu bar
         self.videomass_menu_bar()
         # cretae tool bar
@@ -206,6 +205,9 @@ class MainFrame(wx.Frame):
         ]
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.Layout()
+
+        self.SetSize(tuple(self.appdata["main_window_size"]))
+        self.Move(tuple(self.appdata["main_window_pos"]))
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_destpath_setup)
         self.Bind(wx.EVT_CLOSE, self.on_close)
@@ -405,6 +407,8 @@ class MainFrame(wx.Frame):
         sett["timeline_window_show"] = self.appdata["timeline_window_show"]
         tpos = self.TimeLine.GetPosition()
         sett["timeline_window_pos"] = list(tpos)
+        tsize = self.TimeLine.GetSize()
+        sett["timeline_window_size"] = list(tsize)
 
         prst = self.PrstsPanel.lctrl
         prstcw = [prst.GetColumnWidth(i) for i in range(prst.GetColumnCount())]
@@ -442,7 +446,7 @@ class MainFrame(wx.Frame):
                     "processes, make sure you finish your work "
                     "before exit."
                 ),
-                _("Videomass - Warning!"),
+                "Videomass",
                 wx.ICON_WARNING,
                 self,
             )
@@ -477,7 +481,7 @@ class MainFrame(wx.Frame):
                     "processes, make sure you finish your work "
                     "before exit."
                 ),
-                _("Videomass - Warning!"),
+                "Videomass",
                 wx.ICON_WARNING,
                 self,
             )
@@ -900,10 +904,8 @@ class MainFrame(wx.Frame):
                 return
 
             self.switch_file_import(self)
-            paths = filedlg.GetPaths()
-            for path in paths:
-                self.fileDnDTarget.flCtrl.dropUpdate(path)
-            self.fileDnDTarget.flCtrl.rejected_files()
+            items = [(path, None) for path in filedlg.GetPaths()]
+            self.fileDnDTarget.flCtrl.dropUpdateBatch(items)
 
     # -------------------------------------------------------------------#
 
@@ -1113,9 +1115,7 @@ class MainFrame(wx.Frame):
         )
 
         if download[1]:
-            wx.MessageBox(
-                f"{download[1]}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{download[1]}", "Videomass", wx.ICON_ERROR, self)
             return
 
         wx.MessageBox(
@@ -1147,7 +1147,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_conf(self, event):
         """
-        Show miniframe to check the ffmpeg configuration state.
+        Show dialog to check the ffmpeg configuration state.
         """
         if self.ffmpegconf:
             self.ffmpegconf.Raise()
@@ -1156,7 +1156,7 @@ class MainFrame(wx.Frame):
         out = io_tools.test_conf()
         if "Not found" in out[0]:
             wx.MessageBox(
-                f"\n{out[1]}", _("Videomass - Error!"), wx.ICON_ERROR, self
+                f"\n{out[1]}", "Videomass", wx.ICON_INFORMATION, self
             )
             return
         self.ffmpegconf = FFmpegConf(
@@ -1172,7 +1172,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_formats(self, event):
         """
-        Show miniframe to check the ffmpeg supported formats.
+        Show dialog to check the ffmpeg supported formats.
         """
         if self.ffmpegformats:
             self.ffmpegformats.Raise()
@@ -1182,8 +1182,8 @@ class MainFrame(wx.Frame):
         if "Not found" in out:
             wx.MessageBox(
                 f"\n{out['Not found']}",
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -1194,7 +1194,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_codecs(self, event):
         """
-        Show miniframe to check the ffmpeg supported codecs.
+        Show dialog to check the ffmpeg supported codecs.
         Shares the same window as `get_ffmpeg_decoders`
         """
         if self.ffmpegcodecs:
@@ -1205,8 +1205,8 @@ class MainFrame(wx.Frame):
         if "Not found" in out:
             wx.MessageBox(
                 f"\n{out['Not found']}",
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -1219,7 +1219,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_decoders(self, event):
         """
-        Show miniframe to check the ffmpeg supported decoders.
+        Show dialog to check the ffmpeg supported decoders.
         Shares the same window as `get_ffmpeg_codecs`
         """
         if self.ffmpegdecoders:
@@ -1230,8 +1230,8 @@ class MainFrame(wx.Frame):
         if "Not found" in out:
             wx.MessageBox(
                 f"\n{out['Not found']}",
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return

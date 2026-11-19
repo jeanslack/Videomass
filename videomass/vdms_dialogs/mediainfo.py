@@ -247,7 +247,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(
                 _("Unable to open the clipboard on Format tab"),
-                _("Videomass - Error!"),
+                "Videomass",
                 wx.ICON_ERROR,
                 self,
             )
@@ -271,7 +271,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(
                 _("Unable to open the clipboard on Video Streams tab"),
-                _("Videomass - Error!"),
+                "Videomass",
                 wx.ICON_ERROR,
                 self,
             )
@@ -295,7 +295,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(
                 _("Unable to open the clipboard on Audio Streams tab"),
-                _("Videomass - Error!"),
+                "Videomass",
                 wx.ICON_ERROR,
                 self,
             )
@@ -319,7 +319,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(
                 _("Unable to open the clipboard on Subtitle Streams tab"),
-                _("Videomass - Error!"),
+                "Videomass",
                 wx.ICON_ERROR,
                 self,
             )

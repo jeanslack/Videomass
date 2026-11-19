@@ -90,7 +90,7 @@ def json_data(filename):
     except json.decoder.JSONDecodeError as err:
         wx.MessageBox(
             f"ERROR: {err}.\nInvalid file: «{filename}»",
-            _("Videomass - Error!"),
+            "Videomass",
             wx.ICON_ERROR | wx.OK,
             None,
         )
@@ -104,7 +104,7 @@ def json_data(filename):
         )
         wx.MessageBox(
             f"{err}\n\n{msg}",
-            _("Videomass - Error!"),
+            "Videomass",
             wx.ICON_ERROR | wx.OK,
             None,
         )

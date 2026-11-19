@@ -32,8 +32,8 @@ from typing import Any, ClassVar
 import wx
 from pubsub import pub
 
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io import io_tools
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 class FFmpegHelp(wx.Dialog):

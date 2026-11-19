@@ -26,7 +26,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     from videomass import gui_app
+
     gui_app.main()

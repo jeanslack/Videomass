@@ -24,22 +24,25 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-PRGNAME = 'videomass'
-RELNAME = 'Videomass'
-VERSION = '6.1.24'
-RELSTATE = 'released'
-COPYRIGHT = '2013-2026'
-WEBSITE = 'http://jeanslack.github.io/Videomass/'
-AUTHOR = ('Gianluca Pernigotto', '(aka jeanslack)')
-MAIL = 'jeanlucperni@gmail.com'
-COMMENT = ("\nThanks to:\n"
-           "- Python <https://www.python.org/>, programming language\n"
-           "- wxPython <https://wxpython.org/>, cross-platform\n"
-           "GUI toolkit for the Python language\n"
-           "- FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
-           "originator of the FFmpeg project:\n"
-           "<http://ffmpeg.org/>\n"
-           )
+
+PRGNAME = "videomass"
+RELNAME = "Videomass"
+VERSION = "6.1.30"
+RELSTATE = "released"
+COPYRIGHT = "2013-2026"
+WEBSITE = "http://jeanslack.github.io/Videomass/"
+AUTHOR = ("Gianluca Pernigotto", "(aka jeanslack)")
+MAIL = "jeanlucperni@gmail.com"
+COMMENT = (
+    "\nThanks to:\n"
+    "- Python <https://www.python.org/>, programming language\n"
+    "- wxPython <https://wxpython.org/>, cross-platform\n"
+    "GUI toolkit for the Python language\n"
+    "- FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
+    "originator of the FFmpeg project:\n"
+    "<http://ffmpeg.org/>\n"
+    "Thanks to everyone who contributed to the development of this application"
+)
 SHORTDESCRIPT = "Videomass is a cross-platform GUI for FFmpeg"
 LONGDESCRIPT = """
 Videomass is a powerful, multitasking and cross-platform graphical user
@@ -49,23 +52,22 @@ making it a comprehensive software solution.
 Videomass is written in Python3 using the wxPython4-Phoenix toolkit.
 """
 SHORTLICENSE = "GPL3 (Gnu Public License)"
-LICENSE = (f"Copyleft - all rights reversed - {COPYRIGHT} "
-           f"{AUTHOR[0]}\n"
-           f"Author and developer: {AUTHOR[0]} {AUTHOR[1]}\n"
-           f"Mail: {MAIL}\n\n"
-           "Videomass is free software: you can redistribute\n"
-           "it and/or modify it under the terms of the GNU General\n"
-           "Public License as published by the Free Software\n"
-           "Foundation, either version 3 of the License, or (at your\n"
-           "option) any later version.\n\n"
-
-           "Videomass is distributed in the hope that it\n"
-           "will be useful, but WITHOUT ANY WARRANTY; without\n"
-           "even the implied warranty of MERCHANTABILITY or\n"
-           "FITNESS FOR A PARTICULAR PURPOSE.\n"
-           "See the GNU General Public License for more details.\n\n"
-
-           "You should have received a copy of the GNU General\n"
-           "Public License along with this program. If not, see\n"
-           "http://www.gnu.org/licenses/"
-           )
+LICENSE = (
+    f"Copyleft - all rights reversed - {COPYRIGHT} "
+    f"{AUTHOR[0]}\n"
+    f"Author and developer: {AUTHOR[0]} {AUTHOR[1]}\n"
+    f"Mail: {MAIL}\n\n"
+    "Videomass is free software: you can redistribute\n"
+    "it and/or modify it under the terms of the GNU General\n"
+    "Public License as published by the Free Software\n"
+    "Foundation, either version 3 of the License, or (at your\n"
+    "option) any later version.\n\n"
+    "Videomass is distributed in the hope that it\n"
+    "will be useful, but WITHOUT ANY WARRANTY; without\n"
+    "even the implied warranty of MERCHANTABILITY or\n"
+    "FITNESS FOR A PARTICULAR PURPOSE.\n"
+    "See the GNU General Public License for more details.\n\n"
+    "You should have received a copy of the GNU General\n"
+    "Public License along with this program. If not, see\n"
+    "http://www.gnu.org/licenses/"
+)

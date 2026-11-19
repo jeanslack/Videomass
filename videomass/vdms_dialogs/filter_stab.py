@@ -522,8 +522,8 @@ class VidstabSet(wx.Dialog):
         if self.vidstabdetect:
             self.set_values()  # Set previous changes
         else:
-            self.set_default(self)
-            self.on_activate(self)
+            self.set_default(None)  # arg must be None here to avoid recusrion
+            self.on_activate(None)  # arg must be None here to avoid recusrion
 
     # ------------------------------------------------------------------#
 
@@ -667,9 +667,13 @@ class VidstabSet(wx.Dialog):
 
     def set_default(self, event):
         """
-        Revert all control values to default
+        Revert all control values to default (button reset event)
 
         """
+
+        if event:  # The user wants to reset all clicking the reset btn.
+            self.ckbx_enable.SetValue(False)
+            self.on_activate(self)
         # vidstabdetect
         self.spin_shake.SetValue("5")
         self.spin_accuracy.SetValue("15")
@@ -766,7 +770,7 @@ class VidstabSet(wx.Dialog):
         self.txt_unsharp.write(self.unsharp)
         self.ckbx_enable.SetValue(True)
         self.ckbx_duo.SetValue(self.makeduo)
-        self.on_activate(self)
+        self.on_activate(self)  # arg must be `self` here
 
     # ----------------------Event handler (callback)---------------------#
 
@@ -846,8 +850,11 @@ class VidstabSet(wx.Dialog):
             self._set_controls_enabled(False)
             self.btn_cancel.Enable()
             self.btn_help.Enable()
-            self.btn_ok.Enable()
-            self.btn_reset.Enable()
+            if not event:
+                self.btn_ok.Disable()
+            else:
+                self.btn_ok.Enable()
+            self.btn_reset.Disable()
             self.ckbx_duo.SetValue(False)
             self.ckbx_enable.Enable()
 

@@ -31,9 +31,9 @@ import wx
 import wx.lib.agw.hyperlink as hpl
 
 from videomass.vdms_dialogs.epilogue import Formula
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_utils.utils import integer_to_time
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 def compare_media_param(data):
@@ -47,7 +47,7 @@ def compare_media_param(data):
     """
     if len(data) == 1:
         return (
-            "error",
+            "info",
             _("At least two files are required to perform concatenation."),
         )
     com = {}
@@ -71,7 +71,7 @@ def compare_media_param(data):
 
     if not all(val == totest for val in com.values()):
         return (
-            "error",
+            "info",
             _(
                 'The files do not have the same "codec_types", '
                 'same "sample_rate" or same "width" or "height". '
@@ -202,9 +202,10 @@ class Conc_Demuxer(wx.Panel):
 
         diff = compare_media_param(self.parent.data_files)
         if diff[0] == "error":
-            wx.MessageBox(
-                diff[1], _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(diff[1], "Videomass", wx.ICON_ERROR, self)
+            return
+        if diff[0] == "info":
+            wx.MessageBox(diff[1], "Videomass", wx.ICON_INFORMATION, self)
             return
 
         self.mediatype = diff[1]

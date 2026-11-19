@@ -709,9 +709,7 @@ class SetUp(wx.Dialog):
             for c in suffix:
                 if c not in ("_", "-") and not c.isalnum():  # is not alphanum.
                     self.text_suffix.SetBackgroundColour("#988313")
-                    wx.MessageBox(
-                        msg, _("Videomass - Warning!"), wx.ICON_WARNING
-                    )
+                    wx.MessageBox(msg, "Videomass", wx.ICON_INFORMATION)
                     self.settings["filesuffix"] = ""
                     return
 

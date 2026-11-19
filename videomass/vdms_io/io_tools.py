@@ -29,7 +29,6 @@ import requests
 import wx
 from pubsub import pub
 
-from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads import generic_downloads
 from videomass.vdms_threads.check_bin import (
@@ -41,6 +40,7 @@ from videomass.vdms_threads.check_bin import (
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_utils.utils import open_default_application
+from videomass.vdms_utils.widget_utils import PopupDialog
 
 
 def show_msg_notify(
@@ -83,10 +83,10 @@ def show_msg_notify(
         ico = wx.ICON_INFORMATION
         caption = "Videomass"
     elif warnlev in ("warn", "warning"):
-        ico = wx.ICON_INFORMATION
-        caption = _("Videomass - Warning!")
+        ico = wx.ICON_WARNING
+        caption = "Videomass"
     elif warnlev in ("err", "error"):
-        caption = _("Videomass - Error!")
+        caption = "Videomass"
         ico = wx.ICON_ERROR
     else:
         raise ValueError(
@@ -310,7 +310,7 @@ def openpath(where):
     """
     ret = open_default_application(where)
     if ret:
-        wx.MessageBox(ret, _("Videomass - Error!"), wx.ICON_ERROR, None)
+        wx.MessageBox(ret, "Videomass", wx.ICON_ERROR, None)
 
 
 # -------------------------------------------------------------------------#

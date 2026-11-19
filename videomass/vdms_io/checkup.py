@@ -36,7 +36,7 @@ def check_destination_dir(file_dest):
     """
     Check output destination directory only.
     return `None` if it meets the condition requirements,
-    otherwise an error dialog will be shown and the function
+    otherwise an warning dialog will be shown and the function
     will return the boolean value `True`.
 
     """
@@ -46,8 +46,8 @@ def check_destination_dir(file_dest):
 
     wx.MessageBox(
         _('Output folder does not exist:\n\n"{}"\n').format(drn),
-        _("Videomass - Error!"),
-        wx.ICON_ERROR,
+        "Videomass",
+        wx.ICON_WARNING,
     )
     return True
 
@@ -101,8 +101,8 @@ def check_inout(file_sources, file_dest):
         if not os.path.isdir(drn):
             wx.MessageBox(
                 _('Output folder does not exist:\n\n"{}"\n').format(drn),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_WARNING,
             )
             return None
 

@@ -3,13 +3,15 @@
 URGENCY: to do soon
 --------------------
 
--
-
 - (?) Make function to build arguments from string to list and vice-versa using `subprocess.list2cmdline`
 
-- Testare la corretta uscita dalle finestre videomass e ffplay usando il thread dedicato per Windows (riproduzione anteprima su timeline)
-
 The application still needs to be tested on macOS. If anyone is available to carry out some tests and checks, please let me know.
+
+- Still image make has transictions ?
+- `Still Image Maker`, `Concatenate`, `From Movie to Pictures` Add to Queue features (?).
+- Controllare tooltips su Windows
+- chiedere per limitare file di trascinamento (es. 50 alla volta o più)
+
 
 --------------
 URGENCY: high

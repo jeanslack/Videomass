@@ -29,7 +29,7 @@ import re
 
 import wx
 
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 class Raw_Cmd_Line(wx.Dialog):

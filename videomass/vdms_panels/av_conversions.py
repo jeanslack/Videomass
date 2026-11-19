@@ -47,6 +47,7 @@ from videomass.vdms_io.checkup import check_files
 from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import extract_video_stream
 from videomass.vdms_utils.utils import update_timeseq_duration
 
 from .audio_encoders.acodecs import AudioEncoders
@@ -623,7 +624,7 @@ class AV_Conv(wx.Panel):
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filesel),
                 "Videomass",
-                wx.ICON_EXCLAMATION,
+                wx.ICON_ERROR,
                 self,
             )
             return
@@ -669,12 +670,12 @@ class AV_Conv(wx.Panel):
     def file_selection(self):
         """
         Gets the selected file on files list and returns an object
-        of type list [str('selected file name'), int(index)].
+        of type list [int(index)), (str('selected file name')].
         Returns None if no files are selected.
 
         """
         if len(self.parent.file_src) == 1:
-            return (self.parent.file_src[0], 0)
+            return (0, self.parent.file_src[0])
 
         if not self.parent.filedropselected:
             wx.MessageBox(
@@ -685,8 +686,9 @@ class AV_Conv(wx.Panel):
             )
             return None
 
-        clicked = self.parent.filedropselected
-        return (clicked, self.parent.file_src.index(clicked))
+        selected = self.parent.filedropselected
+        index = self.parent.file_src.index(selected)
+        return (index, selected)
 
     # ------------------------------------------------------------------#
 
@@ -695,45 +697,23 @@ class AV_Conv(wx.Panel):
         Given a frame or a video file, it returns a dict object
         containing required video parameters as width, height, etc.
         """
-        fget = self.file_selection()
-        if not fget:
+        selected = self.file_selection()
+        if not selected:
             return None
 
-        index = self.parent.data_files[fget[1]]
-
-        if "video" in index.get("streams")[0]["codec_type"]:
-            width = int(index["streams"][0]["width"])
-            height = int(index["streams"][0]["height"])
-            filename = index["format"]["filename"]
-            duration = index["format"].get("time", "00:00:00.000")
-            if not width or not height:
-                wx.MessageBox(
-                    _(
-                        "Unsupported file:\n"
-                        "Missing decoder or library? "
-                        "Check FFmpeg configuration."
-                    ),
-                    _("Videomass - Warning!"),
-                    wx.ICON_WARNING,
-                    self,
-                )
-                self.on_vfilters_clear(self)
-                return None
-            return dict(
-                zip(
-                    ["width", "height", "filename", "duration"],
-                    [width, height, filename, duration],
-                )
+        itemdata = self.parent.data_files[selected[0]]
+        streaminfo = extract_video_stream(itemdata)
+        if not streaminfo:
+            wx.MessageBox(
+                _("The selected file is not a frame or a video file"),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
             )
+            self.on_vfilters_clear(self)
+            return None
 
-        wx.MessageBox(
-            _("The file is not a frame or a video file"),
-            _("Videomass - Warning!"),
-            wx.ICON_WARNING,
-            self,
-        )
-        self.on_vfilters_clear(self)
-        return None
+        return streaminfo
 
     # ------------------------------------------------------------------#
 

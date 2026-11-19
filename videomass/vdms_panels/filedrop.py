@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.18.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -34,8 +34,55 @@ from pubsub import pub
 from videomass.vdms_dialogs.list_warning import ListWarning
 from videomass.vdms_dialogs.renamer import Renamer
 from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_threads.ffprobe import ffprobe
+from videomass.vdms_threads.probe_worker import ProbeWorker
 from videomass.vdms_utils.utils import time_to_integer, to_bytes
+
+
+def get_primary_codec_type(index):
+    """
+    Inspect main streams (ignoring attached pictures) and return
+    the primary "codec_type" with format long name (prioritizing
+    "video", then "audio", then other streams).
+    Falls back to format information or "Unknown".
+    """
+    if not isinstance(index, dict):
+        return _("Unknown")
+
+    fmt = index.get("format") if isinstance(index.get("format"), dict) else {}
+    streams = (
+        index.get("streams") if isinstance(index.get("streams"), list) else []
+    )
+    format_name = fmt.get("format_long_name") or fmt.get("format_name")
+
+    main_streams = [
+        s
+        for s in streams
+        if isinstance(s, dict)
+        and s.get("codec_type")
+        and not s.get("disposition", {}).get("attached_pic", 0)
+    ]
+
+    primary_type = None
+    for target in ("video", "audio"):
+        if any(s.get("codec_type") == target for s in main_streams):
+            primary_type = target
+            break
+
+    if not primary_type and main_streams:
+        primary_type = main_streams["codec_type"]
+
+    if primary_type:
+        return (
+            f"{primary_type}: {format_name}" if format_name else primary_type
+        )
+
+    if format_name:
+        return f"format: {format_name}"
+
+    return _("Unknown")
+
+
+# ----------------------------------------------------------------------#
 
 
 def fullpathname_sanitize(fullpathfilename):
@@ -142,71 +189,125 @@ class MyListCtrl(wx.ListCtrl):
 
     # ----------------------------------------------------------------------#
 
-    def dropUpdate(self, path, newname=None):
+    def dropUpdateBatch(self, items):
         """
-        Update list-control during drag and drop.
-        Note that the optional 'newname' argument is given by
-        the 'on_col_click' method in the 'FileDnD' class to preserve
-        the related renames in column 5 of wx.ListCtrl.
+        Validate paths on the main thread and run ffprobe in a worker thread.
+        """
+        existing_paths = {x["format"]["filename"] for x in self.data}
+        to_probe = []
 
-        """
-        self.index = self.GetItemCount()
-        warn = fullpathname_sanitize(path)  # check for fullname sanitize
-        if warn:
-            self.errors[f'"{path}"'] = warn
+        for path, newname in items:
+            warn = fullpathname_sanitize(path)
+            if warn:
+                self.errors[f'"{path}"'] = warn
+                continue
+
+            if path in existing_paths:
+                mess = _(
+                    "Duplicate file, it has already been added to the list."
+                )
+                self.errors[f'"{path}"'] = mess
+                continue
+
+            existing_paths.add(path)
+            to_probe.append((path, newname))
+
+        if not to_probe:
+            self._finalize_drop()
             return
 
-        if not [x for x in self.data if x["format"]["filename"] == path]:
-            probe = ffprobe(
-                path,
-                cmd=self.appdata["ffprobe_cmd"],
-                txtenc=self.appdata["encoding"],
-                hide_banner=None,
-                pretty=None,
-            )
-            if probe[1]:
-                self.errors[f'"{path}"'] = probe[1]
-                return
+        if not wx.IsBusy():
+            wx.BeginBusyCursor()
 
-            probe = probe[0]
-            self.InsertItem(self.index, str(self.index + 1))
-            self.SetItem(self.index, 1, path)
+        worker = ProbeWorker(to_probe, self.appdata, self._on_probe_done)
+        worker.start()
 
-            if "duration" not in probe["format"]:
-                self.SetItem(self.index, 2, "N/A")
-                # NOTE these are my custom adds to probe data
-                probe["format"]["time"] = "00:00:00.000"
-                probe["format"]["duration"] = 0
+    # ----------------------------------------------------------------------#
 
-            else:
-                tdur = probe["format"]["duration"].split(":")
-                sec, msec = tdur[2].split(".")[0], tdur[2].split(".")[1]
-                tdur = f"{tdur[0]}h : {tdur[1]}m : {sec} : {msec}"
-                self.SetItem(self.index, 2, tdur)
-                probe["format"]["time"] = probe.get("format").pop("duration")
-                time = time_to_integer(probe.get("format")["time"])
-                probe["format"]["duration"] = time
+    def insert_probe_item(self, data_probe, newname=None):
+        """
+        Insert an already probed item into wx.ListCtrl
+        and update internal lists.
+        """
+        fmt = data_probe.get("format", {})
+        path = fmt.get("filename", "")
 
-            media = probe["streams"][0]["codec_type"]
-            formatname = probe["format"]["format_long_name"]
-            self.SetItem(self.index, 3, f"{media}: {formatname}")
-            self.SetItem(self.index, 4, probe["format"]["size"])
-            if newname:
-                self.SetItem(self.index, 5, newname)
-                self.outputnames.append(newname)
-            else:
-                fname = os.path.splitext(os.path.basename(path))[0]
-                self.SetItem(self.index, 5, fname)
-                self.outputnames.append(fname)
-            self.index += 1
-            self.data.append(probe)
-            self.file_src.append(path)
-            self.duration.append(probe["format"]["duration"])
-            # self.parent.statusbar_msg('', None)
-            self.parent.changes_in_progress()
+        self.index = self.GetItemCount()
+        self.InsertItem(self.index, str(self.index + 1))
+        self.SetItem(self.index, 1, path)
+
+        if "duration" not in fmt:
+            self.SetItem(self.index, 2, "N/A")
+            # my personal insertings
+            fmt["time"] = "00:00:00.000"
+            fmt["duration"] = 0
+        elif "time" not in fmt:
+            # Eseguito solo la prima volta (al rientro da ffprobe)
+            tdur = fmt["duration"].split(":")
+            sec, msec = tdur[2].split(".")[0], tdur[2].split(".")[1]
+            tdur_str = f"{tdur[0]}h : {tdur[1]}m : {sec} : {msec}"
+            self.SetItem(self.index, 2, tdur_str)
+            fmt["time"] = fmt.pop("duration")
+            fmt["duration"] = time_to_integer(fmt["time"])
         else:
-            mess = _("Duplicate file, it has already been added to the list.")
-            self.errors[f'"{path}"'] = mess
+            # Eseguito durante on_col_click (dati già formattati)
+            tdur = fmt["time"].split(":")
+            sec, msec = tdur[2].split(".")[0], tdur[2].split(".")[1]
+            tdur_str = f"{tdur[0]}h : {tdur[1]}m : {sec} : {msec}"
+            self.SetItem(self.index, 2, tdur_str)
+
+        codectype = get_primary_codec_type(data_probe)
+        self.SetItem(self.index, 3, f"{codectype}")
+        self.SetItem(self.index, 4, fmt.get("size", "N/A"))
+
+        if newname:
+            self.SetItem(self.index, 5, newname)
+            self.outputnames.append(newname)
+        else:
+            fname = os.path.splitext(os.path.basename(path))[0]
+            self.SetItem(self.index, 5, fname)
+            self.outputnames.append(fname)
+
+        self.index += 1
+        self.data.append(data_probe)
+        self.file_src.append(path)
+        self.duration.append(fmt["duration"])
+
+    # ----------------------------------------------------------------------#
+
+    def _on_probe_done(self, results):
+        """
+        Populate wx.ListCtrl safely on the main thread when probing finishes.
+        """
+        if wx.IsBusy():
+            wx.EndBusyCursor()
+
+        added = 0
+        self.Freeze()
+        try:
+            for path, newname, probe in results:
+                if probe[1]:
+                    self.errors[f'"{path}"'] = probe[1]
+                    continue
+                self.insert_probe_item(probe[0], newname)
+                added += 1
+        finally:
+            self.Thaw()
+
+        if added > 0:
+            self.parent.changes_in_progress()
+        self.rejected_files()
+
+    # ----------------------------------------------------------------------#
+
+    def _finalize_drop(self):
+        """
+        Notify parent of changes and display ListWarning
+        for any rejected files.
+        """
+        if self.data:
+            self.parent.changes_in_progress()
+        self.rejected_files()
 
     # ----------------------------------------------------------------------#
 
@@ -226,12 +327,13 @@ class MyListCtrl(wx.ListCtrl):
             self.errors.clear()  # clear values here
 
 
+# ----------------------------------------------------------------------#
+
+
 class FileDrop(wx.FileDropTarget):
     """
     This is the file drop target class
     """
-
-    # ----------------------------------------------------------------------#
 
     def __init__(self, window):
         """
@@ -244,13 +346,10 @@ class FileDrop(wx.FileDropTarget):
 
     def OnDropFiles(self, x, y, filenames):
         """
-        When files are dropped, write where they were dropped and then
-        the file paths themselves
+        When files are dropped, pass them as a batch to MyListCtrl
         """
-        for filepath in filenames:
-            self.window.dropUpdate(filepath)  # update list control
-        self.window.rejected_files()  # call parent.rejected_files at end
-
+        items = [(filepath, None) for filepath in filenames]
+        self.window.dropUpdateBatch(items)
         return True
 
     # ----------------------------------------------------------------------#
@@ -444,14 +543,24 @@ class FileDnD(wx.Panel):
 
         elif topic == "Concatenate Demuxer":
             self.lbl_info.SetLabel(
-                _("Drag two or more Audio/Video files below")
+                _("Drag two or more files below (audio only or video only)")
             )
 
         elif topic == "Image Sequence to Video":
-            self.lbl_info.SetLabel(_("Drag one or more Image files below"))
+            self.lbl_info.SetLabel(
+                _(
+                    "Drag one or more image files below "
+                    "(JPEG, JPG, PNG, TIFF, TIF, BMP)"
+                )
+            )
 
         elif topic == "Video to Pictures":
-            self.lbl_info.SetLabel(_("Drag one or more Video files below"))
+            self.lbl_info.SetLabel(
+                _(
+                    "Drag one or more video files below "
+                    "(including animated images)"
+                )
+            )
 
     # ----------------------------------------------------------------------
 
@@ -459,20 +568,17 @@ class FileDnD(wx.Panel):
         """
         Sort items by LEFT clicking on column headers
         (from ascending to descending and back to ascending).
-        For this feature is required to delete all items from
-        listctrl and data list before re-loading the same
-        items with the new sorted order using `dropUpdate` method.
-
-        if plane to use wx.EVT_LIST_COL_RIGHT_CLICK event:
-            `if event.GetEventType() == wx.EVT_LIST_COL_RIGHT_CLICK.typeId:`
-                `curritems.reverse()`
-        see: <https://discuss.wxpython.org/t/event-geteventtype/22860/4>
         """
         count = self.flCtrl.GetItemCount()
         curritems = []
         if count > 1:
             if event.GetColumn() in (0, -1):
                 return
+
+            # Salva i dati ffprobe già in memoria prima di svuotare
+            cached_probes = {
+                item["format"]["filename"]: item for item in self.data
+            }
 
             for x in range(count):
                 curritems.append(
@@ -497,7 +603,7 @@ class FileDnD(wx.Panel):
             elif event.GetColumn() == 5:
                 curritems.sort(key=lambda item: item[4])
 
-            self.delete_all(None, setstate=False)  # no event, no setstate here
+            self.delete_all(None, setstate=False)
 
             if self.sortingstate == "descending":
                 self.sortingstate = "ascending"
@@ -509,8 +615,17 @@ class FileDnD(wx.Panel):
             if self.sortingstate == "descending":
                 curritems.reverse()
 
-            for data in curritems:
-                self.flCtrl.dropUpdate(data[0], data[4])
+            self.flCtrl.Freeze()
+            try:
+                for data in curritems:
+                    probe_data = cached_probes.get(data[0])
+                    if probe_data:
+                        self.flCtrl.insert_probe_item(probe_data, data[4])
+            finally:
+                self.flCtrl.Thaw()
+
+            if self.data:
+                self.changes_in_progress()
 
     # ----------------------------------------------------------------------
 
@@ -576,7 +691,7 @@ class FileDnD(wx.Panel):
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (item),
                 "Videomass",
-                wx.ICON_EXCLAMATION,
+                wx.ICON_ERROR,
                 self,
             )
             return
