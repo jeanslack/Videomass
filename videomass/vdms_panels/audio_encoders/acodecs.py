@@ -488,13 +488,14 @@ class AudioEncoders(scrolled.ScrolledPanel):
         )
         self.spin_target.SetToolTip(tip)
         tip = _(
-            '"Auto", lets FFmpeg select the audio stream to process '
-            "(usually the first audio stream). If the source file(s) "
-            "is just an audio track, it's recommend to always set this "
-            'control to "Auto".\n\n"1-16", if a video file contains '
-            "more than one audio stream, you can select a specific "
-            'one, e.g "1" for the first available audio stream, '
-            '"2" for the second audio stream, and so on.'
+            '"Auto" lets FFmpeg/FFplay select the audio stream to play or '
+            "process (usually the first audio stream). If the source file(s) "
+            "contain only an audio track, it is recommended to always "
+            'set this control to "Auto".\n\n'
+            '"1-16": if a video file contains more than one audio '
+            'stream, you can select a specific one, e.g., "1" for the '
+            'first available audio stream, "2" for the second audio '
+            "stream, and so on."
         )
         self.cmb_A_inMap.SetToolTip(tip)
         tip = _(

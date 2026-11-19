@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 18 November 2026 v6.1.30
+Thu, 19 November 2026 v6.1.30
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -109,6 +109,7 @@ Wed, 18 November 2026 v6.1.30
     segment playback (ffplay), with automatic stream validation and fallback
     to Auto if the chosen index does not exist.
   * Improved icon relevance for MessageBox().
+  * Fixed Dialog Wizard layout of pages.
 
 
 +------------------------------------+

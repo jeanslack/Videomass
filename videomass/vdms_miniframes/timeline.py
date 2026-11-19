@@ -454,13 +454,14 @@ class Float_TL(wx.MiniFrame):
         tip = _("Play/Stop segment")
         self.btn_play.SetToolTip(tip)
         tip = _(
-            '"Auto", lets FFmpeg select the audio stream to process '
-            "(usually the first audio stream). If the source file(s) "
-            "is just an audio track, it's recommend to always set this "
-            'control to "Auto".\n\n"1-16", if a video file contains '
-            "more than one audio stream, you can select a specific "
-            'one, e.g "1" for the first available audio stream, '
-            '"2" for the second audio stream, and so on.'
+            '"Auto" lets FFmpeg/FFplay select the audio stream to play or '
+            "process (usually the first audio stream). If the source file(s) "
+            "contain only an audio track, it is recommended to always "
+            'set this control to "Auto".\n\n'
+            '"1-16": if a video file contains more than one audio '
+            'stream, you can select a specific one, e.g., "1" for the '
+            'first available audio stream, "2" for the second audio '
+            "stream, and so on."
         )
         self.cmb_A_inMap.SetToolTip(tip)
 
@@ -664,7 +665,7 @@ class Float_TL(wx.MiniFrame):
         if self.sourcedur == _("No source duration:"):
             wx.MessageBox(
                 _("Invalid file format for playback."),
-                _("Videomass"),
+                "Videomass",
                 wx.ICON_INFORMATION,
                 self,
             )
@@ -673,7 +674,7 @@ class Float_TL(wx.MiniFrame):
         if self.parent.time_seq == "":
             wx.MessageBox(
                 _("No segment selected in the timeline yet."),
-                _("Videomass"),
+                "Videomass",
                 wx.ICON_INFORMATION,
                 self,
             )
@@ -685,7 +686,7 @@ class Float_TL(wx.MiniFrame):
                     "Invalid segment selection!\n«End» cursor must be "
                     "moved to the right side of the «Start» cursor."
                 ),
-                _("Videomass"),
+                "Videomass",
                 wx.ICON_WARNING,
                 self,
             )
@@ -846,7 +847,7 @@ class Float_TL(wx.MiniFrame):
                         "source file does not contain any audio "
                         'streams:\n"{}"'
                     ).format(selected[1]),
-                    _("Videomass"),
+                    "Videomass",
                     wx.ICON_INFORMATION,
                     self,
                 )

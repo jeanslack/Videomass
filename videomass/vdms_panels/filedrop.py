@@ -543,19 +543,24 @@ class FileDnD(wx.Panel):
 
         elif topic == "Concatenate Demuxer":
             self.lbl_info.SetLabel(
-                _("Drag two or more Audio or Video files below")
+                _("Drag two or more files below (audio only or video only)")
             )
 
         elif topic == "Image Sequence to Video":
             self.lbl_info.SetLabel(
                 _(
-                    "Drag one or more Image files below "
+                    "Drag one or more image files below "
                     "(JPEG, JPG, PNG, TIFF, TIF, BMP)"
                 )
             )
 
         elif topic == "Video to Pictures":
-            self.lbl_info.SetLabel(_("Drag one or more Video files below"))
+            self.lbl_info.SetLabel(
+                _(
+                    "Drag one or more video files below "
+                    "(including animated images)"
+                )
+            )
 
     # ----------------------------------------------------------------------
 

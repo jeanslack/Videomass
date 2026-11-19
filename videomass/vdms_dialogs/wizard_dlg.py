@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.01.2026
+Rev: Nov.19.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -79,17 +79,24 @@ class PageOne(wx.Panel):
         img = img.Scale(64, 64, wx.IMAGE_QUALITY_NORMAL)
         img = img.ConvertToBitmap()
         bitmap_vdms = wx.StaticBitmap(self, wx.ID_ANY, img)
+
         lab1 = wx.StaticText(
-            self, wx.ID_ANY, _("Welcome to the Videomass Wizard!")
+            self,
+            wx.ID_ANY,
+            _("Welcome to the Videomass Wizard!"),
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         lab2 = wx.StaticText(
             self,
             wx.ID_ANY,
             PageOne.MSG2,
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         lab3 = wx.StaticText(
-            self, wx.ID_ANY, PageOne.MSG3, style=wx.ALIGN_CENTRE_HORIZONTAL
+            self,
+            wx.ID_ANY,
+            PageOne.MSG3,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
 
         if PageOne.OS == "Darwin":
@@ -99,20 +106,22 @@ class PageOne(wx.Panel):
             lab1.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab2.SetFont(wx.Font(11, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
 
-        # layout
-        sizer_base.Add((0, 80), 0)
+        lab1.Wrap(450)
+        lab2.Wrap(450)
+        lab3.Wrap(450)
+
+        # layout con margini laterali (wx.LEFT | wx.RIGHT)
+        sizer_base.Add((0, 60), 0)
         sizer_base.Add(bitmap_vdms, 0, wx.CENTER)
-        sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab1, 0, wx.CENTER)
-        sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab3, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 80), 0)
+        sizer_base.Add((0, 25), 0)
+        sizer_base.Add(lab1, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
+        sizer_base.Add((0, 25), 0)
+        sizer_base.Add(lab2, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
+        sizer_base.Add((0, 25), 0)
+        sizer_base.Add(lab3, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
+        sizer_base.Add((0, 60), 0)
 
         self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
 
 
 class PageTwo(wx.Panel):
@@ -159,39 +168,42 @@ class PageTwo(wx.Panel):
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizerText = wx.BoxSizer(wx.VERTICAL)
+
         lab0 = wx.StaticText(
             self,
             wx.ID_ANY,
             PageTwo.MSG0,
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         lab1 = wx.StaticText(
-            self, wx.ID_ANY, PageTwo.MSG1, style=wx.ALIGN_CENTRE_HORIZONTAL
+            self,
+            wx.ID_ANY,
+            PageTwo.MSG1,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         lab2 = wx.StaticText(
             self,
             wx.ID_ANY,
             PageTwo.MSG2,
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         lab3 = wx.StaticText(
             self,
             wx.ID_ANY,
             PageTwo.MSG3,
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         self.detectBtn = wx.Button(
-            self, wx.ID_ANY, _("Auto-detection"), size=(250, -1)
+            self, wx.ID_ANY, _("Auto-detection"), size=(-1, -1)
         )
-        self.locateBtn = wx.Button(
-            self, wx.ID_ANY, _("Locate"), size=(250, -1)
-        )
+        self.locateBtn = wx.Button(self, wx.ID_ANY, _("Locate"), size=(-1, -1))
         self.labFFpath = wx.StaticText(
             self,
             wx.ID_ANY,
             "",
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
+
         if PageTwo.OS == "Darwin":
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
             lab1.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
@@ -204,32 +216,40 @@ class PageTwo(wx.Panel):
             self.labFFpath.SetFont(
                 wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD, 0, "")
             )
-        # layout
-        sizer_base.Add((0, 50), 0)
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        # sizer_base.Add((0, 5), 0)
-        sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
+        lab1.Wrap(450)
+
+        # layout con margini laterali (wx.LEFT | wx.RIGHT)
         sizer_base.Add((0, 40), 0)
-        sizer_base.Add(sizerText, 0, wx.CENTER)
+        sizer_base.Add(lab0, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 20)
+        sizer_base.Add(lab1, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 20)
+        sizer_base.Add((0, 35), 0)
+        sizer_base.Add(sizerText, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 20)
         sizerText.Add(lab2, 0, wx.EXPAND)
         sizerText.Add((0, 15), 0)
         sizerText.Add(lab3, 0, wx.EXPAND)
-        sizer_base.Add((0, 40), 0)
+        sizer_base.Add((0, 35), 0)
         sizer_base.Add(self.detectBtn, 0, wx.CENTER)
         sizer_base.Add((0, 5), 0)
         sizer_base.Add(self.locateBtn, 0, wx.CENTER)
         sizer_base.Add((0, 25), 0)
-        sizer_base.Add(self.labFFpath, 0, wx.CENTER | wx.EXPAND)
+        sizer_base.Add(self.labFFpath, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 20)
+        sizer_base.Add(
+            (0, 25), 0
+        )  # Margine inferiore per bilanciare quello superiore
 
         self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
 
         # bindings
         self.Bind(wx.EVT_BUTTON, self.detectbin, self.detectBtn)
         self.Bind(wx.EVT_BUTTON, self.Locate, self.locateBtn)
 
-    # -------------------------------------------------------------------#
+    def _update_wizard(self):
+        """
+        Update the internal layout and adjust the
+        dimensions of the parent Wizard."""
+        self.Layout()
+        if hasattr(self.parent, "_adatta_finestra"):
+            self.parent._adatta_finestra()
 
     def Locate(self, event):
         """
@@ -240,9 +260,7 @@ class PageTwo(wx.Panel):
         self.locateBtn.Disable()
         self.detectBtn.Enable()
         self.labFFpath.SetLabel(_('Click the "Next" button'))
-        self.Layout()
-
-    # -------------------------------------------------------------------#
+        self._update_wizard()
 
     def detectbin(self, event):
         """
@@ -302,7 +320,7 @@ class PageTwo(wx.Panel):
         self.detectBtn.Disable()
         self.locateBtn.Enable()
         self.labFFpath.SetLabel(f'...Found: "{PageTwo.GETPATH(path[0])}"')
-        self.Layout()
+        self._update_wizard()
 
 
 class PageThree(wx.Panel):
@@ -333,7 +351,7 @@ class PageThree(wx.Panel):
 
         self.parent = parent
 
-        if PageTwo.OS == "Windows":
+        if PageThree.OS == "Windows":
             self.ffmpeg = "ffmpeg.exe"
             self.ffprobe = "ffprobe.exe"
             self.ffplay = "ffplay.exe"
@@ -344,38 +362,46 @@ class PageThree(wx.Panel):
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizerText = wx.BoxSizer(wx.VERTICAL)
+
         lab0 = wx.StaticText(
             self,
             wx.ID_ANY,
             PageThree.MSG0,
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
         lab1 = wx.StaticText(
             self,
             wx.ID_ANY,
             PageThree.MSG1,
-            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+            style=wx.ALIGN_CENTRE_HORIZONTAL,
         )
-        #  ffmpeg
+
+        # 350px per TextCtrl per leggere agevolmente i percorsi ffmpeg
         gridffmpeg = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffmpegTxt = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
-        gridffmpeg.Add(self.ffmpegTxt, 1, wx.ALL, 5)
+        self.ffmpegTxt = wx.TextCtrl(
+            self, wx.ID_ANY, "", size=(350, -1), style=wx.TE_READONLY
+        )
+        gridffmpeg.Add(self.ffmpegTxt, 1, wx.ALL | wx.EXPAND, 5)
 
         self.ffmpegBtn = wx.Button(self, wx.ID_ANY, "ffmpeg")
         gridffmpeg.Add(self.ffmpegBtn, 0, wx.RIGHT | wx.CENTER, 5)
-        #  ffprobe
+
+        # ffprobe
         gridffprobe = wx.BoxSizer(wx.HORIZONTAL)
         self.ffprobeTxt = wx.TextCtrl(
-            self, wx.ID_ANY, "", style=wx.TE_READONLY
+            self, wx.ID_ANY, "", size=(350, -1), style=wx.TE_READONLY
         )
-        gridffprobe.Add(self.ffprobeTxt, 1, wx.ALL, 5)
+        gridffprobe.Add(self.ffprobeTxt, 1, wx.ALL | wx.EXPAND, 5)
 
         self.ffprobeBtn = wx.Button(self, wx.ID_ANY, "ffprobe")
         gridffprobe.Add(self.ffprobeBtn, 0, wx.RIGHT | wx.CENTER, 5)
-        #  ffplay
+
+        # ffplay
         gridffplay = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffplayTxt = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
-        gridffplay.Add(self.ffplayTxt, 1, wx.ALL, 5)
+        self.ffplayTxt = wx.TextCtrl(
+            self, wx.ID_ANY, "", size=(350, -1), style=wx.TE_READONLY
+        )
+        gridffplay.Add(self.ffplayTxt, 1, wx.ALL | wx.EXPAND, 5)
 
         self.ffplayBtn = wx.Button(self, wx.ID_ANY, "ffplay")
         gridffplay.Add(self.ffplayBtn, 0, wx.RIGHT | wx.CENTER, 5)
@@ -385,22 +411,22 @@ class PageThree(wx.Panel):
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
 
-        # layout
-        sizer_base.Add((0, 50), 0)
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
+        # layout con margini laterali e inferiore bilanciati
         sizer_base.Add((0, 40), 0)
-        sizer_base.Add(sizerText, 0, wx.CENTER)
-        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
-        sizer_base.Add(gridffmpeg, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(lab0, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 20)
+        sizer_base.Add((0, 30), 0)
+        sizer_base.Add(sizerText, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 20)
+        sizerText.Add(lab1, 0, wx.EXPAND)
+        sizer_base.Add((0, 40), 0)
+        sizer_base.Add(gridffmpeg, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 15)
         sizer_base.Add((0, 5), 0)
-        sizer_base.Add(gridffprobe, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(gridffprobe, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 15)
         sizer_base.Add((0, 5), 0)
-        sizer_base.Add(gridffplay, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(gridffplay, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 15)
+        sizer_base.Add((0, 35), 0)
 
         self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
+
         # bindings
         self.Bind(wx.EVT_BUTTON, self.on_ffmpeg, self.ffmpegBtn)
         self.Bind(wx.EVT_BUTTON, self.on_ffprobe, self.ffprobeBtn)
@@ -545,19 +571,21 @@ class PageFinish(wx.Panel):
             lab1.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
             lab3.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
 
-        # layout
-        sizer_base.Add((0, 120), 0)
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 5), 0)
-        sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
+        # Imposta il font sopra PRIMA di chiamare Wrap()
+        lab1.Wrap(450)
+
+        # layout bilanciato con margini laterali e inferiore
+        sizer_base.Add((0, 70), 0)
+        sizer_base.Add(lab0, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
+        sizer_base.Add((0, 10), 0)
+        sizer_base.Add(lab1, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
         sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab3, 0, wx.CENTER | wx.EXPAND)
+        sizer_base.Add(lab3, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
         sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
+        sizer_base.Add(lab2, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 30)
+        sizer_base.Add((0, 70), 0)
 
         self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
 
 
 class Wizard(wx.Dialog):
@@ -613,12 +641,10 @@ class Wizard(wx.Dialog):
         mainSizer.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         #  properties
         self.SetTitle(_("Videomass Wizard"))
-        self.SetMinSize((700, 500))
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(icon_videomass, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetSizer(mainSizer)
-        self.Fit()
+        self.SetSizerAndFit(mainSizer)
         self.Layout()
 
         #  bindings
@@ -627,14 +653,26 @@ class Wizard(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_Next, self.btnNext)
         self.Bind(wx.EVT_CLOSE, self.On_close)  # controlla la chiusura (x)
 
-    # events:
+    def _adatta_finestra(self):
+        """
+        Adatta il dialogo al pannello visibile impedendo il taglio del testo.
+        Resetta eventuali vincoli minimi dello step precedente.
+        Riorganizza i widget interni e calcola il nuovo BestSize.
+        Ridimensiona il Dialog esattamente al contenuto visibile.
+        Blocca il ridimensionamento manuale sotto la soglia in cui il testo
+        verrebbe tagliato.
+        """
+
+        self.SetMinSize(wx.DefaultSize)
+        self.Layout()
+        self.Fit()
+        self.SetMinSize(self.GetSize())
+
     def On_close(self, event):
         """
         Destroy app
         """
         self.Destroy()
-
-    # -------------------------------------------------------------------#
 
     def on_Next(self, event):
         """
@@ -674,9 +712,7 @@ class Wizard(wx.Dialog):
             self.pageFinish.Show()
             self.btnNext.SetLabel(_("Finish"))
 
-        self.Layout()
-
-    # -------------------------------------------------------------------#
+        self._adatta_finestra()
 
     def on_Back(self, event):
         """
@@ -702,9 +738,7 @@ class Wizard(wx.Dialog):
             else:
                 self.pageThree.Show()
 
-        self.Layout()
-
-    # -------------------------------------------------------------------#
+        self._adatta_finestra()
 
     def wizard_Finish(self):
         """
