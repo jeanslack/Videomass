@@ -102,6 +102,13 @@ Wed, 18 November 2026 v6.1.30
     import and drag-and-drop to prevent UI freezes.
   * Reuse cached ffprobe metadata when sorting columns in the file list instead
     of re-probing files.
+  * The logic for enabling/disabling controls and buttons in the video
+    stabilization filter has been redesigned.
+  * Timeline: Added a new combobox allowing users to select a specific audio
+    track (Auto or 1 to 16) for both waveform visualization (ffmpeg) and
+    segment playback (ffplay), with automatic stream validation and fallback
+    to Auto if the chosen index does not exist.
+  * Improved icon relevance for MessageBox().
 
 
 +------------------------------------+

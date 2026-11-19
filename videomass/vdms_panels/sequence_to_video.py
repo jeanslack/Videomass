@@ -361,7 +361,7 @@ class SequenceToVideo(wx.Panel):
     def file_selection(self):
         """
         Gets the selected file on files list and returns an object
-        of type list [str('selected file name'), int(index)].
+        of type list [int(index)), (str('selected file name')].
         Returns None if no files are selected.
 
         """
@@ -395,8 +395,8 @@ class SequenceToVideo(wx.Panel):
         if not kwa:
             wx.MessageBox(
                 _("The selected file is not a frame or a video file"),
-                _("Videomass - Warning!"),
-                wx.ICON_WARNING,
+                "Videomass",
+                wx.ICON_INFORMATION,
             )
             return
 
@@ -516,14 +516,14 @@ class SequenceToVideo(wx.Panel):
 
         if probe[1]:  # some error
             msg = _("Invalid file: '{}'\n\n{}").format(pathname, probe[1])
-            wx.MessageBox(msg, _("Videomass - Error!"), wx.ICON_ERROR, self)
+            wx.MessageBox(msg, "Videomass", wx.ICON_ERROR, self)
             return
 
         if probe[0]["streams"][0]["codec_type"] != "audio":
             msg = _(
                 "Invalid file: '{}'\n\nIt doesn't appear to be an audio file."
             ).format(pathname)
-            wx.MessageBox(msg, _("Videomass - Error!"), wx.ICON_ERROR, self)
+            wx.MessageBox(msg, "Videomass", wx.ICON_ERROR, self)
             return
 
         self.btn_openaudio.SetBackgroundColour(
@@ -629,8 +629,8 @@ class SequenceToVideo(wx.Panel):
             ):
                 wx.MessageBox(
                     _("Invalid file: '{}'").format(fname),
-                    _("Videomass - Error!"),
-                    wx.ICON_ERROR,
+                    "Videomass",
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 return True
@@ -638,7 +638,7 @@ class SequenceToVideo(wx.Panel):
             if not os.path.isfile(os.path.abspath(fname)):
                 wx.MessageBox(
                     _('File does not exist:\n\n"{}"\n').format(fname),
-                    _("ERROR"),
+                    "Videomass",
                     wx.ICON_ERROR,
                     self,
                 )
@@ -662,8 +662,8 @@ class SequenceToVideo(wx.Panel):
         ):
             wx.MessageBox(
                 _("Invalid file: '{}'").format(fname),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return True
@@ -671,7 +671,7 @@ class SequenceToVideo(wx.Panel):
         if not os.path.isfile(os.path.abspath(fname)):
             wx.MessageBox(
                 _('File does not exist:\n\n"{}"\n').format(fname),
-                _("ERROR"),
+                "Videomass",
                 wx.ICON_ERROR,
                 self,
             )
@@ -713,9 +713,7 @@ class SequenceToVideo(wx.Panel):
         outputdir = trailing_name_with_prog_digit(destdir, "Still_Images")
 
         if outputdir[0] == "ERROR":
-            wx.MessageBox(
-                f"{outputdir[1]}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{outputdir[1]}", "Videomass", wx.ICON_ERROR, self)
             return
 
         destdir = os.path.join(outputdir, f"{name}.mkv")
@@ -779,9 +777,7 @@ class SequenceToVideo(wx.Panel):
         try:
             os.makedirs(outputdir, mode=0o777)
         except (OSError, FileExistsError) as err:
-            wx.MessageBox(
-                f"{err}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
             return
 
         self.parent.switch_to_processing(

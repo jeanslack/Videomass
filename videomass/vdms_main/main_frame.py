@@ -446,7 +446,7 @@ class MainFrame(wx.Frame):
                     "processes, make sure you finish your work "
                     "before exit."
                 ),
-                _("Videomass - Warning!"),
+                "Videomass",
                 wx.ICON_WARNING,
                 self,
             )
@@ -481,7 +481,7 @@ class MainFrame(wx.Frame):
                     "processes, make sure you finish your work "
                     "before exit."
                 ),
-                _("Videomass - Warning!"),
+                "Videomass",
                 wx.ICON_WARNING,
                 self,
             )
@@ -1115,9 +1115,7 @@ class MainFrame(wx.Frame):
         )
 
         if download[1]:
-            wx.MessageBox(
-                f"{download[1]}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{download[1]}", "Videomass", wx.ICON_ERROR, self)
             return
 
         wx.MessageBox(
@@ -1149,7 +1147,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_conf(self, event):
         """
-        Show miniframe to check the ffmpeg configuration state.
+        Show dialog to check the ffmpeg configuration state.
         """
         if self.ffmpegconf:
             self.ffmpegconf.Raise()
@@ -1158,7 +1156,7 @@ class MainFrame(wx.Frame):
         out = io_tools.test_conf()
         if "Not found" in out[0]:
             wx.MessageBox(
-                f"\n{out[1]}", _("Videomass - Error!"), wx.ICON_ERROR, self
+                f"\n{out[1]}", "Videomass", wx.ICON_INFORMATION, self
             )
             return
         self.ffmpegconf = FFmpegConf(
@@ -1174,7 +1172,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_formats(self, event):
         """
-        Show miniframe to check the ffmpeg supported formats.
+        Show dialog to check the ffmpeg supported formats.
         """
         if self.ffmpegformats:
             self.ffmpegformats.Raise()
@@ -1184,8 +1182,8 @@ class MainFrame(wx.Frame):
         if "Not found" in out:
             wx.MessageBox(
                 f"\n{out['Not found']}",
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -1196,7 +1194,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_codecs(self, event):
         """
-        Show miniframe to check the ffmpeg supported codecs.
+        Show dialog to check the ffmpeg supported codecs.
         Shares the same window as `get_ffmpeg_decoders`
         """
         if self.ffmpegcodecs:
@@ -1207,8 +1205,8 @@ class MainFrame(wx.Frame):
         if "Not found" in out:
             wx.MessageBox(
                 f"\n{out['Not found']}",
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -1221,7 +1219,7 @@ class MainFrame(wx.Frame):
 
     def get_ffmpeg_decoders(self, event):
         """
-        Show miniframe to check the ffmpeg supported decoders.
+        Show dialog to check the ffmpeg supported decoders.
         Shares the same window as `get_ffmpeg_codecs`
         """
         if self.ffmpegdecoders:
@@ -1232,8 +1230,8 @@ class MainFrame(wx.Frame):
         if "Not found" in out:
             wx.MessageBox(
                 f"\n{out['Not found']}",
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return

@@ -73,7 +73,7 @@ def load_json_file_queue(newincoming=None):
     except json.decoder.JSONDecodeError as err:
         wx.MessageBox(
             f"ERROR: {err}.\nInvalid file: «{newincoming}»",
-            _("Videomass - Error!"),
+            "Videomass",
             wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
             None,
         )
@@ -100,7 +100,7 @@ def load_json_file_queue(newincoming=None):
                 ).format(newincoming)
                 wx.MessageBox(
                     msg,
-                    _("Videomass - Error!"),
+                    "Videomass",
                     wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
                     None,
                 )
@@ -117,7 +117,7 @@ def load_json_file_queue(newincoming=None):
             ).format(newincoming)
             wx.MessageBox(
                 msg,
-                _("Videomass - Error!"),
+                "Videomass",
                 wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
                 None,
             )

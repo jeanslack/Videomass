@@ -83,10 +83,10 @@ def show_msg_notify(
         ico = wx.ICON_INFORMATION
         caption = "Videomass"
     elif warnlev in ("warn", "warning"):
-        ico = wx.ICON_INFORMATION
-        caption = _("Videomass - Warning!")
+        ico = wx.ICON_WARNING
+        caption = "Videomass"
     elif warnlev in ("err", "error"):
-        caption = _("Videomass - Error!")
+        caption = "Videomass"
         ico = wx.ICON_ERROR
     else:
         raise ValueError(
@@ -310,7 +310,7 @@ def openpath(where):
     """
     ret = open_default_application(where)
     if ret:
-        wx.MessageBox(ret, _("Videomass - Error!"), wx.ICON_ERROR, None)
+        wx.MessageBox(ret, "Videomass", wx.ICON_ERROR, None)
 
 
 # -------------------------------------------------------------------------#

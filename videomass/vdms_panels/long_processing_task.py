@@ -60,9 +60,7 @@ def delete_file_source(flist, trashdir):
             filenotfounderror = err
 
     if filenotfounderror is not None:
-        wx.MessageBox(
-            f"{filenotfounderror}", _("Videomass - Error!"), wx.ICON_ERROR
-        )
+        wx.MessageBox(f"{filenotfounderror}", "Videomass", wx.ICON_ERROR)
     else:
         date = time.strftime("%H%M%S-%a_%d_%B_%Y")
         for name in set(flist):

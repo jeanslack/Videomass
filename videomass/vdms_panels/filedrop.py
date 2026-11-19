@@ -226,7 +226,8 @@ class MyListCtrl(wx.ListCtrl):
 
     def insert_probe_item(self, data_probe, newname=None):
         """
-        Insert an already probed item into wx.ListCtrl and update internal lists.
+        Insert an already probed item into wx.ListCtrl
+        and update internal lists.
         """
         fmt = data_probe.get("format", {})
         path = fmt.get("filename", "")
@@ -685,7 +686,7 @@ class FileDnD(wx.Panel):
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (item),
                 "Videomass",
-                wx.ICON_EXCLAMATION,
+                wx.ICON_ERROR,
                 self,
             )
             return

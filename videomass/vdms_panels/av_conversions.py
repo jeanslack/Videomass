@@ -624,7 +624,7 @@ class AV_Conv(wx.Panel):
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filesel),
                 "Videomass",
-                wx.ICON_EXCLAMATION,
+                wx.ICON_ERROR,
                 self,
             )
             return
@@ -670,7 +670,7 @@ class AV_Conv(wx.Panel):
     def file_selection(self):
         """
         Gets the selected file on files list and returns an object
-        of type list [str('selected file name'), int(index)].
+        of type list [int(index)), (str('selected file name')].
         Returns None if no files are selected.
 
         """
@@ -692,7 +692,7 @@ class AV_Conv(wx.Panel):
 
     # ------------------------------------------------------------------#
 
-    def video_stream_test(self):
+    def get_video_stream(self):
         """
         Given a frame or a video file, it returns a dict object
         containing required video parameters as width, height, etc.
@@ -706,8 +706,8 @@ class AV_Conv(wx.Panel):
         if not streaminfo:
             wx.MessageBox(
                 _("The selected file is not a frame or a video file"),
-                _("Videomass - Warning!"),
-                wx.ICON_WARNING,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             self.on_vfilters_clear(self)
@@ -750,7 +750,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        kwa = self.video_stream_test()
+        kwa = self.get_video_stream()
         if not kwa:
             return
         with Scale(
@@ -784,7 +784,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable transpose filter for frame rotations
         """
-        kwa = self.video_stream_test()
+        kwa = self.get_video_stream()
         if not kwa:
             return
         with Transpose(
@@ -812,7 +812,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable crop filter
         """
-        kwa = self.video_stream_test()
+        kwa = self.get_video_stream()
         if not kwa:
             return
         with Crop(
@@ -839,7 +839,7 @@ class AV_Conv(wx.Panel):
         Enable or disable filter for deinterlacing
         (w3fdif and yadif) and interlace filter.
         """
-        sdf = self.video_stream_test()
+        sdf = self.get_video_stream()
         if not sdf:
             return
         with Deinterlace(
@@ -875,7 +875,7 @@ class AV_Conv(wx.Panel):
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        sdf = self.video_stream_test()
+        sdf = self.get_video_stream()
         if not sdf:
             return
         with Denoisers(self, self.opt["Denoiser"], self.bmpreset) as den:
@@ -899,7 +899,7 @@ class AV_Conv(wx.Panel):
         Note, this filter is incompatible with two-pass encoding that
         includes `-pass 1` and` -pass 2` ffmpeg args/options.
         """
-        sdf = self.video_stream_test()
+        sdf = self.get_video_stream()
         if not sdf:
             return
         with VidstabSet(
@@ -936,7 +936,7 @@ class AV_Conv(wx.Panel):
         Enable or disable color correction filter like
         contrast, brightness, saturation, gamma.
         """
-        kwa = self.video_stream_test()
+        kwa = self.get_video_stream()
         if not kwa:
             return
         with ColorEQ(

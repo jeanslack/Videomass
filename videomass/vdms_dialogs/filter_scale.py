@@ -313,9 +313,7 @@ class Scale(wx.Dialog):
         concat = self.concat_filter(scaledata)
         error = self.process(concat)
         if error:
-            wx.MessageBox(
-                f"{error}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{error}", "Videomass", wx.ICON_ERROR, self)
 
     def keep_aspect_ratio_on(self):
         """

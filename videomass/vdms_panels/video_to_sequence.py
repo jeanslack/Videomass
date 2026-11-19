@@ -416,7 +416,7 @@ class VideoToSequence(wx.Panel):
     def file_selection(self):
         """
         Gets the selected file on files list and returns an object
-        of type list [str('selected file name'), int(index)].
+        of type list [int(index)), (str('selected file name')].
         Returns None if no files are selected.
 
         """
@@ -453,8 +453,8 @@ class VideoToSequence(wx.Panel):
         if not kwa:
             wx.MessageBox(
                 _("The selected file is not a frame or a video file"),
-                _("Videomass - Warning!"),
-                wx.ICON_WARNING,
+                "Videomass",
+                wx.ICON_INFORMATION,
             )
             return
 
@@ -589,8 +589,8 @@ class VideoToSequence(wx.Panel):
         if not extract_video_stream(item):
             wx.MessageBox(
                 _("Invalid file: '{}'").format(clicked),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -676,9 +676,7 @@ class VideoToSequence(wx.Panel):
         try:
             os.makedirs(outputdir, mode=0o777)
         except (OSError, FileExistsError) as err:
-            wx.MessageBox(
-                f"{err}", _("Videomass - Error!"), wx.ICON_ERROR, self
-            )
+            wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
             return
 
         self.parent.switch_to_processing(

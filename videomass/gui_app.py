@@ -246,7 +246,7 @@ class Videomass(wx.App):
                         err
                     ),
                     "Videomass",
-                    wx.ICON_WARNING,
+                    wx.ICON_ERROR,
                 )
         return True
 

@@ -34,6 +34,7 @@ from pubsub import pub
 from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import extract_audio_streams
 from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
@@ -291,6 +292,8 @@ class Float_TL(wx.MiniFrame):
         self.invalidselection = False  # booleaan reference
         self.playpoint = None  # `x` point pixel representation or None
         self.playback = None  # playback thread
+        self.play_indx = ""  # audio stream index for playback cmd
+        self.wave_indx = ""  # audio stream index for waveform cmd
 
         wx.MiniFrame.__init__(
             self,
@@ -314,7 +317,7 @@ class Float_TL(wx.MiniFrame):
         )
         sizer_base.Add(self.panelruler, 0, wx.ALL | wx.CENTRE, 2)
         sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_btns = wx.FlexGridSizer(0, 7, 0, 0)
+        # sizer_btns = wx.FlexGridSizer(0, 7, 0, 0)
         sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 8)
         self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
         self.btn_play.SetBitmap(self.bmp_play, wx.LEFT)
@@ -349,6 +352,37 @@ class Float_TL(wx.MiniFrame):
         )
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
         sizer_btns.Add(self.btn_wave, 0, wx.LEFT | wx.CENTRE, 20)
+
+        txtAinmap = wx.StaticText(self.panelbase, wx.ID_ANY, _("Audio Index:"))
+        sizer_btns.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
+        self.cmb_A_inMap = wx.ComboBox(
+            self.panelbase,
+            wx.ID_ANY,
+            choices=[
+                "Auto",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+            ],
+            size=(-1, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
+        sizer_btns.Add(self.cmb_A_inMap, 0, wx.LEFT | wx.CENTRE, 5)
+        self.cmb_A_inMap.SetSelection(0)
+
         btn_quicktip = wx.Button(
             self.panelbase, wx.ID_ANY, _("?"), size=(40, -1)
         )
@@ -419,6 +453,16 @@ class Float_TL(wx.MiniFrame):
         btn_quicktip.SetToolTip(tip)
         tip = _("Play/Stop segment")
         self.btn_play.SetToolTip(tip)
+        tip = _(
+            '"Auto", lets FFmpeg select the audio stream to process '
+            "(usually the first audio stream). If the source file(s) "
+            "is just an audio track, it's recommend to always set this "
+            'control to "Auto".\n\n"1-16", if a video file contains '
+            "more than one audio stream, you can select a specific "
+            'one, e.g "1" for the first available audio stream, '
+            '"2" for the second audio stream, and so on.'
+        )
+        self.cmb_A_inMap.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_TOGGLEBUTTON, self.on_load_waveform, self.btn_wave)
@@ -435,13 +479,13 @@ class Float_TL(wx.MiniFrame):
         self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         self.Bind(wx.EVT_BUTTON, self.on_play_segment, self.btn_play)
+        self.Bind(wx.EVT_COMBOBOX, self.on_audio_index, self.cmb_A_inMap)
         self.panelruler.Bind(wx.EVT_PAINT, self.OnPaint)
         self.panelruler.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
         self.panelruler.Bind(wx.EVT_LEFT_UP, self.on_leftup)
         self.panelruler.Bind(wx.EVT_LEFT_DCLICK, self.on_set_pos)
         self.panelruler.Bind(wx.EVT_MOTION, self.on_move)
         self.Bind(wx.EVT_CLOSE, self.on_close)
-        # self.Bind(wx.EVT_SHOW, self._on_show)
 
         self.set_ui_ctrl(state=False)
         self.panelruler.Refresh()
@@ -452,8 +496,7 @@ class Float_TL(wx.MiniFrame):
 
     def _restore_geometry(self):
         """
-        Workaround to correctly restore the last position
-        on some operating systems
+        Workaround to correctly restore the last position.
         """
         if not self or not self.IsShown():
             return
@@ -470,6 +513,7 @@ class Float_TL(wx.MiniFrame):
         widgets = [
             self.btn_play,
             self.btn_wave,
+            self.cmb_A_inMap,
             self.btn_tstart,
             self.btn_reset,
             self.btn_tend,
@@ -486,7 +530,7 @@ class Float_TL(wx.MiniFrame):
     def file_selection(self):
         """
         Defines the selected file as filename. Returns an object
-        of type list (str('selected file name'), int(index)).
+        of type list [int(index)), (str('selected file name')].
         Returns None type if no file is selected.
         """
         if not self.parent.filedropselected:
@@ -498,7 +542,7 @@ class Float_TL(wx.MiniFrame):
             )
             return None
         self.filename = self.parent.filedropselected
-        return (self.filename, self.parent.file_src.index(self.filename))
+        return (self.parent.file_src.index(self.filename), self.filename)
 
     # ------------------------------------------------------------------#
 
@@ -512,10 +556,11 @@ class Float_TL(wx.MiniFrame):
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
         args = (
-            f'-i "{self.filename}" -filter_complex "aformat=channel_layouts'
-            f"=mono,compand,showwavespic=s={Float_TL.RW + 10}x{Float_TL.PH}:"
-            f"colors={Float_TL.COLORWAVE}:split_channels=1:draw=full:"
-            f'filter=peak" -update 1 -frames:v 1 "{self.frame}"'
+            f'-i "{self.filename}" -filter_complex "{self.wave_indx}'
+            f"aformat=channel_layouts=mono,compand,showwavespic=s="
+            f"{Float_TL.RW + 10}x{Float_TL.PH}:colors={Float_TL.COLORWAVE}:"
+            f'split_channels=1:draw=full:filter=peak" -update 1 '
+            f'-frames:v 1 "{self.frame}"'
         )
         msg = _("Please wait...\nLoading waveform.")
         data = generic_operation_process(
@@ -526,18 +571,73 @@ class Float_TL(wx.MiniFrame):
 
     # ------------------------------------------------------------------#
 
-    def get_audio_stream(self, fileselected):
+    def get_audio_stream(self, fileselect):
         """
         Given a selected media file (object of type `file_selection()`),
-        it evaluates whether it contains any audio streams.
-        If no audio streams Returns None, True otherwise.
+        returns the list of audio stream dicts if present, otherwise None.
         """
-        selected = self.parent.data_files[fileselected[1]].get("streams")
-        isaudio = [a for a in selected if "audio" in a.get("codec_type")]
+        isaudio = extract_audio_streams(self.parent.data_files[fileselect[0]])
 
         if isaudio:
-            return True
+            return isaudio
         return None
+
+    # ------------------------------------------------------------------#
+
+    def validate_audio_index(self, selected):
+        """
+        Checks if the selected audio index in cmb_A_inMap exists in the file.
+        Resets to 'Auto' with a warning if out of range.
+        """
+        cmb_val = self.cmb_A_inMap.GetValue()
+        if cmb_val == "Auto":
+            self.wave_indx = ""
+            self.play_indx = ""
+            return
+
+        audio_streams = self.get_audio_stream(selected)
+        requested_idx = int(cmb_val) - 1
+
+        if not audio_streams or requested_idx >= len(audio_streams):
+            self.cmb_A_inMap.SetValue("Auto")
+            self.wave_indx = ""
+            self.play_indx = ""
+            wx.MessageBox(
+                _(
+                    'Index does not exist in the selected source file:\n"{}"'
+                ).format(selected[1]),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
+        else:
+            self.wave_indx = f"[0:a:{requested_idx}]"
+            self.play_indx = f"-ast a:{requested_idx}"
+
+    # ------------------------------------------------------------------#
+
+    def on_audio_index(self, event):
+        """
+        Set a specific index from audio streams. Validates the index against
+        the selected file and resets any active waveform.
+        See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
+        """
+        selected = self.file_selection()
+        if selected:
+            self.validate_audio_index(selected)
+        else:
+            if self.cmb_A_inMap.GetValue() == "Auto":
+                self.wave_indx = ""
+                self.play_indx = ""
+            else:
+                idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
+                self.wave_indx = f"[0:a:{idx}]"
+                self.play_indx = f"-ast a:{idx}"
+
+        # delete waveform if activated
+        if self.btn_wave.GetValue() is True:
+            self.btn_wave.SetValue(False)
+            self.on_load_waveform(event)
 
     # ------------------------------------------------------------------#
 
@@ -564,8 +664,8 @@ class Float_TL(wx.MiniFrame):
         if self.sourcedur == _("No source duration:"):
             wx.MessageBox(
                 _("Invalid file format for playback."),
-                _("Videomass - Warning!"),
-                wx.ICON_WARNING,
+                _("Videomass"),
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -573,8 +673,8 @@ class Float_TL(wx.MiniFrame):
         if self.parent.time_seq == "":
             wx.MessageBox(
                 _("No segment selected in the timeline yet."),
-                _("Videomass - Warning!"),
-                wx.ICON_WARNING,
+                _("Videomass"),
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -585,8 +685,8 @@ class Float_TL(wx.MiniFrame):
                     "Invalid segment selection!\n«End» cursor must be "
                     "moved to the right side of the «Start» cursor."
                 ),
-                _("Videomass - Error!"),
-                wx.ICON_ERROR,
+                _("Videomass"),
+                wx.ICON_WARNING,
                 self,
             )
             return
@@ -597,7 +697,7 @@ class Float_TL(wx.MiniFrame):
 
         self.btn_play.SetBitmap(self.bmp_stop)
 
-        filesel = self.file_selection()[0]
+        filesel = self.file_selection()[1]
 
         if self.parent.checktimestamp:
             scalef, tstamp = "scale=w=360:h=-1,", f"{self.parent.cmdtimestamp}"
@@ -610,6 +710,7 @@ class Float_TL(wx.MiniFrame):
             f"-loglevel info "  # this is mandatory here
             f'-autoexit -i "{filesel}" '
             f"{self.parent.time_seq} "
+            f"{self.play_indx} "
             f'-vf "{scalef}{tstamp}"'
         )
         try:
@@ -618,9 +719,9 @@ class Float_TL(wx.MiniFrame):
                 self.playback.start()
         except OSError:
             wx.MessageBox(
-                _("Invalid or unsupported file:  %s") % (filesel),
+                _("Invalid or unsupported file:\n'{}'").format(filesel),
                 "Videomass",
-                wx.ICON_EXCLAMATION,
+                wx.ICON_ERROR,
                 self,
             )
             return
@@ -641,9 +742,9 @@ class Float_TL(wx.MiniFrame):
 
         """
         if status:
-            """
-            Set the timeline to be disabled while playing the file
-            """
+            # """
+            # Set the timeline to be disabled while playing the file
+            # """
             return
 
         if output:
@@ -733,19 +834,20 @@ class Float_TL(wx.MiniFrame):
         Event on toggle waveform button
         """
         if self.btn_wave.GetValue() is True:
-            if not self.file_selection():
+            selected = self.file_selection()
+            if not selected:
                 self.btn_wave.SetValue(False)
                 return
 
-            if not self.get_audio_stream(self.file_selection()):
+            if not self.get_audio_stream(selected):
                 wx.MessageBox(
                     _(
                         "Unable to create waveform.\nThe selected "
                         "source file does not contain any audio "
                         'streams:\n"{}"'
-                    ).format(self.file_selection()[0]),
-                    _("Videomass - Warning!"),
-                    wx.ICON_WARNING,
+                    ).format(selected[1]),
+                    _("Videomass"),
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 self.btn_wave.SetValue(False)
@@ -849,6 +951,9 @@ class Float_TL(wx.MiniFrame):
 
         self.btn_wave.SetValue(False)
         self.frame = None
+        self.cmb_A_inMap.SetValue("Auto")
+        self.wave_indx = ""
+        self.play_indx = ""
         self.on_trim_time_reset(None)
 
     # ------------------------------------------------------------------#

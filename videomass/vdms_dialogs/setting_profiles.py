@@ -290,8 +290,8 @@ class SettingProfile(wx.Dialog):
 
             wx.MessageBox(
                 _("Incomplete profile assignments"),
-                _("Videomass - Warning!"),
-                wx.ICON_WARNING,
+                "Videomass",
+                wx.ICON_INFORMATION,
                 self,
             )
             return
@@ -301,8 +301,8 @@ class SettingProfile(wx.Dialog):
             if [i for i in supp.split() if "," not in i]:
                 wx.MessageBox(
                     _("Formats must be comma-separated"),
-                    _("Videomass - Warning!"),
-                    wx.ICON_WARNING,
+                    "Videomass",
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 return
@@ -326,7 +326,7 @@ class SettingProfile(wx.Dialog):
                 ).format(self.filename)
                 wx.MessageBox(
                     msg,
-                    _("Videomass - Error!"),
+                    "Videomass",
                     wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
                     self,
                 )
@@ -334,15 +334,13 @@ class SettingProfile(wx.Dialog):
             if writenewprf == "already exist":
                 wx.MessageBox(
                     _("Profile already stored with same name"),
-                    _("Videomass - Warning!"),
-                    wx.ICON_WARNING,
+                    "Videomass",
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 return
             if writenewprf is not None:
-                wx.MessageBox(
-                    writenewprf, _("Videomass - Error!"), wx.ICON_WARNING, self
-                )
+                wx.MessageBox(writenewprf, "Videomass", wx.ICON_ERROR, self)
                 return
 
             wx.MessageBox(_("Profile stored successfully!"))
@@ -363,8 +361,8 @@ class SettingProfile(wx.Dialog):
             if editprf == "already exist":
                 wx.MessageBox(
                     _("Profile already stored with same name"),
-                    _("Videomass - Warning!"),
-                    wx.ICON_WARNING,
+                    "Videomass",
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 return

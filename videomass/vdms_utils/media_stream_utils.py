@@ -69,3 +69,25 @@ def extract_video_stream(index):
         }
 
     return None
+
+
+# ---------------------------------------------------------------------- #
+
+
+def extract_audio_streams(index):
+    """
+    Return a list of valid audio stream dictionaries from ffprobe data.
+    Returns an empty list if no audio streams are found.
+    """
+    if not isinstance(index, dict):
+        return []
+
+    streams = index.get("streams")
+    if not isinstance(streams, list):
+        return []
+
+    return [
+        s
+        for s in streams
+        if isinstance(s, dict) and s.get("codec_type") == "audio"
+    ]

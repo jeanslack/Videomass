@@ -268,7 +268,7 @@ class PageTwo(wx.Panel):
                         "clicking the 'Locate' button."
                     ).format(exe),
                     "Videomass: Warning",
-                    wx.ICON_EXCLAMATION,
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 return

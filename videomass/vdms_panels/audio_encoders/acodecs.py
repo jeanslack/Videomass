@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.18.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -36,6 +36,7 @@ from videomass.vdms_dialogs.shownormlist import AudioVolNormal
 from videomass.vdms_io.io_tools import volume_detect_process
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.media_stream_utils import extract_audio_streams
 from videomass.vdms_utils.utils import get_volume_data
 
 
@@ -713,7 +714,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             return None
 
         self.build_playfile_command(
-            afilter, idx, self.maindata.file_src[fileget[1]]
+            afilter, idx, self.maindata.file_src[fileget[0]]
         )
         return None
 
@@ -751,7 +752,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filepath),
                 "Videomass",
-                wx.ICON_EXCLAMATION,
+                wx.ICON_INFORMATION,
                 self,
             )
 
@@ -768,36 +769,35 @@ class AudioEncoders(scrolled.ScrolledPanel):
         Return a list of audio indexes otherwise.
 
         See `on_audio_preview()` method for usage.
-
         """
-        selected = self.maindata.data_files[fileselected[1]].get("streams")
-        isaudio = [a for a in selected if "audio" in a.get("codec_type")]
+        file_data = self.maindata.data_files[fileselected[0]]
+        isaudio = extract_audio_streams(file_data)
         idx = self.cmb_A_inMap.GetValue()
 
         if isaudio:
             streamindexes = [x.get("index") for x in isaudio]
             # e.g user has selected an index (1-16)
-            if idx.isdigit() and not int(idx) - 1 in range(len(streamindexes)):
+            if idx.isdigit() and int(idx) - 1 not in range(len(streamindexes)):
                 wx.MessageBox(
                     _(
                         "Index does not exist in the "
                         'selected source file:\n"{}"'
-                    ).format(fileselected[0]),
+                    ).format(fileselected[1]),
                     "Videomass",
-                    wx.ICON_ERROR,
+                    wx.ICON_INFORMATION,
                     self,
                 )
                 return None
             return streamindexes  # e.g user has selected 'Auto'
-        else:
-            wx.MessageBox(
-                _(
-                    'The source file does not contain any audio stream:\n"{}"'
-                ).format(fileselected[0]),
-                "Videomass",
-                wx.ICON_ERROR,
-                self,
-            )
+
+        wx.MessageBox(
+            _(
+                'The source file does not contain any audio stream:\n"{}"'
+            ).format(fileselected),
+            "Videomass",
+            wx.ICON_INFORMATION,
+            self,
+        )
         return None
 
     # ------------------------------------------------------------------#
