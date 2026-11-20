@@ -193,7 +193,7 @@ def get_color_scheme(theme):
             "ERR1": "#C40804",  # RED_DEEP: errors 2
             "SUCCESS": "#0DE40D",  # GREEN: successful
             "TXT3": "#E6FFFC",  # CYAN-WHITE: standard text
-            "INFO": "#194c7e",  # BLUE: other info messages
+            "INFO": "#194C7E",  # BLUE: other info messages
             "DEBUG": "#333333",  # LIGHT BLACK
             "FAILED": "#C40804",  # RED_DEEP if failed
             "ABORT": "#A41EA4",  # SAT.MAGENTA if abort
@@ -232,13 +232,13 @@ def get_color_scheme(theme):
         c_scheme = {
             "BACKGRD": "#2C001E",  # Dark-Aubergine background color
             "TXT0": "#FFFFFF",  # WHITE for titles
-            "TXT1": "#8AB8E6",  # light Blue
+            "TXT1": "#F7C3B1",  # Ubuntu orange light 30%
             "ERR0": "#E95420",  # ORANGE for error text messages
             "WARN": "#dfb72f",  # YELLOW for warning messages
             "ERR1": "#F90808",  # RED_DEEP
             "SUCCESS": "#ABD533",  # Light GREEN when it is successful
             "TXT3": "#AEA79F",  # Ubuntu warm grey (base foreground)
-            "INFO": "#F7C3B1",  # Ubuntu orange light 30%
+            "INFO": "#8AB8E6",  # light Blue
             "DEBUG": "#8AB8E6",  # light Blue
             "FAILED": "#F90808",  # RED_DEEP
             "ABORT": "#F90808",  # RED_DEEP
@@ -391,6 +391,8 @@ class DataSource:
             "ffplay-default-args": "-hide_banner",
             "auto-restart-app": False,
             "make_portable": self.makeportable,
+            "max_drop_files": 50,
+            "max_total_files": 80,
             "applognames": (
                 "volumedetected.log",
                 "AV Conversions.log",

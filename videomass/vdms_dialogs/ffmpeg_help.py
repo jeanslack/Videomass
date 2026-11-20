@@ -46,7 +46,6 @@ class FFmpegHelp(wx.Dialog):
 
     """
 
-    TIPGREEN = "#80C058"
     HELPTOPIC = _(
         "Contextual help based on the argument entered in the "
         "additional text field.\nEach argument consists of the "
@@ -117,6 +116,7 @@ class FFmpegHelp(wx.Dialog):
         self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset["colorscheme"]
+        COLOR_INFO = colorscheme["INFO"]
         vidicon = get.iconset["videomass"]
 
         wx.Dialog.__init__(
@@ -134,7 +134,7 @@ class FFmpegHelp(wx.Dialog):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetForegroundColour(wx.Colour(FFmpegHelp.TIPGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(COLOR_INFO))
         boxshow.Add(
             btn_quicktip,
             0,

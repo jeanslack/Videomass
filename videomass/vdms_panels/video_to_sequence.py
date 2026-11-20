@@ -51,18 +51,6 @@ class VideoToSequence(wx.Panel):
     """
 
     VIOLET = "#D64E93"
-    TIPGREEN = "#80C058"
-    MSG_1 = _(
-        "\n1. Import one or more video files, then select one."
-        "\n\n2. To select a slice of time use the Timeline editor "
-        '(CTRL+T) by adjusting the\n"End" and the "Start" duration '
-        "values."
-        "\n\n3. Select an output format (jpg, png, bmp)."
-        "\n\n4. Start the conversion."
-        "\n\n\nThe images produced will be saved in a folder "
-        "named 'Movie_to_Pictures'\nwith a progressive digit, "
-        "in the path you specify."
-    )
     # ----------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -71,6 +59,7 @@ class VideoToSequence(wx.Panel):
         """
         self.parent = parent  # parent is the MainFrame
         get = wx.GetApp()  # get data from bootstrap
+        COLOR_INFO = get.appset["colorscheme"]["INFO"]
         self.appdata = get.appset
         icons = get.iconset
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
@@ -85,7 +74,7 @@ class VideoToSequence(wx.Panel):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetForegroundColour(wx.Colour(VideoToSequence.TIPGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(COLOR_INFO))
         sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         choices = [
@@ -299,11 +288,19 @@ class VideoToSequence(wx.Panel):
         """
         event on button help
         """
-        win = NormalTransientPopup(
-            self,
-            wx.SIMPLE_BORDER,
-            VideoToSequence.MSG_1,
+        msg = _(
+            "1. Select an imported video file or an animated image."
+            "\n\n2. (Optional, recommended) To extract frames from a specific "
+            "slice of time, use the Timeline editor (CTRL+T) by adjusting the "
+            '"Start" and "End" duration values—otherwise, all frames from the '
+            "entire file will be extracted."
+            "\n\n3. Select an output format (jpg, png, bmp)."
+            "\n\n4. Start the conversion."
+            "\n\nThe images produced will be saved in a folder "
+            "named 'Movie_to_Pictures' with a sequential number, "
+            "in the path you specify."
         )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)
 
         # Show the popup right below or above the button
         # depending on available screen space...

@@ -92,23 +92,6 @@ class Conc_Demuxer(wx.Panel):
 
     """
 
-    TIPGREEN = "#80C058"
-    MSG_1 = _(
-        "\n- The concatenation function is performed only with "
-        "Audio files or only with Video files."
-        "\n\n- The order of concatenation depends on the order in "
-        "which the files were added."
-        "\n\n- The output file name will have the same name as the "
-        "first file added (also depends on the\n"
-        "  settings made in the preferences dialog or the renaming "
-        "functions used)."
-        "\n\n- Video files must have exactly same streams, same "
-        "codecs and same\n  width/height, but can be wrapped in "
-        "different container formats."
-        "\n\n- Audio files must have exactly the same formats, "
-        "same codecs with equal sample rate."
-    )
-
     # ----------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -116,6 +99,7 @@ class Conc_Demuxer(wx.Panel):
         This is a panel impemented on MainFrame
         """
         get = wx.GetApp()  # get data from bootstrap
+        COLOR_INFO = get.appset["colorscheme"]["INFO"]
         self.appdata = get.appset
         self.cachedir = self.appdata["cachedir"]
         self.parent = parent  # parent is the MainFrame
@@ -132,7 +116,7 @@ class Conc_Demuxer(wx.Panel):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetForegroundColour(wx.Colour(Conc_Demuxer.TIPGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(COLOR_INFO))
         sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
@@ -179,7 +163,22 @@ class Conc_Demuxer(wx.Panel):
         """
         event on button help
         """
-        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, Conc_Demuxer.MSG_1)
+        msg = _(
+            "- The concatenation function works only with "
+            "audio files or only with video files."
+            "\n\n- The order of concatenation depends on the order in "
+            "which the files were added."
+            "\n\n- The output file name will take the same name as the "
+            "first file added (also depending on the "
+            "settings made in the preferences dialog or the renaming "
+            "functions used)."
+            "\n\n- Video files must have the exact same streams, the same "
+            "codecs, and the same width/height, though they can be wrapped in "
+            "different container formats."
+            "\n\n- Audio files must have the exact same formats, "
+            "the same codecs, and an equal sample rate."
+        )
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)
 
         # Show the popup right below or above the button
         # depending on available screen space...

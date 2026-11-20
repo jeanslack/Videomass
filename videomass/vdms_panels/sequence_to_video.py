@@ -74,7 +74,6 @@ class SequenceToVideo(wx.Panel):
     """
 
     VIOLET = "#D64E93"
-    TIPGREEN = "#80C058"
     SUPPORTED_IMAGE_EXTS = (".jpeg", ".jpg", ".png", ".tif", ".tiff", ".bmp")
     SUPPORTED_FORMAT_NAME = ("image2", "bmp_pipe", "tiff_pipe", "png_pipe")
     # ---------------------------------------------------------------------
@@ -86,6 +85,7 @@ class SequenceToVideo(wx.Panel):
         """
         self.parent = parent  # parent is the MainFrame
         get = wx.GetApp()  # get data from bootstrap
+        COLOR_INFO = get.appset["colorscheme"]["INFO"]
         self.appdata = get.appset
         icons = get.iconset
         self.ffprobe_cmd = self.appdata["ffprobe_cmd"]
@@ -115,7 +115,7 @@ class SequenceToVideo(wx.Panel):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetForegroundColour(wx.Colour(SequenceToVideo.TIPGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(COLOR_INFO))
         sizer.Add(btn_quicktip, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         # sizer.Add((5, 5))
@@ -270,20 +270,20 @@ class SequenceToVideo(wx.Panel):
         helpmetxt = SequenceToVideo.SUPPORTED_IMAGE_EXTS
         tostr = [e.replace(".", "").upper() for e in helpmetxt]
         msg = _(
-            "1. Import one or more image files such as {} "
-            "formats (even in mixed mode), then select one as your "
-            "starting point."
+            "1. Import one or more image files such as {} formats (even in "
+            "mixed mode), then select one as your starting point."
             "\n\n2. Use the Resize tool if your images have different width "
             "and height dimensions. You only need to do this once for the "
-            "selected file to automatically resize the other images. "
-            "Otherwise, it's optional."
-            "\n\n3. Set a time interval between images, or for a single "
-            "image if you «Enable a single still image» option."
+            "selected file; the remaining images will be resized "
+            "automatically to match it. Otherwise, this step is optional."
+            "\n\n3. Set a time interval between images, or set the duration "
+            "for a single image if you check the 'Enable a single still "
+            "image' option."
             "\n\n4. Run the conversion."
-            "\n\nThe produced video will have the name of the selected "
-            "file in the 'File List' panel, which will be saved in a "
-            "folder named 'Still_Images' with a progressive digit, "
-            "in the path you specify."
+            "\n\nThe produced video will take the name of the selected file "
+            "in the 'File List' panel and will be saved in a folder named "
+            "'Still_Images' with a sequential number, in the path you "
+            "specify."
         ).format(", ".join(tostr))
 
         win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)

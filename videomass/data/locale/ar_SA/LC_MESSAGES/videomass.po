@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-19 18:50+0100\n"
+"POT-Creation-Date: 2026-11-20 13:36+0100\n"
 "PO-Revision-Date: 2026-10-02 11:59+0000\n"
 "Last-Translator: AbdEl-Rahman Mohammed Hassan <https://github.com/vfggf95565>\n"
 "Language: ar_SA\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: videomass/gui_app.py:211
 #, fuzzy
@@ -74,8 +74,8 @@ msgstr "أمر المرور الثاني"
 msgid "Videomass - RAW Commands"
 msgstr "Videomass - أوامر RAW"
 
-#: videomass/vdms_dialogs/avconv_cmd_line.py:68 videomass/vdms_dialogs/ffmpeg_help.py:133 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:387 videomass/vdms_panels/concatenate.py:131 videomass/vdms_panels/sequence_to_video.py:114
-#: videomass/vdms_panels/video_to_sequence.py:84
+#: videomass/vdms_dialogs/avconv_cmd_line.py:68 videomass/vdms_dialogs/ffmpeg_help.py:133 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:387 videomass/vdms_panels/concatenate.py:116 videomass/vdms_panels/sequence_to_video.py:114
+#: videomass/vdms_panels/video_to_sequence.py:73
 msgid "?"
 msgstr ""
 
@@ -189,11 +189,11 @@ msgstr "FFprobe   ...غير موجود !"
 msgid "FFplay   ...not found !"
 msgstr "FFplay   ...غير موجود !"
 
-#: videomass/vdms_dialogs/ffmpeg_conf.py:220 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:701
+#: videomass/vdms_dialogs/ffmpeg_conf.py:220 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:698
 msgid "Enabled"
 msgstr "مفعّل"
 
-#: videomass/vdms_dialogs/ffmpeg_conf.py:231 videomass/vdms_panels/av_conversions.py:1390 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:705
+#: videomass/vdms_dialogs/ffmpeg_conf.py:231 videomass/vdms_panels/av_conversions.py:1390 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:702
 msgid "Disabled"
 msgstr "معطّل"
 
@@ -945,11 +945,11 @@ msgstr "تعذر فتح الحافظة في تبويب تدفقات الترجم
 msgid "Where do you prefer to save your transcodes?"
 msgstr "أين تفضل حفظ الملفات المحوّلة؟"
 
-#: videomass/vdms_dialogs/preferences.py:108 videomass/vdms_dialogs/preferences.py:135 videomass/vdms_dialogs/preferences.py:159 videomass/vdms_dialogs/preferences.py:171 videomass/vdms_dialogs/preferences.py:183 videomass/vdms_panels/filedrop.py:413
+#: videomass/vdms_dialogs/preferences.py:108 videomass/vdms_dialogs/preferences.py:135 videomass/vdms_dialogs/preferences.py:159 videomass/vdms_dialogs/preferences.py:171 videomass/vdms_dialogs/preferences.py:183 videomass/vdms_panels/filedrop.py:459
 msgid "Change"
 msgstr "تغيير"
 
-#: videomass/vdms_dialogs/preferences.py:110 videomass/vdms_panels/av_conversions.py:1385 videomass/vdms_panels/filedrop.py:794 videomass/vdms_panels/presets_manager.py:1223
+#: videomass/vdms_dialogs/preferences.py:110 videomass/vdms_panels/av_conversions.py:1385 videomass/vdms_panels/filedrop.py:840 videomass/vdms_panels/presets_manager.py:1223
 msgid "Same destination paths as source files"
 msgstr "نفس مسارات الملفات المصدر"
 
@@ -1200,7 +1200,7 @@ msgstr "وسائط FFmpeg للترميز بمرورين"
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr "أي وسائط اختيارية تُضاف قبل ملف الإدخال في الترميز بمرورين، مثل الأسماء المطلوبة لبعض تسريعات العتاد كـ -hwaccel للاستخدام مع CUDA."
 
-#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:592 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:207
+#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:592 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
 msgid "Edit"
 msgstr "تعديل"
 
@@ -1228,7 +1228,7 @@ msgstr ""
 "استيراد\n"
 "ملف القائمة"
 
-#: videomass/vdms_dialogs/queuedlg.py:89 videomass/vdms_panels/filedrop.py:401
+#: videomass/vdms_dialogs/queuedlg.py:89 videomass/vdms_panels/filedrop.py:447
 msgid "Destination file name"
 msgstr "اسم ملف الوجهة"
 
@@ -1244,7 +1244,7 @@ msgstr "Videomass - قائمة الانتظار"
 msgid "Export queue file"
 msgstr "تصدير ملف قائمة الانتظار"
 
-#: videomass/vdms_dialogs/queuedlg.py:312 videomass/vdms_panels/av_conversions.py:1380 videomass/vdms_panels/presets_manager.py:1217 videomass/vdms_panels/video_to_sequence.py:695
+#: videomass/vdms_dialogs/queuedlg.py:312 videomass/vdms_panels/av_conversions.py:1380 videomass/vdms_panels/presets_manager.py:1217 videomass/vdms_panels/video_to_sequence.py:692
 msgid "Same as source"
 msgstr "نفس المصدر"
 
@@ -1661,7 +1661,7 @@ msgstr "موجود بالفعل"
 msgid "Not found"
 msgstr "غير موجود"
 
-#: videomass/vdms_io/checkup.py:92 videomass/vdms_panels/filedrop.py:322
+#: videomass/vdms_io/checkup.py:92 videomass/vdms_panels/filedrop.py:353
 msgid "Error list"
 msgstr "قائمة الأخطاء"
 
@@ -1769,7 +1769,7 @@ msgstr "الخروج من التطبيق بالكامل"
 msgid "File"
 msgstr "ملف"
 
-#: videomass/vdms_main/main_frame.py:565 videomass/vdms_panels/filedrop.py:475 videomass/vdms_panels/filedrop.py:517
+#: videomass/vdms_main/main_frame.py:565 videomass/vdms_panels/filedrop.py:521 videomass/vdms_panels/filedrop.py:563
 msgid "Rename selected file\tCtrl+R"
 msgstr "إعادة تسمية الملف المحدد\tCtrl+R"
 
@@ -1777,7 +1777,7 @@ msgstr "إعادة تسمية الملف المحدد\tCtrl+R"
 msgid "Rename the destination of the selected file"
 msgstr "إعادة تسمية وجهة الملف المحدد"
 
-#: videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/filedrop.py:476 videomass/vdms_panels/filedrop.py:520
+#: videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:566
 msgid "Batch rename files\tCtrl+B"
 msgstr "إعادة تسمية الملفات دفعة واحدة\tCtrl+B"
 
@@ -1785,7 +1785,7 @@ msgstr "إعادة تسمية الملفات دفعة واحدة\tCtrl+B"
 msgid "Numerically renames the destination of all items in the list"
 msgstr "إعادة تسمية وجهة جميع عناصر القائمة بأرقام متسلسلة"
 
-#: videomass/vdms_main/main_frame.py:578 videomass/vdms_panels/filedrop.py:478 videomass/vdms_panels/filedrop.py:524
+#: videomass/vdms_main/main_frame.py:578 videomass/vdms_panels/filedrop.py:524 videomass/vdms_panels/filedrop.py:570
 msgid "Remove selected entry\tDEL"
 msgstr "إزالة الإدخال المحدد\tDEL"
 
@@ -1793,7 +1793,7 @@ msgstr "إزالة الإدخال المحدد\tDEL"
 msgid "Remove the selected file from the list"
 msgstr "إزالة الملف المحدد من القائمة"
 
-#: videomass/vdms_main/main_frame.py:583 videomass/vdms_panels/filedrop.py:479 videomass/vdms_panels/filedrop.py:527
+#: videomass/vdms_main/main_frame.py:583 videomass/vdms_panels/filedrop.py:525 videomass/vdms_panels/filedrop.py:573
 msgid "Clear list\tShift+DEL"
 msgstr "مسح القائمة\tShift+DEL"
 
@@ -2198,7 +2198,7 @@ msgstr "Videomass - من فيلم إلى صور"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - صانع الصور الثابتة"
 
-#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:539 videomass/vdms_panels/av_conversions.py:682 videomass/vdms_panels/av_conversions.py:1433 videomass/vdms_panels/filedrop.py:664 videomass/vdms_panels/filedrop.py:810 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:428 videomass/vdms_panels/video_to_sequence.py:577
+#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:539 videomass/vdms_panels/av_conversions.py:682 videomass/vdms_panels/av_conversions.py:1433 videomass/vdms_panels/filedrop.py:710 videomass/vdms_panels/filedrop.py:856 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
 msgid "Have to select an item in the file list first"
 msgstr "يجب تحديد عنصر في قائمة الملفات أولًا"
 
@@ -2487,7 +2487,7 @@ msgstr "معاينة مرشحات الفيديو"
 msgid "Disable active filters"
 msgstr "تعطيل المرشحات النشطة"
 
-#: videomass/vdms_panels/av_conversions.py:400 videomass/vdms_panels/sequence_to_video.py:176 videomass/vdms_panels/video_to_sequence.py:129
+#: videomass/vdms_panels/av_conversions.py:400 videomass/vdms_panels/sequence_to_video.py:176 videomass/vdms_panels/video_to_sequence.py:118
 msgid "Resize"
 msgstr "تغيير الحجم"
 
@@ -2515,12 +2515,12 @@ msgstr "موازنة"
 msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
 msgstr "لمعاينة مرشح التثبيت، يرجى النقر على زر المعاينة في أداة تثبيت الفيديو"
 
-#: videomass/vdms_panels/audio_encoders/acodecs.py:754 videomass/vdms_panels/av_conversions.py:625 videomass/vdms_panels/filedrop.py:692
+#: videomass/vdms_panels/audio_encoders/acodecs.py:754 videomass/vdms_panels/av_conversions.py:625 videomass/vdms_panels/filedrop.py:738
 #, python-format
 msgid "Invalid or unsupported file:  %s"
 msgstr "ملف غير صالح أو غير مدعوم:  %s"
 
-#: videomass/vdms_panels/av_conversions.py:708 videomass/vdms_panels/sequence_to_video.py:397 videomass/vdms_panels/video_to_sequence.py:455
+#: videomass/vdms_panels/av_conversions.py:708 videomass/vdms_panels/sequence_to_video.py:397 videomass/vdms_panels/video_to_sequence.py:452
 msgid "The selected file is not a frame or a video file"
 msgstr "الملف ليس إطارًا ولا ملف فيديو"
 
@@ -2675,20 +2675,26 @@ msgstr "بيانات غير صالحة"
 msgid "The files do not have the same \"codec_types\", same \"sample_rate\" or same \"width\" or \"height\". Unable to proceed."
 msgstr "الملفات لا تملك نفس \"codec_types\" أو نفس \"sample_rate\" أو نفس \"width\" أو \"height\". تعذر المتابعة."
 
-#: videomass/vdms_panels/concatenate.py:97
+#: videomass/vdms_panels/concatenate.py:126
+msgid "Videomass Documentation:"
+msgstr "توثيق Videomass:"
+
+#: videomass/vdms_panels/concatenate.py:140 videomass/vdms_panels/sequence_to_video.py:239 videomass/vdms_panels/video_to_sequence.py:210
+msgid "Official FFmpeg documentation:"
+msgstr "توثيق FFmpeg الرسمي:"
+
+#: videomass/vdms_panels/concatenate.py:168
+#, fuzzy
 msgid ""
-"\n"
-"- The concatenation function is performed only with Audio files or only with Video files.\n"
+"- The concatenation function works only with audio files or only with video files.\n"
 "\n"
 "- The order of concatenation depends on the order in which the files were added.\n"
 "\n"
-"- The output file name will have the same name as the first file added (also depends on the\n"
-"  settings made in the preferences dialog or the renaming functions used).\n"
+"- The output file name will take the same name as the first file added (also depending on the settings made in the preferences dialog or the renaming functions used).\n"
 "\n"
-"- Video files must have exactly same streams, same codecs and same\n"
-"  width/height, but can be wrapped in different container formats.\n"
+"- Video files must have the exact same streams, the same codecs, and the same width/height, though they can be wrapped in different container formats.\n"
 "\n"
-"- Audio files must have exactly the same formats, same codecs with equal sample rate."
+"- Audio files must have the exact same formats, the same codecs, and an equal sample rate."
 msgstr ""
 "\n"
 "- تُنفَّذ وظيفة الدمج مع ملفات الصوت فقط أو ملفات الفيديو فقط.\n"
@@ -2702,14 +2708,6 @@ msgstr ""
 "  العرض/الارتفاع، ولكن يمكن أن تكون في حاويات بصيغ مختلفة.\n"
 "\n"
 "- يجب أن تكون ملفات الصوت بنفس الصيغ تمامًا ونفس المرمِّزات وبنفس معدل العينة."
-
-#: videomass/vdms_panels/concatenate.py:141
-msgid "Videomass Documentation:"
-msgstr "توثيق Videomass:"
-
-#: videomass/vdms_panels/concatenate.py:155 videomass/vdms_panels/sequence_to_video.py:239 videomass/vdms_panels/video_to_sequence.py:221
-msgid "Official FFmpeg documentation:"
-msgstr "توثيق FFmpeg الرسمي:"
 
 #: videomass/vdms_panels/concatenate.py:289
 msgid ""
@@ -2754,87 +2752,106 @@ msgstr "يحتوي الاسم على أحرف غير مسموحة مثل: {0}"
 msgid "Name already in use:"
 msgstr "الاسم مستخدم بالفعل:"
 
-#: videomass/vdms_panels/filedrop.py:207
+#: videomass/vdms_panels/filedrop.py:202
+#, python-brace-format
+msgid ""
+"The file list has reached its maximum limit of {0} files.\n"
+"Please remove some items before adding new ones."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:222
 msgid "Duplicate file, it has already been added to the list."
 msgstr "ملف مكرر، تمت إضافته بالفعل إلى القائمة."
 
-#: videomass/vdms_panels/filedrop.py:323
+#: videomass/vdms_panels/filedrop.py:233
+#, python-brace-format
+msgid "Only {0} of {1} new files will be added to stay within the maximum limit of {2} files in the list."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:354
 msgid "Rejected files"
 msgstr "الملفات المرفوضة"
 
-#: videomass/vdms_panels/filedrop.py:397
+#: videomass/vdms_panels/filedrop.py:389
+#, python-brace-format
+msgid ""
+"Too many files dropped at once ({0}).\n"
+"Maximum allowed per drop is {1} files."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:443
 msgid "Source file"
 msgstr "الملف المصدر"
 
-#: videomass/vdms_panels/filedrop.py:398
+#: videomass/vdms_panels/filedrop.py:444
 msgid "Duration"
 msgstr "المدة"
 
-#: videomass/vdms_panels/filedrop.py:399
+#: videomass/vdms_panels/filedrop.py:445
 msgid "Media type"
 msgstr "نوع الوسائط"
 
-#: videomass/vdms_panels/filedrop.py:400
+#: videomass/vdms_panels/filedrop.py:446
 msgid "Size"
 msgstr "الحجم"
 
-#: videomass/vdms_panels/filedrop.py:403 videomass/vdms_panels/filedrop.py:542
+#: videomass/vdms_panels/filedrop.py:449 videomass/vdms_panels/filedrop.py:588
 msgid "Drag one or more files below"
 msgstr "اسحب ملفًا واحدًا أو أكثر إلى الأسفل"
 
-#: videomass/vdms_panels/filedrop.py:410
+#: videomass/vdms_panels/filedrop.py:456
 msgid "Save to:"
 msgstr "حفظ في:"
 
-#: videomass/vdms_panels/filedrop.py:440
+#: videomass/vdms_panels/filedrop.py:486
 msgid "Set a new destination folder for encodings"
 msgstr "تعيين مجلد وجهة جديد للتحويلات"
 
-#: videomass/vdms_panels/filedrop.py:442
+#: videomass/vdms_panels/filedrop.py:488
 msgid "Encodings destination folder"
 msgstr "مجلد وجهة التحويلات"
 
-#: videomass/vdms_panels/filedrop.py:473 videomass/vdms_panels/filedrop.py:530
+#: videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:576
 msgid "Play file"
 msgstr "تشغيل الملف"
 
-#: videomass/vdms_panels/filedrop.py:546
+#: videomass/vdms_panels/filedrop.py:592
 #, fuzzy
 msgid "Drag two or more files below (audio only or video only)"
 msgstr "اسحب ملفًا واحدًا أو أكثر إلى الأسفل"
 
-#: videomass/vdms_panels/filedrop.py:552
+#: videomass/vdms_panels/filedrop.py:598
 #, fuzzy
 msgid "Drag one or more image files below (JPEG, JPG, PNG, TIFF, TIF, BMP)"
 msgstr "اسحب ملف صورة واحدًا أو أكثر إلى الأسفل"
 
-#: videomass/vdms_panels/filedrop.py:560
+#: videomass/vdms_panels/filedrop.py:606
 #, fuzzy
-msgid "Drag one or more video files below (including animated images)"
+msgid "Drag video files below (including animated images such as APNG, WebP, GIF)"
 msgstr "اسحب ملف فيديو واحدًا أو أكثر إلى الأسفل"
 
-#: videomass/vdms_panels/filedrop.py:820
+#: videomass/vdms_panels/filedrop.py:866
 msgid "Rename the file destination"
 msgstr "إعادة تسمية وجهة الملف"
 
-#: videomass/vdms_panels/filedrop.py:821
+#: videomass/vdms_panels/filedrop.py:867
 msgid "Rename the selected file to:"
 msgstr "إعادة تسمية الملف المحدد إلى:"
 
-#: videomass/vdms_panels/filedrop.py:836 videomass/vdms_panels/filedrop.py:846 videomass/vdms_panels/filedrop.py:880
+#: videomass/vdms_panels/filedrop.py:882 videomass/vdms_panels/filedrop.py:892 videomass/vdms_panels/filedrop.py:926
 msgid "Add Files"
 msgstr "إضافة ملفات"
 
-#: videomass/vdms_panels/filedrop.py:854
+#: videomass/vdms_panels/filedrop.py:900
 msgid "Rename in batch"
 msgstr "إعادة التسمية دفعة واحدة"
 
-#: videomass/vdms_panels/filedrop.py:855
+#: videomass/vdms_panels/filedrop.py:901
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "إعادة تسمية العناصر ({0}) إلى:"
 
-#: videomass/vdms_panels/filedrop.py:858
+#: videomass/vdms_panels/filedrop.py:904
 msgid "New Name #"
 msgstr "الاسم الجديد #"
 
@@ -3207,13 +3224,13 @@ msgstr "وسائط إضافية"
 msgid ""
 "1. Import one or more image files such as {} formats (even in mixed mode), then select one as your starting point.\n"
 "\n"
-"2. Use the Resize tool if your images have different width and height dimensions. You only need to do this once for the selected file to automatically resize the other images. Otherwise, it's optional.\n"
+"2. Use the Resize tool if your images have different width and height dimensions. You only need to do this once for the selected file; the remaining images will be resized automatically to match it. Otherwise, this step is optional.\n"
 "\n"
-"3. Set a time interval between images, or for a single image if you «Enable a single still image» option.\n"
+"3. Set a time interval between images, or set the duration for a single image if you check the 'Enable a single still image' option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
-"The produced video will have the name of the selected file in the 'File List' panel, which will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
+"The produced video will take the name of the selected file in the 'File List' panel and will be saved in a folder named 'Still_Images' with a sequential number, in the path you specify."
 msgstr ""
 "\n"
 "1. استورد ملف صورة أو أكثر بصيغ مثل JPG وPNG وBMP (حتى في وضع مختلط)،\n"
@@ -3258,7 +3275,7 @@ msgstr ""
 "\n"
 "يبدو أنه ليس ملفًا صوتيًا."
 
-#: videomass/vdms_panels/sequence_to_video.py:631 videomass/vdms_panels/sequence_to_video.py:664 videomass/vdms_panels/video_to_sequence.py:591
+#: videomass/vdms_panels/sequence_to_video.py:631 videomass/vdms_panels/sequence_to_video.py:664 videomass/vdms_panels/video_to_sequence.py:588
 #, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "ملف غير صالح: '{}'"
@@ -3306,21 +3323,62 @@ msgstr ""
 "مدة الصورة الثابتة\n"
 "المدة الإجمالية للفيديو"
 
-#: videomass/vdms_panels/video_to_sequence.py:56
+#: videomass/vdms_panels/video_to_sequence.py:81
+msgid "Create thumbnails"
+msgstr "إنشاء صور مصغّرة"
+
+#: videomass/vdms_panels/video_to_sequence.py:82
+msgid "Create tiled mosaics"
+msgstr "إنشاء فسيفساء مرتبة"
+
+#: videomass/vdms_panels/video_to_sequence.py:83
+msgid "Create animated GIF"
+msgstr "إنشاء صورة GIF متحركة"
+
+#: videomass/vdms_panels/video_to_sequence.py:88
+msgid "Options"
+msgstr "خيارات"
+
+#: videomass/vdms_panels/video_to_sequence.py:123
+msgid "Output format:"
+msgstr "صيغة الإخراج:"
+
+#: videomass/vdms_panels/video_to_sequence.py:137
+msgid "Rows:"
+msgstr "الصفوف:"
+
+#: videomass/vdms_panels/video_to_sequence.py:151
+msgid "Columns:"
+msgstr "الأعمدة:"
+
+#: videomass/vdms_panels/video_to_sequence.py:242
+msgid "Other unofficial resources:"
+msgstr "موارد أخرى غير رسمية:"
+
+#: videomass/vdms_panels/video_to_sequence.py:271
+msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
+msgstr "ضبط معدل الإطارات من 0.1 إلى 30.0 إطار/ثانية. كلما زادت هذه القيمة زاد عدد الصور المستخرجة."
+
+#: videomass/vdms_panels/video_to_sequence.py:275
+msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
+msgstr "المسافات حول بلاطات الفسيفساء. من 0 إلى 32 بكسل"
+
+#: videomass/vdms_panels/video_to_sequence.py:277
+msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
+msgstr "المسافات حول حواف الفسيفساء. من 0 إلى 32 بكسل"
+
+#: videomass/vdms_panels/video_to_sequence.py:292
+#, fuzzy
 msgid ""
+"1. Select an imported video file or an animated image.\n"
 "\n"
-"1. Import one or more video files, then select one.\n"
-"\n"
-"2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting the\n"
-"\"End\" and the \"Start\" duration values.\n"
+"2. (Optional, recommended) To extract frames from a specific slice of time, use the Timeline editor (CTRL+T) by adjusting the \"Start\" and \"End\" duration values—otherwise, all frames from the entire file will be extracted.\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
-"\n"
-"The images produced will be saved in a folder named 'Movie_to_Pictures'\n"
-"with a progressive digit, in the path you specify."
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with a sequential number, in the path you specify."
 msgstr ""
 "\n"
 "1. استورد ملف فيديو أو أكثر ثم حدد واحدًا منها.\n"
@@ -3336,51 +3394,7 @@ msgstr ""
 "ستُحفظ الصور الناتجة في مجلد باسم 'Movie_to_Pictures'\n"
 "مع رقم متسلسل، في المسار الذي تحدده."
 
-#: videomass/vdms_panels/video_to_sequence.py:92
-msgid "Create thumbnails"
-msgstr "إنشاء صور مصغّرة"
-
-#: videomass/vdms_panels/video_to_sequence.py:93
-msgid "Create tiled mosaics"
-msgstr "إنشاء فسيفساء مرتبة"
-
-#: videomass/vdms_panels/video_to_sequence.py:94
-msgid "Create animated GIF"
-msgstr "إنشاء صورة GIF متحركة"
-
-#: videomass/vdms_panels/video_to_sequence.py:99
-msgid "Options"
-msgstr "خيارات"
-
-#: videomass/vdms_panels/video_to_sequence.py:134
-msgid "Output format:"
-msgstr "صيغة الإخراج:"
-
-#: videomass/vdms_panels/video_to_sequence.py:148
-msgid "Rows:"
-msgstr "الصفوف:"
-
-#: videomass/vdms_panels/video_to_sequence.py:162
-msgid "Columns:"
-msgstr "الأعمدة:"
-
-#: videomass/vdms_panels/video_to_sequence.py:253
-msgid "Other unofficial resources:"
-msgstr "موارد أخرى غير رسمية:"
-
-#: videomass/vdms_panels/video_to_sequence.py:282
-msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
-msgstr "ضبط معدل الإطارات من 0.1 إلى 30.0 إطار/ثانية. كلما زادت هذه القيمة زاد عدد الصور المستخرجة."
-
-#: videomass/vdms_panels/video_to_sequence.py:286
-msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
-msgstr "المسافات حول بلاطات الفسيفساء. من 0 إلى 32 بكسل"
-
-#: videomass/vdms_panels/video_to_sequence.py:288
-msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
-msgstr "المسافات حول حواف الفسيفساء. من 0 إلى 32 بكسل"
-
-#: videomass/vdms_panels/video_to_sequence.py:724
+#: videomass/vdms_panels/video_to_sequence.py:721
 msgid ""
 "Selected File\n"
 "Output Format\n"

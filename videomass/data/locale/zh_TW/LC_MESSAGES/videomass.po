@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-19 18:50+0100\n"
+"POT-Creation-Date: 2026-11-20 13:36+0100\n"
 "PO-Revision-Date: 2026-02-25 03:16+0800\n"
 "Last-Translator: Peter Dave Hello <hsu@peterdavehello.org>\n"
 "Language: zh_TW\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: videomass/gui_app.py:211
 #, fuzzy
@@ -74,8 +74,8 @@ msgstr "第二階段指令"
 msgid "Videomass - RAW Commands"
 msgstr "Videomass - RAW 指令"
 
-#: videomass/vdms_dialogs/avconv_cmd_line.py:68 videomass/vdms_dialogs/ffmpeg_help.py:133 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:387 videomass/vdms_panels/concatenate.py:131 videomass/vdms_panels/sequence_to_video.py:114
-#: videomass/vdms_panels/video_to_sequence.py:84
+#: videomass/vdms_dialogs/avconv_cmd_line.py:68 videomass/vdms_dialogs/ffmpeg_help.py:133 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:387 videomass/vdms_panels/concatenate.py:116 videomass/vdms_panels/sequence_to_video.py:114
+#: videomass/vdms_panels/video_to_sequence.py:73
 msgid "?"
 msgstr ""
 
@@ -189,11 +189,11 @@ msgstr "找不到 FFprobe！"
 msgid "FFplay   ...not found !"
 msgstr "找不到 FFplay！"
 
-#: videomass/vdms_dialogs/ffmpeg_conf.py:220 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:701
+#: videomass/vdms_dialogs/ffmpeg_conf.py:220 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:698
 msgid "Enabled"
 msgstr "已啟用"
 
-#: videomass/vdms_dialogs/ffmpeg_conf.py:231 videomass/vdms_panels/av_conversions.py:1390 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:705
+#: videomass/vdms_dialogs/ffmpeg_conf.py:231 videomass/vdms_panels/av_conversions.py:1390 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:702
 msgid "Disabled"
 msgstr "已停用"
 
@@ -946,11 +946,11 @@ msgstr "無法在 [字幕串流] 分頁開啟剪貼簿"
 msgid "Where do you prefer to save your transcodes?"
 msgstr "您希望將轉碼檔案儲存到哪裡？"
 
-#: videomass/vdms_dialogs/preferences.py:108 videomass/vdms_dialogs/preferences.py:135 videomass/vdms_dialogs/preferences.py:159 videomass/vdms_dialogs/preferences.py:171 videomass/vdms_dialogs/preferences.py:183 videomass/vdms_panels/filedrop.py:413
+#: videomass/vdms_dialogs/preferences.py:108 videomass/vdms_dialogs/preferences.py:135 videomass/vdms_dialogs/preferences.py:159 videomass/vdms_dialogs/preferences.py:171 videomass/vdms_dialogs/preferences.py:183 videomass/vdms_panels/filedrop.py:459
 msgid "Change"
 msgstr "變更"
 
-#: videomass/vdms_dialogs/preferences.py:110 videomass/vdms_panels/av_conversions.py:1385 videomass/vdms_panels/filedrop.py:794 videomass/vdms_panels/presets_manager.py:1223
+#: videomass/vdms_dialogs/preferences.py:110 videomass/vdms_panels/av_conversions.py:1385 videomass/vdms_panels/filedrop.py:840 videomass/vdms_panels/presets_manager.py:1223
 msgid "Same destination paths as source files"
 msgstr "與來源檔案相同的目的地路徑"
 
@@ -1201,7 +1201,7 @@ msgstr "二次行程編碼的 FFmpeg 引數"
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr "在二次行程編碼的輸入檔案前加入任何選用引數，例如使用 CUDA 時所需的一些硬體加速名稱，如 -hwaccel。"
 
-#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:592 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:207
+#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:592 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
 msgid "Edit"
 msgstr "編輯"
 
@@ -1229,7 +1229,7 @@ msgstr ""
 "匯入\n"
 "佇列檔案"
 
-#: videomass/vdms_dialogs/queuedlg.py:89 videomass/vdms_panels/filedrop.py:401
+#: videomass/vdms_dialogs/queuedlg.py:89 videomass/vdms_panels/filedrop.py:447
 msgid "Destination file name"
 msgstr "目的地檔案名稱"
 
@@ -1245,7 +1245,7 @@ msgstr "Videomass - 佇列"
 msgid "Export queue file"
 msgstr "匯出佇列檔案"
 
-#: videomass/vdms_dialogs/queuedlg.py:312 videomass/vdms_panels/av_conversions.py:1380 videomass/vdms_panels/presets_manager.py:1217 videomass/vdms_panels/video_to_sequence.py:695
+#: videomass/vdms_dialogs/queuedlg.py:312 videomass/vdms_panels/av_conversions.py:1380 videomass/vdms_panels/presets_manager.py:1217 videomass/vdms_panels/video_to_sequence.py:692
 msgid "Same as source"
 msgstr "與來源相同"
 
@@ -1662,7 +1662,7 @@ msgstr "已存在"
 msgid "Not found"
 msgstr "找不到"
 
-#: videomass/vdms_io/checkup.py:92 videomass/vdms_panels/filedrop.py:322
+#: videomass/vdms_io/checkup.py:92 videomass/vdms_panels/filedrop.py:353
 msgid "Error list"
 msgstr "錯誤清單"
 
@@ -1770,7 +1770,7 @@ msgstr "完全退出應用程式"
 msgid "File"
 msgstr "檔案 (&F)"
 
-#: videomass/vdms_main/main_frame.py:565 videomass/vdms_panels/filedrop.py:475 videomass/vdms_panels/filedrop.py:517
+#: videomass/vdms_main/main_frame.py:565 videomass/vdms_panels/filedrop.py:521 videomass/vdms_panels/filedrop.py:563
 msgid "Rename selected file\tCtrl+R"
 msgstr "重新命名選取的檔案 (&R)\tCtrl+R"
 
@@ -1778,7 +1778,7 @@ msgstr "重新命名選取的檔案 (&R)\tCtrl+R"
 msgid "Rename the destination of the selected file"
 msgstr "重新命名選取檔案的目的地"
 
-#: videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/filedrop.py:476 videomass/vdms_panels/filedrop.py:520
+#: videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:566
 msgid "Batch rename files\tCtrl+B"
 msgstr "批次重新命名檔案 (&B)\tCtrl+B"
 
@@ -1786,7 +1786,7 @@ msgstr "批次重新命名檔案 (&B)\tCtrl+B"
 msgid "Numerically renames the destination of all items in the list"
 msgstr "以數字重新命名清單中所有項目的目的地"
 
-#: videomass/vdms_main/main_frame.py:578 videomass/vdms_panels/filedrop.py:478 videomass/vdms_panels/filedrop.py:524
+#: videomass/vdms_main/main_frame.py:578 videomass/vdms_panels/filedrop.py:524 videomass/vdms_panels/filedrop.py:570
 msgid "Remove selected entry\tDEL"
 msgstr "移除選取的項目\tDEL"
 
@@ -1794,7 +1794,7 @@ msgstr "移除選取的項目\tDEL"
 msgid "Remove the selected file from the list"
 msgstr "從清單中移除選取的檔案"
 
-#: videomass/vdms_main/main_frame.py:583 videomass/vdms_panels/filedrop.py:479 videomass/vdms_panels/filedrop.py:527
+#: videomass/vdms_main/main_frame.py:583 videomass/vdms_panels/filedrop.py:525 videomass/vdms_panels/filedrop.py:573
 msgid "Clear list\tShift+DEL"
 msgstr "清除清單\tShift+DEL"
 
@@ -2199,7 +2199,7 @@ msgstr "Videomass - 從影片轉圖片"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - 靜態影像製作器"
 
-#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:539 videomass/vdms_panels/av_conversions.py:682 videomass/vdms_panels/av_conversions.py:1433 videomass/vdms_panels/filedrop.py:664 videomass/vdms_panels/filedrop.py:810 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:428 videomass/vdms_panels/video_to_sequence.py:577
+#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:539 videomass/vdms_panels/av_conversions.py:682 videomass/vdms_panels/av_conversions.py:1433 videomass/vdms_panels/filedrop.py:710 videomass/vdms_panels/filedrop.py:856 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
 msgid "Have to select an item in the file list first"
 msgstr "必須先在檔案清單中選取項目"
 
@@ -2489,7 +2489,7 @@ msgstr "預覽視訊過濾器"
 msgid "Disable active filters"
 msgstr "停用作用中的過濾器"
 
-#: videomass/vdms_panels/av_conversions.py:400 videomass/vdms_panels/sequence_to_video.py:176 videomass/vdms_panels/video_to_sequence.py:129
+#: videomass/vdms_panels/av_conversions.py:400 videomass/vdms_panels/sequence_to_video.py:176 videomass/vdms_panels/video_to_sequence.py:118
 msgid "Resize"
 msgstr "調整大小"
 
@@ -2517,12 +2517,12 @@ msgstr "等化"
 msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
 msgstr "若要預覽穩定過濾器，請按一下 [視訊穩定器工具] 上的 [預覽] 按鈕"
 
-#: videomass/vdms_panels/audio_encoders/acodecs.py:754 videomass/vdms_panels/av_conversions.py:625 videomass/vdms_panels/filedrop.py:692
+#: videomass/vdms_panels/audio_encoders/acodecs.py:754 videomass/vdms_panels/av_conversions.py:625 videomass/vdms_panels/filedrop.py:738
 #, python-format
 msgid "Invalid or unsupported file:  %s"
 msgstr "無效或不支援的檔案： %s"
 
-#: videomass/vdms_panels/av_conversions.py:708 videomass/vdms_panels/sequence_to_video.py:397 videomass/vdms_panels/video_to_sequence.py:455
+#: videomass/vdms_panels/av_conversions.py:708 videomass/vdms_panels/sequence_to_video.py:397 videomass/vdms_panels/video_to_sequence.py:452
 msgid "The selected file is not a frame or a video file"
 msgstr "該檔案不是畫格或視訊檔案"
 
@@ -2677,20 +2677,26 @@ msgstr "發現無效資料"
 msgid "The files do not have the same \"codec_types\", same \"sample_rate\" or same \"width\" or \"height\". Unable to proceed."
 msgstr "檔案沒有相同的 \"codec_types\"、\"sample_rate\" 或相同的 \"width\" 或 \"height\"。無法繼續。"
 
-#: videomass/vdms_panels/concatenate.py:97
+#: videomass/vdms_panels/concatenate.py:126
+msgid "Videomass Documentation:"
+msgstr "Videomass 文件："
+
+#: videomass/vdms_panels/concatenate.py:140 videomass/vdms_panels/sequence_to_video.py:239 videomass/vdms_panels/video_to_sequence.py:210
+msgid "Official FFmpeg documentation:"
+msgstr "官方 FFmpeg 文件："
+
+#: videomass/vdms_panels/concatenate.py:168
+#, fuzzy
 msgid ""
-"\n"
-"- The concatenation function is performed only with Audio files or only with Video files.\n"
+"- The concatenation function works only with audio files or only with video files.\n"
 "\n"
 "- The order of concatenation depends on the order in which the files were added.\n"
 "\n"
-"- The output file name will have the same name as the first file added (also depends on the\n"
-"  settings made in the preferences dialog or the renaming functions used).\n"
+"- The output file name will take the same name as the first file added (also depending on the settings made in the preferences dialog or the renaming functions used).\n"
 "\n"
-"- Video files must have exactly same streams, same codecs and same\n"
-"  width/height, but can be wrapped in different container formats.\n"
+"- Video files must have the exact same streams, the same codecs, and the same width/height, though they can be wrapped in different container formats.\n"
 "\n"
-"- Audio files must have exactly the same formats, same codecs with equal sample rate."
+"- Audio files must have the exact same formats, the same codecs, and an equal sample rate."
 msgstr ""
 "\n"
 "- 串接功能僅適用於音訊檔案或僅適用於視訊檔案。\n"
@@ -2704,14 +2710,6 @@ msgstr ""
 "  寬度/高度，但可封裝在不同的容器格式中。\n"
 "\n"
 "- 音訊檔案必須擁有完全相同的格式、相同的編解碼器以及相同的取樣率。"
-
-#: videomass/vdms_panels/concatenate.py:141
-msgid "Videomass Documentation:"
-msgstr "Videomass 文件："
-
-#: videomass/vdms_panels/concatenate.py:155 videomass/vdms_panels/sequence_to_video.py:239 videomass/vdms_panels/video_to_sequence.py:221
-msgid "Official FFmpeg documentation:"
-msgstr "官方 FFmpeg 文件："
 
 #: videomass/vdms_panels/concatenate.py:289
 msgid ""
@@ -2756,87 +2754,106 @@ msgstr "名稱包含非法字元，例如：{0}"
 msgid "Name already in use:"
 msgstr "名稱已在使用中："
 
-#: videomass/vdms_panels/filedrop.py:207
+#: videomass/vdms_panels/filedrop.py:202
+#, python-brace-format
+msgid ""
+"The file list has reached its maximum limit of {0} files.\n"
+"Please remove some items before adding new ones."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:222
 msgid "Duplicate file, it has already been added to the list."
 msgstr "重複的檔案，它已經被加入清單中。"
 
-#: videomass/vdms_panels/filedrop.py:323
+#: videomass/vdms_panels/filedrop.py:233
+#, python-brace-format
+msgid "Only {0} of {1} new files will be added to stay within the maximum limit of {2} files in the list."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:354
 msgid "Rejected files"
 msgstr "被拒絕的檔案"
 
-#: videomass/vdms_panels/filedrop.py:397
+#: videomass/vdms_panels/filedrop.py:389
+#, python-brace-format
+msgid ""
+"Too many files dropped at once ({0}).\n"
+"Maximum allowed per drop is {1} files."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:443
 msgid "Source file"
 msgstr "來源檔案"
 
-#: videomass/vdms_panels/filedrop.py:398
+#: videomass/vdms_panels/filedrop.py:444
 msgid "Duration"
 msgstr "持續時間"
 
-#: videomass/vdms_panels/filedrop.py:399
+#: videomass/vdms_panels/filedrop.py:445
 msgid "Media type"
 msgstr "媒體類型"
 
-#: videomass/vdms_panels/filedrop.py:400
+#: videomass/vdms_panels/filedrop.py:446
 msgid "Size"
 msgstr "大小"
 
-#: videomass/vdms_panels/filedrop.py:403 videomass/vdms_panels/filedrop.py:542
+#: videomass/vdms_panels/filedrop.py:449 videomass/vdms_panels/filedrop.py:588
 msgid "Drag one or more files below"
 msgstr "將一個或多個檔案拖曳至下方"
 
-#: videomass/vdms_panels/filedrop.py:410
+#: videomass/vdms_panels/filedrop.py:456
 msgid "Save to:"
 msgstr "儲存至："
 
-#: videomass/vdms_panels/filedrop.py:440
+#: videomass/vdms_panels/filedrop.py:486
 msgid "Set a new destination folder for encodings"
 msgstr "設定新的編碼目的地資料夾"
 
-#: videomass/vdms_panels/filedrop.py:442
+#: videomass/vdms_panels/filedrop.py:488
 msgid "Encodings destination folder"
 msgstr "編碼目的地資料夾"
 
-#: videomass/vdms_panels/filedrop.py:473 videomass/vdms_panels/filedrop.py:530
+#: videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:576
 msgid "Play file"
 msgstr "播放檔案"
 
-#: videomass/vdms_panels/filedrop.py:546
+#: videomass/vdms_panels/filedrop.py:592
 #, fuzzy
 msgid "Drag two or more files below (audio only or video only)"
 msgstr "將一個或多個檔案拖曳至下方"
 
-#: videomass/vdms_panels/filedrop.py:552
+#: videomass/vdms_panels/filedrop.py:598
 #, fuzzy
 msgid "Drag one or more image files below (JPEG, JPG, PNG, TIFF, TIF, BMP)"
 msgstr "將一個或多個影像檔案拖曳至下方"
 
-#: videomass/vdms_panels/filedrop.py:560
+#: videomass/vdms_panels/filedrop.py:606
 #, fuzzy
-msgid "Drag one or more video files below (including animated images)"
+msgid "Drag video files below (including animated images such as APNG, WebP, GIF)"
 msgstr "將一個或多個視訊檔案拖曳至下方"
 
-#: videomass/vdms_panels/filedrop.py:820
+#: videomass/vdms_panels/filedrop.py:866
 msgid "Rename the file destination"
 msgstr "重新命名檔案目的地"
 
-#: videomass/vdms_panels/filedrop.py:821
+#: videomass/vdms_panels/filedrop.py:867
 msgid "Rename the selected file to:"
 msgstr "將選取的檔案重新命名為："
 
-#: videomass/vdms_panels/filedrop.py:836 videomass/vdms_panels/filedrop.py:846 videomass/vdms_panels/filedrop.py:880
+#: videomass/vdms_panels/filedrop.py:882 videomass/vdms_panels/filedrop.py:892 videomass/vdms_panels/filedrop.py:926
 msgid "Add Files"
 msgstr "加入檔案"
 
-#: videomass/vdms_panels/filedrop.py:854
+#: videomass/vdms_panels/filedrop.py:900
 msgid "Rename in batch"
 msgstr "批次重新命名"
 
-#: videomass/vdms_panels/filedrop.py:855
+#: videomass/vdms_panels/filedrop.py:901
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "將 {0} 個項目重新命名為："
 
-#: videomass/vdms_panels/filedrop.py:858
+#: videomass/vdms_panels/filedrop.py:904
 msgid "New Name #"
 msgstr "新名稱 #"
 
@@ -3209,13 +3226,13 @@ msgstr "附加引數"
 msgid ""
 "1. Import one or more image files such as {} formats (even in mixed mode), then select one as your starting point.\n"
 "\n"
-"2. Use the Resize tool if your images have different width and height dimensions. You only need to do this once for the selected file to automatically resize the other images. Otherwise, it's optional.\n"
+"2. Use the Resize tool if your images have different width and height dimensions. You only need to do this once for the selected file; the remaining images will be resized automatically to match it. Otherwise, this step is optional.\n"
 "\n"
-"3. Set a time interval between images, or for a single image if you «Enable a single still image» option.\n"
+"3. Set a time interval between images, or set the duration for a single image if you check the 'Enable a single still image' option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
-"The produced video will have the name of the selected file in the 'File List' panel, which will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
+"The produced video will take the name of the selected file in the 'File List' panel and will be saved in a folder named 'Still_Images' with a sequential number, in the path you specify."
 msgstr ""
 "\n"
 "1. 匯入一個或多個影像檔案，例如 JPG、PNG 與 BMP 格式 (即使是混合模式)，\n"
@@ -3260,7 +3277,7 @@ msgstr ""
 "\n"
 "它似乎不是音訊檔案。"
 
-#: videomass/vdms_panels/sequence_to_video.py:631 videomass/vdms_panels/sequence_to_video.py:664 videomass/vdms_panels/video_to_sequence.py:591
+#: videomass/vdms_panels/sequence_to_video.py:631 videomass/vdms_panels/sequence_to_video.py:664 videomass/vdms_panels/video_to_sequence.py:588
 #, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "無效的檔案：'{}'"
@@ -3308,21 +3325,62 @@ msgstr ""
 "靜態影像持續時間\n"
 "整體視訊持續時間"
 
-#: videomass/vdms_panels/video_to_sequence.py:56
+#: videomass/vdms_panels/video_to_sequence.py:81
+msgid "Create thumbnails"
+msgstr "建立縮圖"
+
+#: videomass/vdms_panels/video_to_sequence.py:82
+msgid "Create tiled mosaics"
+msgstr "建立平鋪馬賽克"
+
+#: videomass/vdms_panels/video_to_sequence.py:83
+msgid "Create animated GIF"
+msgstr "建立動畫 GIF"
+
+#: videomass/vdms_panels/video_to_sequence.py:88
+msgid "Options"
+msgstr "選項"
+
+#: videomass/vdms_panels/video_to_sequence.py:123
+msgid "Output format:"
+msgstr "輸出格式："
+
+#: videomass/vdms_panels/video_to_sequence.py:137
+msgid "Rows:"
+msgstr "列："
+
+#: videomass/vdms_panels/video_to_sequence.py:151
+msgid "Columns:"
+msgstr "行："
+
+#: videomass/vdms_panels/video_to_sequence.py:242
+msgid "Other unofficial resources:"
+msgstr "其他非官方資源："
+
+#: videomass/vdms_panels/video_to_sequence.py:271
+msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
+msgstr "設定 FPS 控制，從 0.1 到 30.0 fps。數值越高，擷取的影像越多。"
+
+#: videomass/vdms_panels/video_to_sequence.py:275
+msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
+msgstr "馬賽克磚周圍的空間。從 0 到 32 像素"
+
+#: videomass/vdms_panels/video_to_sequence.py:277
+msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
+msgstr "馬賽克邊框周圍的空間。從 0 到 32 像素"
+
+#: videomass/vdms_panels/video_to_sequence.py:292
+#, fuzzy
 msgid ""
+"1. Select an imported video file or an animated image.\n"
 "\n"
-"1. Import one or more video files, then select one.\n"
-"\n"
-"2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting the\n"
-"\"End\" and the \"Start\" duration values.\n"
+"2. (Optional, recommended) To extract frames from a specific slice of time, use the Timeline editor (CTRL+T) by adjusting the \"Start\" and \"End\" duration values—otherwise, all frames from the entire file will be extracted.\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
-"\n"
-"The images produced will be saved in a folder named 'Movie_to_Pictures'\n"
-"with a progressive digit, in the path you specify."
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with a sequential number, in the path you specify."
 msgstr ""
 "\n"
 "1. 匯入一個或多個視訊檔案，然後選取一個。\n"
@@ -3338,51 +3396,7 @@ msgstr ""
 "產生的影像將會儲存在您指定路徑中名為 'Movie_to_Pictures'\n"
 "的資料夾內，並附上遞增數字。"
 
-#: videomass/vdms_panels/video_to_sequence.py:92
-msgid "Create thumbnails"
-msgstr "建立縮圖"
-
-#: videomass/vdms_panels/video_to_sequence.py:93
-msgid "Create tiled mosaics"
-msgstr "建立平鋪馬賽克"
-
-#: videomass/vdms_panels/video_to_sequence.py:94
-msgid "Create animated GIF"
-msgstr "建立動畫 GIF"
-
-#: videomass/vdms_panels/video_to_sequence.py:99
-msgid "Options"
-msgstr "選項"
-
-#: videomass/vdms_panels/video_to_sequence.py:134
-msgid "Output format:"
-msgstr "輸出格式："
-
-#: videomass/vdms_panels/video_to_sequence.py:148
-msgid "Rows:"
-msgstr "列："
-
-#: videomass/vdms_panels/video_to_sequence.py:162
-msgid "Columns:"
-msgstr "行："
-
-#: videomass/vdms_panels/video_to_sequence.py:253
-msgid "Other unofficial resources:"
-msgstr "其他非官方資源："
-
-#: videomass/vdms_panels/video_to_sequence.py:282
-msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
-msgstr "設定 FPS 控制，從 0.1 到 30.0 fps。數值越高，擷取的影像越多。"
-
-#: videomass/vdms_panels/video_to_sequence.py:286
-msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
-msgstr "馬賽克磚周圍的空間。從 0 到 32 像素"
-
-#: videomass/vdms_panels/video_to_sequence.py:288
-msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
-msgstr "馬賽克邊框周圍的空間。從 0 到 32 像素"
-
-#: videomass/vdms_panels/video_to_sequence.py:724
+#: videomass/vdms_panels/video_to_sequence.py:721
 msgid ""
 "Selected File\n"
 "Output Format\n"

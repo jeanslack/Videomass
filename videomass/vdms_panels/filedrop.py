@@ -193,6 +193,21 @@ class MyListCtrl(wx.ListCtrl):
         """
         Validate paths on the main thread and run ffprobe in a worker thread.
         """
+        current_count = self.GetItemCount()
+        available_slots = self.appdata["max_total_files"] - current_count
+
+        if available_slots <= 0:
+            wx.MessageBox(
+                _(
+                    "The file list has reached its maximum limit of {0} "
+                    "files.\nPlease remove some items before adding new ones."
+                ).format(self.appdata["max_total_files"]),
+                "Videomass",
+                wx.ICON_WARNING,
+                self,
+            )
+            return
+
         existing_paths = {x["format"]["filename"] for x in self.data}
         to_probe = []
 
@@ -211,6 +226,22 @@ class MyListCtrl(wx.ListCtrl):
 
             existing_paths.add(path)
             to_probe.append((path, newname))
+
+        if len(to_probe) > available_slots:
+            wx.MessageBox(
+                _(
+                    "Only {0} of {1} new files will be added to stay within "
+                    "the maximum limit of {2} files in the list."
+                ).format(
+                    available_slots,
+                    len(to_probe),
+                    self.appdata["max_total_files"],
+                ),
+                "Videomass",
+                wx.ICON_INFORMATION,
+                self,
+            )
+            to_probe = to_probe[:available_slots]
 
         if not to_probe:
             self._finalize_drop()
@@ -339,6 +370,9 @@ class FileDrop(wx.FileDropTarget):
         """
         Constructor. File Drop targets are subsets of windows
         """
+        get = wx.GetApp()
+        self.maxdropfiles = get.appset["max_drop_files"]
+
         wx.FileDropTarget.__init__(self)
         self.window = window  # window is MyListCtr class
 
@@ -347,7 +381,19 @@ class FileDrop(wx.FileDropTarget):
     def OnDropFiles(self, x, y, filenames):
         """
         When files are dropped, pass them as a batch to MyListCtrl
+        Reject drop if the number of dragged files exceeds maxdropfiles
         """
+        if len(filenames) > self.maxdropfiles:
+            wx.MessageBox(
+                _(
+                    "Too many files dropped at once ({0}).\n"
+                    "Maximum allowed per drop is {1} files."
+                ).format(len(filenames), self.maxdropfiles),
+                "Videomass",
+                wx.ICON_WARNING,
+            )
+            return False
+
         items = [(filepath, None) for filepath in filenames]
         self.window.dropUpdateBatch(items)
         return True
@@ -557,8 +603,8 @@ class FileDnD(wx.Panel):
         elif topic == "Video to Pictures":
             self.lbl_info.SetLabel(
                 _(
-                    "Drag one or more video files below "
-                    "(including animated images)"
+                    "Drag video files below (including animated "
+                    "images such as APNG, WebP, GIF)"
                 )
             )
 

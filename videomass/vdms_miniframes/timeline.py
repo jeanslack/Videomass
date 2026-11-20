@@ -180,6 +180,7 @@ class Float_TL(wx.MiniFrame):
     get = wx.GetApp()
     ICONS = get.iconset
     COLORSCHEME = get.appset["colorscheme"]
+    COLOR_INFO = COLORSCHEME["INFO"]
     ICONTHEME = get.appset["icontheme"]
     OS = get.appset["ostype"]
     LOGDIR = get.appset["logdir"]
@@ -192,13 +193,13 @@ class Float_TL(wx.MiniFrame):
         YELLOW = "#BD9F00"  # for warnings
         BLACK = "#060505"  # black for background status bar
         ORANGE = "#F28924"  # orange light for errors and warnings
-        COLORWAVE = "0x0A192F@0.55"  # see ffmpeg cmd line color wave
-        RULER_BKGRD = "#8C8777"  # beige, ruller background
+        COLORWAVE = "0x4682B4@0.40"  # see ffmpeg cmd line color wave
+        RULER_BKGRD = COLORSCHEME["BACKGRD"]
         DELIMITER_COLOR = "#00F5D4"  # Mint Green for margin selection handles
         SELECTION = (0, 245, 212, 40)  # semi-transp Mint Green, inner area
-        DURATION_RESET = "#060505"  # Black for the initial time text
-        DURATION_START = "#E6FFFC"  # Cyan-white for the time text (Start/End)
-        TEXT_PEN_COLOR = "#E6FFFC"  # Cyan-white for the ruler markings
+        DURATION_RESET = COLORSCHEME["TXT1"]  # time text (Start/End) reset
+        DURATION_START = COLORSCHEME["TXT3"]  # time text (Start/End) activated
+        TEXT_PEN_COLOR = COLORSCHEME["TXT0"]  # ruler markings
         # --- INVALID SELECTION HIGHLIGHTED
         SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
         TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
@@ -247,9 +248,6 @@ class Float_TL(wx.MiniFrame):
         # --- INVALID SELECTION HIGHLIGHTED
         SELECTION_INVALID = (255, 38, 38, 110)  # Semi-transparent red error
         TEXT_INVALID = "#FFD700"  # Golden yellow for text containing errors
-
-    # --- BTN readme
-    TIPGREEN = "#80C058"  # readme btn foreground
 
     # ruler and panel specifications constants
     RW = 900  # ruler width
@@ -389,7 +387,7 @@ class Float_TL(wx.MiniFrame):
         font = btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         btn_quicktip.SetFont(font)
-        btn_quicktip.SetForegroundColour(wx.Colour(Float_TL.TIPGREEN))
+        btn_quicktip.SetForegroundColour(wx.Colour(Float_TL.COLOR_INFO))
         sizer_btns.Add(btn_quicktip, 0, wx.LEFT | wx.CENTRE, 20)
 
         # ----------------------Properties ----------------------#

@@ -43,26 +43,31 @@ class NormalTransientPopup(wx.PopupTransientWindow):
         parent,
         style,
         message,
-        backgrdcol="#646D6F",
-        foregrdcol="#80C058",
+        backgrdcol=None,
+        foregrdcol=None,
         wrap=-1,
     ):
         """
         Some word on these parameters:
         - message: the text you want showing in the popup.
-        - backgrdcol: the background colour code (RGB or html)
-        - foregrdcol: The text colour code
+        - backgrdcol: the background colour code (RGB or html), e.g. "#646D6F"
+        - foregrdcol: The text colour code, e.g "#80C058"
         - wrap = width in pixels specified as an integer argument
           for the text displayed in the popup.
         """
+        get = wx.GetApp()
+        colorscheme = get.appset["colorscheme"]
+        backgrd = colorscheme["BACKGRD"] if not backgrdcol else backgrdcol
+        foregrd = colorscheme["INFO"] if not foregrdcol else foregrdcol
+
         wx.PopupTransientWindow.__init__(self, parent, style)
         panel = wx.Panel(self, style=wx.BORDER_SIMPLE)
-        panel.SetBackgroundColour(backgrdcol)
+        panel.SetBackgroundColour(backgrd)
         st = wx.StaticText(panel, -1, message)
 
         if wrap > -1:
             st.Wrap(wrap)
-        st.SetForegroundColour(wx.Colour(foregrdcol))
+        st.SetForegroundColour(wx.Colour(foregrd))
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(st, 0, wx.ALL, 5)

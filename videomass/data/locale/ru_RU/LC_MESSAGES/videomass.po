@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-19 18:50+0100\n"
-"PO-Revision-Date: 2026-11-16 21:13+0100\n"
+"POT-Creation-Date: 2026-11-20 13:36+0100\n"
+"PO-Revision-Date: 2026-11-19 23:33+0300\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
 "Language-Team: Chour <ChourS2008@yandex.ru>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: videomass/gui_app.py:211
 msgid "Unable to delete some cache files."
@@ -76,8 +76,8 @@ msgstr "Команда первого прохода"
 msgid "Videomass - RAW Commands"
 msgstr "Videomass - RAW Команды"
 
-#: videomass/vdms_dialogs/avconv_cmd_line.py:68 videomass/vdms_dialogs/ffmpeg_help.py:133 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:387 videomass/vdms_panels/concatenate.py:131 videomass/vdms_panels/sequence_to_video.py:114
-#: videomass/vdms_panels/video_to_sequence.py:84
+#: videomass/vdms_dialogs/avconv_cmd_line.py:68 videomass/vdms_dialogs/ffmpeg_help.py:133 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:102 videomass/vdms_dialogs/shownormlist.py:115 videomass/vdms_dialogs/shownormlist.py:128 videomass/vdms_miniframes/timeline.py:387 videomass/vdms_panels/concatenate.py:116 videomass/vdms_panels/sequence_to_video.py:114
+#: videomass/vdms_panels/video_to_sequence.py:73
 msgid "?"
 msgstr "?"
 
@@ -192,11 +192,11 @@ msgstr "FFprobe   ...не найдено !"
 msgid "FFplay   ...not found !"
 msgstr "FFplay   ...не найдено !"
 
-#: videomass/vdms_dialogs/ffmpeg_conf.py:220 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:701
+#: videomass/vdms_dialogs/ffmpeg_conf.py:220 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:698
 msgid "Enabled"
 msgstr "Включено"
 
-#: videomass/vdms_dialogs/ffmpeg_conf.py:231 videomass/vdms_panels/av_conversions.py:1390 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:705
+#: videomass/vdms_dialogs/ffmpeg_conf.py:231 videomass/vdms_panels/av_conversions.py:1390 videomass/vdms_panels/sequence_to_video.py:796 videomass/vdms_panels/video_to_sequence.py:702
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -443,15 +443,16 @@ msgstr "Эквалайзер для цветокоррекции"
 # оставлено 19-3-2021
 # | msgid "Preview video filters"
 #: videomass/vdms_dialogs/filter_colorcorrection.py:361 videomass/vdms_dialogs/filter_colorcorrection.py:362 videomass/vdms_dialogs/filter_colorcorrection.py:417 videomass/vdms_dialogs/filter_colorcorrection.py:435 videomass/vdms_dialogs/filter_crop.py:502 videomass/vdms_dialogs/filter_transpose.py:199
-#, fuzzy
 msgid "Preview unavailable"
-msgstr "Предварительный просмотр с учётом фильтров FFplay"
+msgstr "Предварительный просмотр недоступен"
 
 #: videomass/vdms_dialogs/filter_colorcorrection.py:399 videomass/vdms_dialogs/filter_crop.py:495 videomass/vdms_dialogs/filter_scale.py:387 videomass/vdms_dialogs/filter_transpose.py:180
 msgid ""
 "Please wait...\n"
 "Loading image."
 msgstr ""
+"Пожалуйста подождите...\n"
+"Загрузка изображения."
 
 #: videomass/vdms_dialogs/filter_crop.py:253 videomass/vdms_dialogs/filter_scale.py:118
 #, python-brace-format
@@ -872,7 +873,7 @@ msgstr ""
 
 #: videomass/vdms_dialogs/filter_transpose.py:89
 msgid "Loading preview..."
-msgstr ""
+msgstr "Загружается предварительный просмотр..."
 
 #: videomass/vdms_dialogs/filter_transpose.py:94
 msgid "Rotation setting"
@@ -966,11 +967,11 @@ msgstr "Невозможно открыть буфер обмена на вкл�
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Где вы предпочитаете сохранять перекодировки?"
 
-#: videomass/vdms_dialogs/preferences.py:108 videomass/vdms_dialogs/preferences.py:135 videomass/vdms_dialogs/preferences.py:159 videomass/vdms_dialogs/preferences.py:171 videomass/vdms_dialogs/preferences.py:183 videomass/vdms_panels/filedrop.py:413
+#: videomass/vdms_dialogs/preferences.py:108 videomass/vdms_dialogs/preferences.py:135 videomass/vdms_dialogs/preferences.py:159 videomass/vdms_dialogs/preferences.py:171 videomass/vdms_dialogs/preferences.py:183 videomass/vdms_panels/filedrop.py:459
 msgid "Change"
 msgstr "Изменить"
 
-#: videomass/vdms_dialogs/preferences.py:110 videomass/vdms_panels/av_conversions.py:1385 videomass/vdms_panels/filedrop.py:794 videomass/vdms_panels/presets_manager.py:1223
+#: videomass/vdms_dialogs/preferences.py:110 videomass/vdms_panels/av_conversions.py:1385 videomass/vdms_panels/filedrop.py:840 videomass/vdms_panels/presets_manager.py:1223
 msgid "Same destination paths as source files"
 msgstr "Те же пути назначения, что и у исходных файлов"
 
@@ -1230,7 +1231,7 @@ msgstr "Аргументы FFmpeg для двухпроходного кодир
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr "Любые необязательные аргументы, добавляемые перед входным файлом при двухпроходном кодировании, например, обязательные имена некоторых аппаратных ускорений, таких как -hwaccel, для использования с CUDA."
 
-#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:592 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:207
+#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:592 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -1258,7 +1259,7 @@ msgstr ""
 "Импортировать\n"
 "файл очереди"
 
-#: videomass/vdms_dialogs/queuedlg.py:89 videomass/vdms_panels/filedrop.py:401
+#: videomass/vdms_dialogs/queuedlg.py:89 videomass/vdms_panels/filedrop.py:447
 msgid "Destination file name"
 msgstr "Имя файла назначения"
 
@@ -1274,7 +1275,7 @@ msgstr "Videomass - Очередь"
 msgid "Export queue file"
 msgstr "Экспортировать файл очереди(.json)"
 
-#: videomass/vdms_dialogs/queuedlg.py:312 videomass/vdms_panels/av_conversions.py:1380 videomass/vdms_panels/presets_manager.py:1217 videomass/vdms_panels/video_to_sequence.py:695
+#: videomass/vdms_dialogs/queuedlg.py:312 videomass/vdms_panels/av_conversions.py:1380 videomass/vdms_panels/presets_manager.py:1217 videomass/vdms_panels/video_to_sequence.py:692
 msgid "Same as source"
 msgstr "Так же, как источник"
 
@@ -1696,7 +1697,7 @@ msgstr "Уже существует"
 msgid "Not found"
 msgstr "Не найдено"
 
-#: videomass/vdms_io/checkup.py:92 videomass/vdms_panels/filedrop.py:322
+#: videomass/vdms_io/checkup.py:92 videomass/vdms_panels/filedrop.py:353
 msgid "Error list"
 msgstr "Список ошибок"
 
@@ -1806,7 +1807,7 @@ msgstr "Полностью выйти из приложения"
 msgid "File"
 msgstr "Файл"
 
-#: videomass/vdms_main/main_frame.py:565 videomass/vdms_panels/filedrop.py:475 videomass/vdms_panels/filedrop.py:517
+#: videomass/vdms_main/main_frame.py:565 videomass/vdms_panels/filedrop.py:521 videomass/vdms_panels/filedrop.py:563
 msgid "Rename selected file\tCtrl+R"
 msgstr "Переименовать выбранный файл\tCtrl+R"
 
@@ -1814,7 +1815,7 @@ msgstr "Переименовать выбранный файл\tCtrl+R"
 msgid "Rename the destination of the selected file"
 msgstr "Переименуйте место назначения выбранного файла"
 
-#: videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/filedrop.py:476 videomass/vdms_panels/filedrop.py:520
+#: videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:566
 msgid "Batch rename files\tCtrl+B"
 msgstr "Пакетное переименование файлов\tCtrl+B"
 
@@ -1822,7 +1823,7 @@ msgstr "Пакетное переименование файлов\tCtrl+B"
 msgid "Numerically renames the destination of all items in the list"
 msgstr "Численно переименовывает пункт назначения всех элементов в списке."
 
-#: videomass/vdms_main/main_frame.py:578 videomass/vdms_panels/filedrop.py:478 videomass/vdms_panels/filedrop.py:524
+#: videomass/vdms_main/main_frame.py:578 videomass/vdms_panels/filedrop.py:524 videomass/vdms_panels/filedrop.py:570
 msgid "Remove selected entry\tDEL"
 msgstr "Удалить выбранный файл\tDEL"
 
@@ -1830,7 +1831,7 @@ msgstr "Удалить выбранный файл\tDEL"
 msgid "Remove the selected file from the list"
 msgstr "Удалить выбранный файл из списка"
 
-#: videomass/vdms_main/main_frame.py:583 videomass/vdms_panels/filedrop.py:479 videomass/vdms_panels/filedrop.py:527
+#: videomass/vdms_main/main_frame.py:583 videomass/vdms_panels/filedrop.py:525 videomass/vdms_panels/filedrop.py:573
 msgid "Clear list\tShift+DEL"
 msgstr "Очистить список\tShift+DEL"
 
@@ -2239,7 +2240,7 @@ msgstr "Videomass - Картинки из фильма"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Still Image Maker"
 
-#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:539 videomass/vdms_panels/av_conversions.py:682 videomass/vdms_panels/av_conversions.py:1433 videomass/vdms_panels/filedrop.py:664 videomass/vdms_panels/filedrop.py:810 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:428 videomass/vdms_panels/video_to_sequence.py:577
+#: videomass/vdms_main/main_frame.py:1931 videomass/vdms_miniframes/timeline.py:539 videomass/vdms_panels/av_conversions.py:682 videomass/vdms_panels/av_conversions.py:1433 videomass/vdms_panels/filedrop.py:710 videomass/vdms_panels/filedrop.py:856 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
 msgid "Have to select an item in the file list first"
 msgstr "Сначала необходимо выбрать элемент в списке файлов"
 
@@ -2318,9 +2319,8 @@ msgid "Wave"
 msgstr "Wave"
 
 #: videomass/vdms_miniframes/timeline.py:356
-#, fuzzy
 msgid "Audio Index:"
-msgstr "Аудио кодировщик"
+msgstr "Аудио индекс:"
 
 #: videomass/vdms_miniframes/timeline.py:413 videomass/vdms_miniframes/timeline.py:912 videomass/vdms_miniframes/timeline.py:969 videomass/vdms_miniframes/timeline.py:975 videomass/vdms_miniframes/timeline.py:1087
 #, python-brace-format
@@ -2349,26 +2349,26 @@ msgstr "Использование редактора Timeline"
 
 # | msgid "Play segment"
 #: videomass/vdms_miniframes/timeline.py:454
-#, fuzzy
 msgid "Play/Stop segment"
-msgstr "Воспроизвести сегмент"
+msgstr "Воспроизведение/Остановка воспроизведения отрезка"
 
 #: videomass/vdms_miniframes/timeline.py:457 videomass/vdms_panels/audio_encoders/acodecs.py:491
-#, fuzzy
 msgid ""
 "\"Auto\" lets FFmpeg/FFplay select the audio stream to play or process (usually the first audio stream). If the source file(s) contain only an audio track, it is recommended to always set this control to \"Auto\".\n"
 "\n"
 "\"1-16\": if a video file contains more than one audio stream, you can select a specific one, e.g., \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
-"\"Авто\" позволяет FFmpeg выбрать аудиопоток для обработки (обычно это первый аудиопоток). Если исходный файл (ы) представляет собой просто звуковую дорожку, рекомендуется всегда устанавливать этот параметр в положение \"Авто\".\n"
+"\"Auto\" позволяет FFmpeg/FFplay выбрать аудиопоток для воспроизведения или обработки (обычно это первый аудиопоток). Если исходные файлы содержат только звуковую дорожку, рекомендуется всегда устанавливать этот параметр управления в положение \"Авто\"..\n"
 "\n"
-"\"1-16\", если видеофайл содержит более одного аудиопотока, вы можете выбрать определенный из них, например \"1\" для первого доступного аудиопотока, \"2\" для второго аудиопотока и так далее."
+"\"1-16\": если видеофайл содержит более одного аудиопотока, вы можете выбрать определенный из них, например, \"1\" для первого доступного аудиопотока, \"2\" для второго аудиопотока и так далее."
 
 #: videomass/vdms_miniframes/timeline.py:566
 msgid ""
 "Please wait...\n"
 "Loading waveform."
 msgstr ""
+"Пожалуйста подождите...\n"
+"Загрузка формы волны(waveform)."
 
 #: videomass/vdms_miniframes/timeline.py:608 videomass/vdms_panels/audio_encoders/acodecs.py:784
 #, python-brace-format
@@ -2396,11 +2396,13 @@ msgstr ""
 "Курсор «Конец» должен быть перемещен вправо от курсора «Начало»."
 
 #: videomass/vdms_miniframes/timeline.py:723
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Invalid or unsupported file:\n"
 "'{}'"
-msgstr "Недопустимый или неподдерживаемый файл:  %s"
+msgstr ""
+"Недопустимый или неподдерживаемый файл:\n"
+"'{}'"
 
 #: videomass/vdms_miniframes/timeline.py:846
 #, python-brace-format
@@ -2532,7 +2534,7 @@ msgstr "Предварительный просмотр с учётом филь
 msgid "Disable active filters"
 msgstr "Отключить активные фильтры"
 
-#: videomass/vdms_panels/av_conversions.py:400 videomass/vdms_panels/sequence_to_video.py:176 videomass/vdms_panels/video_to_sequence.py:129
+#: videomass/vdms_panels/av_conversions.py:400 videomass/vdms_panels/sequence_to_video.py:176 videomass/vdms_panels/video_to_sequence.py:118
 msgid "Resize"
 msgstr "Изменить размер"
 
@@ -2560,12 +2562,12 @@ msgstr "Цветокоррекция"
 msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
 msgstr "Чтобы просмотреть фильтр Stabilize, пожалуйста, нажмите кнопку предварительного просмотра в инструменте Stabilize видео"
 
-#: videomass/vdms_panels/audio_encoders/acodecs.py:754 videomass/vdms_panels/av_conversions.py:625 videomass/vdms_panels/filedrop.py:692
+#: videomass/vdms_panels/audio_encoders/acodecs.py:754 videomass/vdms_panels/av_conversions.py:625 videomass/vdms_panels/filedrop.py:738
 #, python-format
 msgid "Invalid or unsupported file:  %s"
 msgstr "Недопустимый или неподдерживаемый файл:  %s"
 
-#: videomass/vdms_panels/av_conversions.py:708 videomass/vdms_panels/sequence_to_video.py:397 videomass/vdms_panels/video_to_sequence.py:455
+#: videomass/vdms_panels/av_conversions.py:708 videomass/vdms_panels/sequence_to_video.py:397 videomass/vdms_panels/video_to_sequence.py:452
 msgid "The selected file is not a frame or a video file"
 msgstr "Файл не является кадром или видеофайлом"
 
@@ -2722,20 +2724,26 @@ msgstr "Обнаружены неверные данные"
 msgid "The files do not have the same \"codec_types\", same \"sample_rate\" or same \"width\" or \"height\". Unable to proceed."
 msgstr "Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых «ширины» или «высоты». Невозможно продолжить."
 
-#: videomass/vdms_panels/concatenate.py:97
+#: videomass/vdms_panels/concatenate.py:126
+msgid "Videomass Documentation:"
+msgstr "Документация Videomass:"
+
+#: videomass/vdms_panels/concatenate.py:140 videomass/vdms_panels/sequence_to_video.py:239 videomass/vdms_panels/video_to_sequence.py:210
+msgid "Official FFmpeg documentation:"
+msgstr "Официальная документация FFmpeg:"
+
+#: videomass/vdms_panels/concatenate.py:168
+#, fuzzy
 msgid ""
-"\n"
-"- The concatenation function is performed only with Audio files or only with Video files.\n"
+"- The concatenation function works only with audio files or only with video files.\n"
 "\n"
 "- The order of concatenation depends on the order in which the files were added.\n"
 "\n"
-"- The output file name will have the same name as the first file added (also depends on the\n"
-"  settings made in the preferences dialog or the renaming functions used).\n"
+"- The output file name will take the same name as the first file added (also depending on the settings made in the preferences dialog or the renaming functions used).\n"
 "\n"
-"- Video files must have exactly same streams, same codecs and same\n"
-"  width/height, but can be wrapped in different container formats.\n"
+"- Video files must have the exact same streams, the same codecs, and the same width/height, though they can be wrapped in different container formats.\n"
 "\n"
-"- Audio files must have exactly the same formats, same codecs with equal sample rate."
+"- Audio files must have the exact same formats, the same codecs, and an equal sample rate."
 msgstr ""
 "\n"
 "- Функция конкатенации(последовательного соединения) выполняется \n"
@@ -2753,14 +2761,6 @@ msgstr ""
 "- Аудиофайлы должны иметь одинаковые форматы, одинаковые кодеки \n"
 "  с одинаковой частотой дискретизации."
 
-#: videomass/vdms_panels/concatenate.py:141
-msgid "Videomass Documentation:"
-msgstr "Документация Videomass:"
-
-#: videomass/vdms_panels/concatenate.py:155 videomass/vdms_panels/sequence_to_video.py:239 videomass/vdms_panels/video_to_sequence.py:221
-msgid "Official FFmpeg documentation:"
-msgstr "Официальная документация FFmpeg:"
-
 #: videomass/vdms_panels/concatenate.py:289
 msgid ""
 "Items to concatenate\n"
@@ -2777,7 +2777,7 @@ msgstr ""
 
 #: videomass/vdms_panels/filedrop.py:49 videomass/vdms_panels/filedrop.py:82
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестно"
 
 #: videomass/vdms_panels/filedrop.py:94
 msgid "File has illegal characters like:"
@@ -2804,95 +2804,112 @@ msgstr "Имя содержит недопустимые символы, так�
 msgid "Name already in use:"
 msgstr "Имя уже используется:"
 
-#: videomass/vdms_panels/filedrop.py:207
+#: videomass/vdms_panels/filedrop.py:202
+#, python-brace-format
+msgid ""
+"The file list has reached its maximum limit of {0} files.\n"
+"Please remove some items before adding new ones."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:222
 msgid "Duplicate file, it has already been added to the list."
 msgstr "Дублирующий файл, он уже добавлен в список."
 
-#: videomass/vdms_panels/filedrop.py:323
+#: videomass/vdms_panels/filedrop.py:233
+#, python-brace-format
+msgid "Only {0} of {1} new files will be added to stay within the maximum limit of {2} files in the list."
+msgstr ""
+
+#: videomass/vdms_panels/filedrop.py:354
 msgid "Rejected files"
 msgstr "Отклоненные файлы"
 
+#: videomass/vdms_panels/filedrop.py:389
+#, python-brace-format
+msgid ""
+"Too many files dropped at once ({0}).\n"
+"Maximum allowed per drop is {1} files."
+msgstr ""
+
 # Изменил 14-5-2021
-#: videomass/vdms_panels/filedrop.py:397
+#: videomass/vdms_panels/filedrop.py:443
 msgid "Source file"
 msgstr "Исходный файл"
 
-#: videomass/vdms_panels/filedrop.py:398
+#: videomass/vdms_panels/filedrop.py:444
 msgid "Duration"
 msgstr "Длина"
 
-#: videomass/vdms_panels/filedrop.py:399
+#: videomass/vdms_panels/filedrop.py:445
 msgid "Media type"
 msgstr "Тип медиа"
 
-#: videomass/vdms_panels/filedrop.py:400
+#: videomass/vdms_panels/filedrop.py:446
 msgid "Size"
 msgstr "Размер"
 
-#: videomass/vdms_panels/filedrop.py:403 videomass/vdms_panels/filedrop.py:542
+#: videomass/vdms_panels/filedrop.py:449 videomass/vdms_panels/filedrop.py:588
 msgid "Drag one or more files below"
 msgstr "Перетащите один или несколько файлов ниже"
 
-#: videomass/vdms_panels/filedrop.py:410
+#: videomass/vdms_panels/filedrop.py:456
 msgid "Save to:"
 msgstr "Сохранить в:"
 
-#: videomass/vdms_panels/filedrop.py:440
+#: videomass/vdms_panels/filedrop.py:486
 msgid "Set a new destination folder for encodings"
 msgstr "Установите новую папку назначения для кодировок"
 
-#: videomass/vdms_panels/filedrop.py:442
+#: videomass/vdms_panels/filedrop.py:488
 msgid "Encodings destination folder"
 msgstr "Папка назначения кодировок"
 
-#: videomass/vdms_panels/filedrop.py:473 videomass/vdms_panels/filedrop.py:530
+#: videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:576
 msgid "Play file"
 msgstr "Воспроизвести файл"
 
-#: videomass/vdms_panels/filedrop.py:546
-#, fuzzy
+#: videomass/vdms_panels/filedrop.py:592
 msgid "Drag two or more files below (audio only or video only)"
-msgstr "Перетащите один или несколько файлов ниже"
+msgstr "Перетащите два или более файла ниже (только аудио или только видео)."
 
-#: videomass/vdms_panels/filedrop.py:552
-#, fuzzy
+#: videomass/vdms_panels/filedrop.py:598
 msgid "Drag one or more image files below (JPEG, JPG, PNG, TIFF, TIF, BMP)"
-msgstr "Перетащите один или несколько файлов изображений ниже"
+msgstr "Перетащите один или несколько файлов изображений ниже (JPEG, JPG, PNG, TIFF, TIF, BMP)"
 
-#: videomass/vdms_panels/filedrop.py:560
+#: videomass/vdms_panels/filedrop.py:606
 #, fuzzy
-msgid "Drag one or more video files below (including animated images)"
-msgstr "Перетащите один или несколько видеофайлов ниже"
+msgid "Drag video files below (including animated images such as APNG, WebP, GIF)"
+msgstr "Перетащите один или несколько видеофайлов ниже (включая анимированные изображения)."
 
-#: videomass/vdms_panels/filedrop.py:820
+#: videomass/vdms_panels/filedrop.py:866
 msgid "Rename the file destination"
 msgstr "Переименуйте место назначения файла"
 
-#: videomass/vdms_panels/filedrop.py:821
+#: videomass/vdms_panels/filedrop.py:867
 msgid "Rename the selected file to:"
 msgstr "Переименуйте выбранный файл в:"
 
-#: videomass/vdms_panels/filedrop.py:836 videomass/vdms_panels/filedrop.py:846 videomass/vdms_panels/filedrop.py:880
+#: videomass/vdms_panels/filedrop.py:882 videomass/vdms_panels/filedrop.py:892 videomass/vdms_panels/filedrop.py:926
 msgid "Add Files"
 msgstr "Добавить файлы"
 
-#: videomass/vdms_panels/filedrop.py:854
+#: videomass/vdms_panels/filedrop.py:900
 msgid "Rename in batch"
 msgstr "Переименование в пакетном режиме"
 
 # Здесь изменил фразу исходника для правильного использования в русском языке
-#: videomass/vdms_panels/filedrop.py:855
+#: videomass/vdms_panels/filedrop.py:901
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Файлов для переименования: {0}"
 
-#: videomass/vdms_panels/filedrop.py:858
+#: videomass/vdms_panels/filedrop.py:904
 msgid "New Name #"
 msgstr "Новое имя #"
 
 #: videomass/vdms_panels/long_processing_task.py:120
 msgid "For details, please read the log file by clicking the \"Current Log\" button at the bottom, if available, or consult the complete activity logs now (Ctrl+L)."
-msgstr ""
+msgstr "Для получения более подробной информации, пожалуйста, ознакомьтесь с файлом журнала, нажав кнопку \"Текущий журнал\" внизу, если она доступна, или ознакомьтесь с полными журналами действий прямо сейчас (Ctrl+L)."
 
 #: videomass/vdms_panels/long_processing_task.py:125
 msgid "Sorry, all task failed !"
@@ -3281,35 +3298,23 @@ msgstr "Дополнительные аргументы"
 msgid ""
 "1. Import one or more image files such as {} formats (even in mixed mode), then select one as your starting point.\n"
 "\n"
-"2. Use the Resize tool if your images have different width and height dimensions. You only need to do this once for the selected file to automatically resize the other images. Otherwise, it's optional.\n"
+"2. Use the Resize tool if your images have different width and height dimensions. You only need to do this once for the selected file; the remaining images will be resized automatically to match it. Otherwise, this step is optional.\n"
 "\n"
-"3. Set a time interval between images, or for a single image if you «Enable a single still image» option.\n"
+"3. Set a time interval between images, or set the duration for a single image if you check the 'Enable a single still image' option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
-"The produced video will have the name of the selected file in the 'File List' panel, which will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
+"The produced video will take the name of the selected file in the 'File List' panel and will be saved in a folder named 'Still_Images' with a sequential number, in the path you specify."
 msgstr ""
+"1. Импортируйте один или несколько файлов изображений, например в форматах {} (даже в смешанном режиме), затем выберите один из них в качестве отправной точки.\n"
 "\n"
-"1. Импортируйте один или несколько графических файлов, таких как форматы\n"
-"JPG, PNG и BMP (даже в смешанном режиме), затем выберите один из них\n"
-"в качестве отправной точки.\n"
+"2.Используйте инструмент \"Изменить размер\", если ваши изображения имеют разные размеры по ширине и высоте. Вам нужно сделать это только один раз, чтобы выбранный файл автоматически изменил размер других изображений. В противном случае это необязательно.\n"
 "\n"
-"2. Используйте инструмент \"Изменить размер\", если ваши изображения имеют \n"
-"разные размеры по ширине и высоте.\n"
-"Вам нужно сделать это только один раз, чтобы выбранный файл автоматически \n"
-"изменил размер других изображений.\n"
-"В противном случае это необязательно.\n"
-"\n"
-"3. Установите временной интервал между изображениями или для одного \n"
-"изображения, если вы включили опцию «Использовать одно \n"
-"неподвижное изображение».\n"
+"3.Установите временной интервал между изображениями или для одного изображения, если вы включили опцию «Использовать одно неподвижное изображение».\n"
 "\n"
 "4. Запустите преобразование.\n"
 "\n"
-"\n"
-"Созданное видео будет иметь название выбранного файла на панели \"Список файлов\",\n"
-"который будет сохранен в папке с именем \"Still_Images\" с последовательной нумерацией\n"
-"в указанном вами пути."
+"Созданное видео будет иметь название выбранного файла на панели \"Список файлов\", который будет сохранен в папке с именем \"Still_Images\" с прогрессивной нумерацией в указанном вами пути."
 
 #: videomass/vdms_panels/sequence_to_video.py:503
 msgid "Open Audio File"
@@ -3337,7 +3342,7 @@ msgstr ""
 "\n"
 "Похоже, это не аудиофайл."
 
-#: videomass/vdms_panels/sequence_to_video.py:631 videomass/vdms_panels/sequence_to_video.py:664 videomass/vdms_panels/video_to_sequence.py:591
+#: videomass/vdms_panels/sequence_to_video.py:631 videomass/vdms_panels/sequence_to_video.py:664 videomass/vdms_panels/video_to_sequence.py:588
 #, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "Недопустимый файл: '{}'"
@@ -3385,21 +3390,62 @@ msgstr ""
 "Продолжительность неподвижного изображения\n"
 "Общая продолжительность видео"
 
-#: videomass/vdms_panels/video_to_sequence.py:56
+#: videomass/vdms_panels/video_to_sequence.py:81
+msgid "Create thumbnails"
+msgstr "Создание эскизов"
+
+#: videomass/vdms_panels/video_to_sequence.py:82
+msgid "Create tiled mosaics"
+msgstr "Создание мозаики из плиток"
+
+#: videomass/vdms_panels/video_to_sequence.py:83
+msgid "Create animated GIF"
+msgstr "Создать анимированный GIF"
+
+#: videomass/vdms_panels/video_to_sequence.py:88
+msgid "Options"
+msgstr "Параметры"
+
+#: videomass/vdms_panels/video_to_sequence.py:123
+msgid "Output format:"
+msgstr "Выходной формат:"
+
+#: videomass/vdms_panels/video_to_sequence.py:137
+msgid "Rows:"
+msgstr "Ряды:"
+
+#: videomass/vdms_panels/video_to_sequence.py:151
+msgid "Columns:"
+msgstr "Столбцы:"
+
+#: videomass/vdms_panels/video_to_sequence.py:242
+msgid "Other unofficial resources:"
+msgstr "Другие неофициальные ресурсы:"
+
+#: videomass/vdms_panels/video_to_sequence.py:271
+msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
+msgstr "Установите контроль FPS от 0,1 до 30,0 кадров в секунду. Чем выше это значение, тем больше изображений будет извлечено."
+
+#: videomass/vdms_panels/video_to_sequence.py:275
+msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
+msgstr "Пространства вокруг мозаичных плиток. От 0 до 32 пикселей"
+
+#: videomass/vdms_panels/video_to_sequence.py:277
+msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
+msgstr "Пространства вокруг границ мозаики. От 0 до 32 пикселей"
+
+#: videomass/vdms_panels/video_to_sequence.py:292
+#, fuzzy
 msgid ""
+"1. Select an imported video file or an animated image.\n"
 "\n"
-"1. Import one or more video files, then select one.\n"
-"\n"
-"2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting the\n"
-"\"End\" and the \"Start\" duration values.\n"
+"2. (Optional, recommended) To extract frames from a specific slice of time, use the Timeline editor (CTRL+T) by adjusting the \"Start\" and \"End\" duration values—otherwise, all frames from the entire file will be extracted.\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
-"\n"
-"The images produced will be saved in a folder named 'Movie_to_Pictures'\n"
-"with a progressive digit, in the path you specify."
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with a sequential number, in the path you specify."
 msgstr ""
 "\n"
 "1. Импортируйте один или несколько видеофайлов, \n"
@@ -3418,51 +3464,7 @@ msgstr ""
 "с именем 'Movie_to_Pictures'\n"
 "с прогрессивной цифрой по указанному вами пути."
 
-#: videomass/vdms_panels/video_to_sequence.py:92
-msgid "Create thumbnails"
-msgstr "Создание эскизов"
-
-#: videomass/vdms_panels/video_to_sequence.py:93
-msgid "Create tiled mosaics"
-msgstr "Создание мозаики из плиток"
-
-#: videomass/vdms_panels/video_to_sequence.py:94
-msgid "Create animated GIF"
-msgstr "Создать анимированный GIF"
-
-#: videomass/vdms_panels/video_to_sequence.py:99
-msgid "Options"
-msgstr "Параметры"
-
-#: videomass/vdms_panels/video_to_sequence.py:134
-msgid "Output format:"
-msgstr "Выходной формат:"
-
-#: videomass/vdms_panels/video_to_sequence.py:148
-msgid "Rows:"
-msgstr "Ряды:"
-
-#: videomass/vdms_panels/video_to_sequence.py:162
-msgid "Columns:"
-msgstr "Столбцы:"
-
-#: videomass/vdms_panels/video_to_sequence.py:253
-msgid "Other unofficial resources:"
-msgstr "Другие неофициальные ресурсы:"
-
-#: videomass/vdms_panels/video_to_sequence.py:282
-msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
-msgstr "Установите контроль FPS от 0,1 до 30,0 кадров в секунду. Чем выше это значение, тем больше изображений будет извлечено."
-
-#: videomass/vdms_panels/video_to_sequence.py:286
-msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
-msgstr "Пространства вокруг мозаичных плиток. От 0 до 32 пикселей"
-
-#: videomass/vdms_panels/video_to_sequence.py:288
-msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
-msgstr "Пространства вокруг границ мозаики. От 0 до 32 пикселей"
-
-#: videomass/vdms_panels/video_to_sequence.py:724
+#: videomass/vdms_panels/video_to_sequence.py:721
 msgid ""
 "Selected File\n"
 "Output Format\n"

@@ -45,8 +45,8 @@ class Scale(wx.Dialog):
 
     """
 
-    TIPGREEN = "#80C058"
     get = wx.GetApp()
+    COLOR_INFO = get.appset["colorscheme"]["INFO"]
     appdata = get.appset
     TMPROOT = os.path.join(appdata["cachedir"], "tmp", "Scale")
     TMPSRC = os.path.join(TMPROOT, "tmpsrc")
@@ -78,7 +78,7 @@ class Scale(wx.Dialog):
         font = self.btn_quicktip.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.btn_quicktip.SetFont(font)
-        self.btn_quicktip.SetForegroundColour(wx.Colour(Scale.TIPGREEN))
+        self.btn_quicktip.SetForegroundColour(wx.Colour(Scale.COLOR_INFO))
         grid_opt.Add(self.btn_quicktip, 0, wx.CENTER | wx.ALL, 5)
 
         btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
