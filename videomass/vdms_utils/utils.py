@@ -29,9 +29,38 @@ import glob
 import math
 import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
+
+
+def opt_arg(flag: str, val: str | None) -> list[str]:
+    """
+    Restituisce [flag, val] solo se val non è vuoto,
+    altrimenti [] (senza toccare val).
+
+    Se hai bisogno di gestire anche flag booleani opzionali (es.
+    aggiungere "-vn" solo se una variabile booleana no_video è True),
+    puoi usare direttamente *("-vn" if no_video else ())
+    """
+    return [flag, val] if val else []
+
+
+def split_args(arg_str: str) -> list[str]:
+    """
+    Splits arguments for Popen.
+    """
+    if not arg_str:
+        return []
+    is_posix = sys.platform != "win32"
+    parts = shlex.split(arg_str, posix=is_posix)
+    if not is_posix:
+        return [p.strip('"') for p in parts]
+    return parts
+
+
+# ------------------------------------------------------------------------
 
 
 def open_default_application(pathname):

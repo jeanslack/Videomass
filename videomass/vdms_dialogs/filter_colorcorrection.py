@@ -34,6 +34,8 @@ from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
+    opt_arg,
+    split_args,
     time_to_integer,
 )
 
@@ -386,20 +388,26 @@ class ColorEQ(wx.Dialog):
         Generate a new frame at the clock position using
         ffmpeg `eq` filter.
         """
-        if not self.mills:
-            sseg = ""
-        else:
-            sseg = f"-ss {self.clock}"
-        eql = "" if not equalizer else f'-vf "{equalizer}"'
-        arg = (
-            f'{sseg} -i "{self.filename}" -f image2 '
-            f'-update 1 -frames:v 1 {eql} "{pathtosave}"'
-        )
+        sseg = "" if not self.mills else f"-ss {self.clock}"
+        eql = "" if not equalizer else equalizer
+        appdata = ColorEQ.get.appset
+
+        args = [
+            appdata["ffmpeg_cmd"],
+            *split_args(appdata["ffmpeg-default-args"]),
+            *split_args(appdata["ffmpeg_loglev"]),
+            *split_args(sseg),
+            "-i",
+            self.filename,
+            *split_args("-f image2 -update 1 -frames:v 1"),
+            *opt_arg("-vf", eql),
+            pathtosave,
+        ]
 
         msg = _("Please wait...\nLoading image.")
         parent = self.GetParent()
         data = generic_operation_process(
-            arg, editor="ColorEQ", msg=msg, parent=parent, showlog=False
+            args, editor="ColorEQ", msg=msg, parent=parent, showlog=False
         )
         if data:
             return True

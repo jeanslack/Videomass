@@ -48,7 +48,11 @@ from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_video_stream
-from videomass.vdms_utils.utils import update_timeseq_duration
+from videomass.vdms_utils.utils import (
+    opt_arg,
+    split_args,
+    update_timeseq_duration,
+)
 
 from .audio_encoders.acodecs import AudioEncoders
 from .miscellaneous.miscell import Miscellaneous
@@ -597,25 +601,21 @@ class AV_Conv(wx.Panel):
 
         flt = self.opt["VFilters"]
         autoexit = "-autoexit" if self.parent.autoexit else ""
-        filesel = self.parent.file_src[fget[1]]
+        filesel = self.parent.file_src[fget[0]]
 
         if self.parent.checktimestamp:
-            args = (
-                f'"{self.appdata["ffplay_cmd"]}" '
-                f"{self.appdata['ffplay-default-args']} "
-                f"{self.appdata['ffplay_loglev']} "
-                f'{autoexit} -i "{filesel}" '
-                f"{self.parent.time_seq} "
-                f'{flt},"{self.parent.cmdtimestamp}"'
-            )
-        else:
-            args = (
-                f'"{self.appdata["ffplay_cmd"]}" '
-                f"{self.appdata['ffplay-default-args']} "
-                f"{self.appdata['ffplay_loglev']} "
-                f'{autoexit} -i "{filesel}" {flt}'
-            )
+            flt = f"{flt},{self.parent.timestampfilter}"
 
+        args = [
+            self.appdata["ffplay_cmd"],
+            *split_args(self.appdata["ffplay-default-args"]),
+            *split_args(self.appdata["ffplay_loglev"]),
+            autoexit,
+            "-i",
+            filesel,
+            *split_args(self.parent.time_seq),
+            *opt_arg(flt.split()[0], flt.split()[1]),
+        ]
         try:
             with open(filesel, encoding="utf-8"):
                 playback = FilePlay(self.GetParent(), args)

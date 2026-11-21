@@ -66,7 +66,7 @@ class BaseFilePlay(Thread):
         self.parent = parent  # is the top-level window (main_frame)
         get = wx.GetApp()
         self.appdata = get.appset
-        self.cmdstr = cmdstr
+        self.cmd = cmdstr
         self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
         self.process = None
         self.stopped_by_user = None
@@ -79,15 +79,19 @@ class BaseFilePlay(Thread):
     def _prepare_command(self) -> list:
         """Prepare and format the command in a cross-platform way."""
 
-        cmdlist = shlex.split(str(self.cmdstr))
+        cmd_log = (
+            subprocess.list2cmdline(self.cmd)
+            if self.appdata["ostype"] == "Windows"
+            else shlex.join(self.cmd)
+        )
 
         tolog(
-            f"INFO: VIDEOMASS COMMAND: {shlex.join(cmdlist)}",
+            f"INFO: VIDEOMASS COMMAND: {cmd_log}",
             self.logfile,
             sep=True,
             wdate=True,
         )
-        return cmdlist
+        return self.cmd
 
     # ----------------------------------------------------------------------
 

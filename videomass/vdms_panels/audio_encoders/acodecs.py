@@ -37,7 +37,7 @@ from videomass.vdms_io.io_tools import volume_detect_process
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_audio_streams
-from videomass.vdms_utils.utils import get_volume_data
+from videomass.vdms_utils.utils import get_volume_data, opt_arg, split_args
 
 
 class AudioEncoders(scrolled.ScrolledPanel):
@@ -698,12 +698,12 @@ class AudioEncoders(scrolled.ScrolledPanel):
         elif self.rdbx_normalize.GetSelection() == 1:
             if self.btn_voldect.IsEnabled():
                 return _undetect()
-            afilter = f"-af {self.opt['PEAK'][fileget[1]][5].split()[1]}"
+            afilter = f"-af {self.opt['PEAK'][fileget[0]][5].split()[1]}"
 
         elif self.rdbx_normalize.GetSelection() == 2:
             if self.btn_voldect.IsEnabled():
                 return _undetect()
-            afilter = f"-af {self.opt['RMS'][fileget[1]][5].split()[1]}"
+            afilter = f"-af {self.opt['RMS'][fileget[0]][5].split()[1]}"
 
         elif self.rdbx_normalize.GetSelection() in (3, 4):
             afilter = (
@@ -726,25 +726,22 @@ class AudioEncoders(scrolled.ScrolledPanel):
         Build ffplay command for playback
         """
         autoexit = "-autoexit" if self.maindata.autoexit else ""
+        ts = self.maindata.checktimestamp and self.maindata.timestampfilter
 
-        if self.maindata.checktimestamp:
-            args = (
-                f'"{self.appdata["ffplay_cmd"]}" '
-                f"{self.appdata['ffplay-default-args']} "
-                f"{self.appdata['ffplay_loglev']} "
-                f'-showmode waves {autoexit} -i "{filepath}" '
-                f"{self.maindata.time_seq} "
-                f'-vf "{self.maindata.cmdtimestamp}" {afilter} {index}'
-            )
-        else:
-            args = (
-                f'"{self.appdata["ffplay_cmd"]}" '
-                f"{self.appdata['ffplay-default-args']} "
-                f"{self.appdata['ffplay_loglev']} "
-                f'-showmode waves {autoexit} -i "{filepath}" '
-                f"{self.maindata.time_seq} "
-                f"{afilter} {index}"
-            )
+        args = [
+            self.appdata["ffplay_cmd"],
+            *split_args(self.appdata["ffplay-default-args"]),
+            *split_args(self.appdata["ffplay_loglev"]),
+            *split_args("-showmode waves"),
+            autoexit,
+            "-i",
+            filepath,
+            *split_args(self.maindata.time_seq),
+            *opt_arg("-vf", ts),
+            *split_args(afilter),
+            *split_args(index),
+        ]
+
         try:
             with open(filepath, encoding="utf-8"):
                 playback = FilePlay(self.GetParent(), args)

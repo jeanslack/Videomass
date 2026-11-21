@@ -71,6 +71,27 @@ from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_utils.widget_utils import CountDownDlg
 
 
+def timestampset(ostype):
+    """
+    Return the default vf filter string for ffplay timestamp
+    """
+    # set fontconfig for timestamp
+    if ostype == "Darwin":
+        tsfont = "/Library/Fonts/Arial.ttf"
+    elif ostype == "Windows":
+        tsfont = "C\\:/Windows/Fonts/Arial.ttf"
+    else:
+        tsfont = "Arial"
+    fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
+    # set command line for timestamp
+    ptshms = r"%{pts\:hms}"
+    return (
+        f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
+        f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
+        f"box=1:boxcolor=DeepPink"
+    )
+
+
 class MainFrame(wx.Frame):
     """
     This main frame is the first ancestor aka the top-level
@@ -122,22 +143,7 @@ class MainFrame(wx.Frame):
         self.ffmpegdecoders = False
         self.ffmpegformats = False
         self.audivolnormalize = False
-
-        # set fontconfig for timestamp
-        if self.appdata["ostype"] == "Darwin":
-            tsfont = "/Library/Fonts/Arial.ttf"
-        elif self.appdata["ostype"] == "Windows":
-            tsfont = "C\\:/Windows/Fonts/Arial.ttf"
-        else:
-            tsfont = "Arial"
-        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
-        # set command line for timestamp
-        ptshms = r"%{pts\:hms}"
-        self.cmdtimestamp = (
-            f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
-            f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
-            f"box=1:boxcolor=DeepPink"
-        )
+        self.timestampfilter = timestampset(self.appdata["ostype"])
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
 
@@ -1343,12 +1349,12 @@ class MainFrame(wx.Frame):
         FFplay submenu: customize the timestamp filter
 
         """
-        with set_timestamp.Set_Timestamp(self, self.cmdtimestamp) as dialog:
+        with set_timestamp.Set_Timestamp(self, self.timestampfilter) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 data = dialog.getvalue()
                 if not data:
                     return
-                self.cmdtimestamp = data
+                self.timestampfilter = data
 
     # ------------------------------------------------------------------#
 

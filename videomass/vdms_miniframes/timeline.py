@@ -35,7 +35,11 @@ from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_audio_streams
-from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.utils import (
+    integer_to_time,
+    split_args,
+    time_to_integer,
+)
 from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
@@ -551,21 +555,32 @@ class Float_TL(wx.MiniFrame):
         an audio waveform frame from a selected file.
         Return None on success, error string or 'STOP' otherwise
         """
-
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
-        args = (
-            f'-i "{self.filename}" -filter_complex "{self.wave_indx}'
+
+        filtercomplex = (
+            f"{self.wave_indx}"
             f"aformat=channel_layouts=mono,compand,showwavespic=s="
             f"{Float_TL.RW + 10}x{Float_TL.PH}:colors={Float_TL.COLORWAVE}:"
-            f'split_channels=1:draw=full:filter=peak" -update 1 '
-            f'-frames:v 1 "{self.frame}"'
+            f"split_channels=1:draw=full:filter=peak"
         )
+
+        args = [
+            Float_TL.get.appset["ffmpeg_cmd"],
+            *split_args(Float_TL.get.appset["ffmpeg-default-args"]),
+            *split_args(Float_TL.get.appset["ffmpeg_loglev"]),
+            "-i",
+            self.filename,
+            "-filter_complex",
+            filtercomplex,
+            *split_args("-update 1"),
+            *split_args("-frames:v 1"),
+            self.frame,
+        ]
         msg = _("Please wait...\nLoading waveform.")
         data = generic_operation_process(
             args, editor="Timeline Waveform", msg=msg, parent=self.GetParent()
         )
-
         return data
 
     # ------------------------------------------------------------------#
@@ -699,19 +714,22 @@ class Float_TL(wx.MiniFrame):
         filesel = self.file_selection()[1]
 
         if self.parent.checktimestamp:
-            scalef, tstamp = "scale=w=360:h=-1,", f"{self.parent.cmdtimestamp}"
+            vf = f"scale=w=360:h=-1,{self.parent.timestampfilter}"
         else:
-            scalef, tstamp = "scale=w=360:h=-1", ""
+            vf = "scale=w=360:h=-1"
 
-        args = (
-            f'"{Float_TL.get.appset["ffplay_cmd"]}" '
-            f"{Float_TL.get.appset['ffplay-default-args']} "
-            f"-loglevel info "  # this is mandatory here
-            f'-autoexit -i "{filesel}" '
-            f"{self.parent.time_seq} "
-            f"{self.play_indx} "
-            f'-vf "{scalef}{tstamp}"'
-        )
+        args = [
+            Float_TL.get.appset["ffplay_cmd"],
+            *split_args(Float_TL.get.appset["ffplay-default-args"]),
+            *split_args(
+                "-loglevel info -autoexit -i"
+            ),  # `info` is mandatory here
+            filesel,
+            *split_args(self.parent.time_seq),
+            *split_args(self.play_indx),
+            "-vf",
+            vf,
+        ]
         try:
             with open(filesel, encoding="utf-8"):
                 self.playback = FilePlayWithprogress(self.GetParent(), args)
