@@ -563,7 +563,7 @@ class SequenceToVideo(wx.Panel):
         self.opt["Interval"] = sec
 
         if self.txt_addparams.IsEnabled():
-            addparam = self.txt_addparams.GetValue()
+            addparam = self.txt_addparams.GetValue().strip()
         else:
             addparam = ""
 
@@ -600,7 +600,7 @@ class SequenceToVideo(wx.Panel):
         self.opt["Interval"] = sec
 
         if self.txt_addparams.IsEnabled():
-            addparam = self.txt_addparams.GetValue()
+            addparam = self.txt_addparams.GetValue().strip()
         else:
             addparam = ""
 

@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.11.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import shlex
 import subprocess
 import sys
 import time
@@ -34,10 +35,7 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
+from videomass.vdms_utils.utils import split_args
 
 
 class ConcatDemuxer(BaseVideomassThread):
@@ -71,25 +69,28 @@ class ConcatDemuxer(BaseVideomassThread):
 
         """
         filedone = None
-        cmd = (
-            f'"{self.appdata["ffmpeg_cmd"]}" '
-            f"{self.appdata['ffmpeg-default-args']} "
-            f"{self.appdata['ffmpeg_loglev']} -f concat "
-            f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"'
+        cmd = [
+            self.appdata["ffmpeg_cmd"],
+            *split_args(self.appdata["ffmpeg-default-args"]),
+            *split_args(self.appdata["ffmpeg_loglev"]),
+            *split_args("-f concat -safe 0"),
+            "-i",
+            self.kwa["args"][0],
+            *split_args(self.kwa["args"][1]),
+            self.kwa["destination"],
+        ]
+        cmd_log = (
+            subprocess.list2cmdline(cmd)
+            if sys.platform == "win32"
+            else shlex.join(cmd)
         )
-
         count = (
             f"{self.kwa['nmax']} Items in progress...\nSource: "
             f'"{self.kwa["source"]}"\nDestination: '
             f'"{self.kwa["destination"]}"'
         )
-        stamp = f"{count}\n\n[COMMAND]:\n{cmd}"
+        stamp = f"{count}\n\n[COMMAND]:\n{cmd_log}"
 
-        # countevt = (
-        #     f"{self.kwa['nmax']} Items in progress...\n...for "
-        #     f"details see Current Log.\nDestination: "
-        #     f'"{self.kwa["destination"]}"'
-        # )
         strsrc = "\n".join(self.kwa["source"])
         countevt = (
             f"{self.kwa['nmax']} Items in progress...\n...for "
@@ -103,8 +104,6 @@ class ConcatDemuxer(BaseVideomassThread):
             duration=self.kwa["duration"],
             end="CONTINUE",
         )
-        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
-
         with open(self.logfile, "a", encoding="utf-8") as logfile:
             tolog(stamp, logfile, sep=True, wdate=True, openf=False)
             try:

@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -215,10 +215,12 @@ class Conc_Demuxer(wx.Panel):
             escaped = f.replace(r"'", r"'\''")  # need escaping some chars
             textstr.append(f"file '{escaped}'")
         self.args = (
-            f'"{ftext}" -map 0:v? -map_chapters 0 '
-            f"-map 0:s? -map 0:a? -map_metadata 0 -c copy"
+            ftext,
+            (
+                "-map 0:v? -map_chapters 0 "
+                "-map 0:s? -map 0:a? -map_metadata 0 -c copy"
+            ),
         )
-
         with open(ftext, "w", encoding="utf-8") as txt:
             txt.write("\n".join(textstr))
 

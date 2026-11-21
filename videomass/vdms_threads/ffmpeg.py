@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.10.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import shlex
 import subprocess
 import sys
 import time
@@ -34,15 +35,13 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
+from videomass.vdms_utils.utils import split_args
 
 
 def get_raw_cmdline_args(**kwa):
     """
     Return a list of raw command lines.
+    This is used for displays raw command on A/V-Conversions
     """
     if kwa["type"] == "One pass":
         model = simple_one_pass(1, 1, **kwa)
@@ -115,23 +114,27 @@ def one_pass(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     nul = "NUL" if sys.platform == "win32" else "/dev/null"
-    pass1 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-1', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][0]} "
-        f"{nul}"
+    pass1 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-1", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][0]),
+        nul,
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass1)
+        if sys.platform == "win32"
+        else shlex.join(pass1)
     )
     count1 = (
         f"File {args[0]}/{args[1]} - Pass One\n"
         f'Source: "{kwa["source"]}"\nDestination: "{nul}"'
     )
-    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
-
-    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{cmd_log}"
 
     return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
 
@@ -144,25 +147,29 @@ def two_pass(*args, **kwa):
     Command builder for second pass of two
     """
     cmd = ffmpeg_cmd_args()
-    pass2 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-2', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][1]} "
-        f"{kwa.get('volume', '')} "
-        f'"{kwa["destination"]}"'
+    pass2 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-2", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][1]),
+        *split_args(kwa.get("volume", "")),
+        kwa["destination"],
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass2)
+        if sys.platform == "win32"
+        else shlex.join(pass2)
     )
     count2 = (
         f"File {args[0]}/{args[1]} - Pass Two\n"
         f'Source: "{kwa["source"]}"\nDestination: '
         f'"{kwa["destination"]}"'
     )
-    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
-
-    pass2 = shlex.split(pass2) if sys.platform != "win32" else pass2
+    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{cmd_log}"
 
     return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
 
@@ -176,24 +183,28 @@ def one_pass_stab(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     nul = "NUL" if sys.platform == "win32" else "/dev/null"
-    pass1 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-1', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][0]} "
-        f"{nul}"
+    pass1 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-1", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][0]),
+        nul,
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass1)
+        if sys.platform == "win32"
+        else shlex.join(pass1)
     )
     count1 = (
         f"File {args[0]}/{args[1]} - Pass One\n"
         f"Detecting statistics for measurements...\n\nSource: "
         f'"{kwa["source"]}"\nDestination: "{nul}"'
     )
-    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
-
-    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{cmd_log}"
 
     return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
 
@@ -206,25 +217,29 @@ def two_pass_stab(*args, **kwa):
     Command builder for two pass video stabilizer
     """
     cmd = ffmpeg_cmd_args()
-    pass2 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-2', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][1]} "
-        f"{kwa.get('volume', '')} "
-        f'"{kwa["destination"]}"'
+    pass2 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-2", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][1]),
+        *split_args(kwa.get("volume", "")),
+        kwa["destination"],
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass2)
+        if sys.platform == "win32"
+        else shlex.join(pass2)
     )
     count2 = (
         f"File {args[0]}/{args[1]} - Pass Two\n"
         f"Application of Audio/Video filters...\n\nSource: "
         f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"'
     )
-    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
-
-    pass2 = shlex.split(pass2) if sys.platform != "win32" else pass2
+    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{cmd_log}"
 
     return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
 
@@ -237,24 +252,28 @@ def simple_one_pass(*args, **kwa):
     Command builder for one pass ebu
     """
     cmd = ffmpeg_cmd_args()
-    pass1 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-1', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][0]} "
-        f"{kwa.get('volume', '')} "
-        f'"{kwa["destination"]}"'
+    pass1 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-1", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][0]),
+        *split_args(kwa.get("volume", "")),
+        kwa["destination"],
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass1)
+        if sys.platform == "win32"
+        else shlex.join(pass1)
     )
     count1 = (
         f"File {args[0]}/{args[1]}\nSource: "
         f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"'
     )
-    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
-
-    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{cmd_log}"
 
     return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
 
@@ -268,24 +287,29 @@ def one_pass_ebu(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     nul = "NUL" if sys.platform == "win32" else "/dev/null"
-    pass1 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-1', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][0]} "
-        f"{nul}"
+
+    pass1 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-1", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][0]),
+        nul,
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass1)
+        if sys.platform == "win32"
+        else shlex.join(pass1)
     )
     count1 = (
         f"File {args[0]}/{args[1]} - Pass One\n"
         f"Detecting statistics for measurements...\n\nSource: "
         f'"{kwa["source"]}"\nDestination: "{nul}"'
     )
-    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
-
-    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{cmd_log}"
 
     summary = {
         "Input Integrated:": None,
@@ -315,26 +339,30 @@ def two_pass_ebu(*args, **kwa):
     Command builder for two pass ebu
     """
     cmd = ffmpeg_cmd_args()
-    pass2 = (
-        f'"{cmd["ffmpeg_cmd"]}" '
-        f"{cmd['ffmpeg-default-args']} "
-        f"{kwa.get('pre-input-2', '')} "
-        f"{kwa['start-time']} "
-        f'-i "{kwa["source"]}" '
-        f"{kwa['end-time']} "
-        f"{kwa['args'][1]} "
-        f"-filter:a:{kwa['audiomap'][1]} "
-        f"{args[2]} "
-        f'"{kwa["destination"]}"'
+    pass2 = [
+        cmd["ffmpeg_cmd"],
+        *split_args(cmd["ffmpeg-default-args"]),
+        *split_args(kwa.get("pre-input-2", "")),
+        *split_args(kwa["start-time"]),
+        "-i",
+        kwa["source"],
+        *split_args(kwa["end-time"]),
+        *split_args(kwa["args"][1]),
+        *split_args(f"-filter:a:{kwa['audiomap'][1]}"),
+        *split_args(args[2]),
+        kwa["destination"],
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(pass2)
+        if sys.platform == "win32"
+        else shlex.join(pass2)
     )
     count2 = (
         f"File {args[0]}/{args[1]} - Pass Two\n"
         f"Application of Audio/Video filters...\n\nSource: "
         f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"'
     )
-    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
-
-    pass2 = shlex.split(pass2) if sys.platform != "win32" else pass2
+    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{cmd_log}"
 
     return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
 

@@ -39,9 +39,10 @@ def opt_arg(flag: str, val: str | None) -> list[str]:
     """
     Restituisce [flag, val] solo se val non è vuoto,
     altrimenti [] (senza toccare val).
+    Utile quando hai un flag che è None, Boolean o vuoto("")
 
-    Se hai bisogno di gestire anche flag booleani opzionali (es.
-    aggiungere "-vn" solo se una variabile booleana no_video è True),
+    Può gestire anche flag booleani opzionali (es.
+    aggiungere "-vn" solo se una variabile booleana `no_video` è True),
     puoi usare direttamente *("-vn" if no_video else ())
     """
     return [flag, val] if val else []
@@ -49,7 +50,18 @@ def opt_arg(flag: str, val: str | None) -> list[str]:
 
 def split_args(arg_str: str) -> list[str]:
     """
-    Splits arguments for Popen.
+    Splits string on arguments for Popen.
+    Return a list of args.
+
+    USAGE example:
+            cmdlist = [
+            "/usr/bin/ffmpeg",
+            *split_args("-y -stats -hide_banner -loglevel info"),
+            "-i",
+            input_file,
+            *split_args(otherargs),
+            output_file,
+        ]
     """
     if not arg_str:
         return []

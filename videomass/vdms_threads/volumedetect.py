@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.14.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import shlex
 import subprocess
 import sys
 import time
@@ -34,10 +35,7 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
+from videomass.vdms_utils.utils import split_args
 
 
 class VolumeDetectThread(BaseVideomassThread):
@@ -82,10 +80,48 @@ class VolumeDetectThread(BaseVideomassThread):
         self.audiomap = audiomap
         self.status = None
         self.data = None
-        self.nul = "NUL" if sys.platform == "win32" else "/dev/null"
         self.logfile = logfile
 
     # ----------------------------------------------------------------#
+
+    def _prepare_command(self, filename, logf) -> list:
+        """
+        Prepare and format the command in a cross-platform way
+        and writes logfile.
+        Return list of command args.
+
+        """
+
+        nul = "NUL" if sys.platform == "win32" else "/dev/null"
+
+        cmd = [
+            self.appdata["ffmpeg_cmd"],
+            *split_args(self.appdata["ffmpeg-default-args"]),
+            *split_args(self.appdata["ffmpeg_loglev"]),
+            *split_args(self.time_seq[0]),
+            "-i",
+            filename,
+            *split_args(self.time_seq[1]),
+            *split_args(self.audiomap),
+            *split_args("-af volumedetect -vn -sn -dn -f null "),
+            nul,
+        ]
+        cmd_log = (
+            subprocess.list2cmdline(cmd)
+            if self.appdata["ostype"] == "Windows"
+            else shlex.join(cmd)
+        )
+
+        tolog(
+            f"INFO: VIDEOMASS COMMAND: {cmd_log}",
+            logf,
+            sep=True,
+            wdate=True,
+            openf=False,
+        )
+        return cmd
+
+    # ----------------------------------------------------------------------
 
     def run(self):
         """
@@ -102,25 +138,7 @@ class VolumeDetectThread(BaseVideomassThread):
 
         with open(self.logfile, "a", newline="\n", encoding="utf-8") as logf:
             for files in self.filelist:
-                cmd = (
-                    f'"{self.appdata["ffmpeg_cmd"]}" '
-                    f"{self.appdata['ffmpeg-default-args']} "
-                    f"{self.appdata['ffmpeg_loglev']} "
-                    f"{self.time_seq[0]} "
-                    f'-i "{files}" '
-                    f"{self.time_seq[1]} "
-                    f"{self.audiomap} "
-                    f"-af volumedetect -vn -sn -dn -f null "
-                    f"{self.nul}"
-                )
-                tolog(
-                    f"INFO: VIDEOMASS COMMAND: {cmd}",
-                    logf,
-                    sep=True,
-                    wdate=True,
-                    openf=False,
-                )
-                cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
+                cmd = self._prepare_command(files, logf)
                 meanv, maxv = "", ""
 
                 try:
