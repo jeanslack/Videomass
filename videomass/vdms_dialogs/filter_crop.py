@@ -37,6 +37,7 @@ from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
+    split_args,
     time_to_integer,
 )
 
@@ -480,6 +481,7 @@ class Crop(wx.Dialog):
         greater than the max time nor less than the min time
         (see the `seek` callback above)
         """
+        appdata = Crop.get.appset
         if not self.mills:
             sseg = ""
         else:
@@ -487,15 +489,21 @@ class Crop(wx.Dialog):
             self.clock = integer_to_time(seek, False)  # to 24-HH
             sseg = f"-ss {self.clock}"
 
-        arg = (
-            f'{sseg} -i "{self.filename}" -f image2 '
-            f'-update 1 -frames:v 1 "{self.frame}"'
-        )
+        args = [
+            appdata["ffmpeg_cmd"],
+            *split_args(appdata["ffmpeg-default-args"]),
+            *split_args(appdata["ffmpeg_loglev"]),
+            *split_args(sseg),
+            "-i",
+            self.filename,
+            *split_args("-f image2 -update 1 -frames:v 1"),
+            self.frame,
+        ]
 
         msg = _("Please wait...\nLoading image.")
         parent = self.GetParent()
         data = generic_operation_process(
-            arg, editor="Crop", msg=msg, parent=parent, showlog=False
+            args, editor="Crop", msg=msg, parent=parent, showlog=False
         )
         if data:
             self._set_controls_enabled(False)

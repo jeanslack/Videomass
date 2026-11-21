@@ -3,14 +3,23 @@
 URGENCY: to do soon
 --------------------
 
-- (?) Make function to build arguments from string to list and vice-versa using `subprocess.list2cmdline`
+- [DONE PARTIALLY] Make function to build arguments from string to list and vice-versa using `subprocess.list2cmdline`
 
 The application still needs to be tested on macOS. If anyone is available to carry out some tests and checks, please let me know.
 
 - Still image make has transictions ?
 - `Still Image Maker`, `Concatenate`, `From Movie to Pictures` Add to Queue features (?).
-- Controllare tooltips su Windows
-- chiedere per limitare file di trascinamento (es. 50 alla volta o più)
+- Controllare tooltips su Windows (durata tip più che altro anche)
+- [DONE] chiedere per limitare file di trascinamento (es. 50 alla volta o più)
+
+ATTENZIONE chiamate a ffprobe: probe = ffprobe(
+            pathname,
+            self.ffprobe_cmd,
+            hide_banner=None,
+        ) ma è solo un file audio per un processo di breve durata quindi penso possa passare lo stesso
+
+- con System Light theme io lascerei gli sfondi del sistema usando icone light
+- Il carico forma d'onda è dispendioso passando da un file all'altro: lasciare frame in cache garantisce velocità e maggiore sicurezza evitando thread secondari.
 
 
 --------------

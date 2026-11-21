@@ -35,7 +35,12 @@ from videomass.vdms_dialogs.list_warning import ListWarning
 from videomass.vdms_dialogs.renamer import Renamer
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads.probe_worker import ProbeWorker
-from videomass.vdms_utils.utils import time_to_integer, to_bytes
+from videomass.vdms_utils.utils import (
+    opt_arg,
+    split_args,
+    time_to_integer,
+    to_bytes,
+)
 
 
 def get_primary_codec_type(index):
@@ -717,17 +722,18 @@ class FileDnD(wx.Panel):
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
         autoexit = "-autoexit" if self.parent.autoexit else ""
-        ts = self.parent.cmdtimestamp if self.parent.checktimestamp else None
-        tstamp = f'-vf "{ts}"' if ts is not None else ""
+        ts = self.maindata.checktimestamp and self.maindata.timestampfilter
 
-        args = (
-            f'"{self.appdata["ffplay_cmd"]}" '
-            f"{self.appdata['ffplay-default-args']} "
-            f"{self.appdata['ffplay_loglev']} "
-            f'{autoexit} -i "{item}" '
-            f"{self.parent.time_seq} "
-            f"{tstamp}"
-        )
+        args = [
+            self.appdata["ffplay_cmd"],
+            *split_args(self.appdata["ffplay-default-args"]),
+            *split_args(self.appdata["ffplay_loglev"]),
+            autoexit,
+            "-i",
+            item,
+            *split_args(self.parent.time_seq),
+            *opt_arg("-vf", ts),
+        ]
 
         try:
             with open(item, encoding="utf-8"):

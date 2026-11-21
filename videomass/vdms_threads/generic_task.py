@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import shlex
 import subprocess
 import sys
 from threading import Thread
@@ -34,10 +35,6 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
 
 
 class FFmpegGenericTaskOutLines(BaseVideomassThread):
@@ -74,9 +71,7 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
         """
         Attributes defined here:
 
-        self.args: a string containing only the command arguments
-                   of FFmpeg, not `ffmpeg` command nor loglevel
-                   nor ffmpeg-default-args.
+        self.cmd: a list containing the ffmpeg command arguments.
         self.procname: any task name for identification.
         self.logfile: filename to redirect text string log
         """
@@ -85,7 +80,7 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
         get = wx.GetApp()
         self.appdata = get.appset
         self.procname = procname
-        self.args = args
+        self.cmd = args
 
     # ----------------------------------------------------------------#
 
@@ -94,25 +89,23 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
         Start thread
 
         """
-        cmd = (
-            f'"{self.appdata["ffmpeg_cmd"]}" '
-            f"{self.appdata['ffmpeg-default-args']} "
-            f"{self.appdata['ffmpeg_loglev']} "
-            f"{self.args}"
+        cmd_log = (
+            subprocess.list2cmdline(self.cmd)
+            if sys.platform == "win32"
+            else shlex.join(self.cmd)
         )
         with open(self.logfile, "a", encoding="utf-8") as logfile:
             tolog(
                 f"INFO: VIDEOMASS TASK: {self.procname}\n"
-                f"INFO: VIDEOMASS COMMAND: {cmd}",
+                f"INFO: VIDEOMASS COMMAND: {cmd_log}",
                 logfile,
                 sep=True,
                 wdate=True,
                 openf=False,
             )
-            cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
             try:
                 with subprocess.Popen(
-                    cmd,
+                    self.cmd,
                     stderr=subprocess.PIPE,
                     stdin=subprocess.PIPE,
                     text=True,
@@ -180,9 +173,7 @@ class FFmpegGenericTask(Thread):
         """
         Attributes defined here:
 
-        self.args: a string containing only the command arguments
-                   of FFmpeg, not `ffmpeg` command nor loglevel
-                   nor ffmpeg-default-args.
+        self.cmd: a list containing the ffmpeg command arguments.
         self.procname: any task name for identification.
         self.logfile: filename to redirect text string log
         self.status: If the exit status is true (which can be an
@@ -194,7 +185,7 @@ class FFmpegGenericTask(Thread):
         self.appdata = get.appset
         self.logfile = logfile
         self.procname = procname
-        self.args = args
+        self.cmd = args
         self.status = None
         self.stop_work_thread = None
         self.proc = None
@@ -213,23 +204,21 @@ class FFmpegGenericTask(Thread):
         Start thread
 
         """
-        cmd = (
-            f'"{self.appdata["ffmpeg_cmd"]}" '
-            f"{self.appdata['ffmpeg-default-args']} "
-            f"{self.appdata['ffmpeg_loglev']} "
-            f"{self.args}"
+        cmd_log = (
+            subprocess.list2cmdline(self.cmd)
+            if sys.platform == "win32"
+            else shlex.join(self.cmd)
         )
         tolog(
             f"INFO: VIDEOMASS TASK: {self.procname}\n"
-            f"INFO: VIDEOMASS COMMAND: {cmd}",
+            f"INFO: VIDEOMASS COMMAND: {cmd_log}",
             self.logfile,
             sep=True,
             wdate=True,
         )
-        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
         try:
             with subprocess.Popen(
-                cmd,
+                self.cmd,
                 stderr=subprocess.PIPE,
                 text=True,
                 encoding=self.appdata["encoding"],

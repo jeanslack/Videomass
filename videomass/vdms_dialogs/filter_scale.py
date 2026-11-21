@@ -34,7 +34,11 @@ import wx
 
 from videomass.vdms_io import io_tools
 from videomass.vdms_io.io_tools import generic_operation_process
-from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.utils import (
+    integer_to_time,
+    split_args,
+    time_to_integer,
+)
 from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
@@ -368,6 +372,8 @@ class Scale(wx.Dialog):
         filter. Note that the trim start point on this process is
         set to the total length of the movie divided by two.
         """
+        appdata = Scale.get.appset
+
         if not self.mills:
             sseg = ""
         else:
@@ -380,14 +386,22 @@ class Scale(wx.Dialog):
         fname, __ = os.path.splitext(os.path.basename(self.filename))
         self.frame = os.path.join(dname, f"{fname}_{unique_id}.png")
 
-        arg = (
-            f'{sseg} -i "{self.filename}" -f image2 -update 1 '
-            f'-frames:v 1 {scale} "{self.frame}"'
-        )
+        args = [
+            appdata["ffmpeg_cmd"],
+            *split_args(appdata["ffmpeg-default-args"]),
+            *split_args(appdata["ffmpeg_loglev"]),
+            *split_args(sseg),
+            "-i",
+            self.filename,
+            *split_args("-f image2 -update 1 -frames:v 1"),
+            *split_args(scale),
+            self.frame,
+        ]
+
         msg = _("Please wait...\nLoading image.")
         parent = self.GetParent()
         data = generic_operation_process(
-            arg, editor="Scale", msg=msg, parent=parent, showlog=False
+            args, editor="Scale", msg=msg, parent=parent, showlog=False
         )
         if data:
             return data
