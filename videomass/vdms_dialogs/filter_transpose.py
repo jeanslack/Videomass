@@ -73,8 +73,12 @@ class Transpose(wx.Dialog):
         self.transpose = {"degrees": ["", 0]}
         self.initial_args = (args[0], args[1])
         self.video = kwa["filename"]
-        name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join(Transpose.TMPSRC, f"{name}.png")
+        stat = os.stat(self.video)  # reads size/modification date in ns.
+        fingerprint = f"{stat.st_size}_{stat.st_mtime_ns}"
+        name = os.path.splitext(os.path.basename(self.video))[0][:100]
+        self.frame = os.path.join(
+            Transpose.TMPSRC, f"{name}-{fingerprint}.png"
+        )
         self.stbitmap = None
         self.scaled_img = None  # Cache per l'immagine pre-scalata
         self.mills = time_to_integer(kwa["duration"].split(".")[0])
@@ -172,6 +176,10 @@ class Transpose(wx.Dialog):
         """
         Initializing conversion command for preview.
         """
+        if os.path.exists(self.frame):  # reload the frame already in cache
+            self.on_frame_ready()
+            return
+
         appdata = Transpose.get.appset
 
         if not self.mills:

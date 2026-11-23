@@ -232,15 +232,17 @@ class MainFrame(wx.Frame):
                         "Would you like to keep them in the queue?"
                     ),
                     _("Please confirm"),
-                    wx.ICON_QUESTION | wx.CANCEL | wx.YES_NO,
+                    wx.ICON_QUESTION | wx.YES_NO,
                     self,
                 )
                 == wx.YES
             ):
                 queue = load_json_file_queue(fque)
                 if queue:
-                    self.queuelist = queue
+                    self.queuelist = queue[: self.appdata["max_queue_items"]]
                     self.queue_tool_counter()
+                    if len(queue) > self.appdata["max_queue_items"]:
+                        write_json_file_queue(self.queuelist)
             else:
                 os.remove(fque)
 
@@ -251,8 +253,8 @@ class MainFrame(wx.Frame):
         Set a counter aside Queue text when adding items
         to queue list
         """
-        counter = len(self.queuelist)
         if self.queuelist:
+            counter = len(self.queuelist)
             self.pqueue.SetLabel(_("Queue ({0})").format(counter))
             # need to call Realize() to re-draw the toolbar
             self.toolbar.Realize()
@@ -1958,6 +1960,7 @@ class MainFrame(wx.Frame):
             for idx, item in enumerate(self.queuelist):
                 if item["destination"] == kwargs["destination"]:
                     dup = idx
+                    break
             if dup is not None:
                 if (
                     wx.MessageBox(
@@ -1976,6 +1979,17 @@ class MainFrame(wx.Frame):
                 self.queuelist[dup] = kwargs
 
             else:
+                if len(self.queuelist) >= self.appdata["max_queue_items"]:
+                    wx.MessageBox(
+                        _(
+                            "Queue limit reached ({} items).\nPlease remove "
+                            "some items before adding more."
+                        ).format(self.appdata["max_queue_items"]),
+                        "Videomass",
+                        wx.OK | wx.ICON_INFORMATION,
+                        self,
+                    )
+                    return
                 self.queuelist.append(kwargs)
 
         write_json_file_queue(self.queuelist)

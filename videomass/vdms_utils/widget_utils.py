@@ -55,10 +55,13 @@ class NormalTransientPopup(wx.PopupTransientWindow):
         - wrap = width in pixels specified as an integer argument
           for the text displayed in the popup.
         """
-        get = wx.GetApp()
-        colorscheme = get.appset["colorscheme"]
-        backgrd = colorscheme["BACKGRD"] if not backgrdcol else backgrdcol
-        foregrd = colorscheme["INFO"] if not foregrdcol else foregrdcol
+        # get = wx.GetApp()
+        # colorscheme = get.appset["colorscheme"]
+        # backgrd = colorscheme["BACKGRD"] if not backgrdcol else backgrdcol
+        # foregrd = colorscheme["INFO"] if not foregrdcol else foregrdcol
+
+        backgrd = wx.NullColour if not backgrdcol else backgrdcol
+        foregrd = wx.NullColour if not foregrdcol else foregrdcol
 
         wx.PopupTransientWindow.__init__(self, parent, style)
         panel = wx.Panel(self, style=wx.BORDER_SIMPLE)

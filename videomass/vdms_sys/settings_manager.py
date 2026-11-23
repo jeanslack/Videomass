@@ -154,7 +154,7 @@ class ConfigManager:
 
     """
 
-    VERSION = 8.7
+    VERSION = 8.8
     DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
         "confversion": VERSION,
         "shutdown": False,
@@ -183,6 +183,9 @@ class ConfigManager:
         "move_file_to_trash": False,
         "trashdir_loc": "",
         "locale_name": "Default",
+        "max_drop_files": 50,
+        "max_total_files": 80,
+        "max_queue_items": 50,
         "prstmng_column_width": [250, 350, 200, 220],
         "filedrop_column_width": [30, 200, 200, 200, 150, 200],
         "timeline_window_show": True,

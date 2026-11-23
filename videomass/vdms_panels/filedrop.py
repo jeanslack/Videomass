@@ -722,7 +722,7 @@ class FileDnD(wx.Panel):
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
         autoexit = "-autoexit" if self.parent.autoexit else ""
-        ts = self.maindata.checktimestamp and self.maindata.timestampfilter
+        ts = self.parent.checktimestamp and self.parent.timestampfilter
 
         args = [
             self.appdata["ffplay_cmd"],

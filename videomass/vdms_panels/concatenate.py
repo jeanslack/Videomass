@@ -50,19 +50,44 @@ def compare_media_param(data):
             "info",
             _("At least two files are required to perform concatenation."),
         )
+
+    image_codecs = {"mjpeg", "png", "webp", "gif", "bmp", "tiff", "apng"}
     com = {}
     mediatype = []
+
     for streams in data:
-        name = streams.get("format").get("filename")
+        fmt = streams.get("format", {})
+        name = fmt.get("filename")
+        # it stop if is 0 (N/A) or <= 40 ms (single frame)
+        if fmt.get("duration", 0) <= 40:
+            return (
+                "info",
+                _(
+                    "Static images or files without a valid duration "
+                    "cannot be concatenated directly. "
+                    'Please, use "Still Image Maker" for this task.'
+                ),
+            )
         com[name] = {}
-        for items in streams.get("streams"):
-            mediatype.append(items.get("codec_type"))
-            if items.get("codec_type") == "video":
-                com[name][items.get("index")] = [items.get("codec_name")]
+        for items in streams.get("streams", []):
+            codec_type = items.get("codec_type")
+            codec_name = items.get("codec_name")
+            mediatype.append(codec_type)
+
+            if codec_type == "video" and codec_name in image_codecs:
+                return (
+                    "info",
+                    _(
+                        "Image formats (static or animated) cannot be "
+                        "concatenated with stream copy."
+                    ),
+                )
+                # if items.get("codec_type") == "video":
+                com[name][items.get("index")] = [codec_name]
                 size = f"{items.get('width')}x{items.get('height')}"
                 com[name][items.get("index")].append(size)
-            if items.get("codec_type") == "audio":
-                com[name][items.get("index")] = [items.get("codec_name")]
+            if codec_type == "audio":
+                com[name][items.get("index")] = [codec_name]
                 com[name][items.get("index")].append(items.get("sample_rate"))
     if not com:
         return ("error", _("Invalid data found"))

@@ -37,12 +37,14 @@ def write_json_file_queue(data, queuefile=None):
     """
     Write queue json file
     """
+    maxqueue = wx.GetApp().appset["max_queue_items"]
     if not queuefile:
         get = wx.GetApp()
         appdata = get.appset
         queuefile = os.path.join(appdata["confdir"], "queue.backup")
+
     with open(queuefile, "w", encoding="utf-8") as outfile:
-        json.dump(data, outfile, ensure_ascii=False, indent=4)
+        json.dump(data[:maxqueue], outfile, ensure_ascii=False, indent=4)
 
 
 # --------------------------------------------------------------------

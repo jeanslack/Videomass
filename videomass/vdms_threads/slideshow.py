@@ -64,7 +64,7 @@ def convert_images(*varargs, **kwargs):
     )
     with open(logfile, "a", encoding="utf-8") as logf:
         tolog(
-            f"Preparing temporary files...\n\n[TEMPDIR:]\n{tmpdir}",
+            f"Preparing temporary files...\n\n[TEMPDIR]:\n{tmpdir}",
             logf,
             sep=True,
             wdate=True,
@@ -72,7 +72,6 @@ def convert_images(*varargs, **kwargs):
         )
         for prognum, files in enumerate(flist, start=1):
             tmpf = os.path.join(tmpdir, f"{imagenames}{prognum}.bmp")
-            # cmd = args + ['-i', files, tmpf]
             cmd_1 = [
                 kwargs["ffmpeg_cmd"],
                 *split_args(kwargs["ffmpeg-default-args"]),
@@ -86,7 +85,7 @@ def convert_images(*varargs, **kwargs):
                 if sys.platform != "win32"
                 else shlex.join(cmd_1)
             )
-            logf.write(f"\n[COMMAND:]\n{cmd_log}\n")
+            logf.write(f"\n|{prognum}|[COMMAND]:\n{cmd_log}\n")
 
             try:
                 with subprocess.Popen(
@@ -115,14 +114,13 @@ def convert_images(*varargs, **kwargs):
                         logf.write(status)
                         return error
 
-                else:  # ok
+                else:  # done
                     wx.CallAfter(
                         pub.sendMessage,
                         "NOTIFICATIONS_MSG_EVT",
                         msg="INFO",
                         output=f" |{prognum}|  {files}  >  {tmpf}\n",
                     )
-                    logf.write(f" |{prognum}|  {files}  >  {tmpf}\n")
 
             except (OSError, FileNotFoundError) as err:  # cmd not found
                 wx.CallAfter(
@@ -183,8 +181,13 @@ def resizing_process(*varargs, **kwargs):
         if sys.platform != "win32"
         else shlex.join(cmd_1)
     )
-    tolog(f"\nFile resizing...\n\n[COMMAND]:\n{cmd_log}", logfile)
-
+    tolog(
+        f"\nFile resizing...\n\n[COMMAND]:\n{cmd_log}",
+        logfile,
+        sep=True,
+        wdate=True,
+        openf=True,
+    )
     try:
         with subprocess.Popen(
             cmd_1,
@@ -312,8 +315,14 @@ class SlideshowMaker(BaseVideomassThread):
         """
         Subprocess initialize thread.
         """
+        last_gui_update = time.monotonic()
+        THROTTLE_INTERVAL = 0.1
+        last_file_flush = time.monotonic()
+        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro (constant)
+
         imgtmpnames = "TMP_" if self.kwa["resize"] else "IMAGE_"
         filedone = []
+
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
             tmpproc1 = convert_images(
                 self.kwa["source"],
@@ -381,14 +390,22 @@ class SlideshowMaker(BaseVideomassThread):
                         creationflags=self.creationflags,
                     ) as self.process:
                         for line in self.process.stderr:
-                            wx.CallAfter(
-                                pub.sendMessage,
-                                "UPDATE_EVT",
-                                output=line,
-                                duration=self.duration,
-                                status=0,
-                            )
                             logfile.write(line)
+                            now = time.monotonic()
+                            if (now - last_file_flush) > FLUSH_INTERVAL:
+                                logfile.flush()
+                                last_file_flush = now
+
+                            if (now - last_gui_update) > THROTTLE_INTERVAL:
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "UPDATE_EVT",
+                                    output=line,
+                                    duration=self.duration,
+                                    status=0,
+                                )
+                                last_gui_update = now
+
                             if self.stop_work_thread:
                                 if self.fatal:
                                     return

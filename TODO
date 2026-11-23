@@ -3,16 +3,16 @@
 URGENCY: to do soon
 --------------------
 
-- [DONE PARTIALLY] Make function to build arguments from string to list and vice-versa using `subprocess.list2cmdline`
+- [DONE] Make function to build arguments from string to list and vice-versa using `subprocess.list2cmdline` to logging.
     DONE: volumedetect, timeline(ffplay, waveform), A/V Conversions (ffplay filter video preview,
           ffplay filter audio preview), File drop(ffplay preview), Crop, Stabilize, Resize, Transpose, ColorcEQ.
+          ffmpeg, slideshow, concat_demuxer, image_extractor, generic_task, ffplay.
 
 The application still needs to be tested on macOS. If anyone is available to carry out some tests and checks, please let me know.
 
 - Still image make has transictions ?
 - `Still Image Maker`, `Concatenate`, `From Movie to Pictures` Add to Queue features (?).
 - Controllare tooltips su Windows (durata tip più che altro anche)
-- [DONE] chiedere per limitare file di trascinamento (es. 50 alla volta o più)
 
 ATTENZIONE chiamate a ffprobe: probe = ffprobe(
             pathname,
@@ -26,6 +26,9 @@ ATTENZIONE chiamate a ffprobe: probe = ffprobe(
 -  il tracciamento dei processi ffplay è stato migliorato in questa pull request, ma le callback dell'interfaccia utente possono ancora creare molte istanze di FilePlay o FilePlayWithprogress. I processi esistenti dovrebbero essere arrestati o riutilizzati prima di avviare un'altra anteprima.
 
 - Le ripetute invocazioni di FFmpeg/FFprobe — le anteprime per ritaglio, ridimensionamento, trasposizione, correzione del colore, stabilizzazione e forme d'onda della timeline avviano frequentemente sottoprocessi. Queste operazioni dovrebbero memorizzare nella cache i frame/forme d'onda generati anziché rigenerarli a ogni evento dell'interfaccia utente.
+
+- Miglioramento prioritario: aggiungere debouncing/cancellazione e memorizzare nella cache gli output di anteprima più onerosi. Ciò eliminerebbe la maggiore probabile regressione delle prestazioni: i frequenti avvii del processo FFmpeg durante la regolazione dei cursori o il cambio di media.
+
 
 
 --------------

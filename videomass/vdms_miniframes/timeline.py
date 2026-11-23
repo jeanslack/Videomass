@@ -510,9 +510,9 @@ class Float_TL(wx.MiniFrame):
     def set_ui_ctrl(self, state=True):
         """
         Enable or disable the graphical user interface controls.
-        Accetta True per attivare o False per disattivare i widget.
+        Accepts True to enable or False to disable the widgets.
         """
-        # 2. Lista dei widget da aggiornare in blocco
+        # Lista dei widget da aggiornare in blocco
         widgets = [
             self.btn_play,
             self.btn_wave,
@@ -554,9 +554,22 @@ class Float_TL(wx.MiniFrame):
         This method is responsible for making available
         an audio waveform frame from a selected file.
         Return None on success, error string or 'STOP' otherwise
+
+        Update: To save on FFmpeg processes and speed up loading tasks,
+        the last modification timestamp (mtime) and file size have been
+        added to the names of the generated frames; this ensures that
+        the cache is automatically regenerated if the file is overwritten
+        or modified.
         """
-        name = os.path.splitext(os.path.basename(self.filename))[0]
-        self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
+        name = os.path.splitext(os.path.basename(self.filename))[0][:100]
+        stat = os.stat(self.filename)  # reads size/modification date in ns.
+        fingerprint = f"{stat.st_size}_{stat.st_mtime_ns}"
+        idxid = self.wave_indx.replace(":", "-")
+        self.frame = os.path.join(
+            f"{Float_TL.TMPSRC}", f"{name}-{idxid}-{fingerprint}.png"
+        )
+        if os.path.exists(self.frame):
+            return None  # reload the frame already in cache
 
         filtercomplex = (
             f"{self.wave_indx}"

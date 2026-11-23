@@ -391,8 +391,6 @@ class DataSource:
             "ffplay-default-args": "-hide_banner",
             "auto-restart-app": False,
             "make_portable": self.makeportable,
-            "max_drop_files": 50,
-            "max_total_files": 80,
             "applognames": (
                 "volumedetected.log",
                 "AV Conversions.log",

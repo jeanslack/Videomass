@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 19 November 2026 v6.1.30
+Mon, 23 November 2026 v6.1.30
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -110,12 +110,17 @@ Thu, 19 November 2026 v6.1.30
     to Auto if the chosen index does not exist.
   * Improved icon relevance for MessageBox().
   * Fixed Dialog Wizard layout of pages.
-  * To better manage GUI workloads safely, limits have been placed on the total
-    number of files and on drag-and-drop operations.
+  * To more safely manage GUI workloads, reasonable limits have been imposed on
+    the total number of files in the list control, then a maximum limit on the
+    files dragged at a time and also on the number of items in the queue.
   * Cross-platform command execution: Replaced string-based command parsing
     with structured argument lists passed directly to subprocess.Popen,
     preventing issues with file paths containing spaces, quotes, or backslashes
     on Windows, macOS, and Linux.
+  * Previews[Waveform, Transpose]: To limit ffmpeg processes and speed up some
+    preview loading tasks, the last modification timestamp (mtime) + file size
+    has been added to the generated frame names, to ensure that the cache is
+    automatically regenerated if the file is overwritten or modified.
 
 
 +------------------------------------+

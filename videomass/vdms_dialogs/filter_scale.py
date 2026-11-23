@@ -380,7 +380,8 @@ class Scale(wx.Dialog):
             stime = integer_to_time(int(self.mills / 2), False)
             sseg = f"-ss {stime}"
         scale = "" if not concat else f'-vf "{concat}"'
-
+        # Assigning a UUID prevents the file-locking issue—typical of
+        # NTFS—that occurs during overwriting.
         unique_id = uuid.uuid4().hex[:6]
         dname = os.path.dirname(self.frame)
         fname, __ = os.path.splitext(os.path.basename(self.filename))
