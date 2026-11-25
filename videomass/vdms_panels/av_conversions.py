@@ -45,7 +45,6 @@ from videomass.vdms_dialogs.filter_transpose import Transpose
 from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
-from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_video_stream
 from videomass.vdms_utils.utils import (
@@ -53,6 +52,7 @@ from videomass.vdms_utils.utils import (
     split_args,
     update_timeseq_duration,
 )
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 from .audio_encoders.acodecs import AudioEncoders
 from .miscellaneous.miscell import Miscellaneous
@@ -123,7 +123,9 @@ class AV_Conv(wx.Panel):
         icons = get.iconset
         self.videopanel = None
 
-        bmpplay = get_bmp(icons["preview"], ((16, 16)))
+        COLORSCHEME = get.appset["colorscheme"]
+        COLOR_INFO = COLORSCHEME["INFO"]
+
         self.bmpreset = get_bmp(icons["clear"], ((16, 16)))
         bmpresize = get_bmp(icons["scale"], ((16, 16)))
         bmpcrop = get_bmp(icons["crop"], ((16, 16)))
@@ -273,12 +275,14 @@ class AV_Conv(wx.Panel):
         )
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
 
-        self.btn_preview = wx.Button(
-            self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
+        btn_quicktip = wx.Button(
+            self.filterVpanel, wx.ID_ANY, _("?"), size=(40, -1)
         )
-        self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_preview.Disable()
+        font = btn_quicktip.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        btn_quicktip.SetFont(font)
+        btn_quicktip.SetForegroundColour(wx.Colour(COLOR_INFO))
+        sizer_Vfilter.Add(btn_quicktip, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_reset = wx.Button(
             self.filterVpanel, wx.ID_ANY, "", size=(40, -1)
         )
@@ -399,7 +403,7 @@ class AV_Conv(wx.Panel):
             "normalization."
         )
         self.cmb_Media.SetToolTip(tip)
-        self.btn_preview.SetToolTip(_("Preview video filters"))
+        btn_quicktip.SetToolTip(_("Quick tip"))
         self.btn_reset.SetToolTip(_("Disable active filters"))
         self.btn_videosize.SetToolTip(_("Resize"))
         self.btn_crop.SetToolTip(_("Crop"))
@@ -419,6 +423,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_Container, self.cmb_cont)
         self.Bind(wx.EVT_COMBOBOX, self.on_Media, self.cmb_Media)
         self.Bind(wx.EVT_BUTTON, self.on_saveprst, self.btn_saveprst)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         self.Bind(wx.EVT_BUTTON, self.on_Set_scale, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Set_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Set_transpose, self.btn_rotate)
@@ -426,14 +431,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Set_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_Set_stabilizer, self.btn_vidstab)
         self.Bind(wx.EVT_BUTTON, self.on_Set_coloreq, self.btn_coloreq)
-        self.Bind(wx.EVT_BUTTON, self.on_video_preview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_vfilters_clear, self.btn_reset)
-        self.Bind(
-            wx.EVT_BUTTON,
-            self.on_audio_preview,
-            self.audioenc.btn_audio_preview,
-        )
-
         self.Bind(wx.EVT_BUTTON, self.on_cmd_line, self.btn_cmd)
 
         #  initialize default layout:
@@ -452,10 +450,10 @@ class AV_Conv(wx.Panel):
         above to allow the `AudioEncoders` class to set the
         required objects, e.g. some `opt` dictionary keys.
         """
-        if self.opt["PEAK"] or self.opt["RMS"]:
-            self.audioenc.normalize_default()
-        if self.opt["VFilters"]:
-            self.on_vfilters_clear(self)
+        # if self.opt["PEAK"] or self.opt["RMS"]:
+        self.audioenc.normalize_default()
+        # if self.opt["VFilters"]:
+        self.on_vfilters_clear(self)
 
     # -------------------------------------------------------------------#
 
@@ -512,7 +510,79 @@ class AV_Conv(wx.Panel):
 
         self.nb_Video.Layout()  # force Layout
 
+        # ------------------------------------------------------------------#
+
+    def on_media_preview(self):
+        """
+        Concatenates all previously set audio and video filters and
+        returns a tuple of two elements:
+            (list[filters], int(audio stream index))
+        """
+        fget = self.file_selection()
+        if not fget:
+            return
+
+        filesel = self.parent.file_src[fget[0]]
+        vfilters = self.opt["VFilters"]  # has `-vf` flag
+        raw_flt = split_args(vfilters)[1] if vfilters else ""
+
+        # Excludes Vidstab (and the associated Unsharp) from the preview
+        excluded = {self.opt["Vidstabtransform"], self.opt["Unsharp"]}
+        flt = ",".join(
+            f for f in raw_flt.split(",") if f and f not in excluded
+        )
+        vf = flt
+
+        if self.parent.checktimestamp:
+            ts = self.parent.timestampfilter
+            vf = ",".join(f for f in (flt, ts) if f)
+
+        audiodata = self.audioenc.on_audio_preview(fget)
+        if audiodata is False:
+            return
+        af = "" if audiodata is None else audiodata
+        # audioindex = 0 if audiodata is None else audiodata[1]  NON pIU USATO
+
+        cmdlist = [
+            self.appdata["ffplay_cmd"],
+            *split_args(self.appdata["ffplay-default-args"]),
+            *split_args(self.appdata["ffplay_loglevel"]),
+            *split_args("-autoexit" if self.parent.autoexit else ""),
+            "-i",
+            filesel,
+            *split_args(self.parent.time_seq),
+            *split_args(af),
+            *opt_arg("-vf", vf),
+        ]
+        return cmdlist
+
     # ----------------------Event handler (callback)----------------------#
+
+    def on_help(self, event):
+        """
+        Event clicking on button Quick Tip.
+        """
+        msg = _(
+            "Turn on one or more video filters in this column, then preview "
+            "the combined effect by clicking the Play/Stop button in the "
+            "Timeline (CTRL+T).\n\n"
+            "The Stabilize (vidstab) filter cannot be previewed live in the "
+            "Timeline; instead, you can run a quick test render directly "
+            "inside its filter window to check the result."
+        )
+
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+
+    # --------------------------------------------------------------#
 
     def videoCodec(self, event):
         """
@@ -579,68 +649,6 @@ class AV_Conv(wx.Panel):
 
     # ------------------------------------------------------------------#
 
-    def on_video_preview(self, event):
-        """
-        Showing selected video preview with applied filters.
-        Note that libstab filter is not possible to preview.
-        """
-        fget = self.file_selection()
-        if not fget or not self.opt["VFilters"]:
-            return
-        if self.opt["Vidstabtransform"]:
-            wx.MessageBox(
-                _(
-                    "To preview Stabilize filter, please click "
-                    "Preview button on Video Stabilizer Tool"
-                ),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-            return
-
-        flt = self.opt["VFilters"]
-        autoexit = "-autoexit" if self.parent.autoexit else ""
-        filesel = self.parent.file_src[fget[0]]
-
-        if self.parent.checktimestamp:
-            flt = f"{flt},{self.parent.timestampfilter}"
-
-        args = [
-            self.appdata["ffplay_cmd"],
-            *split_args(self.appdata["ffplay-default-args"]),
-            *split_args(self.appdata["ffplay_loglev"]),
-            autoexit,
-            "-i",
-            filesel,
-            *split_args(self.parent.time_seq),
-            *opt_arg(flt.split()[0], flt.split()[1]),
-        ]
-        try:
-            with open(filesel, encoding="utf-8"):
-                playback = FilePlay(self.GetParent(), args)
-                playback.start()
-        except OSError:
-            wx.MessageBox(
-                _("Invalid or unsupported file:  %s") % (filesel),
-                "Videomass",
-                wx.ICON_ERROR,
-                self,
-            )
-            return
-
-    # ------------------------------------------------------------------#
-
-    def on_audio_preview(self, event):
-        """
-        Button event for button preview on `self.audioenc`.
-        Only Bind it in this class.
-        """
-        fget = self.file_selection()
-        self.audioenc.on_audio_preview(fget)
-
-    # ------------------------------------------------------------------#
-
     def on_vfilters_clear(self, event):
         """
         Reset all enabled filters. If default disablevidstab
@@ -662,7 +670,6 @@ class AV_Conv(wx.Panel):
             self.btn_rotate.SetBackgroundColour(wx.NullColour)
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
             self.btn_coloreq.SetBackgroundColour(wx.NullColour)
-            self.btn_preview.Disable()
             self.btn_reset.Disable()
 
     # ------------------------------------------------------------------#
@@ -739,10 +746,8 @@ class AV_Conv(wx.Panel):
 
         if filters:
             self.opt["VFilters"] = f"-vf {filters}"
-            self.btn_preview.Enable(), self.btn_reset.Enable()
         else:
             self.opt["VFilters"] = ""
-            self.btn_preview.Disable(), self.btn_reset.Disable()
 
     # ------------------------------------------------------------------#
 
@@ -992,19 +997,6 @@ class AV_Conv(wx.Panel):
         """
         Update entries and file check.
         """
-        if self.audioenc.btn_voldect.IsEnabled():
-            wx.MessageBox(
-                _(
-                    "Undetected volume values! Click the "
-                    '"Volume detect" button to analyze '
-                    "audio volume data."
-                ),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-            return None
-
         if index is not None:
             infile = [self.parent.file_src[index]]
             outfilenames = [self.parent.outputnames[index]]
@@ -1023,6 +1015,14 @@ class AV_Conv(wx.Panel):
         )
         if not filecheck:  # User changing idea or not such files exist
             return None
+
+        norm_sel = self.audioenc.rdbx_normalize.GetSelection()
+        needs_vol = (norm_sel == 1 and not self.opt["PEAK"]) or (
+            norm_sel == 2 and not self.opt["RMS"]
+        )
+        if needs_vol and self.audioenc.on_analyzes():
+            return
+
         return filecheck
 
     # ------------------------------------------------------------------#

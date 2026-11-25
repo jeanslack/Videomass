@@ -33,11 +33,8 @@ from pubsub import pub
 
 from videomass.vdms_dialogs.list_warning import ListWarning
 from videomass.vdms_dialogs.renamer import Renamer
-from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads.probe_worker import ProbeWorker
 from videomass.vdms_utils.utils import (
-    opt_arg,
-    split_args,
     time_to_integer,
     to_bytes,
 )
@@ -509,20 +506,16 @@ class FileDnD(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID1"):
-            popupID5 = wx.ID_ANY
             popupID1 = wx.ID_ANY
             popupID2 = wx.ID_ANY
             popupID3 = wx.ID_ANY
             popupID4 = wx.ID_ANY
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID5)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID4)
         # build the menu
         menu = wx.Menu()
-        playfile = menu.Append(popupID5, _("Play file"))
-        menu.AppendSeparator()
         rename = menu.Append(popupID2, _("Rename selected file\tCtrl+R"))
         rename_batch = menu.Append(popupID1, _("Batch rename files\tCtrl+B"))
         menu.AppendSeparator()
@@ -536,15 +529,12 @@ class FileDnD(wx.Panel):
             else:
                 rename_batch.Enable(False)
             if self.parent.filedropselected:
-                playfile.Enable(True)
                 rename.Enable(True)
                 delfile.Enable(True)
             else:
-                playfile.Enable(False)
                 rename.Enable(False)
                 delfile.Enable(False)
         else:
-            playfile.Enable(False)
             rename.Enable(False)
             rename_batch.Enable(False)
             delfile.Enable(False)
@@ -577,9 +567,6 @@ class FileDnD(wx.Panel):
 
         elif menuItem.GetItemLabel() == _("Clear list\tShift+DEL"):
             self.delete_all(event)  # need pass event here
-
-        elif menuItem.GetItemLabel() == _("Play file"):
-            self.on_play_select(None)
 
     # ----------------------------------------------------------------------
 
@@ -703,50 +690,6 @@ class FileDnD(wx.Panel):
             self.flCtrl.Select(selitem, on=1)  # default event selection
 
         pub.sendMessage("RESET_ON_CHANGED_LIST", msg=selitem)
-
-    # ----------------------------------------------------------------------
-
-    def on_play_select(self, event):
-        """
-        Playback the selected file
-        """
-        if self.flCtrl.GetFirstSelected() == -1:  # None
-            wx.MessageBox(
-                _("Have to select an item in the file list first"),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-            return
-
-        index = self.flCtrl.GetFocusedItem()
-        item = self.flCtrl.GetItemText(index, 1)
-        autoexit = "-autoexit" if self.parent.autoexit else ""
-        ts = self.parent.checktimestamp and self.parent.timestampfilter
-
-        args = [
-            self.appdata["ffplay_cmd"],
-            *split_args(self.appdata["ffplay-default-args"]),
-            *split_args(self.appdata["ffplay_loglev"]),
-            autoexit,
-            "-i",
-            item,
-            *split_args(self.parent.time_seq),
-            *opt_arg("-vf", ts),
-        ]
-
-        try:
-            with open(item, encoding="utf-8"):
-                playback = FilePlay(self.GetParent(), args)
-                playback.start()
-        except OSError:
-            wx.MessageBox(
-                _("Invalid or unsupported file:  %s") % (item),
-                "Videomass",
-                wx.ICON_ERROR,
-                self,
-            )
-            return
 
     # ----------------------------------------------------------------------
 

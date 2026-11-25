@@ -21,13 +21,20 @@ ATTENZIONE chiamate a ffprobe: probe = ffprobe(
         ) ma è solo un file audio per un processo di breve durata quindi penso possa passare lo stesso
 
 - con System Light theme io lascerei gli sfondi del sistema usando icone light
-- Il carico forma d'onda è dispendioso passando da un file all'altro: lasciare frame in cache garantisce velocità e maggiore sicurezza evitando thread secondari.
 
--  il tracciamento dei processi ffplay è stato migliorato in questa pull request, ma le callback dell'interfaccia utente possono ancora creare molte istanze di FilePlay o FilePlayWithprogress. I processi esistenti dovrebbero essere arrestati o riutilizzati prima di avviare un'altra anteprima.
+-[DONE] Anche i dati analisi normalizzazione audio possono essere lasciati in cache.
 
-- Le ripetute invocazioni di FFmpeg/FFprobe — le anteprime per ritaglio, ridimensionamento, trasposizione, correzione del colore, stabilizzazione e forme d'onda della timeline avviano frequentemente sottoprocessi. Queste operazioni dovrebbero memorizzare nella cache i frame/forme d'onda generati anziché rigenerarli a ogni evento dell'interfaccia utente.
+-[DONE] Il carico forma d'onda è dispendioso passando da un file all'altro: lasciare frame in cache garantisce velocità e maggiore sicurezza evitando thread secondari.
+
+-[DONE]  il tracciamento dei processi ffplay è stato migliorato in questa pull request, ma le callback dell'interfaccia utente possono ancora creare molte istanze di FilePlay o FilePlayWithprogress. I processi esistenti dovrebbero essere arrestati o riutilizzati prima di avviare un'altra anteprima.
+
+-[PARTIALLY DONE] Le ripetute invocazioni di FFmpeg/FFprobe — le anteprime per ritaglio, ridimensionamento, trasposizione, correzione del colore, stabilizzazione e forme d'onda della timeline avviano frequentemente sottoprocessi. Queste operazioni dovrebbero memorizzare nella cache i frame/forme d'onda generati anziché rigenerarli a ogni evento dell'interfaccia utente.
 
 - Miglioramento prioritario: aggiungere debouncing/cancellazione e memorizzare nella cache gli output di anteprima più onerosi. Ciò eliminerebbe la maggiore probabile regressione delle prestazioni: i frequenti avvii del processo FFmpeg durante la regolazione dei cursori o il cambio di media.
+
+- Se cambia il tema icone videomass, la waveform avrà il suo colore adatto per solo per quel tema, ma potrebbe non esserlo per gli altri dal momento che salvi le immagini con hash.
+
+- Messaggio se il cestino Videomass ha raggiunto dimensioni ragguardevoli avvisare una-tantum.
 
 
 

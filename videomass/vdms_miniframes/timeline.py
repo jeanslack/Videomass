@@ -631,8 +631,9 @@ class Float_TL(wx.MiniFrame):
             self.play_indx = ""
             wx.MessageBox(
                 _(
-                    'Index does not exist in the selected source file:\n"{}"'
-                ).format(selected[1]),
+                    "Audio index ({0}) does not exist in the "
+                    'selected source file:\n"{1}"'
+                ).format(requested_idx, selected[1]),
                 "Videomass",
                 wx.ICON_INFORMATION,
                 self,
@@ -643,28 +644,39 @@ class Float_TL(wx.MiniFrame):
 
     # ------------------------------------------------------------------#
 
-    def on_audio_index(self, event):
+    def on_audio_index(self, aindx):
         """
         Set a specific index from audio streams. Validates the index against
         the selected file and resets any active waveform.
         See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
         """
-        selected = self.file_selection()
-        if selected:
-            self.validate_audio_index(selected)
+        print(aindx)
+        if aindx == 0:  # "Auto"
+            self.wave_indx = ""
         else:
-            if self.cmb_A_inMap.GetValue() == "Auto":
-                self.wave_indx = ""
-                self.play_indx = ""
-            else:
-                idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
-                self.wave_indx = f"[0:a:{idx}]"
-                self.play_indx = f"-ast a:{idx}"
+            self.wave_indx = f"[0:a:{aindx - 1}]"
 
-        # delete waveform if activated
-        if self.btn_wave.GetValue() is True:
-            self.btn_wave.SetValue(False)
-            self.on_load_waveform(event)
+        if self.playback is not None and self.playback.is_alive():
+            self.stop_playback()
+        self.btn_wave.SetValue(False)
+        self.on_load_waveform(None)
+
+        # selected = self.file_selection()
+        # if selected:
+        #     self.validate_audio_index(selected)
+        # else:
+        #     if self.cmb_A_inMap.GetValue() == "Auto":
+        #         self.wave_indx = ""
+        #         self.play_indx = ""
+        #     else:
+        #         idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
+        #         self.wave_indx = f"[0:a:{idx}]"
+        #         self.play_indx = f"-ast a:{idx}"
+        #
+        # # delete waveform if activated
+        # if self.btn_wave.GetValue() is True:
+        #     self.btn_wave.SetValue(False)
+        #     self.on_load_waveform(event)
 
     # ------------------------------------------------------------------#
 
@@ -677,6 +689,44 @@ class Float_TL(wx.MiniFrame):
         self.playback = None
         self.end_playback_thread()
 
+    # ------------------------------------------------------------------#
+    #     def preview(self, args):
+    #         """
+    #         Receiving a Play request from preview functionalities
+    #         """
+    #         if FilePlay.is_playing():
+    #             print("è ancora playng")
+    #             return
+    #         print("timeline preview ", args)
+    #
+    #         if self.playback is not None and self.playback.is_alive():
+    #             self.stop_playback()
+    #             return
+    #
+    #         if audiostreamidx is not None:
+    #             self.cmb_A_inMap.SetSelection(audiostreamidx)
+    #             self.on_audio_index(self)
+    #
+    #         self.btn_play.SetBitmap(self.bmp_stop)
+    #
+    #         try:
+    #             with open(filepath, encoding="utf-8"):
+    #                 self.playback = FilePlay.play(self.GetParent(), cmdlist)
+    #                 # playback = FilePlay(self.GetParent(), cmdlist)
+    #                 # playback.start()
+    #
+    #         except OSError:
+    #             wx.MessageBox(
+    #                 _("Invalid or unsupported file:\n'{}'").format(filepath),
+    #                 "Videomass",
+    #                 wx.ICON_ERROR,
+    #                 self,
+    #             )
+    #             return
+    #
+    #         self.set_ui_ctrl(False)
+    #         self.playpoint = round(self.bar_x)
+
     # ----------------------Event handler (callbacks)----------------------#
 
     def on_play_segment(self, event):
@@ -685,26 +735,34 @@ class Float_TL(wx.MiniFrame):
         IMPORTANT: To make this effective, set ffplay's loglevel
         args to info: `-loglevel info.
         """
-        if not self.file_selection():
+        # if FilePlay.is_playing():
+        #     self.btn_play.Disable()
+        #     return
+        fselect = self.file_selection()
+        if not fselect:
             return
 
-        if self.sourcedur == _("No source duration:"):
-            wx.MessageBox(
-                _("Invalid file format for playback."),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
+        args = self.parent.get_preview_args()
+        if not args:
             return
 
-        if self.parent.time_seq == "":
-            wx.MessageBox(
-                _("No segment selected in the timeline yet."),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-            return
+        # if self.sourcedur == _("No source duration:"):
+        #     wx.MessageBox(
+        #         _("Invalid file format for playback."),
+        #         "Videomass",
+        #         wx.ICON_INFORMATION,
+        #         self,
+        #     )
+        #     return
+
+        # if self.parent.time_seq == "":
+        #     wx.MessageBox(
+        #         _("No segment selected in the timeline yet."),
+        #         "Videomass",
+        #         wx.ICON_INFORMATION,
+        #         self,
+        #     )
+        #     return
 
         if self.invalidselection:
             wx.MessageBox(
@@ -724,32 +782,13 @@ class Float_TL(wx.MiniFrame):
 
         self.btn_play.SetBitmap(self.bmp_stop)
 
-        filesel = self.file_selection()[1]
-
-        if self.parent.checktimestamp:
-            vf = f"scale=w=360:h=-1,{self.parent.timestampfilter}"
-        else:
-            vf = "scale=w=360:h=-1"
-
-        args = [
-            Float_TL.get.appset["ffplay_cmd"],
-            *split_args(Float_TL.get.appset["ffplay-default-args"]),
-            *split_args(
-                "-loglevel info -autoexit -i"
-            ),  # `info` is mandatory here
-            filesel,
-            *split_args(self.parent.time_seq),
-            *split_args(self.play_indx),
-            "-vf",
-            vf,
-        ]
         try:
-            with open(filesel, encoding="utf-8"):
+            with open(fselect[1], encoding="utf-8"):
                 self.playback = FilePlayWithprogress(self.GetParent(), args)
                 self.playback.start()
         except OSError:
             wx.MessageBox(
-                _("Invalid or unsupported file:\n'{}'").format(filesel),
+                _("Invalid or unsupported file:\n'{}'").format(fselect[1]),
                 "Videomass",
                 wx.ICON_ERROR,
                 self,
@@ -767,7 +806,7 @@ class Float_TL(wx.MiniFrame):
         slice/segment offset, and requests thread-safe redraw.
 
         This method uses pub/sub protocol subscribing "UPDATE_PLAY_COUNTER"
-        message. It is called by `FilePlay` class thread to update
+        message. It is called by `FilePlayWithprogress` class thread to update
         the output lines of the ffplay stderr (see `on_play_segment` def).
 
         """
@@ -841,8 +880,8 @@ class Float_TL(wx.MiniFrame):
     def end_playback_thread(self):
         """
         This method uses pub/sub protocol subscribing "END_PLAY" message.
-        It is called by `FilePlay` class thread to indicate the end of the
-        thread.
+        It is called by `BaseFilePlay` class thread to indicate the end
+        of the thread.
         """
 
         def reset_gui():
@@ -970,9 +1009,11 @@ class Float_TL(wx.MiniFrame):
 
         else:
             if self.duration[msg] < 100:
-                self.milliseconds = 86399999
-                self.set_ui_ctrl(False)
-                self.overalltime = "00:00:00.000"
+                # self.milliseconds = 86399999
+                self.milliseconds = 40
+                # self.set_ui_ctrl(False)
+                self.set_ui_ctrl(True)
+                self.overalltime = "00:00:00.040"
             else:
                 self.milliseconds = self.duration[msg]
                 self.sourcedur = _("Source duration:")

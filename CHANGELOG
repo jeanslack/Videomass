@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 23 November 2026 v6.1.30
+Wed, 25 November 2026 v6.1.30
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -121,6 +121,12 @@ Mon, 23 November 2026 v6.1.30
     preview loading tasks, the last modification timestamp (mtime) + file size
     has been added to the generated frame names, to ensure that the cache is
     automatically regenerated if the file is overwritten or modified.
+  * NEW: Removed all the various players scattered around the GUI in favor of
+    a single player implemented on the timeline. Now, all previews will be
+    played exclusively on the timeline.
+  * NEW: The user experience has been significantly improved through a new
+    approach to audio normalization, utilizing fully automated background
+    processes.
 
 
 +------------------------------------+

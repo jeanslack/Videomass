@@ -193,7 +193,7 @@ def get_color_scheme(theme):
             "ERR1": "#C40804",  # RED_DEEP: errors 2
             "SUCCESS": "#0DE40D",  # GREEN: successful
             "TXT3": "#E6FFFC",  # CYAN-WHITE: standard text
-            "INFO": "#194C7E",  # BLUE: other info messages
+            "INFO": "#00bfffff",  # "#194C7E",  # BLUE: other info messages
             "DEBUG": "#333333",  # LIGHT BLACK
             "FAILED": "#C40804",  # RED_DEEP if failed
             "ABORT": "#A41EA4",  # SAT.MAGENTA if abort
@@ -388,7 +388,9 @@ class DataSource:
             "ffprobe_cmd": _relativize(userconf["ffprobe_cmd"]),
             "ffplay_cmd": _relativize(userconf["ffplay_cmd"]),
             "ffmpeg-default-args": "-y -stats -hide_banner",
-            "ffplay-default-args": "-hide_banner",
+            "ffplay-default-args": (
+                '-alwaysontop -window_title "Videomass Preview" -hide_banner'
+            ),
             "auto-restart-app": False,
             "make_portable": self.makeportable,
             "applognames": (
@@ -421,7 +423,6 @@ class DataSource:
             "fileproperties",
             "playback",
             "concatenate",
-            "preview",
             "clear",
             "addtoprst",
             "scale",
@@ -431,7 +432,6 @@ class DataSource:
             "denoiser",
             "volanalyze",
             "settings",
-            "audiovolume",
             "presets_manager",
             "profile_add",
             "profile_del",
@@ -439,7 +439,6 @@ class DataSource:
             "previous",
             "next",
             "stabilizer",
-            "preview_audio",
             "profile_copy",
             "slideshow",
             "videotopictures",
@@ -448,7 +447,6 @@ class DataSource:
             "coloreq",
             "stop",
             "home",
-            "play",
             "proc-queue",
             "add-queue",
             "delpreset",
@@ -511,7 +509,6 @@ class DataSource:
             f"{choose.get('x22')}/properties.{ext}",
             f"{choose.get('x16')}/playback.{ext}",
             f"{choose.get('x48')}/icon_concat.{ext}",
-            f"{choose.get('x16')}/preview.{ext}",
             f"{choose.get('x16')}/edit-clear.{ext}",
             f"{choose.get('x16')}/addtoprst.{ext}",
             f"{choose.get('x16')}/transform-scale.{ext}",
@@ -521,7 +518,6 @@ class DataSource:
             f"{choose.get('x16')}/denoise.{ext}",
             f"{choose.get('x16')}/volanalyze.{ext}",
             f"{choose.get('x16')}/settings.{ext}",
-            f"{choose.get('x16')}/player-volume.{ext}",
             f"{choose.get('x48')}/icon_prst_mng.{ext}",
             f"{choose.get('x16')}/newprf.{ext}",
             f"{choose.get('x16')}/delprf.{ext}",
@@ -529,7 +525,6 @@ class DataSource:
             f"{choose.get('x22')}/go-previous.{ext}",
             f"{choose.get('x22')}/go-next.{ext}",
             f"{choose.get('x16')}/stabilizer.{ext}",
-            f"{choose.get('x16')}/preview_audio.{ext}",
             f"{choose.get('x16')}/copyprf.{ext}",
             f"{choose.get('x48')}/icon_slideshow.{ext}",
             f"{choose.get('x48')}/icon_videopictures.{ext}",
@@ -538,7 +533,6 @@ class DataSource:
             f"{choose.get('x16')}/coloreq.{ext}",
             f"{choose.get('x22')}/stop.{ext}",
             f"{choose.get('x22')}/home.{ext}",
-            f"{choose.get('x22')}/play.{ext}",
             f"{choose.get('x22')}/proc-queue.{ext}",
             f"{choose.get('x22')}/add-queue.{ext}",
             f"{choose.get('x16')}/delpreset.{ext}",

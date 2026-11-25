@@ -26,6 +26,8 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
+
 import wx
 
 
@@ -225,21 +227,31 @@ class Set_Timestamp(wx.Dialog):
         This method return values via a getvalue() interface by
         the caller. See the caller for more infos and usage.
         """
+        if self.appdata["ostype"] == "Darwin":
+            mac_fonts = (
+                "/System/Library/Fonts/Supplemental/Arial.ttf",
+                "/Library/Fonts/Arial.ttf",
+                "/System/Library/Fonts/Helvetica.ttc",
+            )
+            found = next((f for f in mac_fonts if os.path.exists(f)), None)
+            tsfont = f"fontfile='{found}'" if found else "font='Arial'"
+
+        elif self.appdata["ostype"] == "Windows":
+            win_font = r"C:\Windows\Fonts\arial.ttf"
+            if os.path.exists(win_font):
+                tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
+            else:
+                tsfont = "font='Arial'"
+
+        else:
+            tsfont = "font='Sans'"
+
+        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
+        # set command line for timestamp
         ptshms = r"%{pts\:hms}"
 
-        if self.appdata["ostype"] == "Darwin":
-            tsfont = "/Library/Fonts/Arial.ttf"
-        elif self.appdata["ostype"] == "Windows":
-            tsfont = "C\\:/Windows/Fonts/Arial.ttf"
-        else:
-            tsfont = "Arial"
-        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # adaptative
-
-        timestamp = (
-            f"drawtext=fontfile='{tsfont}':text='{ptshms}':"
-            f"fontcolor={self.fontcolor}:shadowcolor={self.shadowcolor}:"
-            f"shadowx=1:shadowy=1:{fontsize}:"
+        return (
+            f"drawtext={tsfont}:text='{ptshms}':fontcolor={self.fontcolor}:"
+            f"shadowcolor={self.shadowcolor}:shadowx=1:shadowy=1:{fontsize}:"
             f"box={self.boxenabled}:boxcolor={self.boxcolor}"
         )
-
-        return timestamp

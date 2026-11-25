@@ -154,7 +154,7 @@ class ConfigManager:
 
     """
 
-    VERSION = 8.8
+    VERSION = 8.9
     DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
         "confversion": VERSION,
         "shutdown": False,
@@ -169,7 +169,7 @@ class ConfigManager:
         "ffmpeg_loglev": "-loglevel info",
         "ffplay_cmd": "",
         "ffplay_islocal": False,
-        "ffplay_loglev": "-loglevel error",
+        "ffplay_loglevel": "-loglevel info",
         "ffprobe_cmd": "",
         "ffprobe_islocal": False,
         "warnexiting": True,

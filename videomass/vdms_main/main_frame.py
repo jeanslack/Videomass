@@ -75,18 +75,32 @@ def timestampset(ostype):
     """
     Return the default vf filter string for ffplay timestamp
     """
-    # set fontconfig for timestamp
+    # set fontconfig / fontfile with fallback for timestamp
     if ostype == "Darwin":
-        tsfont = "/Library/Fonts/Arial.ttf"
+        mac_fonts = (
+            "/System/Library/Fonts/Supplemental/Arial.ttf",
+            "/Library/Fonts/Arial.ttf",
+            "/System/Library/Fonts/Helvetica.ttc",
+        )
+        found = next((f for f in mac_fonts if os.path.exists(f)), None)
+        tsfont = f"fontfile='{found}'" if found else "font='Arial'"
+
     elif ostype == "Windows":
-        tsfont = "C\\:/Windows/Fonts/Arial.ttf"
+        win_font = r"C:\Windows\Fonts\arial.ttf"
+        if os.path.exists(win_font):
+            tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
+        else:
+            tsfont = "font='Arial'"
+
     else:
-        tsfont = "Arial"
+        tsfont = "font='Sans'"
+
     fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
     # set command line for timestamp
     ptshms = r"%{pts\:hms}"
+
     return (
-        f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
+        f"drawtext={tsfont}:text='{ptshms}':fontcolor=White:"
         f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
         f"box=1:boxcolor=DeepPink"
     )
@@ -142,7 +156,6 @@ class MainFrame(wx.Frame):
         self.ffmpegcodecs = False
         self.ffmpegdecoders = False
         self.ffmpegformats = False
-        self.audivolnormalize = False
         self.timestampfilter = timestampset(self.appdata["ostype"])
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
@@ -205,10 +218,7 @@ class MainFrame(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_("Ready"), None)
         # disabling toolbar/menu items
-        [
-            self.toolbar.EnableTool(x, False)
-            for x in (3, 4, 5, 6, 7, 8, 35, 36, 37)
-        ]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 36, 37)]
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.Layout()
 
@@ -343,9 +353,6 @@ class MainFrame(wx.Frame):
         elif msg == "FFmpegFormats":
             self.ffmpegformats.Destroy()
             self.ffmpegformats = False
-        elif msg == "AudioVolNormal":
-            self.audivolnormalize.Destroy()
-            self.audivolnormalize = False
 
     # ---------------------- Event handler (callback) ------------------#
 
@@ -396,9 +403,6 @@ class MainFrame(wx.Frame):
         if self.ffmpegformats:
             self.ffmpegformats.Destroy()
             self.ffmpegformats = False
-        if self.audivolnormalize:
-            self.audivolnormalize.Destroy()
-            self.audivolnormalize = False
 
     # ------------------------------------------------------------------#
 
@@ -1559,7 +1563,6 @@ class MainFrame(wx.Frame):
         bmpconv = get_bmp(self.icons["startconv"], bmp_size)
         bmpstop = get_bmp(self.icons["stop"], bmp_size)
         bmphome = get_bmp(self.icons["home"], bmp_size)
-        bmpplay = get_bmp(self.icons["play"], bmp_size)
         bmpprocqueue = get_bmp(self.icons["proc-queue"], bmp_size)
         bmpaddqueue = get_bmp(self.icons["add-queue"], bmp_size)
 
@@ -1574,10 +1577,7 @@ class MainFrame(wx.Frame):
         )
         tip = _("Home panel")
         home = self.toolbar.AddTool(5, _("Home"), bmphome, tip, wx.ITEM_NORMAL)
-        tip = _("Play the selected input file")
-        play = self.toolbar.AddTool(
-            35, _("Play"), bmpplay, tip, wx.ITEM_NORMAL
-        )
+
         tip = _("Get informative data about imported media streams")
         self.btn_streams = self.toolbar.AddTool(
             6, _("Properties"), bmpinfo, tip, wx.ITEM_NORMAL
@@ -1607,7 +1607,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
         self.Bind(wx.EVT_TOOL, self.media_streams, self.btn_streams)
-        self.Bind(wx.EVT_TOOL, self.fileDnDTarget.on_play_select, play)
+        # self.Bind(wx.EVT_TOOL, self.fileDnDTarget.on_play_select, play)
         self.Bind(wx.EVT_TOOL, self.on_add_to_queue, addqueue)
         self.Bind(wx.EVT_TOOL, self.on_process_queue, self.pqueue)
 
@@ -1663,7 +1663,7 @@ class MainFrame(wx.Frame):
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 35, 36)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 36)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
@@ -1699,7 +1699,7 @@ class MainFrame(wx.Frame):
             self.clearall.Enable(True)
             self.rename_batch.Enable(True)
         self.openmedia.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6)]
         [self.toolbar.EnableTool(x, False) for x in (7, 8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
@@ -1732,7 +1732,7 @@ class MainFrame(wx.Frame):
         self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 36)]
         self.toolbar.EnableTool(8, False)
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
@@ -1762,7 +1762,7 @@ class MainFrame(wx.Frame):
         self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 36)]
         self.toolbar.EnableTool(8, False)
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
@@ -1793,7 +1793,7 @@ class MainFrame(wx.Frame):
         self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
         [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
@@ -1823,7 +1823,7 @@ class MainFrame(wx.Frame):
         self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
         [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
@@ -1853,7 +1853,7 @@ class MainFrame(wx.Frame):
         self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
         [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
@@ -2026,7 +2026,7 @@ class MainFrame(wx.Frame):
         else:
             self.menu_go_items((1, 1, 1, 1, 1, 1, 0))  # Go menu items
             [self.toolbar.EnableTool(x, False) for x in (4, 8, 36)]
-            [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7, 35)]
+            [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7)]
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
         self.Layout()
 
@@ -2180,3 +2180,18 @@ class MainFrame(wx.Frame):
             self.write_option_before_exit()
             self.destroy_orphaned_window()
             self.destroy_application()
+
+    # ------------------------------------------------------------------#
+
+    def get_preview_args(self):
+        """
+        Get ffplay command arguments for playback on Timeline.
+        """
+        return self.AVconvPanel.on_media_preview()
+
+    def set_audio_index_timeline(self, indx):
+        """
+        Set the selected audio index on corrresponding waveform
+        """
+        self.TimeLine.on_audio_index(indx)
+        # self.Timeline.make_frame_from_file()
