@@ -71,41 +71,6 @@ from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_utils.widget_utils import CountDownDlg
 
 
-# def timestampset(ostype):
-#     """
-#     Return the default vf filter string for ffplay timestamp
-#     """
-#     # set fontconfig / fontfile with fallback for timestamp
-#     if ostype == "Darwin":
-#         mac_fonts = (
-#             "/System/Library/Fonts/Supplemental/Arial.ttf",
-#             "/Library/Fonts/Arial.ttf",
-#             "/System/Library/Fonts/Helvetica.ttc",
-#         )
-#         found = next((f for f in mac_fonts if os.path.exists(f)), None)
-#         tsfont = f"fontfile='{found}'" if found else "font='Arial'"
-#
-#     elif ostype == "Windows":
-#         win_font = r"C:\Windows\Fonts\arial.ttf"
-#         if os.path.exists(win_font):
-#             tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
-#         else:
-#             tsfont = "font='Arial'"
-#
-#     else:
-#         tsfont = "font='Sans'"
-#
-#     fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
-#     # set command line for timestamp
-#     ptshms = r"%{pts\:hms}"
-#
-#     return (
-#         f"drawtext={tsfont}:text='{ptshms}':fontcolor=White:"
-#         f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
-#         f"box=1:boxcolor=DeepPink"
-#     )
-
-
 class MainFrame(wx.Frame):
     """
     This main frame is the first ancestor aka the top-level
@@ -431,6 +396,8 @@ class MainFrame(wx.Frame):
         fdcw = [fdrop.GetColumnWidth(i) for i in range(fdrop.GetColumnCount())]
         sett["filedrop_column_width"] = fdcw
 
+        sett["ffplay_win_dim"] = self.appdata["ffplay_win_dim"]
+
         confmanager.write_options(**sett)
 
     # ------------------------------------------------------------------#
@@ -676,6 +643,34 @@ class MainFrame(wx.Frame):
         self.exitplayback = ffplayButton.Append(
             wx.ID_ANY, dscrp[0], dscrp[1], kind=wx.ITEM_CHECK
         )
+        ffplayButton.AppendSeparator()
+        windowdimension = wx.Menu()  # ffmpeg sub menu
+        ffplayButton.AppendSubMenu(windowdimension, _("Window dimension"))
+        self.item_native = windowdimension.Append(
+            wx.ID_ANY,
+            _("Native"),
+            _("Use native video dimensions"),
+            kind=wx.ITEM_RADIO,
+        )
+        self.item_medium = windowdimension.Append(
+            wx.ID_ANY,
+            _("Medium (854x480)"),
+            _("Set preview window to 854x480"),
+            kind=wx.ITEM_RADIO,
+        )
+        self.item_small = windowdimension.Append(
+            wx.ID_ANY,
+            _("Small (640x360)"),
+            _("Set preview window to 640x360"),
+            kind=wx.ITEM_RADIO,
+        )
+        if self.appdata["ffplay_win_dim"] == "medium":
+            self.item_medium.Check(True)
+        elif self.appdata["ffplay_win_dim"] == "small":
+            self.item_small.Check(True)
+        else:
+            self.item_native.Check(True)
+        ffplayButton.AppendSeparator()
         dscrp = (_("Timestamp settings"), _("Customize the timestamp style"))
         tscustomize = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton.AppendSeparator()
@@ -845,6 +840,10 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.get_ffmpeg_decoders, ckdecoders)
         self.Bind(wx.EVT_MENU, self.showTimestamp, self.viewtimestamp)
         self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
+        self.Bind(wx.EVT_MENU, self.on_ffplay_dim, self.item_native)
+        self.Bind(wx.EVT_MENU, self.on_ffplay_dim, self.item_medium)
+        self.Bind(wx.EVT_MENU, self.on_ffplay_dim, self.item_small)
+
         self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
@@ -1374,6 +1373,23 @@ class MainFrame(wx.Frame):
 
         """
         self.autoexit = self.exitplayback.IsChecked()
+
+    # ------------------------------------------------------------------#
+
+    def on_ffplay_dim(self, event):
+        """
+        FFplay submenu "Window dimension" event:
+        Set a string value identifier to set ffplay
+        window dimension.
+
+        """
+        item_id = event.GetId()
+        if item_id == self.item_native.GetId():
+            self.appdata["ffplay_win_dim"] = "native"
+        elif item_id == self.item_medium.GetId():
+            self.appdata["ffplay_win_dim"] = "medium"
+        elif item_id == self.item_small.GetId():
+            self.appdata["ffplay_win_dim"] = "small"
 
     # ------------------------------------------------------------------#
 

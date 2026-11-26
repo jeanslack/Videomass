@@ -128,6 +128,13 @@ Thu, 26 November 2026 v6.1.30
     for both waveform visualization (ffmpeg) and
     playback (ffplay), with automatic stream validation and fallback
     to Auto if the chosen index does not exist.
+  * NEW: The FFplay window can now be resized using "native," "medium," and
+    "small" settings. This allows for managing the window within specific space
+    constraints without losing editing results.
+  * NEW: Added a notification to empty the Videomass trash upon application
+    startup; this will appear if the size of the trashed files exceeds a
+    certain threshold (2048 MB).
+
 
 
 +------------------------------------+

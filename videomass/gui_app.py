@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.29.2026
+Rev: Nov.26.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -119,7 +119,43 @@ class Videomass(wx.App):
         main_frame = MainFrame(self.appset)
         main_frame.Show()
         self.SetTopWindow(main_frame)
+
+        # Esegue il controllo subito dopo che la finestra principale è apparsa
+        wx.CallAfter(self.check_trash_size, main_frame)
         return True
+
+    # -------------------------------------------------------------------
+
+    def check_trash_size(self, parent):
+        """
+        If the trash folder exists and has reached a certain
+        size in MB, issue an alert.
+        """
+        limit_mb = self.appset.get("trash_size_limit", 2048)
+        trash_dir = self.appset["trashdir_default"]
+        if limit_mb <= 0 or not os.path.isdir(trash_dir):
+            return
+
+        total_bytes = sum(
+            os.path.getsize(os.path.join(dirpath, filename))
+            for dirpath, _, filenames in os.walk(trash_dir)
+            for filename in filenames
+        )
+        trash_mb = total_bytes / (1024 * 1024)
+
+        # Threshold set in MB
+        if trash_mb >= limit_mb:
+            msg = _(
+                "The Videomass trash folder has reached {0:.0f} MB.\n"
+                "You can empty it from the menu when needed."
+            ).format(trash_mb)
+
+            wx.MessageBox(
+                msg,
+                _("Trash Folder Warning"),
+                wx.OK | wx.ICON_INFORMATION,
+                parent=parent,
+            )
 
     # -------------------------------------------------------------------
 

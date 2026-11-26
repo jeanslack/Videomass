@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.26.2026
 Code checker: flake8, pylint, ruff
 
  This file is part of Videomass.
@@ -137,6 +137,10 @@ class ConfigManager:
     trashdir_loc (str):
         Trash path name (see preferences, wizard and configurator)
         See also `trashdir_default` on configurator.
+        The difference is that `trashdir_default` is the value saved and
+        kept in the cache when set via the preferences—persisting until
+        the program is restarted—at which point it will have the same value
+        as `trashdir_loc`.
 
     locale_name (str):
         "Default", set system language to videomass message catalog
@@ -152,9 +156,14 @@ class ConfigManager:
     filedrop_column_width (list of int)
         column width in the File Drop panel.
 
+    trash_size_limit: (int) default 2048,
+        Trash folder size limit in MB. Note that if the value in
+        MB is 0, the check will not be performed at all when the
+        app starts.
+
     """
 
-    VERSION = 8.9
+    VERSION = 9.0
     DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
         "confversion": VERSION,
         "shutdown": False,
@@ -170,6 +179,7 @@ class ConfigManager:
         "ffplay_cmd": "",
         "ffplay_islocal": False,
         "ffplay_loglevel": "-loglevel info",
+        "ffplay_win_dim": "medium",
         "ffprobe_cmd": "",
         "ffprobe_islocal": False,
         "warnexiting": True,
@@ -191,6 +201,7 @@ class ConfigManager:
         "timeline_window_show": True,
         "timeline_window_pos": [2, 2],
         "timeline_window_size": [920, 190],
+        "trash_size_limit": 2048,
     }
 
     def __init__(self, filename, makeportable=None):

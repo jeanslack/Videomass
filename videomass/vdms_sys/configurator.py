@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.26.2026
 Code checker: flake8, pylint, ruff
 
  This file is part of Videomass.

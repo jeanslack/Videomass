@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.26.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -110,6 +110,13 @@ class AV_Conv(wx.Panel):
     }
     # Namings in the audio format selection on Container combobox:
     A_FORMATS = ("wav", "mp3", "ac3", "ogg", "flac", "m4a", "aac", "opus")
+
+    # FFplay default window dimensions
+    FFPLAY_DIM: ClassVar[dict[str, Any]] = {
+        "native": "",
+        "medium": "-x 854 -y 480",
+        "small": "-x 640 -y 360",
+    }
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -558,6 +565,7 @@ class AV_Conv(wx.Panel):
             *split_args(self.appdata["ffplay-default-args"]),
             *split_args(self.appdata["ffplay_loglevel"]),
             *split_args("-autoexit" if self.parent.autoexit else ""),
+            *split_args(AV_Conv.FFPLAY_DIM[self.appdata["ffplay_win_dim"]]),
             "-i",
             filesel,
             *split_args(self.parent.time_seq),
