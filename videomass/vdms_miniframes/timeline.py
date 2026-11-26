@@ -294,8 +294,8 @@ class Float_TL(wx.MiniFrame):
         self.invalidselection = False  # booleaan reference
         self.playpoint = None  # `x` point pixel representation or None
         self.playback = None  # playback thread
-        self.play_indx = ""  # audio stream index for playback cmd
-        self.wave_indx = ""  # audio stream index for waveform cmd
+        self.intindx = ""  # real int index for audio stream
+        self.wave_indx = ""  # audio stream index string for waveform cmd
 
         wx.MiniFrame.__init__(
             self,
@@ -354,37 +354,6 @@ class Float_TL(wx.MiniFrame):
         )
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
         sizer_btns.Add(self.btn_wave, 0, wx.LEFT | wx.CENTRE, 20)
-
-        txtAinmap = wx.StaticText(self.panelbase, wx.ID_ANY, _("Audio Index:"))
-        sizer_btns.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
-        self.cmb_A_inMap = wx.ComboBox(
-            self.panelbase,
-            wx.ID_ANY,
-            choices=[
-                "Auto",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-            ],
-            size=(-1, -1),
-            style=wx.CB_DROPDOWN | wx.CB_READONLY,
-        )
-        sizer_btns.Add(self.cmb_A_inMap, 0, wx.LEFT | wx.CENTRE, 5)
-        self.cmb_A_inMap.SetSelection(0)
-
         btn_quicktip = wx.Button(
             self.panelbase, wx.ID_ANY, _("?"), size=(40, -1)
         )
@@ -455,17 +424,6 @@ class Float_TL(wx.MiniFrame):
         btn_quicktip.SetToolTip(tip)
         tip = _("Play/Stop segment")
         self.btn_play.SetToolTip(tip)
-        tip = _(
-            '"Auto" lets FFmpeg/FFplay select the audio stream to play or '
-            "process (usually the first audio stream). If the source file(s) "
-            "contain only an audio track, it is recommended to always "
-            'set this control to "Auto".\n\n'
-            '"1-16": if a video file contains more than one audio '
-            'stream, you can select a specific one, e.g., "1" for the '
-            'first available audio stream, "2" for the second audio '
-            "stream, and so on."
-        )
-        self.cmb_A_inMap.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_TOGGLEBUTTON, self.on_load_waveform, self.btn_wave)
@@ -482,7 +440,6 @@ class Float_TL(wx.MiniFrame):
         self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         self.Bind(wx.EVT_BUTTON, self.on_play_segment, self.btn_play)
-        self.Bind(wx.EVT_COMBOBOX, self.on_audio_index, self.cmb_A_inMap)
         self.panelruler.Bind(wx.EVT_PAINT, self.OnPaint)
         self.panelruler.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
         self.panelruler.Bind(wx.EVT_LEFT_UP, self.on_leftup)
@@ -516,7 +473,6 @@ class Float_TL(wx.MiniFrame):
         widgets = [
             self.btn_play,
             self.btn_wave,
-            self.cmb_A_inMap,
             self.btn_tstart,
             self.btn_reset,
             self.btn_tend,
@@ -611,123 +567,47 @@ class Float_TL(wx.MiniFrame):
 
     # ------------------------------------------------------------------#
 
-    def validate_audio_index(self, selected):
-        """
-        Checks if the selected audio index in cmb_A_inMap exists in the file.
-        Resets to 'Auto' with a warning if out of range.
-        """
-        cmb_val = self.cmb_A_inMap.GetValue()
-        if cmb_val == "Auto":
-            self.wave_indx = ""
-            self.play_indx = ""
-            return
-
-        audio_streams = self.get_audio_stream(selected)
-        requested_idx = int(cmb_val) - 1
-
-        if not audio_streams or requested_idx >= len(audio_streams):
-            self.cmb_A_inMap.SetValue("Auto")
-            self.wave_indx = ""
-            self.play_indx = ""
-            wx.MessageBox(
-                _(
-                    "Audio index ({0}) does not exist in the "
-                    'selected source file:\n"{1}"'
-                ).format(requested_idx, selected[1]),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-        else:
-            self.wave_indx = f"[0:a:{requested_idx}]"
-            self.play_indx = f"-ast a:{requested_idx}"
-
-    # ------------------------------------------------------------------#
-
-    def on_audio_index(self, aindx):
-        """
-        Set a specific index from audio streams. Validates the index against
-        the selected file and resets any active waveform.
-        See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
-        """
-        print(aindx)
-        if aindx == 0:  # "Auto"
-            self.wave_indx = ""
-        else:
-            self.wave_indx = f"[0:a:{aindx - 1}]"
-
-        if self.playback is not None and self.playback.is_alive():
-            self.stop_playback()
-        self.btn_wave.SetValue(False)
-        self.on_load_waveform(None)
-
-        # selected = self.file_selection()
-        # if selected:
-        #     self.validate_audio_index(selected)
-        # else:
-        #     if self.cmb_A_inMap.GetValue() == "Auto":
-        #         self.wave_indx = ""
-        #         self.play_indx = ""
-        #     else:
-        #         idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
-        #         self.wave_indx = f"[0:a:{idx}]"
-        #         self.play_indx = f"-ast a:{idx}"
-        #
-        # # delete waveform if activated
-        # if self.btn_wave.GetValue() is True:
-        #     self.btn_wave.SetValue(False)
-        #     self.on_load_waveform(event)
-
-    # ------------------------------------------------------------------#
-
     def stop_playback(self):
         """
         Extension of the btn_play event when the user clicks
         the button to stop playback.
         """
         self.playback.stop("FilePlayWithprogress")
+        # DO NOT change order: playback=None on TOP of end_playback_thread
         self.playback = None
         self.end_playback_thread()
 
-    # ------------------------------------------------------------------#
-    #     def preview(self, args):
-    #         """
-    #         Receiving a Play request from preview functionalities
-    #         """
-    #         if FilePlay.is_playing():
-    #             print("è ancora playng")
-    #             return
-    #         print("timeline preview ", args)
-    #
-    #         if self.playback is not None and self.playback.is_alive():
-    #             self.stop_playback()
-    #             return
-    #
-    #         if audiostreamidx is not None:
-    #             self.cmb_A_inMap.SetSelection(audiostreamidx)
-    #             self.on_audio_index(self)
-    #
-    #         self.btn_play.SetBitmap(self.bmp_stop)
-    #
-    #         try:
-    #             with open(filepath, encoding="utf-8"):
-    #                 self.playback = FilePlay.play(self.GetParent(), cmdlist)
-    #                 # playback = FilePlay(self.GetParent(), cmdlist)
-    #                 # playback.start()
-    #
-    #         except OSError:
-    #             wx.MessageBox(
-    #                 _("Invalid or unsupported file:\n'{}'").format(filepath),
-    #                 "Videomass",
-    #                 wx.ICON_ERROR,
-    #                 self,
-    #             )
-    #             return
-    #
-    #         self.set_ui_ctrl(False)
-    #         self.playpoint = round(self.bar_x)
-
     # ----------------------Event handler (callbacks)----------------------#
+
+    def on_audio_index(self, event, dataindex):
+        """
+        Set a specific index from audio streams. Validates the index against
+        the selected file and resets any active waveform.
+        See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
+        """
+        # selected = self.file_selection()
+        # if selected:
+        #     self.validate_audio_index(selected)
+        self.intindx = dataindex
+
+        if dataindex == 0:
+            self.wave_indx = ""
+
+        else:
+            indx = dataindex - 1
+            self.wave_indx = f"[0:a:{indx}]"
+
+        # delete waveform if activated
+        if self.btn_wave.GetValue() is True:
+            self.btn_wave.SetValue(False)
+            self.on_load_waveform(event)
+
+        # stop playback
+        if self.playback is not None and self.playback.is_alive():
+            self.stop_playback()
+            return
+
+    # ------------------------------------------------------------------#
 
     def on_play_segment(self, event):
         """
@@ -842,25 +722,31 @@ class Float_TL(wx.MiniFrame):
                 res = integer_to_time(round(timemils))
                 wx.CallAfter(self.counterplay.SetLabel, res)
 
+                # Limiti effettivi: segmento selezionato oppure intero file
+                has_selection = bool(self.parent.time_seq)
+                start_ms = self.mills_start if has_selection else 0
+                end_ms = self.mills_end if has_selection else self.milliseconds
+                start_px = round(self.bar_x) if has_selection else 0
+                end_px = (
+                    round(self.bar_w) if has_selection else round(Float_TL.RW)
+                )
+
                 # Checks whether playback is still in the "previous keyframe"
                 # phase before the actual slice start.
-                if timemils < self.mills_start:
-                    # Force the cursor to the start position of the segment
-                    pixpos = round(self.bar_x)
+                if timemils < start_ms:
+                    pixpos = start_px
 
-                # Check whether the end of the set slice has been exceeded
-                elif timemils > self.mills_end:
-                    # Force the cursor to the end position of the segment
-                    pixpos = round(self.bar_w)
+                # Check whether the end of the set slice/file has been exceeded
+                elif timemils > end_ms:
+                    pixpos = end_px
                 else:
                     # when the video is at the very beginning
                     if timemils == 0:
                         pixpos = 0
                     else:
-                        scaletopix = round(
+                        pixpos = round(
                             self.pix / (Float_TL.RW / timemils) * Float_TL.RW
                         )
-                        pixpos = scaletopix
 
                 def safe_ui_update(px):
                     """
@@ -983,7 +869,7 @@ class Float_TL(wx.MiniFrame):
         self.playpoint = None
         self.counterplay.SetLabel("00:00:00.000")
         self.statusbar_msg(msg, None)
-        self.parent.time_seq = ""
+        self.set_time_seq(False)
 
         self.onRedraw()
 
@@ -1011,9 +897,10 @@ class Float_TL(wx.MiniFrame):
             if self.duration[msg] < 100:
                 # self.milliseconds = 86399999
                 self.milliseconds = 40
+                self.overalltime = "00:00:00.040"
                 # self.set_ui_ctrl(False)
                 self.set_ui_ctrl(True)
-                self.overalltime = "00:00:00.040"
+
             else:
                 self.milliseconds = self.duration[msg]
                 self.sourcedur = _("Source duration:")
@@ -1022,30 +909,37 @@ class Float_TL(wx.MiniFrame):
 
         self.btn_wave.SetValue(False)
         self.frame = None
-        self.cmb_A_inMap.SetValue("Auto")
         self.wave_indx = ""
-        self.play_indx = ""
+        self.intindx = ""
         self.on_trim_time_reset(None)
 
     # ------------------------------------------------------------------#
 
     def set_time_seq(self, isset=True):
         """
-        Set parent time_seq attr.
+        Set parent time_seq attr. This method sends messages to
+        the subscriber using the pub/sub protocol whenever segments
+        on the timeline are changed (see `AVConv.reset_on_timeline_change()`).
         """
+        old_time_seq = self.parent.time_seq
+
         if isset:
             dur = integer_to_time(self.mills_end - self.mills_start)
-            self.parent.time_seq = f"-ss {self.clock_start} -t {dur}"
+            new_time_seq = f"-ss {self.clock_start} -t {dur}"
             msg = _("{0} {1}  |  Segment Duration: {2}").format(
                 self.sourcedur, self.overalltime, dur
             )
             self.statusbar_msg(f"{msg}", None)
         else:
-            self.parent.time_seq = ""
+            new_time_seq = ""
             msg = _("{0} {1}  |  Segment Duration: {2}").format(
                 self.sourcedur, self.overalltime, "00:00:00.000"
             )
             self.statusbar_msg(f"{msg}", None)
+
+        if old_time_seq != new_time_seq:
+            self.parent.time_seq = new_time_seq
+            pub.sendMessage("TIMELINE_TRIM_CHANGED")
 
     # ------------------------------------------------------------------#
 

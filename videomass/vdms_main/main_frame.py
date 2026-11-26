@@ -71,39 +71,39 @@ from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_utils.widget_utils import CountDownDlg
 
 
-def timestampset(ostype):
-    """
-    Return the default vf filter string for ffplay timestamp
-    """
-    # set fontconfig / fontfile with fallback for timestamp
-    if ostype == "Darwin":
-        mac_fonts = (
-            "/System/Library/Fonts/Supplemental/Arial.ttf",
-            "/Library/Fonts/Arial.ttf",
-            "/System/Library/Fonts/Helvetica.ttc",
-        )
-        found = next((f for f in mac_fonts if os.path.exists(f)), None)
-        tsfont = f"fontfile='{found}'" if found else "font='Arial'"
-
-    elif ostype == "Windows":
-        win_font = r"C:\Windows\Fonts\arial.ttf"
-        if os.path.exists(win_font):
-            tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
-        else:
-            tsfont = "font='Arial'"
-
-    else:
-        tsfont = "font='Sans'"
-
-    fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
-    # set command line for timestamp
-    ptshms = r"%{pts\:hms}"
-
-    return (
-        f"drawtext={tsfont}:text='{ptshms}':fontcolor=White:"
-        f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
-        f"box=1:boxcolor=DeepPink"
-    )
+# def timestampset(ostype):
+#     """
+#     Return the default vf filter string for ffplay timestamp
+#     """
+#     # set fontconfig / fontfile with fallback for timestamp
+#     if ostype == "Darwin":
+#         mac_fonts = (
+#             "/System/Library/Fonts/Supplemental/Arial.ttf",
+#             "/Library/Fonts/Arial.ttf",
+#             "/System/Library/Fonts/Helvetica.ttc",
+#         )
+#         found = next((f for f in mac_fonts if os.path.exists(f)), None)
+#         tsfont = f"fontfile='{found}'" if found else "font='Arial'"
+#
+#     elif ostype == "Windows":
+#         win_font = r"C:\Windows\Fonts\arial.ttf"
+#         if os.path.exists(win_font):
+#             tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
+#         else:
+#             tsfont = "font='Arial'"
+#
+#     else:
+#         tsfont = "font='Sans'"
+#
+#     fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
+#     # set command line for timestamp
+#     ptshms = r"%{pts\:hms}"
+#
+#     return (
+#         f"drawtext={tsfont}:text='{ptshms}':fontcolor=White:"
+#         f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
+#         f"box=1:boxcolor=DeepPink"
+#     )
 
 
 class MainFrame(wx.Frame):
@@ -156,7 +156,8 @@ class MainFrame(wx.Frame):
         self.ffmpegcodecs = False
         self.ffmpegdecoders = False
         self.ffmpegformats = False
-        self.timestampfilter = timestampset(self.appdata["ostype"])
+        # self.timestampfilter = timestampset(self.appdata["ostype"])
+        self.timestampfilter = self.appdata["ffplaytstamp"]
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
 
@@ -1355,12 +1356,13 @@ class MainFrame(wx.Frame):
         FFplay submenu: customize the timestamp filter
 
         """
-        with set_timestamp.Set_Timestamp(self, self.timestampfilter) as dialog:
+        ts = self.appdata["ffplaytstamp"]
+        with set_timestamp.Set_Timestamp(self, ts) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 data = dialog.getvalue()
                 if not data:
                     return
-                self.timestampfilter = data
+                self.appdata["ffplaytstamp"] = data
 
     # ------------------------------------------------------------------#
 
@@ -2189,9 +2191,8 @@ class MainFrame(wx.Frame):
         """
         return self.AVconvPanel.on_media_preview()
 
-    def set_audio_index_timeline(self, indx):
+    def set_audio_index_timeline(self, event, dataindex):
         """
-        Set the selected audio index on corrresponding waveform
+        Set the selected audio index on Timeline attributes
         """
-        self.TimeLine.on_audio_index(indx)
-        # self.Timeline.make_frame_from_file()
+        self.TimeLine.on_audio_index(event, dataindex)

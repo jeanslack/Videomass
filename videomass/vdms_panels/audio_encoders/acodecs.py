@@ -535,7 +535,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
     def audio_options(self):
         """
-        Get audio parameters
+        Get audio parameters method, called by AVConv
         """
         if self.rdbx_normalize.GetSelection() == 0:
             del self.opt["PEAK"][:]
@@ -836,7 +836,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 self.btn_set.Disable()
                 self.btn_set.SetBackgroundColour(wx.NullColour)
 
-        # --------------------------------------------------------
         for k, v in AudioEncoders.ACODECS.items():
             if audiocodec in k:
                 if audiocodec == "Auto":
@@ -871,7 +870,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.opt["AudioIndex"] = ""
         else:
             self.cmb_A_inMap.Enable()
-            self.on_audio_index(self)
+            self.on_audio_index(self, normalize=False)
 
     # -------------------------------------------------------------------#
 
@@ -946,7 +945,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
     # ------------------------------------------------------------------#
 
-    def on_audio_index(self, event):
+    def on_audio_index(self, event, normalize=True):
         """
         Set a specific index from audio streams.
         See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
@@ -968,10 +967,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.opt["AudioIndex"] = f"-map 0:a:{idx}"
 
         if self.rdbx_normalize.GetSelection() in [1, 2] and audio_streams:
-            self.on_analyzes()
+            normalize and self.on_analyzes()
 
         self.on_audio_mapping(None)
-        self.maindata.set_audio_index_timeline(self.cmb_A_inMap.GetSelection())
+        intindex = self.cmb_A_inMap.GetSelection()
+        self.maindata.set_audio_index_timeline(event, intindex)
 
     # ------------------------------------------------------------------#
 
@@ -1118,20 +1118,20 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
         if selection == 1:
             title = _("PEAK-based volume statistics")
-            typelevel = self.opt["PEAK"]
+            target = self.opt["PEAK"]
         elif selection == 2:
             title = _("RMS-based volume statistics")
-            typelevel = self.opt["RMS"]
+            target = self.opt["RMS"]
         else:
             return
 
-        if not typelevel and self.on_analyzes():
+        if not target and self.on_analyzes():
             return
 
         self.maindata.audivolnormalize = AudioVolNormal(
             self,
             title,
-            typelevel,
+            target,
             self.appdata["ostype"],
         )
         self.maindata.audivolnormalize.ShowModal()

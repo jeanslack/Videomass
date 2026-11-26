@@ -3,13 +3,30 @@ VIDEOMASS INSTALLATION INSTRUCTIONS AND BUILDINGS
 
 Notes: Some systems need to replace "python3" with "py" or "python".
 
-IMPORTANT NOTE:
---------------
+=======================
+WAYLAND IMPORTANT NOTE:
+=======================
+
     Linux Wayland Issues - On some Wayland-based Linux desktop environments,
     tooltips or some interface elements may not appear or function properly.
     Launch Videomass by forcing the X11 backend:
 
-        GDK_BACKEND=x11 videomass or GDK_BACKEND=x11 python3 launcher.py
+        For installed package, use:
+
+            GDK_BACKEND=x11 videomass
+
+        For locale sources:
+
+            GDK_BACKEND=x11 python3 launcher.py
+
+    If you installed Videomass via a package manager, you should have
+    its .desktop file in your menu. In that file, replace `exec=videomass`
+    with the following line:
+
+        Exec=GDK_BACKEND=x11 videomass
+
+    This way, you avoid having to enter that line manually every time you
+    launch the application.
 
 ==============================
 Executable packages availables
@@ -30,7 +47,7 @@ Base application dependencies
         - wxPython >=4.1.1
         - PyPubSub >=4.0.3
         - requests
-        - FFmpeg (included ffplay and ffprobe) >=5.1
+        - FFmpeg (included ffplay and ffprobe) >=5.1 (build with fontconfig)
 
 
 =========================

@@ -32,7 +32,7 @@ ATTENZIONE chiamate a ffprobe: probe = ffprobe(
 
 - Miglioramento prioritario: aggiungere debouncing/cancellazione e memorizzare nella cache gli output di anteprima più onerosi. Ciò eliminerebbe la maggiore probabile regressione delle prestazioni: i frequenti avvii del processo FFmpeg durante la regolazione dei cursori o il cambio di media.
 
-- Se cambia il tema icone videomass, la waveform avrà il suo colore adatto per solo per quel tema, ma potrebbe non esserlo per gli altri dal momento che salvi le immagini con hash.
+- Waveform già in cache: Cambiato il tema icone videomass, se generata, la waveform avrà il colore adatto solo per quel tema, ma potrebbe non esserlo per gli altri dal momento che salvi le immagini con hash.
 
 - Messaggio se il cestino Videomass ha raggiunto dimensioni ragguardevoli avvisare una-tantum.
 

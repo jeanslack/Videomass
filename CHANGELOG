@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 25 November 2026 v6.1.30
+Thu, 26 November 2026 v6.1.30
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -52,13 +52,13 @@ Wed, 25 November 2026 v6.1.30
     in these scenarios, ensuring that all running instances are terminated
     when the application's main window is closed.
   * Fixed a timeline portability issue; segment playback is now available on
-    Windows as well (Testing on macOS still needs to be done by someone).
-  * Improved the timeline’s graphics engine; it is thread-safe, consumes very
+    Windows as well (Testing on macOS still needs to be done by any of you).
+  * Redesigned the timeline graphics engine; it is thread-safe, consumes very
     few resources, and performs in a consistent and fluid manner.
   * Improved waveform visualization in the timeline, in addition to other
     cosmetic enhancements applied.
   * Improved display of Quick Tips (formerly "Read me" buttons).
-  * Improved the graphics engine in the Crop filter window in A/V Conversions.
+  * Redesigned the graphics engine in the Crop filter window in A/V Conversions.
     Mouse actions will now be even smoother with significant CPU savings at the
     end of events.
   * Fixed (flushing) a potential slowdown in log display when performing
@@ -92,7 +92,8 @@ Wed, 25 November 2026 v6.1.30
   * Fixed the Maxangle parameter setting in the vidstab (Stabilize) filter
     being set to out-of-range maximum values.
   * Fixed "Still Image Maker" comparing image dimensions.
-  * Added ".tiff" format (no multi-page) to "Still Image Maker".
+  * Added ".tiff" format (no multi-page) to "Still Image Maker" file
+    compatibilities.
   * Fixed stream inspection assuming the video stream is always at index 0,
     preventing false warnings on files where audio or subtitle tracks precede
     the video stream.
@@ -104,12 +105,8 @@ Wed, 25 November 2026 v6.1.30
     of re-probing files.
   * The logic for enabling/disabling controls and buttons in the video
     stabilization filter has been redesigned.
-  * Timeline: Added a new combobox allowing users to select a specific audio
-    track (Auto or 1 to 16) for both waveform visualization (ffmpeg) and
-    segment playback (ffplay), with automatic stream validation and fallback
-    to Auto if the chosen index does not exist.
   * Improved icon relevance for MessageBox().
-  * Fixed Dialog Wizard layout of pages.
+  * New dynamic-sized layout in the dialog wizard.
   * To more safely manage GUI workloads, reasonable limits have been imposed on
     the total number of files in the list control, then a maximum limit on the
     files dragged at a time and also on the number of items in the queue.
@@ -117,16 +114,20 @@ Wed, 25 November 2026 v6.1.30
     with structured argument lists passed directly to subprocess.Popen,
     preventing issues with file paths containing spaces, quotes, or backslashes
     on Windows, macOS, and Linux.
-  * Previews[Waveform, Transpose]: To limit ffmpeg processes and speed up some
-    preview loading tasks, the last modification timestamp (mtime) + file size
-    has been added to the generated frame names, to ensure that the cache is
-    automatically regenerated if the file is overwritten or modified.
+  * Improved previews[Waveform, Transpose]: To limit ffmpeg processes and speed
+    up some preview loading tasks, the last modification timestamp (mtime) +
+    file size has been added to the generated frame names, to ensure that the
+    cache is automatically regenerated if the file is overwritten or modified.
   * NEW: Removed all the various players scattered around the GUI in favor of
     a single player implemented on the timeline. Now, all previews will be
     played exclusively on the timeline.
-  * NEW: The user experience has been significantly improved through a new
-    approach to audio normalization, utilizing fully automated background
-    processes.
+  * NEW: [AV Conversions] The user experience has been significantly improved
+    through a new approach to audio normalization, utilizing fully automated
+    background processes.
+  * NEW: [Timeline]: Ability to specify an audio track index (Auto or 1 to 16)
+    for both waveform visualization (ffmpeg) and
+    playback (ffplay), with automatic stream validation and fallback
+    to Auto if the chosen index does not exist.
 
 
 +------------------------------------+

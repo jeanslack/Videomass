@@ -140,6 +140,12 @@ def conventional_paths():
         cache_dir = os.path.join(dir_conf, "cache")  # updates executable
         trash_dir = os.path.join(dir_conf, "Trash")
 
+        win_font = r"C:\Windows\Fonts\arial.ttf"
+        if os.path.exists(win_font):
+            tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
+        else:
+            tsfont = "font='Arial'"
+
     elif platform.system() == "Darwin":
         fpath = "Library/Application Support/videomass/settings.json"
         file_conf = os.path.join(user_name, fpath)
@@ -148,6 +154,14 @@ def conventional_paths():
         cache_dir = os.path.join(user_name, "Library/Caches/videomass")
         trash_dir = os.path.join(dir_conf, "Trash")
 
+        mac_fonts = (
+            "/System/Library/Fonts/Supplemental/Arial.ttf",
+            "/Library/Fonts/Arial.ttf",
+            "/System/Library/Fonts/Helvetica.ttc",
+        )
+        found = next((f for f in mac_fonts if os.path.exists(f)), None)
+        tsfont = f"fontfile='{found}'" if found else "font='Arial'"
+
     else:  # Linux, FreeBsd, etc.
         fpath = ".config/videomass/settings.json"
         file_conf = os.path.join(user_name, fpath)
@@ -155,8 +169,18 @@ def conventional_paths():
         log_dir = os.path.join(user_name, ".local/share/videomass/log")
         cache_dir = os.path.join(user_name, ".cache/videomass")
         trash_dir = os.path.join(dir_conf, "Trash")
+        tsfont = "font='Sans'"
 
-    return file_conf, dir_conf, log_dir, cache_dir, trash_dir
+    # set command line for timestamp
+    fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
+    ptshms = r"%{pts\:hms}"
+    ffplaytstamp = (
+        f"drawtext={tsfont}:text='{ptshms}':fontcolor=White:"
+        f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
+        f"box=1:boxcolor=DeepPink"
+    )
+
+    return file_conf, dir_conf, log_dir, cache_dir, trash_dir, ffplaytstamp
 
 
 def portable_paths(portdirname):
@@ -261,7 +285,9 @@ def data_location(kwargs):
             portdir
         )
     else:
-        conffile, confdir, logdir, cachedir, trash_dir = conventional_paths()
+        conffile, confdir, logdir, cachedir, trash_dir, _ = (
+            conventional_paths()
+        )
 
     return {
         "conffile": conffile,
@@ -358,6 +384,9 @@ class DataSource:
         if theme.get("ERROR"):
             return theme
 
+        # Get command line for timestamp
+        timestampfilter = conventional_paths()[5]
+
         def _relativize(path, relative=self.relativepaths):
             """
             Returns a relative pathname if *relative* param is True.
@@ -387,6 +416,7 @@ class DataSource:
             "ffmpeg_cmd": _relativize(userconf["ffmpeg_cmd"]),
             "ffprobe_cmd": _relativize(userconf["ffprobe_cmd"]),
             "ffplay_cmd": _relativize(userconf["ffplay_cmd"]),
+            "ffplaytstamp": timestampfilter,
             "ffmpeg-default-args": "-y -stats -hide_banner",
             "ffplay-default-args": (
                 '-alwaysontop -window_title "Videomass Preview" -hide_banner'

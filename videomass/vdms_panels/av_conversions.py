@@ -440,6 +440,7 @@ class AV_Conv(wx.Panel):
         self.vencoder_panel_set(default=True)
         self.audioenc.startup_one_time(), self.audioenc.normalize_default()
         pub.subscribe(self.reset_on_changed_data, "RESET_ON_CHANGED_LIST")
+        pub.subscribe(self.reset_on_timeline_change, "TIMELINE_TRIM_CHANGED")
 
     # -------------------------------------------------------------------#
 
@@ -454,6 +455,15 @@ class AV_Conv(wx.Panel):
         self.audioenc.normalize_default()
         # if self.opt["VFilters"]:
         self.on_vfilters_clear(self)
+
+    def reset_on_timeline_change(self):
+        """
+        Called using pub/sub protocol when timeline trim selection
+        changes. Clears cached PEAK/RMS data without resetting UI
+        normalization settings.
+        """
+        del self.opt["PEAK"][:]
+        del self.opt["RMS"][:]
 
     # -------------------------------------------------------------------#
 
@@ -534,7 +544,7 @@ class AV_Conv(wx.Panel):
         vf = flt
 
         if self.parent.checktimestamp:
-            ts = self.parent.timestampfilter
+            ts = self.appdata["ffplaytstamp"]
             vf = ",".join(f for f in (flt, ts) if f)
 
         audiodata = self.audioenc.on_audio_preview(fget)
