@@ -32,7 +32,7 @@ import wx.adv
 from pubsub import pub
 
 from videomass.vdms_io.io_tools import generic_operation_process
-from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
+from videomass.vdms_threads.ffplay_file import FilePlay, FilePlayWithprogress
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_audio_streams
 from videomass.vdms_utils.utils import (
@@ -572,7 +572,9 @@ class Float_TL(wx.MiniFrame):
         Extension of the btn_play event when the user clicks
         the button to stop playback.
         """
-        self.playback.stop("FilePlayWithprogress")
+        if self.playback is not None:
+            self.playback.stop(self.playback.__class__.__name__)
+
         # DO NOT change order: playback=None on TOP of end_playback_thread
         self.playback = None
         self.end_playback_thread()
@@ -585,9 +587,6 @@ class Float_TL(wx.MiniFrame):
         the selected file and resets any active waveform.
         See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
         """
-        # selected = self.file_selection()
-        # if selected:
-        #     self.validate_audio_index(selected)
         self.intindx = dataindex
 
         if dataindex == 0:
@@ -626,24 +625,6 @@ class Float_TL(wx.MiniFrame):
         if not args:
             return
 
-        # if self.sourcedur == _("No source duration:"):
-        #     wx.MessageBox(
-        #         _("Invalid file format for playback."),
-        #         "Videomass",
-        #         wx.ICON_INFORMATION,
-        #         self,
-        #     )
-        #     return
-
-        # if self.parent.time_seq == "":
-        #     wx.MessageBox(
-        #         _("No segment selected in the timeline yet."),
-        #         "Videomass",
-        #         wx.ICON_INFORMATION,
-        #         self,
-        #     )
-        #     return
-
         if self.invalidselection:
             wx.MessageBox(
                 _(
@@ -664,8 +645,14 @@ class Float_TL(wx.MiniFrame):
 
         try:
             with open(fselect[1], encoding="utf-8"):
-                self.playback = FilePlayWithprogress(self.GetParent(), args)
+                if not self.parent.autoexit:
+                    self.playback = FilePlay(self.GetParent(), args)
+                else:
+                    self.playback = FilePlayWithprogress(
+                        self.GetParent(), args
+                    )
                 self.playback.start()
+
         except OSError:
             wx.MessageBox(
                 _("Invalid or unsupported file:\n'{}'").format(fselect[1]),
@@ -691,9 +678,7 @@ class Float_TL(wx.MiniFrame):
 
         """
         if status:
-            # """
             # Set the timeline to be disabled while playing the file
-            # """
             return
 
         if output:
@@ -701,7 +686,6 @@ class Float_TL(wx.MiniFrame):
             clean_line = output.strip()
             if not clean_line:
                 return
-
             # Check the diagnostic line from ffplay's actual counter
             if not any(
                 x in clean_line for x in ("A-V:", "M-A:", "aq=", "vq=")
@@ -883,9 +867,8 @@ class Float_TL(wx.MiniFrame):
         removing imported files (see`filedrop.py`).
         """
         if self.playback is not None and self.playback.is_alive():
-            self.playback.stop("FilePlayWithprogress")
-            self.playback = None
-            self.btn_play.SetBitmap(self.bmp_play)
+            self.stop_playback()
+            # self.btn_play.SetBitmap(self.bmp_play)
 
         self.sourcedur = _("No source duration:")
         if msg is None:

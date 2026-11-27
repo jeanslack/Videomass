@@ -121,7 +121,6 @@ class MainFrame(wx.Frame):
         self.ffmpegcodecs = False
         self.ffmpegdecoders = False
         self.ffmpegformats = False
-        # self.timestampfilter = timestampset(self.appdata["ostype"])
         self.timestampfilter = self.appdata["ffplaytstamp"]
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)

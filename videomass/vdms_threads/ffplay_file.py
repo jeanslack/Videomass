@@ -171,7 +171,9 @@ class BaseFilePlay(Thread):
     # ----------------------------------------------------------------------
 
     def _prepare_command(self) -> list:
-        """Prepare and format the command in a cross-platform way."""
+        """
+        Prepare and format the command in a cross-platform way.
+        """
         cmd_log = (
             subprocess.list2cmdline(self.cmd)
             if self.appdata["ostype"] == "Windows"
@@ -189,7 +191,9 @@ class BaseFilePlay(Thread):
     # ----------------------------------------------------------------------
 
     def _handle_error(self, error_msg):
-        """Centralized error handling."""
+        """
+        Centralized error handling.
+        """
         if BaseFilePlay._is_exiting:
             return
 
@@ -198,7 +202,9 @@ class BaseFilePlay(Thread):
     # ----------------------------------------------------------------------
 
     def _finalize_play(self):
-        """Always notify the GUI when playback ends."""
+        """
+        Always notify the GUI when playback ends.
+        """
         if BaseFilePlay._is_exiting:
             return
 

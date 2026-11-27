@@ -564,7 +564,7 @@ class AV_Conv(wx.Panel):
             self.appdata["ffplay_cmd"],
             *split_args(self.appdata["ffplay-default-args"]),
             *split_args(self.appdata["ffplay_loglevel"]),
-            *split_args("-autoexit" if self.parent.autoexit else ""),
+            "-autoexit" if self.parent.autoexit else "-nostats",
             *split_args(AV_Conv.FFPLAY_DIM[self.appdata["ffplay_win_dim"]]),
             "-i",
             filesel,

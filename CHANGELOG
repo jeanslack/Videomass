@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 26 November 2026 v6.1.30
+Fri, 27 November 2026 v6.1.30
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Requires wxPython >= 4.1.1 .
@@ -134,6 +134,10 @@ Thu, 26 November 2026 v6.1.30
   * NEW: Added a notification to empty the Videomass trash upon application
     startup; this will appear if the size of the trashed files exceeds a
     certain threshold (2048 MB).
+  * NEW: With "Auto-exit after playback" disabled, which is useful to avoid
+    immediately closing the FFplay window with files without duration (e.g.
+    static images), the progress bar and the duration counter will be disabled
+    (-nostats).
 
 
 
