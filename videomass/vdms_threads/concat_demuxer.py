@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.11.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import shlex
 import subprocess
 import sys
 import time
@@ -34,10 +35,7 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
+from videomass.vdms_utils.utils import split_args
 
 
 class ConcatDemuxer(BaseVideomassThread):
@@ -65,31 +63,38 @@ class ConcatDemuxer(BaseVideomassThread):
         self.appdata = get.appset
         self.kwa = kwargs
 
-    def run(self):
+    # ----------------------------------------------------------------#
+
+    def _prepare_command(self, logf) -> list:
         """
-        Subprocess initialize thread.
+        Prepare and format the command in a cross-platform way
+        and writes logfile.
+        Return list of command args.
 
         """
-        filedone = None
-        cmd = (
-            f'"{self.appdata["ffmpeg_cmd"]}" '
-            f"{self.appdata['ffmpeg-default-args']} "
-            f"{self.appdata['ffmpeg_loglev']} -f concat "
-            f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"'
+        cmd = [
+            self.appdata["ffmpeg_cmd"],
+            *split_args(self.appdata["ffmpeg-default-args"]),
+            *split_args(self.appdata["ffmpeg_loglev"]),
+            *split_args("-f concat -safe 0"),
+            "-i",
+            self.kwa["args"][0],
+            *split_args(self.kwa["args"][1]),
+            self.kwa["destination"],
+        ]
+        cmd_log = (
+            subprocess.list2cmdline(cmd)
+            if sys.platform == "win32"
+            else shlex.join(cmd)
         )
-
         count = (
             f"{self.kwa['nmax']} Items in progress...\nSource: "
             f'"{self.kwa["source"]}"\nDestination: '
             f'"{self.kwa["destination"]}"'
         )
-        stamp = f"{count}\n\n[COMMAND]:\n{cmd}"
+        stamp = f"{count}\n\n[COMMAND]:\n{cmd_log}"
+        tolog(stamp, logf, sep=True, wdate=True, openf=False)
 
-        # countevt = (
-        #     f"{self.kwa['nmax']} Items in progress...\n...for "
-        #     f"details see Current Log.\nDestination: "
-        #     f'"{self.kwa["destination"]}"'
-        # )
         strsrc = "\n".join(self.kwa["source"])
         countevt = (
             f"{self.kwa['nmax']} Items in progress...\n...for "
@@ -103,10 +108,22 @@ class ConcatDemuxer(BaseVideomassThread):
             duration=self.kwa["duration"],
             end="CONTINUE",
         )
-        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
+
+        return cmd
+
+    def run(self):
+        """
+        Subprocess initialize thread.
+
+        """
+        last_gui_update = time.monotonic()
+        THROTTLE_INTERVAL = 0.1
+        last_file_flush = time.monotonic()
+        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro (constant)
+        filedone = None
 
         with open(self.logfile, "a", encoding="utf-8") as logfile:
-            tolog(stamp, logfile, sep=True, wdate=True, openf=False)
+            cmd = self._prepare_command(logfile)
             try:
                 with subprocess.Popen(
                     cmd,
@@ -119,14 +136,22 @@ class ConcatDemuxer(BaseVideomassThread):
                     creationflags=self.creationflags,
                 ) as self.process:
                     for line in self.process.stderr:
-                        wx.CallAfter(
-                            pub.sendMessage,
-                            "UPDATE_EVT",
-                            output=line,
-                            duration=self.kwa["duration"],
-                            status=0,
-                        )
                         logfile.write(line)
+                        now = time.monotonic()
+                        if (now - last_file_flush) > FLUSH_INTERVAL:
+                            logfile.flush()
+                            last_file_flush = now
+
+                        if (now - last_gui_update) > THROTTLE_INTERVAL:
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "UPDATE_EVT",
+                                output=line,
+                                duration=self.kwa["duration"],
+                                status=0,
+                            )
+                            last_gui_update = now
+
                         if self.stop_work_thread:
                             if self.fatal:
                                 return

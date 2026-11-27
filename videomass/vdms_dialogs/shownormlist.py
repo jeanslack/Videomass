@@ -26,7 +26,6 @@ This file is part of Videomass.
 """
 
 import wx
-from pubsub import pub
 
 from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
@@ -56,7 +55,7 @@ class AudioVolNormal(wx.Dialog):
         BLUE = "LIGHT STEEL BLUE"
         FOREGRD = "BLACK"
 
-    def __init__(self, title, data, OS):
+    def __init__(self, parent, title, data, OS):
         """
         data contains volume list per-track.
         """
@@ -69,10 +68,9 @@ class AudioVolNormal(wx.Dialog):
 
         wx.Dialog.__init__(
             self,
-            None,
-            style=wx.DEFAULT_DIALOG_STYLE
-            | wx.RESIZE_BORDER
-            | wx.DIALOG_NO_PARENT,
+            parent,
+            -1,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
         )
         self.panel = wx.Panel(
             self,
@@ -141,8 +139,8 @@ class AudioVolNormal(wx.Dialog):
         # bottm btns
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
-        gridbtn.Add(self.button_close, 1, wx.ALL, 5)
+        btn_ok = wx.Button(self.panel, wx.ID_OK, "")
+        gridbtn.Add(btn_ok, 1, wx.ALL, 5)
 
         # ----------------------Properties----------------------#
         icon = wx.Icon()
@@ -174,8 +172,8 @@ class AudioVolNormal(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_red, btn_red)
         self.Bind(wx.EVT_BUTTON, self.on_blue, btn_blue)
         self.Bind(wx.EVT_BUTTON, self.on_yellow, btn_yell)
-        self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
-        self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
+        self.Bind(wx.EVT_CLOSE, self.on_ok)  # controlla la chiusura (x)
 
         index = 0
         if title == _("RMS-based volume statistics"):
@@ -311,8 +309,8 @@ class AudioVolNormal(wx.Dialog):
 
     # --------------------------------------------------------------#
 
-    def on_close(self, event):
+    def on_ok(self, event):
         """
         Destroy this window
         """
-        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg="AudioVolNormal")
+        event.Skip()

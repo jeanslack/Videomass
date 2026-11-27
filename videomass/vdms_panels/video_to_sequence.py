@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -629,16 +629,13 @@ class VideoToSequence(wx.Panel):
         if self.txt_args.IsEnabled():
             arg = self.update_arguments(self.cmb_frmt.GetValue())
             preargs = arg[0]
-            command = " ".join(
-                f'{self.txt_args.GetValue()} -y "{outfilename}"'.split()
-            )
+            user_txt = f"{self.txt_args.GetValue()} -y".strip()
+            command = user_txt, outfilename
         else:
             arg = self.update_arguments(self.cmb_frmt.GetValue())
             preargs = arg[0]
-            command = " ".join(
-                f"{arg[1]} {self.txt_args.GetValue()} -y "
-                f'"{outfilename}"'.split()
-            )
+            user_txt = f"{arg[1]} {self.txt_args.GetValue()} -y".strip()
+            command = user_txt, outfilename
 
         dur, ss, et = update_timeseq_duration(
             self.parent.time_seq, self.parent.duration

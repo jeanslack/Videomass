@@ -29,9 +29,51 @@ import glob
 import math
 import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
+
+
+def opt_arg(flag: str, val: str | None) -> list[str]:
+    """
+    Restituisce [flag, val] solo se val non è vuoto,
+    altrimenti [] (senza toccare val).
+    Utile quando hai un flag che è None, Boolean o vuoto("")
+
+    Può gestire anche flag booleani opzionali (es.
+    aggiungere "-vn" solo se una variabile booleana `no_video` è True),
+    puoi usare direttamente *("-vn" if no_video else ())
+    """
+    return [flag, val] if val else []
+
+
+def split_args(arg_str: str) -> list[str]:
+    """
+    Splits string on arguments for Popen.
+    Return a list of args.
+
+    USAGE example:
+            cmdlist = [
+            "/usr/bin/ffmpeg",
+            *split_args("-y -stats -hide_banner -loglevel info"),
+            "-i",
+            input_file,
+            *split_args(otherargs),
+            output_file,
+        ]
+    """
+    if not arg_str:
+        return []
+    is_posix = sys.platform != "win32"
+    parts = shlex.split(arg_str, posix=is_posix)
+    if not is_posix:
+        return [p.strip('"') for p in parts]
+    return parts
+
+
+# ------------------------------------------------------------------------
 
 
 def open_default_application(pathname):
@@ -216,75 +258,67 @@ def time_to_integer(
     timef: str = "0", sec: bool = False, rnd: bool = False
 ) -> int:
     """
-    Converts strings representing the 24-hour format to an
-    integer equivalent to the time duration in milliseconds
-    (default).
+    Converts strings representing the 24-hour clock format
+    (00:00:00 to 23:59:59.999...) to an integer equivalent
+    in milliseconds (default) or seconds.
 
     ARGUMENTS:
     ---------
     timef: Accepts a string representing the 24-hour clock in the
            following valid string formats:
 
-            '0' | '00' | '00.0' | '00.00' | 00:0 | '00:00:00'
-            '0:00:00' | '0:0:0' | '00:00.000' | '00:00:00.000
+            '0' | '00' | '00.0' | '00.00' | '00:0' | '00:00:00'
+            '0:00:00' | '0:0:0' | '00:00.000' | '00:00:00.000'
 
-           Default is '0' .
-           Any other representation passed as a string argument will
-           be returned as an integer object equal to 0 (int).
-           If the argument passed is an object other than the string
-           object (str) the exception `TypeError` will be raised.
+           Default is '0'.
+           Any other representation or value >= 24 hours
+           returns 0 (int).
+           Raises `TypeError` if `timef` is not a `str`.
 
     sec: if `True`, returns the duration in seconds instead
          of milliseconds.
 
-    rnd: if `True` rounds the result, i.e. "00:00:02.999" > 3000
-         milliseconds instead of 2999 milliseconds or 3 seconds
-         instead of 2 seconds using `sec=True` argument.
-
-    Return an int object.
-    Raise `TypeError` if argument != `str` .
-
+    rnd: if `True`, rounds the result to the nearest whole second
+         (e.g. "00:00:02.999" -> 3000 ms, or 3 s with `sec=True`).
     """
     if not isinstance(timef, str):
         raise TypeError("Only a string (str) object is expected.")
 
-    # removes any whitespace at the sides of the string
     timef = timef.strip()
+    if not timef:
+        return 0
 
-    # If the string does not contain ":" (e.g. "00.00")
-    if ":" not in timef:
-        try:
-            total_seconds = float(timef)
-            total_ms = total_seconds * 1000
-            if rnd:
-                return round(total_ms / 1000) if sec else round(total_ms)
-            return int(total_seconds) if sec else int(total_ms)
-        except ValueError:
-            return 0
+    parts = timef.split(":")
+    if len(parts) > 3:
+        return 0
 
-    # adds leading zeros to fill up possibly non-existing fields.
-    hours, minutes, seconds = (["0", "0"] + timef.split(":"))[-3:]
+    hours, minutes, seconds = (["0", "0"] + parts)[-3:]
 
     try:
         h_val = int(hours)
         m_val = int(minutes)
-        s_val = float(seconds)
-    except ValueError:
+        s_val = Decimal(seconds)
+    except (ValueError, InvalidOperation):
         return 0
 
-    # Calculates absolute total in millisenconds
-    total_ms = (h_val * 3600000) + (m_val * 60000) + (s_val * 1000)
+    if not s_val.is_finite() or h_val < 0 or m_val < 0 or s_val < 0:
+        return 0
+
+    if len(parts) > 1 and (m_val >= 60 or s_val >= 60):
+        return 0
+
+    total_seconds = (Decimal(h_val) * 3600) + (Decimal(m_val) * 60) + s_val
+
+    if h_val >= 24 or total_seconds >= 86400:
+        return 0
 
     if rnd:
-        # Round total overall based on mode (seconds or milliseconds)
-        if sec:
-            return round(total_ms / 1000)
-        return round(total_ms)
+        rounded_sec = int(
+            total_seconds.quantize(Decimal(1), rounding=ROUND_HALF_UP)
+        )
+        return rounded_sec if sec else rounded_sec * 1000
 
-    # Without round perform the standard truncate (int)
-    if sec:
-        return int(total_ms / 1000)
-    return int(total_ms)
+    return int(total_seconds) if sec else int(total_seconds * 1000)
 
 
 # ------------------------------------------------------------------------
@@ -315,7 +349,7 @@ def integer_to_time(
     Raise `TypeError` if argument != `int` .
 
     """
-    if not isinstance(integer, int):
+    if not isinstance(integer, int) or isinstance(integer, bool):
         raise TypeError("An integer (int) object is expected.")
 
     # Protect from accidental negative numbers

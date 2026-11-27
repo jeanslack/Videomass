@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.31.2026
+Rev: Nov.26.2026
 Code checker: flake8, pylint, ruff
 
  This file is part of Videomass.
@@ -140,6 +140,12 @@ def conventional_paths():
         cache_dir = os.path.join(dir_conf, "cache")  # updates executable
         trash_dir = os.path.join(dir_conf, "Trash")
 
+        win_font = r"C:\Windows\Fonts\arial.ttf"
+        if os.path.exists(win_font):
+            tsfont = r"fontfile='C\:/Windows/Fonts/arial.ttf'"
+        else:
+            tsfont = "font='Arial'"
+
     elif platform.system() == "Darwin":
         fpath = "Library/Application Support/videomass/settings.json"
         file_conf = os.path.join(user_name, fpath)
@@ -148,6 +154,14 @@ def conventional_paths():
         cache_dir = os.path.join(user_name, "Library/Caches/videomass")
         trash_dir = os.path.join(dir_conf, "Trash")
 
+        mac_fonts = (
+            "/System/Library/Fonts/Supplemental/Arial.ttf",
+            "/Library/Fonts/Arial.ttf",
+            "/System/Library/Fonts/Helvetica.ttc",
+        )
+        found = next((f for f in mac_fonts if os.path.exists(f)), None)
+        tsfont = f"fontfile='{found}'" if found else "font='Arial'"
+
     else:  # Linux, FreeBsd, etc.
         fpath = ".config/videomass/settings.json"
         file_conf = os.path.join(user_name, fpath)
@@ -155,8 +169,18 @@ def conventional_paths():
         log_dir = os.path.join(user_name, ".local/share/videomass/log")
         cache_dir = os.path.join(user_name, ".cache/videomass")
         trash_dir = os.path.join(dir_conf, "Trash")
+        tsfont = "font='Sans'"
 
-    return file_conf, dir_conf, log_dir, cache_dir, trash_dir
+    # set command line for timestamp
+    fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
+    ptshms = r"%{pts\:hms}"
+    ffplaytstamp = (
+        f"drawtext={tsfont}:text='{ptshms}':fontcolor=White:"
+        f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
+        f"box=1:boxcolor=DeepPink"
+    )
+
+    return file_conf, dir_conf, log_dir, cache_dir, trash_dir, ffplaytstamp
 
 
 def portable_paths(portdirname):
@@ -193,7 +217,7 @@ def get_color_scheme(theme):
             "ERR1": "#C40804",  # RED_DEEP: errors 2
             "SUCCESS": "#0DE40D",  # GREEN: successful
             "TXT3": "#E6FFFC",  # CYAN-WHITE: standard text
-            "INFO": "#194C7E",  # BLUE: other info messages
+            "INFO": "#00bfffff",  # "#194C7E",  # BLUE: other info messages
             "DEBUG": "#333333",  # LIGHT BLACK
             "FAILED": "#C40804",  # RED_DEEP if failed
             "ABORT": "#A41EA4",  # SAT.MAGENTA if abort
@@ -261,7 +285,9 @@ def data_location(kwargs):
             portdir
         )
     else:
-        conffile, confdir, logdir, cachedir, trash_dir = conventional_paths()
+        conffile, confdir, logdir, cachedir, trash_dir, _ = (
+            conventional_paths()
+        )
 
     return {
         "conffile": conffile,
@@ -358,6 +384,9 @@ class DataSource:
         if theme.get("ERROR"):
             return theme
 
+        # Get command line for timestamp
+        timestampfilter = conventional_paths()[5]
+
         def _relativize(path, relative=self.relativepaths):
             """
             Returns a relative pathname if *relative* param is True.
@@ -387,12 +416,13 @@ class DataSource:
             "ffmpeg_cmd": _relativize(userconf["ffmpeg_cmd"]),
             "ffprobe_cmd": _relativize(userconf["ffprobe_cmd"]),
             "ffplay_cmd": _relativize(userconf["ffplay_cmd"]),
+            "ffplaytstamp": timestampfilter,
             "ffmpeg-default-args": "-y -stats -hide_banner",
-            "ffplay-default-args": "-hide_banner",
+            "ffplay-default-args": (
+                '-alwaysontop -window_title "Videomass Preview" -hide_banner'
+            ),
             "auto-restart-app": False,
             "make_portable": self.makeportable,
-            "max_drop_files": 50,
-            "max_total_files": 80,
             "applognames": (
                 "volumedetected.log",
                 "AV Conversions.log",
@@ -423,7 +453,6 @@ class DataSource:
             "fileproperties",
             "playback",
             "concatenate",
-            "preview",
             "clear",
             "addtoprst",
             "scale",
@@ -433,7 +462,6 @@ class DataSource:
             "denoiser",
             "volanalyze",
             "settings",
-            "audiovolume",
             "presets_manager",
             "profile_add",
             "profile_del",
@@ -441,7 +469,6 @@ class DataSource:
             "previous",
             "next",
             "stabilizer",
-            "preview_audio",
             "profile_copy",
             "slideshow",
             "videotopictures",
@@ -450,7 +477,6 @@ class DataSource:
             "coloreq",
             "stop",
             "home",
-            "play",
             "proc-queue",
             "add-queue",
             "delpreset",
@@ -513,7 +539,6 @@ class DataSource:
             f"{choose.get('x22')}/properties.{ext}",
             f"{choose.get('x16')}/playback.{ext}",
             f"{choose.get('x48')}/icon_concat.{ext}",
-            f"{choose.get('x16')}/preview.{ext}",
             f"{choose.get('x16')}/edit-clear.{ext}",
             f"{choose.get('x16')}/addtoprst.{ext}",
             f"{choose.get('x16')}/transform-scale.{ext}",
@@ -523,7 +548,6 @@ class DataSource:
             f"{choose.get('x16')}/denoise.{ext}",
             f"{choose.get('x16')}/volanalyze.{ext}",
             f"{choose.get('x16')}/settings.{ext}",
-            f"{choose.get('x16')}/player-volume.{ext}",
             f"{choose.get('x48')}/icon_prst_mng.{ext}",
             f"{choose.get('x16')}/newprf.{ext}",
             f"{choose.get('x16')}/delprf.{ext}",
@@ -531,7 +555,6 @@ class DataSource:
             f"{choose.get('x22')}/go-previous.{ext}",
             f"{choose.get('x22')}/go-next.{ext}",
             f"{choose.get('x16')}/stabilizer.{ext}",
-            f"{choose.get('x16')}/preview_audio.{ext}",
             f"{choose.get('x16')}/copyprf.{ext}",
             f"{choose.get('x48')}/icon_slideshow.{ext}",
             f"{choose.get('x48')}/icon_videopictures.{ext}",
@@ -540,7 +563,6 @@ class DataSource:
             f"{choose.get('x16')}/coloreq.{ext}",
             f"{choose.get('x22')}/stop.{ext}",
             f"{choose.get('x22')}/home.{ext}",
-            f"{choose.get('x22')}/play.{ext}",
             f"{choose.get('x22')}/proc-queue.{ext}",
             f"{choose.get('x22')}/add-queue.{ext}",
             f"{choose.get('x16')}/delpreset.{ext}",

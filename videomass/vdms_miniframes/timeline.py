@@ -32,10 +32,14 @@ import wx.adv
 from pubsub import pub
 
 from videomass.vdms_io.io_tools import generic_operation_process
-from videomass.vdms_threads.ffplay_file import FilePlayWithprogress
+from videomass.vdms_threads.ffplay_file import FilePlay, FilePlayWithprogress
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_audio_streams
-from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.utils import (
+    integer_to_time,
+    split_args,
+    time_to_integer,
+)
 from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
@@ -290,8 +294,8 @@ class Float_TL(wx.MiniFrame):
         self.invalidselection = False  # booleaan reference
         self.playpoint = None  # `x` point pixel representation or None
         self.playback = None  # playback thread
-        self.play_indx = ""  # audio stream index for playback cmd
-        self.wave_indx = ""  # audio stream index for waveform cmd
+        self.intindx = ""  # real int index for audio stream
+        self.wave_indx = ""  # audio stream index string for waveform cmd
 
         wx.MiniFrame.__init__(
             self,
@@ -350,37 +354,6 @@ class Float_TL(wx.MiniFrame):
         )
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
         sizer_btns.Add(self.btn_wave, 0, wx.LEFT | wx.CENTRE, 20)
-
-        txtAinmap = wx.StaticText(self.panelbase, wx.ID_ANY, _("Audio Index:"))
-        sizer_btns.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
-        self.cmb_A_inMap = wx.ComboBox(
-            self.panelbase,
-            wx.ID_ANY,
-            choices=[
-                "Auto",
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-            ],
-            size=(-1, -1),
-            style=wx.CB_DROPDOWN | wx.CB_READONLY,
-        )
-        sizer_btns.Add(self.cmb_A_inMap, 0, wx.LEFT | wx.CENTRE, 5)
-        self.cmb_A_inMap.SetSelection(0)
-
         btn_quicktip = wx.Button(
             self.panelbase, wx.ID_ANY, _("?"), size=(40, -1)
         )
@@ -451,17 +424,6 @@ class Float_TL(wx.MiniFrame):
         btn_quicktip.SetToolTip(tip)
         tip = _("Play/Stop segment")
         self.btn_play.SetToolTip(tip)
-        tip = _(
-            '"Auto" lets FFmpeg/FFplay select the audio stream to play or '
-            "process (usually the first audio stream). If the source file(s) "
-            "contain only an audio track, it is recommended to always "
-            'set this control to "Auto".\n\n'
-            '"1-16": if a video file contains more than one audio '
-            'stream, you can select a specific one, e.g., "1" for the '
-            'first available audio stream, "2" for the second audio '
-            "stream, and so on."
-        )
-        self.cmb_A_inMap.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_TOGGLEBUTTON, self.on_load_waveform, self.btn_wave)
@@ -478,7 +440,6 @@ class Float_TL(wx.MiniFrame):
         self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
         self.Bind(wx.EVT_BUTTON, self.on_play_segment, self.btn_play)
-        self.Bind(wx.EVT_COMBOBOX, self.on_audio_index, self.cmb_A_inMap)
         self.panelruler.Bind(wx.EVT_PAINT, self.OnPaint)
         self.panelruler.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
         self.panelruler.Bind(wx.EVT_LEFT_UP, self.on_leftup)
@@ -506,13 +467,12 @@ class Float_TL(wx.MiniFrame):
     def set_ui_ctrl(self, state=True):
         """
         Enable or disable the graphical user interface controls.
-        Accetta True per attivare o False per disattivare i widget.
+        Accepts True to enable or False to disable the widgets.
         """
-        # 2. Lista dei widget da aggiornare in blocco
+        # Lista dei widget da aggiornare in blocco
         widgets = [
             self.btn_play,
             self.btn_wave,
-            self.cmb_A_inMap,
             self.btn_tstart,
             self.btn_reset,
             self.btn_tend,
@@ -550,22 +510,46 @@ class Float_TL(wx.MiniFrame):
         This method is responsible for making available
         an audio waveform frame from a selected file.
         Return None on success, error string or 'STOP' otherwise
-        """
 
-        name = os.path.splitext(os.path.basename(self.filename))[0]
-        self.frame = os.path.join(f"{Float_TL.TMPSRC}", f"{name}.png")  # image
-        args = (
-            f'-i "{self.filename}" -filter_complex "{self.wave_indx}'
+        Update: To save on FFmpeg processes and speed up loading tasks,
+        the last modification timestamp (mtime) and file size have been
+        added to the names of the generated frames; this ensures that
+        the cache is automatically regenerated if the file is overwritten
+        or modified.
+        """
+        name = os.path.splitext(os.path.basename(self.filename))[0][:100]
+        stat = os.stat(self.filename)  # reads size/modification date in ns.
+        fingerprint = f"{stat.st_size}_{stat.st_mtime_ns}"
+        idxid = self.wave_indx.replace(":", "-")
+        self.frame = os.path.join(
+            f"{Float_TL.TMPSRC}", f"{name}-{idxid}-{fingerprint}.png"
+        )
+        if os.path.exists(self.frame):
+            return None  # reload the frame already in cache
+
+        filtercomplex = (
+            f"{self.wave_indx}"
             f"aformat=channel_layouts=mono,compand,showwavespic=s="
             f"{Float_TL.RW + 10}x{Float_TL.PH}:colors={Float_TL.COLORWAVE}:"
-            f'split_channels=1:draw=full:filter=peak" -update 1 '
-            f'-frames:v 1 "{self.frame}"'
+            f"split_channels=1:draw=full:filter=peak"
         )
+
+        args = [
+            Float_TL.get.appset["ffmpeg_cmd"],
+            *split_args(Float_TL.get.appset["ffmpeg-default-args"]),
+            *split_args(Float_TL.get.appset["ffmpeg_loglev"]),
+            "-i",
+            self.filename,
+            "-filter_complex",
+            filtercomplex,
+            *split_args("-update 1"),
+            *split_args("-frames:v 1"),
+            self.frame,
+        ]
         msg = _("Please wait...\nLoading waveform.")
         data = generic_operation_process(
             args, editor="Timeline Waveform", msg=msg, parent=self.GetParent()
         )
-
         return data
 
     # ------------------------------------------------------------------#
@@ -583,73 +567,46 @@ class Float_TL(wx.MiniFrame):
 
     # ------------------------------------------------------------------#
 
-    def validate_audio_index(self, selected):
+    def stop_playback(self):
         """
-        Checks if the selected audio index in cmb_A_inMap exists in the file.
-        Resets to 'Auto' with a warning if out of range.
+        Extension of the btn_play event when the user clicks
+        the button to stop playback.
         """
-        cmb_val = self.cmb_A_inMap.GetValue()
-        if cmb_val == "Auto":
-            self.wave_indx = ""
-            self.play_indx = ""
-            return
+        if self.playback is not None:
+            self.playback.stop(self.playback.__class__.__name__)
 
-        audio_streams = self.get_audio_stream(selected)
-        requested_idx = int(cmb_val) - 1
+        # DO NOT change order: playback=None on TOP of end_playback_thread
+        self.playback = None
+        self.end_playback_thread()
 
-        if not audio_streams or requested_idx >= len(audio_streams):
-            self.cmb_A_inMap.SetValue("Auto")
-            self.wave_indx = ""
-            self.play_indx = ""
-            wx.MessageBox(
-                _(
-                    'Index does not exist in the selected source file:\n"{}"'
-                ).format(selected[1]),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-        else:
-            self.wave_indx = f"[0:a:{requested_idx}]"
-            self.play_indx = f"-ast a:{requested_idx}"
+    # ----------------------Event handler (callbacks)----------------------#
 
-    # ------------------------------------------------------------------#
-
-    def on_audio_index(self, event):
+    def on_audio_index(self, event, dataindex):
         """
         Set a specific index from audio streams. Validates the index against
         the selected file and resets any active waveform.
         See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
         """
-        selected = self.file_selection()
-        if selected:
-            self.validate_audio_index(selected)
+        self.intindx = dataindex
+
+        if dataindex == 0:
+            self.wave_indx = ""
+
         else:
-            if self.cmb_A_inMap.GetValue() == "Auto":
-                self.wave_indx = ""
-                self.play_indx = ""
-            else:
-                idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
-                self.wave_indx = f"[0:a:{idx}]"
-                self.play_indx = f"-ast a:{idx}"
+            indx = dataindex - 1
+            self.wave_indx = f"[0:a:{indx}]"
 
         # delete waveform if activated
         if self.btn_wave.GetValue() is True:
             self.btn_wave.SetValue(False)
             self.on_load_waveform(event)
 
+        # stop playback
+        if self.playback is not None and self.playback.is_alive():
+            self.stop_playback()
+            return
+
     # ------------------------------------------------------------------#
-
-    def stop_playback(self):
-        """
-        Extension of the btn_play event when the user clicks
-        the button to stop playback.
-        """
-        self.playback.stop("FilePlayWithprogress")
-        self.playback = None
-        self.end_playback_thread()
-
-    # ----------------------Event handler (callbacks)----------------------#
 
     def on_play_segment(self, event):
         """
@@ -657,25 +614,15 @@ class Float_TL(wx.MiniFrame):
         IMPORTANT: To make this effective, set ffplay's loglevel
         args to info: `-loglevel info.
         """
-        if not self.file_selection():
+        # if FilePlay.is_playing():
+        #     self.btn_play.Disable()
+        #     return
+        fselect = self.file_selection()
+        if not fselect:
             return
 
-        if self.sourcedur == _("No source duration:"):
-            wx.MessageBox(
-                _("Invalid file format for playback."),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-            return
-
-        if self.parent.time_seq == "":
-            wx.MessageBox(
-                _("No segment selected in the timeline yet."),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
+        args = self.parent.get_preview_args()
+        if not args:
             return
 
         if self.invalidselection:
@@ -696,29 +643,19 @@ class Float_TL(wx.MiniFrame):
 
         self.btn_play.SetBitmap(self.bmp_stop)
 
-        filesel = self.file_selection()[1]
-
-        if self.parent.checktimestamp:
-            scalef, tstamp = "scale=w=360:h=-1,", f"{self.parent.cmdtimestamp}"
-        else:
-            scalef, tstamp = "scale=w=360:h=-1", ""
-
-        args = (
-            f'"{Float_TL.get.appset["ffplay_cmd"]}" '
-            f"{Float_TL.get.appset['ffplay-default-args']} "
-            f"-loglevel info "  # this is mandatory here
-            f'-autoexit -i "{filesel}" '
-            f"{self.parent.time_seq} "
-            f"{self.play_indx} "
-            f'-vf "{scalef}{tstamp}"'
-        )
         try:
-            with open(filesel, encoding="utf-8"):
-                self.playback = FilePlayWithprogress(self.GetParent(), args)
+            with open(fselect[1], encoding="utf-8"):
+                if not self.parent.autoexit:
+                    self.playback = FilePlay(self.GetParent(), args)
+                else:
+                    self.playback = FilePlayWithprogress(
+                        self.GetParent(), args
+                    )
                 self.playback.start()
+
         except OSError:
             wx.MessageBox(
-                _("Invalid or unsupported file:\n'{}'").format(filesel),
+                _("Invalid or unsupported file:\n'{}'").format(fselect[1]),
                 "Videomass",
                 wx.ICON_ERROR,
                 self,
@@ -736,14 +673,12 @@ class Float_TL(wx.MiniFrame):
         slice/segment offset, and requests thread-safe redraw.
 
         This method uses pub/sub protocol subscribing "UPDATE_PLAY_COUNTER"
-        message. It is called by `FilePlay` class thread to update
+        message. It is called by `FilePlayWithprogress` class thread to update
         the output lines of the ffplay stderr (see `on_play_segment` def).
 
         """
         if status:
-            # """
             # Set the timeline to be disabled while playing the file
-            # """
             return
 
         if output:
@@ -751,7 +686,6 @@ class Float_TL(wx.MiniFrame):
             clean_line = output.strip()
             if not clean_line:
                 return
-
             # Check the diagnostic line from ffplay's actual counter
             if not any(
                 x in clean_line for x in ("A-V:", "M-A:", "aq=", "vq=")
@@ -772,25 +706,31 @@ class Float_TL(wx.MiniFrame):
                 res = integer_to_time(round(timemils))
                 wx.CallAfter(self.counterplay.SetLabel, res)
 
+                # Limiti effettivi: segmento selezionato oppure intero file
+                has_selection = bool(self.parent.time_seq)
+                start_ms = self.mills_start if has_selection else 0
+                end_ms = self.mills_end if has_selection else self.milliseconds
+                start_px = round(self.bar_x) if has_selection else 0
+                end_px = (
+                    round(self.bar_w) if has_selection else round(Float_TL.RW)
+                )
+
                 # Checks whether playback is still in the "previous keyframe"
                 # phase before the actual slice start.
-                if timemils < self.mills_start:
-                    # Force the cursor to the start position of the segment
-                    pixpos = round(self.bar_x)
+                if timemils < start_ms:
+                    pixpos = start_px
 
-                # Check whether the end of the set slice has been exceeded
-                elif timemils > self.mills_end:
-                    # Force the cursor to the end position of the segment
-                    pixpos = round(self.bar_w)
+                # Check whether the end of the set slice/file has been exceeded
+                elif timemils > end_ms:
+                    pixpos = end_px
                 else:
                     # when the video is at the very beginning
                     if timemils == 0:
                         pixpos = 0
                     else:
-                        scaletopix = round(
+                        pixpos = round(
                             self.pix / (Float_TL.RW / timemils) * Float_TL.RW
                         )
-                        pixpos = scaletopix
 
                 def safe_ui_update(px):
                     """
@@ -810,8 +750,8 @@ class Float_TL(wx.MiniFrame):
     def end_playback_thread(self):
         """
         This method uses pub/sub protocol subscribing "END_PLAY" message.
-        It is called by `FilePlay` class thread to indicate the end of the
-        thread.
+        It is called by `BaseFilePlay` class thread to indicate the end
+        of the thread.
         """
 
         def reset_gui():
@@ -913,7 +853,7 @@ class Float_TL(wx.MiniFrame):
         self.playpoint = None
         self.counterplay.SetLabel("00:00:00.000")
         self.statusbar_msg(msg, None)
-        self.parent.time_seq = ""
+        self.set_time_seq(False)
 
         self.onRedraw()
 
@@ -927,9 +867,8 @@ class Float_TL(wx.MiniFrame):
         removing imported files (see`filedrop.py`).
         """
         if self.playback is not None and self.playback.is_alive():
-            self.playback.stop("FilePlayWithprogress")
-            self.playback = None
-            self.btn_play.SetBitmap(self.bmp_play)
+            self.stop_playback()
+            # self.btn_play.SetBitmap(self.bmp_play)
 
         self.sourcedur = _("No source duration:")
         if msg is None:
@@ -939,9 +878,12 @@ class Float_TL(wx.MiniFrame):
 
         else:
             if self.duration[msg] < 100:
-                self.milliseconds = 86399999
-                self.set_ui_ctrl(False)
-                self.overalltime = "00:00:00.000"
+                # self.milliseconds = 86399999
+                self.milliseconds = 40
+                self.overalltime = "00:00:00.040"
+                # self.set_ui_ctrl(False)
+                self.set_ui_ctrl(True)
+
             else:
                 self.milliseconds = self.duration[msg]
                 self.sourcedur = _("Source duration:")
@@ -950,30 +892,37 @@ class Float_TL(wx.MiniFrame):
 
         self.btn_wave.SetValue(False)
         self.frame = None
-        self.cmb_A_inMap.SetValue("Auto")
         self.wave_indx = ""
-        self.play_indx = ""
+        self.intindx = ""
         self.on_trim_time_reset(None)
 
     # ------------------------------------------------------------------#
 
     def set_time_seq(self, isset=True):
         """
-        Set parent time_seq attr.
+        Set parent time_seq attr. This method sends messages to
+        the subscriber using the pub/sub protocol whenever segments
+        on the timeline are changed (see `AVConv.reset_on_timeline_change()`).
         """
+        old_time_seq = self.parent.time_seq
+
         if isset:
             dur = integer_to_time(self.mills_end - self.mills_start)
-            self.parent.time_seq = f"-ss {self.clock_start} -t {dur}"
+            new_time_seq = f"-ss {self.clock_start} -t {dur}"
             msg = _("{0} {1}  |  Segment Duration: {2}").format(
                 self.sourcedur, self.overalltime, dur
             )
             self.statusbar_msg(f"{msg}", None)
         else:
-            self.parent.time_seq = ""
+            new_time_seq = ""
             msg = _("{0} {1}  |  Segment Duration: {2}").format(
                 self.sourcedur, self.overalltime, "00:00:00.000"
             )
             self.statusbar_msg(f"{msg}", None)
+
+        if old_time_seq != new_time_seq:
+            self.parent.time_seq = new_time_seq
+            pub.sendMessage("TIMELINE_TRIM_CHANGED")
 
     # ------------------------------------------------------------------#
 

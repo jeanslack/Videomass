@@ -32,7 +32,11 @@ from math import pi as pigreco
 import wx
 
 from videomass.vdms_io.io_tools import generic_operation_process
-from videomass.vdms_utils.utils import integer_to_time, time_to_integer
+from videomass.vdms_utils.utils import (
+    integer_to_time,
+    split_args,
+    time_to_integer,
+)
 
 
 class Transpose(wx.Dialog):
@@ -69,8 +73,12 @@ class Transpose(wx.Dialog):
         self.transpose = {"degrees": ["", 0]}
         self.initial_args = (args[0], args[1])
         self.video = kwa["filename"]
-        name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join(Transpose.TMPSRC, f"{name}.png")
+        stat = os.stat(self.video)  # reads size/modification date in ns.
+        fingerprint = f"{stat.st_size}_{stat.st_mtime_ns}"
+        name = os.path.splitext(os.path.basename(self.video))[0][:100]
+        self.frame = os.path.join(
+            Transpose.TMPSRC, f"{name}-{fingerprint}.png"
+        )
         self.stbitmap = None
         self.scaled_img = None  # Cache per l'immagine pre-scalata
         self.mills = time_to_integer(kwa["duration"].split(".")[0])
@@ -168,19 +176,32 @@ class Transpose(wx.Dialog):
         """
         Initializing conversion command for preview.
         """
+        if os.path.exists(self.frame):  # reload the frame already in cache
+            self.on_frame_ready()
+            return
+
+        appdata = Transpose.get.appset
+
         if not self.mills:
             sseg = ""
         else:
             stime = integer_to_time(int(self.mills / 2), False)
             sseg = f"-ss {stime}"
-        arg = (
-            f'{sseg} -i "{self.video}" -f image2 '
-            f'-update 1 -frames:v 1 "{self.frame}"'
-        )
+
+        args = [
+            appdata["ffmpeg_cmd"],
+            *split_args(appdata["ffmpeg-default-args"]),
+            *split_args(appdata["ffmpeg_loglev"]),
+            *split_args(sseg),
+            "-i",
+            self.video,
+            *split_args("-f image2 -update 1 -frames:v 1"),
+            self.frame,
+        ]
         msg = _("Please wait...\nLoading image.")
         parent = self.GetParent()
         data = generic_operation_process(
-            arg, editor="Transpose", msg=msg, parent=parent, showlog=False
+            args, editor="Transpose", msg=msg, parent=parent, showlog=False
         )
         if data:
             return

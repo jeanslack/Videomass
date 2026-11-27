@@ -34,10 +34,10 @@ import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_dialogs.audioproperties import AudioProperties
 from videomass.vdms_dialogs.shownormlist import AudioVolNormal
 from videomass.vdms_io.io_tools import volume_detect_process
-from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.media_stream_utils import extract_audio_streams
 from videomass.vdms_utils.utils import get_volume_data
+from videomass.vdms_utils.widget_utils import NormalTransientPopup
 
 
 class AudioEncoders(scrolled.ScrolledPanel):
@@ -243,11 +243,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.appdata = self.maindata.appdata
         self.opt = opt
         icons = self.maindata.icons
+        COLORSCHEME = self.appdata["colorscheme"]
+        COLOR_INFO = COLORSCHEME["INFO"]
 
-        bmpapreview = get_bmp(icons["preview_audio"], ((16, 16)))
         bmpanalyzes = get_bmp(icons["volanalyze"], ((16, 16)))
         bmpasettings = get_bmp(icons["settings"], ((16, 16)))
-        bmppeaklevel = get_bmp(icons["audiovolume"], ((16, 16)))
 
         scrolled.ScrolledPanel.__init__(
             self,
@@ -336,11 +336,12 @@ class AudioEncoders(scrolled.ScrolledPanel):
             style=wx.CB_DROPDOWN | wx.CB_READONLY,
         )
         sizproper.Add(self.cmb_A_outMap, 0, wx.LEFT | wx.CENTRE, 5)
-        self.btn_audio_preview = wx.Button(
-            self, wx.ID_ANY, _("Preview"), size=(-1, -1)
-        )
-        self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
-        sizproper.Add(self.btn_audio_preview, 0, wx.LEFT | wx.CENTRE, 20)
+        btn_quicktip = wx.Button(self, wx.ID_ANY, _("?"), size=(40, -1))
+        font = btn_quicktip.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        btn_quicktip.SetFont(font)
+        btn_quicktip.SetForegroundColour(wx.Colour(COLOR_INFO))
+        sizproper.Add(btn_quicktip, 0, wx.LEFT | wx.CENTRE, 20)
         line2 = wx.StaticLine(
             self,
             wx.ID_ANY,
@@ -371,13 +372,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
         sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.CENTRE, 5)
         sizer_a_normaliz.AddSpacer(10)
 
-        grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
+        grid_peak = wx.FlexGridSizer(1, 3, 15, 4)
         sizer_a_normaliz.Add(grid_peak, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_voldect = wx.Button(
-            self, wx.ID_ANY, _("Volume detect"), size=(-1, -1)
-        )
-        self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
-        grid_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_stat = wx.Button(
             self, wx.ID_ANY, _("Volume Statistics"), size=(-1, -1)
         )
@@ -477,10 +473,10 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.SetupScrolling()
 
         tip = _(
-            "Gets maximum volume and average volume data in dBFS, then "
-            "calculates the offset amount for audio normalization."
+            "View statistics for maximum volume (peak level) or average "
+            "volume (RMS level) in dBFS."
         )
-        self.btn_voldect.SetToolTip(tip)
+        self.btn_stat.SetToolTip(tip)
         tip = _(
             "Limiter for the maximum peak level or the mean level "
             "(when switch to RMS) in dBFS. From -99.0 to +0.0; default "
@@ -523,12 +519,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
             "From +1.0 to +20.0, default is +11.0"
         )
         self.spin_lra.SetToolTip(tip)
-        tip = _(
-            'Play the audio stream selected in the "Index Selection" '
-            "control. Using this function you can test the result of "
-            "audio normalization."
-        )
-        self.btn_audio_preview.SetToolTip(tip)
+        tip = _("Quick tip")
+        btn_quicktip.SetToolTip(tip)
 
         self.Bind(wx.EVT_RADIOBOX, self.on_getting_acodec, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_setting_acodec, self.btn_set)
@@ -536,14 +528,14 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.Bind(wx.EVT_COMBOBOX, self.on_audio_mapping, self.cmb_A_outMap)
         self.Bind(wx.EVT_RADIOBOX, self.on_normalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_gain, self.spin_target)
-        self.Bind(wx.EVT_BUTTON, self.on_analyzes, self.btn_voldect)
         self.Bind(wx.EVT_BUTTON, self.on_show_vol_statistics, self.btn_stat)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_quicktip)
 
     # ------------------------------------------------------------------#
 
     def audio_options(self):
         """
-        Get audio parameters
+        Get audio parameters method, called by AVConv
         """
         if self.rdbx_normalize.GetSelection() == 0:
             del self.opt["PEAK"][:]
@@ -630,62 +622,57 @@ class AudioEncoders(scrolled.ScrolledPanel):
     def normalize_default(self, setoff="all"):
         """
         Reset normalization parameters on the audio properties.
-        This method even is called by `MainFrame.switch_video_conv()`
+        This method even is called by `AVConv.reset_on_changed_data()`
         on start-up and when there are changing on `dragNdrop` panel.
         """
         del self.opt["PEAK"][:]
         del self.opt["RMS"][:]
         self.opt["EBU"] = ["", ""]
+        self.cmb_A_outMap.SetSelection(0)
+        self.cmb_A_inMap.SetSelection(0)
+        self.cmb_A_outMap.Disable()
 
         if setoff == "all":
             self.rdbx_normalize.SetSelection(0)
             self.spin_i.Disable(), self.spin_lra.Disable()
-            self.spin_tp.Disable(), self.btn_voldect.Disable()
+            self.spin_tp.Disable()
             self.spin_target.Disable(), self.btn_stat.Disable()
             self.spin_target.SetValue(-1.0)
 
         elif setoff == "ebu":
-            self.btn_voldect.Disable(), self.spin_target.Disable()
+            self.spin_target.Disable()
             self.btn_stat.Disable(), self.spin_i.Enable()
             self.spin_lra.Enable(), self.spin_tp.Enable()
             self.opt["EBU"][0] = self.rdbx_normalize.GetStringSelection()
 
         elif setoff == "rms":
             self.spin_i.Disable(), self.spin_lra.Disable()
-            self.spin_tp.Disable(), self.btn_voldect.Enable()
-            self.spin_target.Enable(), self.btn_stat.Disable()
+            self.spin_tp.Disable()
+            self.spin_target.Enable(), self.btn_stat.Enable()
             self.spin_target.SetValue(-20.0)
 
         elif setoff == "peak":
             self.spin_i.Disable(), self.spin_lra.Disable()
-            self.spin_tp.Disable(), self.btn_voldect.Enable()
-            self.spin_target.Enable(), self.btn_stat.Disable()
+            self.spin_tp.Disable()
+            self.spin_target.Enable(), self.btn_stat.Enable()
             self.spin_target.SetValue(-1.0)
 
     # ------------------------------------------------------------------#
 
     def on_audio_preview(self, fileget):
         """
-        It allows a direct evaluation of the sound results given
-        by the audio filters with the ability to playback even the
-        selected audio streams through audio index mapping.
+        Accepts a `fileget` type object given by `file_selection()`.
+        Returns the string composed of the audio filter arguments
+        and the index of the selected audio stream.
+        Returns False if an error occurs.
+
         """
+        idx = ""
+        afilter = ""
 
         def _undetect():
-            wx.MessageBox(
-                _(
-                    "Undetected volume values! Click the "
-                    '"Volume detect" button to analyze '
-                    "audio volume data."
-                ),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-
-        # fileget = self.parent.file_selection()
-        if not fileget or not self.get_audio_stream(fileget):
-            return None
+            if self.on_analyzes():
+                return True
 
         if self.cmb_A_inMap.GetValue() == "Auto":
             idx = ""
@@ -696,14 +683,14 @@ class AudioEncoders(scrolled.ScrolledPanel):
             afilter = ""
 
         elif self.rdbx_normalize.GetSelection() == 1:
-            if self.btn_voldect.IsEnabled():
-                return _undetect()
-            afilter = f"-af {self.opt['PEAK'][fileget[1]][5].split()[1]}"
+            if not self.opt["PEAK"] and _undetect():
+                return False
+            afilter = f"-af {self.opt['PEAK'][fileget[0]][5].split()[1]}"
 
         elif self.rdbx_normalize.GetSelection() == 2:
-            if self.btn_voldect.IsEnabled():
-                return _undetect()
-            afilter = f"-af {self.opt['RMS'][fileget[1]][5].split()[1]}"
+            if not self.opt["RMS"] and _undetect():
+                return False
+            afilter = f"-af {self.opt['RMS'][fileget[0]][5].split()[1]}"
 
         elif self.rdbx_normalize.GetSelection() in (3, 4):
             afilter = (
@@ -712,78 +699,61 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 f":TP={(self.spin_tp.GetValue())}"
             )
         else:
-            return None
+            afilter = ""
 
-        self.build_playfile_command(
-            afilter, idx, self.maindata.file_src[fileget[0]]
-        )
-        return None
+        return f"{afilter} {idx}".strip()
 
     # ------------------------------------------------------------------#
 
-    def build_playfile_command(self, afilter, index, filepath):
+    def file_selection(self):
         """
-        Build ffplay command for playback
+        Defines the selected file as filename. Returns an object
+        of type list [int(index)), (str('selected file name')].
+        Returns None type if no file is selected.
         """
-        autoexit = "-autoexit" if self.maindata.autoexit else ""
-
-        if self.maindata.checktimestamp:
-            args = (
-                f'"{self.appdata["ffplay_cmd"]}" '
-                f"{self.appdata['ffplay-default-args']} "
-                f"{self.appdata['ffplay_loglev']} "
-                f'-showmode waves {autoexit} -i "{filepath}" '
-                f"{self.maindata.time_seq} "
-                f'-vf "{self.maindata.cmdtimestamp}" {afilter} {index}'
-            )
-        else:
-            args = (
-                f'"{self.appdata["ffplay_cmd"]}" '
-                f"{self.appdata['ffplay-default-args']} "
-                f"{self.appdata['ffplay_loglev']} "
-                f'-showmode waves {autoexit} -i "{filepath}" '
-                f"{self.maindata.time_seq} "
-                f"{afilter} {index}"
-            )
-        try:
-            with open(filepath, encoding="utf-8"):
-                playback = FilePlay(self.GetParent(), args)
-                playback.start()
-        except OSError:
+        selected = self.maindata.filedropselected
+        if not selected:
             wx.MessageBox(
-                _("Invalid or unsupported file:  %s") % (filepath),
+                _("Have to select an item in the file list first"),
                 "Videomass",
                 wx.ICON_INFORMATION,
                 self,
             )
+            return None
+
+        index = self.maindata.file_src.index(selected)
+        return (index, selected)
 
     # ------------------------------------------------------------------#
 
-    def get_audio_stream(self, fileselected):
+    def get_audio_stream(self):
         """
-        Given a selected media file (object of type `file_selection()`),
-        it evaluates whether it contains any audio streams and any
+        It evaluates whether it contains any audio streams and any
         indexes based on selected index (audio map).
 
         If there are no audio streams in the source file or the index
         does not match one of the existing audio streams, returns None.
         Return a list of audio indexes otherwise.
-
-        See `on_audio_preview()` method for usage.
+        Called by `on_audio_index()` and Normalization methods
         """
+
+        fileselected = self.file_selection()
+        if not fileselected:
+            return None
+
         file_data = self.maindata.data_files[fileselected[0]]
-        isaudio = extract_audio_streams(file_data)
+        audio_streams = extract_audio_streams(file_data)
         idx = self.cmb_A_inMap.GetValue()
 
-        if isaudio:
-            streamindexes = [x.get("index") for x in isaudio]
+        if audio_streams:
+            streamindexes = [x.get("index") for x in audio_streams]
             # e.g user has selected an index (1-16)
-            if idx.isdigit() and int(idx) - 1 not in range(len(streamindexes)):
+            if idx.isdigit() and not (1 <= int(idx) <= len(streamindexes)):
                 wx.MessageBox(
                     _(
-                        "Index does not exist in the "
-                        'selected source file:\n"{}"'
-                    ).format(fileselected[1]),
+                        "Audio index ({0}) does not exist in the "
+                        'selected source file:\n"{1}"'
+                    ).format(int(idx), fileselected[1]),
                     "Videomass",
                     wx.ICON_INFORMATION,
                     self,
@@ -794,7 +764,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         wx.MessageBox(
             _(
                 'The source file does not contain any audio stream:\n"{}"'
-            ).format(fileselected),
+            ).format(fileselected[1]),
             "Videomass",
             wx.ICON_INFORMATION,
             self,
@@ -866,7 +836,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 self.btn_set.Disable()
                 self.btn_set.SetBackgroundColour(wx.NullColour)
 
-        # --------------------------------------------------------
         for k, v in AudioEncoders.ACODECS.items():
             if audiocodec in k:
                 if audiocodec == "Auto":
@@ -901,7 +870,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.opt["AudioIndex"] = ""
         else:
             self.cmb_A_inMap.Enable()
-            self.on_audio_index(self)
+            self.on_audio_index(self, normalize=False)
 
     # -------------------------------------------------------------------#
 
@@ -976,26 +945,33 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
     # ------------------------------------------------------------------#
 
-    def on_audio_index(self, event):
+    def on_audio_index(self, event, normalize=True):
         """
         Set a specific index from audio streams.
         See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
         """
-        if self.cmb_A_inMap.GetValue() == "Auto":
+
+        cmb_val = self.cmb_A_inMap.GetValue()
+        audio_streams = self.get_audio_stream()
+
+        if not audio_streams:
+            self.cmb_A_inMap.SetValue("Auto")
+            self.cmb_A_outMap.Disable()
+
+        elif cmb_val == "Auto":
             self.cmb_A_outMap.Disable()
             self.opt["AudioIndex"] = ""
         else:
             self.cmb_A_outMap.Enable()
-            idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
+            idx = int(cmb_val) - 1
             self.opt["AudioIndex"] = f"-map 0:a:{idx}"
 
-        if (
-            self.rdbx_normalize.GetSelection() in [1, 2]
-            and not self.btn_voldect.IsEnabled()
-        ):
-            self.btn_voldect.Enable()
+        if self.rdbx_normalize.GetSelection() in [1, 2] and audio_streams:
+            normalize and self.on_analyzes()
 
         self.on_audio_mapping(None)
+        intindex = self.cmb_A_inMap.GetSelection()
+        self.maindata.set_audio_index_timeline(event, intindex)
 
     # ------------------------------------------------------------------#
 
@@ -1005,7 +981,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         """
         index = self.cmb_A_inMap.GetValue()
         sel = self.cmb_A_outMap.GetValue()
-        idx = "" if index == "Auto" else str(int(index) - 1)
+        idx = "" if index == "Auto" else int(index) - 1
 
         if sel == "Auto":
             if self.opt["Media"] == "Video":
@@ -1029,6 +1005,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
         """
         Enable or disable functionality for volume normalization.
         """
+        selection = self.rdbx_normalize.GetSelection()
+        if selection != 0 and not self.get_audio_stream():
+            self.rdbx_normalize.SetSelection(0)
+            return
+
         msg_1 = _(
             "PEAK level normalization, which will produce "
             "a maximum peak level equal to the set target level."
@@ -1081,31 +1062,21 @@ class AudioEncoders(scrolled.ScrolledPanel):
         update new incomming
 
         """
-        if not self.btn_voldect.IsEnabled():
-            self.btn_voldect.Enable()
+        del self.opt["PEAK"][:]
+        del self.opt["RMS"][:]
 
     # ------------------------------------------------------------------#
 
-    def on_analyzes(self, event):
+    def on_analyzes(self):
         """
-        Clicking on the "Detect Volume" button performs the
-        PEAK/RMS-based volume detection and analysis process
+        Performs the PEAK/RMS-based volume detection and analysis process
         required to calculate the offset for audio volume
-        normalization in dBFS:
+        normalization in dBFS "Detect Volume":
             - PEAK-based Analyzes, get the MAXIMUM peak level data.
             - RMS-based Analyzes, get the MEAN peak level data.
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        if not self.maindata.data_files:
-            wx.MessageBox(
-                _("You need to import at least one file"),
-                "Videomass",
-                wx.ICON_INFORMATION,
-                self,
-            )
-            return
-
         data = volume_detect_process(
             self.maindata.file_src,
             self.maindata.time_seq,  # from -ss to -t
@@ -1113,7 +1084,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             parent=self.GetParent(),
         )
         if data[1]:  # see `volume_detect_process` in `io_tools`
-            return
+            return True
 
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             target = "PEAK"
@@ -1136,35 +1107,61 @@ class AudioEncoders(scrolled.ScrolledPanel):
             )
             self.opt[target].append(dataref)
 
-        self.btn_voldect.Disable()
-        self.btn_stat.Enable()
-
     # ------------------------------------------------------------------#
 
     def on_show_vol_statistics(self, event):
         """
-        Show a wx.ListCtrl dialog with volumedetect data
+        Button event on clicking "Volume Statistic".
+        Show a dialog of audio volume data.
         """
-        if self.maindata.audivolnormalize:
-            self.maindata.audivolnormalize.Raise()
-            return
+        selection = self.rdbx_normalize.GetSelection()
 
-        if self.rdbx_normalize.GetSelection() == 1:  # PEAK
+        if selection == 1:
             title = _("PEAK-based volume statistics")
-        elif self.rdbx_normalize.GetSelection() == 2:  # RMS
+            target = self.opt["PEAK"]
+        elif selection == 2:
             title = _("RMS-based volume statistics")
+            target = self.opt["RMS"]
         else:
             return
 
-        if self.btn_voldect.IsEnabled():
-            self.on_analyzes(self)
+        if not target and self.on_analyzes():
+            return
 
-        lev = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
         self.maindata.audivolnormalize = AudioVolNormal(
+            self,
             title,
-            lev,
+            target,
             self.appdata["ostype"],
         )
-        self.maindata.audivolnormalize.Show()
+        self.maindata.audivolnormalize.ShowModal()
 
     # ------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        Event clicking on button Quick Tip.
+        """
+        msg = _(
+            "Listen to how each audio normalization filter sounds "
+            "by clicking the Play/Stop button in the Timeline (CTRL+T).\n\n"
+            "If a video file has multiple audio streams (tracks)—for "
+            "example, audio in different languages—you can choose the "
+            "specific stream you want, apply normalization to it, and "
+            "hear the result.\n\n"
+            "You can also test audio normalization in advance on "
+            "standalone audio files from your collection before "
+            "starting the conversion."
+        )
+
+        win = NormalTransientPopup(self, wx.SIMPLE_BORDER, msg, wrap=500)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+
+    # --------------------------------------------------------------#

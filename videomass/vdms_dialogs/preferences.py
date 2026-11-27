@@ -590,7 +590,7 @@ class SetUp(wx.Dialog):
         """
         for strs in range(self.rdbFFplay.GetCount()):
             if (
-                self.appdata["ffplay_loglev"].split()[1]
+                self.appdata["ffplay_loglevel"].split()[1]
                 in self.rdbFFplay.GetString(strs).split()[0]
             ):
                 self.rdbFFplay.SetSelection(strs)
@@ -767,7 +767,7 @@ class SetUp(wx.Dialog):
         specifies loglevel type for ffplay.
         """
         strn = self.rdbFFplay.GetStringSelection().split()[0]
-        self.settings["ffplay_loglev"] = f"-loglevel {strn}"
+        self.settings["ffplay_loglevel"] = f"-loglevel {strn}"
 
     # --------------------------------------------------------------------#
 

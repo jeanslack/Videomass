@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.11.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 
 import os
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -36,10 +37,7 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
+from videomass.vdms_utils.utils import split_args
 
 
 def convert_images(*varargs, **kwargs):
@@ -64,14 +62,9 @@ def convert_images(*varargs, **kwargs):
         duration=len(flist),
         end="CONTINUE",
     )
-    args = (
-        f'"{kwargs["ffmpeg_cmd"]}" '
-        f"{kwargs['ffmpeg-default-args']} "
-        f"{kwargs['ffmpeg_loglev']} "
-    )
     with open(logfile, "a", encoding="utf-8") as logf:
         tolog(
-            f"Preparing temporary files...\n\n[COMMAND:]\n{args}",
+            f"Preparing temporary files...\n\n[TEMPDIR]:\n{tmpdir}",
             logf,
             sep=True,
             wdate=True,
@@ -79,8 +72,20 @@ def convert_images(*varargs, **kwargs):
         )
         for prognum, files in enumerate(flist, start=1):
             tmpf = os.path.join(tmpdir, f"{imagenames}{prognum}.bmp")
-            cmd_1 = f'{args} -i "{files}" "{tmpf}"'
-            cmd_1 = shlex.split(cmd_1) if sys.platform != "win32" else cmd_1
+            cmd_1 = [
+                kwargs["ffmpeg_cmd"],
+                *split_args(kwargs["ffmpeg-default-args"]),
+                *split_args(kwargs["ffmpeg_loglev"]),
+                "-i",
+                files,
+                tmpf,
+            ]
+            cmd_log = (
+                subprocess.list2cmdline(cmd_1)
+                if sys.platform != "win32"
+                else shlex.join(cmd_1)
+            )
+            logf.write(f"\n|{prognum}|[COMMAND]:\n{cmd_log}\n")
 
             try:
                 with subprocess.Popen(
@@ -107,17 +112,15 @@ def convert_images(*varargs, **kwargs):
                             output=status,
                         )
                         logf.write(status)
-                        time.sleep(1)
                         return error
 
-                else:  # ok
+                else:  # done
                     wx.CallAfter(
                         pub.sendMessage,
                         "NOTIFICATIONS_MSG_EVT",
                         msg="INFO",
                         output=f" |{prognum}|  {files}  >  {tmpf}\n",
                     )
-                    logf.write(f" |{prognum}|  {files}  >  {tmpf}\n")
 
             except (OSError, FileNotFoundError) as err:  # cmd not found
                 wx.CallAfter(
@@ -164,15 +167,27 @@ def resizing_process(*varargs, **kwargs):
 
     tmpf = os.path.join(tmpdir, "TMP_%d.bmp")
     tmpfout = os.path.join(tmpdir, "IMAGE_%d.bmp")
-    cmd_1 = (
-        f'"{kwargs["ffmpeg_cmd"]}" '
-        f"{kwargs['ffmpeg-default-args']} "
-        f"{kwargs['ffmpeg_loglev']} "
-        f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
+    cmd_1 = [
+        kwargs["ffmpeg_cmd"],
+        *split_args(kwargs["ffmpeg-default-args"]),
+        *split_args(kwargs["ffmpeg_loglev"]),
+        "-i",
+        tmpf,
+        *split_args(cmdargs),
+        tmpfout,
+    ]
+    cmd_log = (
+        subprocess.list2cmdline(cmd_1)
+        if sys.platform != "win32"
+        else shlex.join(cmd_1)
     )
-    tolog(f"\nFile resizing...\n\n[COMMAND]:\n{cmd_1}", logfile)
-
-    cmd_1 = shlex.split(cmd_1) if sys.platform != "win32" else cmd_1
+    tolog(
+        f"\nFile resizing...\n\n[COMMAND]:\n{cmd_log}",
+        logfile,
+        sep=True,
+        wdate=True,
+        openf=True,
+    )
     try:
         with subprocess.Popen(
             cmd_1,
@@ -198,7 +213,6 @@ def resizing_process(*varargs, **kwargs):
                     output=status,
                 )
                 tolog(status, logfile)
-                time.sleep(1)
                 return error
 
         else:  # ok
@@ -208,9 +222,7 @@ def resizing_process(*varargs, **kwargs):
                 msg="INFO",
                 output="\nResizing completed successfully.\n",
             )
-
             tolog(error, logfile)
-            time.sleep(1)
 
     except (OSError, FileNotFoundError) as err:  # cmd not found
         wx.CallAfter(
@@ -252,12 +264,65 @@ class SlideshowMaker(BaseVideomassThread):
         self.destination = kwargs["destination"]
         self.kwa = kwargs
 
+    # ----------------------------------------------------------------#
+
+    def _prepare_command(self, tempdir, logf) -> list:
+        """
+        Prepare and format the command in a cross-platform way
+        and writes logfile.
+        Return list of command args.
+
+        """
+        tmpgroup = os.path.join(tempdir, "IMAGE_%d.bmp")
+        cmd_2 = [
+            self.appdata["ffmpeg_cmd"],
+            *split_args(self.appdata["ffmpeg-default-args"]),
+            *split_args(self.appdata["ffmpeg_loglev"]),
+            *split_args(self.kwa["pre-input-1"]),
+            "-i",
+            tmpgroup,
+            *split_args(self.kwa["args"]),
+            self.destination,
+        ]
+        cmd_log = (
+            subprocess.list2cmdline(cmd_2)
+            if self.appdata["ostype"] == "Windows"
+            else shlex.join(cmd_2)
+        )
+        count = (
+            f'\n\nVideo production...\nSource: "{tempdir}"\n'
+            f'Destination: "{self.destination}"\n'
+        )
+        tolog(
+            f"{count}\n\n[COMMAND]:\n{cmd_log}",
+            logf,
+            sep=True,
+            wdate=True,
+            openf=False,
+        )
+        wx.CallAfter(
+            pub.sendMessage,
+            "COUNT_EVT",
+            count=count,
+            duration=self.duration,
+            end="CONTINUE",
+        )
+        return cmd_2
+
+    # ----------------------------------------------------------------#
+
     def run(self):
         """
         Subprocess initialize thread.
         """
+        last_gui_update = time.monotonic()
+        THROTTLE_INTERVAL = 0.1
+        last_file_flush = time.monotonic()
+        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro (constant)
+
         imgtmpnames = "TMP_" if self.kwa["resize"] else "IMAGE_"
         filedone = []
+
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
             tmpproc1 = convert_images(
                 self.kwa["source"],
@@ -310,35 +375,8 @@ class SlideshowMaker(BaseVideomassThread):
                     return
 
             # ------------------------------- make video
-            tmpgroup = os.path.join(tempdir, "IMAGE_%d.bmp")
-            cmd_2 = (
-                f'"{self.appdata["ffmpeg_cmd"]}" '
-                f"{self.appdata['ffmpeg-default-args']} "
-                f"{self.appdata['ffmpeg_loglev']} "
-                f"{self.kwa['pre-input-1']} "
-                f'-i "{tmpgroup}" '
-                f"{self.kwa['args']} "
-                f'"{self.destination}"'
-            )
-            count = (
-                f'\n\nVideo production...\nSource: "{tempdir}"\n'
-                f'Destination: "{self.destination}"\n'
-            )
-            log = f"{count}\n\n[COMMAND]:\n{cmd_2}"
-
-            wx.CallAfter(
-                pub.sendMessage,
-                "COUNT_EVT",
-                count=count,
-                duration=self.duration,
-                end="CONTINUE",
-            )
             with open(self.logfile, "a", encoding="utf-8") as logfile:
-                logfile.write(log)
-                time.sleep(1)
-
-                if self.appdata["ostype"] != "win32":
-                    cmd_2 = shlex.split(cmd_2)
+                cmd_2 = self._prepare_command(tempdir, logfile)
 
                 try:
                     with subprocess.Popen(
@@ -352,14 +390,22 @@ class SlideshowMaker(BaseVideomassThread):
                         creationflags=self.creationflags,
                     ) as self.process:
                         for line in self.process.stderr:
-                            wx.CallAfter(
-                                pub.sendMessage,
-                                "UPDATE_EVT",
-                                output=line,
-                                duration=self.duration,
-                                status=0,
-                            )
                             logfile.write(line)
+                            now = time.monotonic()
+                            if (now - last_file_flush) > FLUSH_INTERVAL:
+                                logfile.flush()
+                                last_file_flush = now
+
+                            if (now - last_gui_update) > THROTTLE_INTERVAL:
+                                wx.CallAfter(
+                                    pub.sendMessage,
+                                    "UPDATE_EVT",
+                                    output=line,
+                                    duration=self.duration,
+                                    status=0,
+                                )
+                                last_gui_update = now
+
                             if self.stop_work_thread:
                                 if self.fatal:
                                     return
@@ -373,7 +419,6 @@ class SlideshowMaker(BaseVideomassThread):
                                     output=stopstr,
                                 )
                                 logfile.write(f"{out}\n{stopstr}")
-                                time.sleep(1)
                                 self.end_process(None)
                                 return
 
@@ -391,8 +436,6 @@ class SlideshowMaker(BaseVideomassThread):
                             msg="FAILED",
                             output=errstr,
                         )
-                        time.sleep(1)
-
                     else:  # status ok
                         filedone = self.kwa["source"]
                         wx.CallAfter(

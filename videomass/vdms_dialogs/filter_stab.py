@@ -37,6 +37,7 @@ from videomass.vdms_io.io_tools import generic_operation_process
 from videomass.vdms_utils.utils import (
     clockset,
     integer_to_time,
+    split_args,
     time_to_integer,
 )
 
@@ -625,39 +626,57 @@ class VidstabSet(wx.Dialog):
             sseg = f"-ss {self.clock}.000"
             tseg = f"-t {duration}.000"
 
+        cmdlist = [
+            VidstabSet.appdata["ffmpeg_cmd"],
+            *split_args(VidstabSet.appdata["ffmpeg-default-args"]),
+            *split_args(VidstabSet.appdata["ffmpeg_loglev"]),
+            *split_args(sseg),
+            "-i",
+        ]
         if mode == "detect":
             nul = (
                 "NUL"
                 if VidstabSet.appdata["ostype"] == "Windows"
                 else "/dev/null"
             )
-            argstr = f'{sseg} -i "{self.filename}" {tseg} {args} -f null {nul}'
+            cmdlist.append(self.filename)
+            cmdlist.extend(split_args(tseg))
+            cmdlist.extend(split_args(args))
+            cmdlist.extend(split_args("-f null"))
+            cmdlist.append(nul)
 
         elif mode == "trasform":
             unique_id = uuid.uuid4().hex[:6]
             dname = os.path.dirname(self.framesrc)
             fname, __ = os.path.splitext(os.path.basename(self.filename))
             self.framesrc = os.path.join(dname, f"{fname}_{unique_id}.mkv")
-            argstr = (
-                f'{sseg} -i "{self.filename}" {tseg} {args} "{self.framesrc}"'
-            )
+
+            cmdlist.append(self.filename)
+            cmdlist.extend(split_args(tseg))
+            cmdlist.extend(split_args(args))
+            cmdlist.append(self.framesrc)
 
         elif mode == "makeduo":
             unique_id = uuid.uuid4().hex[:6]
             dname = os.path.dirname(self.frameduo)
             fname, __ = os.path.splitext(os.path.basename(self.filename))
             self.frameduo = os.path.join(dname, f"{fname}_{unique_id}_DUO.mkv")
-            argstr = (
-                f'{sseg} -i "{self.filename}" {tseg} -i "{self.framesrc}" '
-                f'{tseg} -filter_complex hstack "{self.frameduo}"'
-            )
+
+            cmdlist.append(self.filename)
+            cmdlist.extend(split_args(tseg))
+            cmdlist.append("-i")
+            cmdlist.append(self.framesrc)
+            cmdlist.extend(split_args(tseg))
+            cmdlist.extend(split_args("-filter_complex hstack"))
+            cmdlist.append(self.frameduo)
+
         else:
             return None
 
         msg = _("Please wait,\nThis process will take a few seconds.")
         parent = self.GetParent()
         data = generic_operation_process(
-            argstr, editor=mode, msg=msg, parent=parent, showlog=False
+            cmdlist, editor=mode, msg=msg, parent=parent, showlog=False
         )
         if data:
             return data

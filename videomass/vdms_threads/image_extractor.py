@@ -6,7 +6,7 @@ Compatibility: Python >= 3.11, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.11.2026
+Rev: Nov.21.2026
 Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
@@ -25,8 +25,8 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import shlex
 import subprocess
-import sys
 import time
 
 import wx
@@ -34,10 +34,7 @@ from pubsub import pub
 
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.thread_utils import BaseVideomassThread
-
-
-if sys.platform != "win32":
-    import shlex
+from videomass.vdms_utils.utils import split_args
 
 
 class PicturesFromVideo(BaseVideomassThread):
@@ -65,31 +62,43 @@ class PicturesFromVideo(BaseVideomassThread):
         self.appdata = get.appset
         self.fname = kwargs["filename"]
         self.outputdir = kwargs["outputdir"]  # output directory
-        self.cmd = kwargs["args"]  # comand set on single pass
+        self.args = kwargs["args"]  # comand set on single pass
         self.duration = kwargs["duration"][0]  # duration list
         self.count = 0  # count first for loop
         self.kwa = kwargs
 
-    def run(self):
+    # ----------------------------------------------------------------#
+
+    def _prepare_command(self, logf) -> list:
         """
-        Subprocess initialize thread.
+        Prepare and format the command in a cross-platform way
+        and writes logfile.
+        Return list of command args.
+
         """
-        filedone = []
-        cmd = (
-            f'"{self.appdata["ffmpeg_cmd"]}" '
-            f"{self.kwa['start-time']} "
-            f"{self.kwa['end-time']} "
-            f"{self.appdata['ffmpeg-default-args']} "
-            f"{self.appdata['ffmpeg_loglev']} "
-            f"{self.kwa['pre-input-1']} "
-            f'-i "{self.kwa["filename"]}" '
-            f"{self.cmd}"
+        cmd = [
+            self.appdata["ffmpeg_cmd"],
+            *split_args(self.kwa["start-time"]),
+            *split_args(self.kwa["end-time"]),
+            *split_args(self.appdata["ffmpeg-default-args"]),
+            *split_args(self.appdata["ffmpeg_loglev"]),
+            *split_args(self.kwa["pre-input-1"]),
+            "-i",
+            self.kwa["filename"],
+            *split_args(self.args[0]),
+            self.args[1],  # dest files
+        ]
+        cmd_log = (
+            subprocess.list2cmdline(cmd)
+            if self.appdata["ostype"] == "Windows"
+            else shlex.join(cmd)
         )
         count1 = (
             f'File 1/1\nSource: "{self.fname}"\n'
             f'Destination: "{self.outputdir}"'
         )
-        com = f"{count1}\n\n[COMMAND]:\n{cmd}"
+        com = f"{count1}\n\n[COMMAND]:\n{cmd_log}"
+        tolog(com, logf, sep=True, wdate=True, openf=False)
 
         wx.CallAfter(
             pub.sendMessage,
@@ -98,10 +107,15 @@ class PicturesFromVideo(BaseVideomassThread):
             duration=self.duration,
             end="CONTINUE",
         )
-        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
+        return cmd
 
+    def run(self):
+        """
+        Subprocess initialize thread.
+        """
+        filedone = []
         with open(self.logfile, "a", encoding="utf-8") as logfile:
-            tolog(com, logfile, sep=True, wdate=True, openf=False)
+            cmd = self._prepare_command(logfile)
             try:
                 with subprocess.Popen(
                     cmd,

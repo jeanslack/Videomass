@@ -45,7 +45,24 @@ class BaseFilePlay(Thread):
     Base class for the shared management of playback using ffplay.
 
     NOTE: The attributes defined here keep track of all active
-          processes and are shared by all instances of this class.
+          processes shared across all child classes
+          (`FilePlay` and `FilePlayWithprogress`).
+
+    USAGE:
+        # 1. Stop an active playback instance before starting a new one
+        if self.playback is not None and self.playback.is_alive():
+            self.playback.stop(self.playback.__class__.__name__)
+            self.playback.join(timeout=1.5)
+
+        self.playback = FilePlayWithprogress(self.GetParent(), args)
+        self.playback.start()
+
+        # 2. Check from anywhere if ffplay is currently running
+        if BaseFilePlay.is_playing():
+            ...
+
+        # 3. Stop all active ffplay processes when closing the application
+        BaseFilePlay.stop_all()
     """
 
     _active_processes: ClassVar[set] = set()
@@ -56,17 +73,17 @@ class BaseFilePlay(Thread):
 
     def __init__(self, parent, cmdstr):
         """
-        The main init thread
+        The main init thread.
         It is better to wait for initialization to complete in
         the child classes before calling run(). For this reason,
-        start() has been moved to the individual instances."""
-
-        Thread.__init__(self)
+        start() has been moved to the individual instances.
+        """
+        super().__init__()
 
         self.parent = parent  # is the top-level window (main_frame)
         get = wx.GetApp()
         self.appdata = get.appset
-        self.cmdstr = cmdstr
+        self.cmd = cmdstr
         self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
         self.process = None
         self.stopped_by_user = None
@@ -76,37 +93,36 @@ class BaseFilePlay(Thread):
 
     # ----------------------------------------------------------------------
 
-    def _prepare_command(self) -> list:
-        """Prepare and format the command in a cross-platform way."""
-
-        cmdlist = shlex.split(str(self.cmdstr))
-
-        tolog(
-            f"INFO: VIDEOMASS COMMAND: {shlex.join(cmdlist)}",
-            self.logfile,
-            sep=True,
-            wdate=True,
-        )
-        return cmdlist
+    @classmethod
+    def is_playing(cls) -> bool:
+        """
+        Returns True if any ffplay process is currently active.
+        """
+        with cls._lock:
+            return any(proc.poll() is None for proc in cls._active_processes)
 
     # ----------------------------------------------------------------------
 
-    def _handle_error(self, error_msg):
-        """Centralized error handling."""
+    @classmethod
+    def stop_all(cls):
+        """
+        If the user closes the Videomass app, this method will
+        also close any ffplay open windows, thus freeing up background
+        processes immediately.
+        """
+        with cls._lock:  # block concurrency access on closing app
+            # Closing Videomass while ffplay is in execution
+            cls._is_exiting = True
 
-        if BaseFilePlay._is_exiting:
-            return
+            for proc in list(cls._active_processes):
+                if proc.poll() is None:
+                    try:
+                        proc.terminate()
+                        proc.wait(timeout=1)
 
-        wx.CallAfter(show_msg_notify, self.parent, logname="ffplay.log")
-
-    # ----------------------------------------------------------------------
-
-    def _finalize_play(self):
-        """Always notify the GUI when playback ends."""
-        if BaseFilePlay._is_exiting:
-            return
-
-        wx.CallAfter(pub.sendMessage, "END_PLAY")
+                    except (OSError, subprocess.TimeoutExpired):
+                        proc.kill()
+            cls._active_processes.clear()
 
     # ----------------------------------------------------------------------
 
@@ -121,19 +137,19 @@ class BaseFilePlay(Thread):
         The `classname` parameter accepts a string representing the
         exact name of one of the child classes.
 
-        Let’s let `communicate()` in the `FilePlay` class handle
+        Let's let `communicate()` in the `FilePlay` class handle
         the closing of `stderr`.
         """
         if self.process and self.process.poll() is None:
             if classname == "FilePlay":
-                # NON chiudere stderr qui! Lascia che sia communicate() a farlo
+                # Do not close stderr here; let communicate() handle it
                 self.stopped_by_user = True
                 try:
                     self.process.terminate()
                 except (OSError, subprocess.TimeoutExpired):
                     self.process.kill()
 
-            if classname == "FilePlayWithprogress":
+            elif classname == "FilePlayWithprogress":
                 self.stopped_by_user = True
                 try:
                     self.process.terminate()
@@ -154,28 +170,45 @@ class BaseFilePlay(Thread):
 
     # ----------------------------------------------------------------------
 
-    @classmethod
-    def stop_all(cls):
+    def _prepare_command(self) -> list:
         """
-        If the user closes the Videomass app, this method will
-        also close any ffplay open windows, thus freeing up background
-        processes immediatly.
-
+        Prepare and format the command in a cross-platform way.
         """
-        with cls._lock:  # block concurency access on closing app
-            # Closing Videomass while ffplay is in execution
-            cls._is_exiting = True
+        cmd_log = (
+            subprocess.list2cmdline(self.cmd)
+            if self.appdata["ostype"] == "Windows"
+            else shlex.join(self.cmd)
+        )
 
-            for proc in list(cls._active_processes):
-                if proc.poll() is None:
-                    try:
-                        proc.terminate()
-                        proc.wait(timeout=1)
+        tolog(
+            f"INFO: VIDEOMASS COMMAND: {cmd_log}",
+            self.logfile,
+            sep=True,
+            wdate=True,
+        )
+        return self.cmd
 
-                    except (OSError, subprocess.TimeoutExpired):
-                        proc.kill()
-                        # pass
-            cls._active_processes.clear()
+    # ----------------------------------------------------------------------
+
+    def _handle_error(self, error_msg):
+        """
+        Centralized error handling.
+        """
+        if BaseFilePlay._is_exiting:
+            return
+
+        wx.CallAfter(show_msg_notify, self.parent, logname="ffplay.log")
+
+    # ----------------------------------------------------------------------
+
+    def _finalize_play(self):
+        """
+        Always notify the GUI when playback ends.
+        """
+        if BaseFilePlay._is_exiting:
+            return
+
+        wx.CallAfter(pub.sendMessage, "END_PLAY")
 
 
 # ----------------------------------------------------------------------
@@ -191,7 +224,7 @@ class FilePlay(BaseFilePlay):
 
     def run(self):
         """
-        Start thread. Executes ffplay command
+        Start thread. Executes ffplay command.
         """
         cmd = self._prepare_command()  # Don't use the "-stats" arg here!
         is_windows = self.appdata["ostype"] == "Windows"
@@ -233,9 +266,9 @@ class FilePlay(BaseFilePlay):
             self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
             return
 
-        with BaseFilePlay._lock:
-            if self.process in BaseFilePlay._active_processes:
-                BaseFilePlay._active_processes.remove(self.process)
+        finally:
+            with BaseFilePlay._lock:
+                BaseFilePlay._active_processes.discard(self.process)
 
         self._finalize_play()
 
@@ -267,7 +300,7 @@ class FilePlayWithprogress(BaseFilePlay):
         is_windows = self.appdata["ostype"] == "Windows"
         creationflags = subprocess.CREATE_NO_WINDOW if is_windows else 0
 
-        FLUSH_INTERVAL = 2.0  # Secondi tra un flush e l'altro
+        FLUSH_INTERVAL = 2.0  # Seconds between flushes
         last_flush = time.monotonic()
         THROTTLE_INTERVAL = 0.1
         last_gui_update = time.monotonic()
@@ -350,7 +383,6 @@ class FilePlayWithprogress(BaseFilePlay):
                         pass
 
                 with BaseFilePlay._lock:
-                    if self.process in BaseFilePlay._active_processes:
-                        BaseFilePlay._active_processes.remove(self.process)
+                    BaseFilePlay._active_processes.discard(self.process)
 
         self._finalize_play()
