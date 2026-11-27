@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-26 23:47+0100\n"
+"POT-Creation-Date: 2026-11-27 16:07+0100\n"
 "PO-Revision-Date: 2026-11-03 10:39+0100\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language: nl_NL\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: videomass/gui_app.py:149
 #, python-brace-format
@@ -112,7 +112,7 @@ msgstr "Verwijder het geselecteerde profiel"
 msgid "Clear the File List"
 msgstr "Log bestanden lijst"
 
-#: videomass/vdms_dialogs/epilogue.py:102 videomass/vdms_dialogs/queuedlg.py:154 videomass/vdms_main/main_frame.py:1614
+#: videomass/vdms_dialogs/epilogue.py:102 videomass/vdms_dialogs/queuedlg.py:154 videomass/vdms_main/main_frame.py:1604
 msgid "Run"
 msgstr ""
 
@@ -313,19 +313,19 @@ msgstr "toon beschikbare HW acceleratie methodes"
 msgid "Show license"
 msgstr ""
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:146 videomass/vdms_main/main_frame.py:606
+#: videomass/vdms_dialogs/ffmpeg_help.py:146 videomass/vdms_main/main_frame.py:605
 msgid "Show configuration"
 msgstr "Toon configuratie"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:152 videomass/vdms_main/main_frame.py:618
+#: videomass/vdms_dialogs/ffmpeg_help.py:152 videomass/vdms_main/main_frame.py:617
 msgid "Encoders"
 msgstr "Encoders"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:158 videomass/vdms_main/main_frame.py:623
+#: videomass/vdms_dialogs/ffmpeg_help.py:158 videomass/vdms_main/main_frame.py:622
 msgid "Decoders"
 msgstr "Decoders"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:164 videomass/vdms_main/main_frame.py:612
+#: videomass/vdms_dialogs/ffmpeg_help.py:164 videomass/vdms_main/main_frame.py:611
 msgid "Muxers and Demuxers"
 msgstr "Muxers en Demuxers"
 
@@ -937,7 +937,7 @@ msgstr "Snij breedte bij"
 msgid "FILE SELECTION"
 msgstr "BESTAND SELECTIE"
 
-#: videomass/vdms_dialogs/mediainfo.py:137 videomass/vdms_dialogs/mediainfo.py:140 videomass/vdms_dialogs/mediainfo.py:143 videomass/vdms_dialogs/mediainfo.py:146 videomass/vdms_main/main_frame.py:1610
+#: videomass/vdms_dialogs/mediainfo.py:137 videomass/vdms_dialogs/mediainfo.py:140 videomass/vdms_dialogs/mediainfo.py:143 videomass/vdms_dialogs/mediainfo.py:146 videomass/vdms_main/main_frame.py:1600
 #, fuzzy
 msgid "Properties"
 msgstr "Audio Eigenschappen"
@@ -1190,7 +1190,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "Referenties"
 
-#: videomass/vdms_dialogs/preferences.py:662 videomass/vdms_dialogs/preferences.py:749 videomass/vdms_main/main_frame.py:1113 videomass/vdms_main/main_frame.py:1328
+#: videomass/vdms_dialogs/preferences.py:662 videomass/vdms_dialogs/preferences.py:749 videomass/vdms_main/main_frame.py:1103 videomass/vdms_main/main_frame.py:1318
 #, fuzzy
 msgid "Choose Destination"
 msgstr "Bestemming folder"
@@ -1241,7 +1241,7 @@ msgstr ""
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr ""
 
-#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:572 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
+#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
 msgid "Edit"
 msgstr "Edit"
 
@@ -1334,7 +1334,7 @@ msgstr "Toon tekstkader"
 msgid "Box Color"
 msgstr "Kader kleur"
 
-#: videomass/vdms_dialogs/set_timestamp.py:144 videomass/vdms_main/main_frame.py:683
+#: videomass/vdms_dialogs/set_timestamp.py:144 videomass/vdms_main/main_frame.py:673
 msgid "Timestamp settings"
 msgstr "Tijdcode instellingen"
 
@@ -1422,7 +1422,7 @@ msgstr "Selecteer een log bestand"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Wilt u echt dit log-bestand legen ?"
 
-#: videomass/vdms_dialogs/showlogs.py:177 videomass/vdms_dialogs/wizard_dlg.py:308 videomass/vdms_io/checkup.py:77 videomass/vdms_main/main_frame.py:210 videomass/vdms_main/main_frame.py:999 videomass/vdms_main/main_frame.py:1999 videomass/vdms_panels/presets_manager.py:384 videomass/vdms_panels/presets_manager.py:624 videomass/vdms_panels/presets_manager.py:680
+#: videomass/vdms_dialogs/showlogs.py:177 videomass/vdms_dialogs/wizard_dlg.py:308 videomass/vdms_io/checkup.py:77 videomass/vdms_main/main_frame.py:209 videomass/vdms_main/main_frame.py:989 videomass/vdms_main/main_frame.py:1989 videomass/vdms_panels/presets_manager.py:384 videomass/vdms_panels/presets_manager.py:624 videomass/vdms_panels/presets_manager.py:680
 #: videomass/vdms_panels/presets_manager.py:754 videomass/vdms_panels/presets_manager.py:797 videomass/vdms_panels/presets_manager.py:885 videomass/vdms_panels/presets_manager.py:916 videomass/vdms_panels/presets_manager.py:1027 videomass/vdms_panels/presets_manager.py:1068
 msgid "Please confirm"
 msgstr "Bevestig dit"
@@ -1743,446 +1743,446 @@ msgstr ""
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Bezig met downloaden..."
 
-#: videomass/vdms_main/main_frame.py:185 videomass/vdms_main/main_frame.py:1702 videomass/vdms_main/main_frame.py:1735
+#: videomass/vdms_main/main_frame.py:184 videomass/vdms_main/main_frame.py:1692 videomass/vdms_main/main_frame.py:1725
 msgid "Ready"
 msgstr "Gereed"
 
-#: videomass/vdms_main/main_frame.py:207
+#: videomass/vdms_main/main_frame.py:206
 msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
 "Would you like to keep them in the queue?"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:234
+#: videomass/vdms_main/main_frame.py:233
 #, python-brace-format
 msgid "Queue ({0})"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:239 videomass/vdms_main/main_frame.py:1626
+#: videomass/vdms_main/main_frame.py:238 videomass/vdms_main/main_frame.py:1616
 msgid "Queue"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:425 videomass/vdms_main/main_frame.py:460
+#: videomass/vdms_main/main_frame.py:424 videomass/vdms_main/main_frame.py:459
 msgid "There are still active windows with running processes, make sure you finish your work before exit."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:438
+#: videomass/vdms_main/main_frame.py:437
 #, fuzzy
 msgid "Are you sure you want to exit the application?"
 msgstr "Afsluiten : bent u zeker?"
 
-#: videomass/vdms_main/main_frame.py:439
+#: videomass/vdms_main/main_frame.py:438
 msgid "Exit"
 msgstr "Afsluiten"
 
-#: videomass/vdms_main/main_frame.py:517
+#: videomass/vdms_main/main_frame.py:516
 #, fuzzy
 msgid "Import files\tCtrl+O"
 msgstr "Open...\tCtrl+O"
 
-#: videomass/vdms_main/main_frame.py:520
+#: videomass/vdms_main/main_frame.py:519
 #, fuzzy
 msgid "Open destination folder of encodings\tCtrl+D"
 msgstr "Maak een nieuwe preset"
 
-#: videomass/vdms_main/main_frame.py:524
+#: videomass/vdms_main/main_frame.py:523
 msgid "Load queue file"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:525
+#: videomass/vdms_main/main_frame.py:524
 msgid "Load a previously exported queue file"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:529
+#: videomass/vdms_main/main_frame.py:528
 #, fuzzy
 msgid "Open trash"
 msgstr "Videomass Prullenbak"
 
-#: videomass/vdms_main/main_frame.py:529
+#: videomass/vdms_main/main_frame.py:528
 #, fuzzy
 msgid "Open the Videomass trash folder"
 msgstr "Opent de Videomass Prullenbak folder, als deze bestaat"
 
-#: videomass/vdms_main/main_frame.py:532
+#: videomass/vdms_main/main_frame.py:531
 #, fuzzy
 msgid "Empty trash"
 msgstr "Prullenbak legen"
 
-#: videomass/vdms_main/main_frame.py:533
+#: videomass/vdms_main/main_frame.py:532
 #, fuzzy
 msgid "Delete all files in the Videomass trash folder"
 msgstr "Verwijder alle bestanden uit de Videomass Prullenbak"
 
-#: videomass/vdms_main/main_frame.py:538
+#: videomass/vdms_main/main_frame.py:537
 msgid "Exit\tCtrl+Q"
 msgstr "Afsluiten\tCtrl+Q"
 
-#: videomass/vdms_main/main_frame.py:538
+#: videomass/vdms_main/main_frame.py:537
 #, fuzzy
 msgid "Completely exit the application"
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
-#: videomass/vdms_main/main_frame.py:540
+#: videomass/vdms_main/main_frame.py:539
 msgid "File"
 msgstr "Bestand"
 
-#: videomass/vdms_main/main_frame.py:545 videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:558
+#: videomass/vdms_main/main_frame.py:544 videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:558
 #, fuzzy
 msgid "Rename selected file\tCtrl+R"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: videomass/vdms_main/main_frame.py:546
+#: videomass/vdms_main/main_frame.py:545
 #, fuzzy
 msgid "Rename the destination of the selected file"
 msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
 
-#: videomass/vdms_main/main_frame.py:551 videomass/vdms_panels/filedrop.py:520 videomass/vdms_panels/filedrop.py:561
+#: videomass/vdms_main/main_frame.py:550 videomass/vdms_panels/filedrop.py:520 videomass/vdms_panels/filedrop.py:561
 #, fuzzy
 msgid "Batch rename files\tCtrl+B"
 msgstr "Toon Log-berichten\tCtrl+L"
 
-#: videomass/vdms_main/main_frame.py:552
+#: videomass/vdms_main/main_frame.py:551
 msgid "Numerically renames the destination of all items in the list"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:558 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:565
+#: videomass/vdms_main/main_frame.py:557 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:565
 #, fuzzy
 msgid "Remove selected entry\tDEL"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: videomass/vdms_main/main_frame.py:559
+#: videomass/vdms_main/main_frame.py:558
 #, fuzzy
 msgid "Remove the selected file from the list"
 msgstr "Verwijder het geselecteerde bestand uit de lijst"
 
-#: videomass/vdms_main/main_frame.py:563 videomass/vdms_panels/filedrop.py:523 videomass/vdms_panels/filedrop.py:568
+#: videomass/vdms_main/main_frame.py:562 videomass/vdms_panels/filedrop.py:523 videomass/vdms_panels/filedrop.py:568
 msgid "Clear list\tShift+DEL"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:563
+#: videomass/vdms_main/main_frame.py:562
 #, fuzzy
 msgid "Clear the file list"
 msgstr "Log bestanden lijst"
 
-#: videomass/vdms_main/main_frame.py:569
+#: videomass/vdms_main/main_frame.py:568
 msgid "Preferences\tCtrl+P"
 msgstr "Voorkeuren\tCtrl+P"
 
-#: videomass/vdms_main/main_frame.py:570
+#: videomass/vdms_main/main_frame.py:569
 msgid "Application preferences"
 msgstr "Applicatie voorkeuren"
 
-#: videomass/vdms_main/main_frame.py:577
+#: videomass/vdms_main/main_frame.py:576
 #, fuzzy
 msgid "Find FFmpeg topics"
 msgstr "FFmpeg help-onderwerpen"
 
-#: videomass/vdms_main/main_frame.py:578
+#: videomass/vdms_main/main_frame.py:577
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "Een nuttig gereedschap om FFmpeg help-onderwerpen en opties te zoeken"
 
-#: videomass/vdms_main/main_frame.py:584
+#: videomass/vdms_main/main_frame.py:583
 #, fuzzy
 msgid "Check for preset updates"
 msgstr "Controleer op nieuwe presets"
 
-#: videomass/vdms_main/main_frame.py:585
+#: videomass/vdms_main/main_frame.py:584
 #, fuzzy, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "Controleer op nieuwe presets"
 
-#: videomass/vdms_main/main_frame.py:589
+#: videomass/vdms_main/main_frame.py:588
 #, fuzzy
 msgid "Get latest presets"
 msgstr "Maak een nieuwe preset"
 
-#: videomass/vdms_main/main_frame.py:590
+#: videomass/vdms_main/main_frame.py:589
 #, fuzzy, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "Controleer op nieuwe presets"
 
-#: videomass/vdms_main/main_frame.py:595
+#: videomass/vdms_main/main_frame.py:594
 #, fuzzy
 msgid "Work notes\tCtrl+N"
 msgstr "Notities\tCtrl+N"
 
-#: videomass/vdms_main/main_frame.py:596
+#: videomass/vdms_main/main_frame.py:595
 msgid "Read and write useful notes and reminders."
 msgstr "Lees en maak notities en reminders."
 
-#: videomass/vdms_main/main_frame.py:599
+#: videomass/vdms_main/main_frame.py:598
 msgid "Tools"
 msgstr "Gereedschappen"
 
-#: videomass/vdms_main/main_frame.py:607
+#: videomass/vdms_main/main_frame.py:606
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "Toon ingebouwde FFmpeg configuratie mogelijkheden"
 
-#: videomass/vdms_main/main_frame.py:613
+#: videomass/vdms_main/main_frame.py:612
 #, fuzzy
 msgid "Muxers and demuxers available on your version of FFmpeg"
 msgstr "Muxers en demuxers beschikbaar voor gebruikte FFmpeg."
 
-#: videomass/vdms_main/main_frame.py:619
+#: videomass/vdms_main/main_frame.py:618
 #, fuzzy
 msgid "Encoders available on your version of FFmpeg"
 msgstr "Toont beschikbare encoders voor FFmpeg"
 
-#: videomass/vdms_main/main_frame.py:624
+#: videomass/vdms_main/main_frame.py:623
 #, fuzzy
 msgid "Decoders available on your version of FFmpeg"
 msgstr "Toont beschikbare encoders voor FFmpeg"
 
-#: videomass/vdms_main/main_frame.py:630
+#: videomass/vdms_main/main_frame.py:629
 #, fuzzy
 msgid "Enable timestamps on playback"
 msgstr "Toont tijdcode"
 
-#: videomass/vdms_main/main_frame.py:631
+#: videomass/vdms_main/main_frame.py:630
 #, fuzzy
 msgid "Displays timestamp when playing media with FFplay"
 msgstr "Toont tijdcode bij afspelen van films met FFplay"
 
-#: videomass/vdms_main/main_frame.py:637
+#: videomass/vdms_main/main_frame.py:636
 msgid "Auto-exit after playback"
 msgstr "Automatisch afsluiten na afspelen"
 
-#: videomass/vdms_main/main_frame.py:639
+#: videomass/vdms_main/main_frame.py:638
 #, fuzzy
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr "Als geselecteerd, zal het FFplay window auto-sluiten als het afspelen beëindigd is"
 
-#: videomass/vdms_main/main_frame.py:651
+#: videomass/vdms_main/main_frame.py:647
 msgid "Window dimension"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:656
+#: videomass/vdms_main/main_frame.py:650
 #, fuzzy
 msgid "Native"
 msgstr "Naam"
 
-#: videomass/vdms_main/main_frame.py:657
+#: videomass/vdms_main/main_frame.py:651
 msgid "Use native video dimensions"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:662
+#: videomass/vdms_main/main_frame.py:656
 msgid "Medium (854x480)"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:663
+#: videomass/vdms_main/main_frame.py:657
 msgid "Set preview window to 854x480"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:668
+#: videomass/vdms_main/main_frame.py:662
 msgid "Small (640x360)"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:669
+#: videomass/vdms_main/main_frame.py:663
 msgid "Set preview window to 640x360"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:683
+#: videomass/vdms_main/main_frame.py:673
 msgid "Customize the timestamp style"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:687
+#: videomass/vdms_main/main_frame.py:677
 #, fuzzy
 msgid "While playing..."
 msgstr "Tijdens afspelen"
 
-#: videomass/vdms_main/main_frame.py:689
+#: videomass/vdms_main/main_frame.py:679
 #, fuzzy
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr "Toon nuttige sneltoetsen bij afspelen of preview met FFplay"
 
-#: videomass/vdms_main/main_frame.py:696
+#: videomass/vdms_main/main_frame.py:686
 #, fuzzy
 msgid "Show timeline editor\tCtrl+T"
 msgstr "Toon tijdslijn\tCtrl+T"
 
-#: videomass/vdms_main/main_frame.py:698
+#: videomass/vdms_main/main_frame.py:688
 msgid "Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:706
+#: videomass/vdms_main/main_frame.py:696
 msgid "View"
 msgstr "Bekijk"
 
-#: videomass/vdms_main/main_frame.py:714
+#: videomass/vdms_main/main_frame.py:704
 #, fuzzy
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Home panel\tShift+H"
 
-#: videomass/vdms_main/main_frame.py:715
+#: videomass/vdms_main/main_frame.py:705
 msgid "Go to the «Home» panel"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:720
+#: videomass/vdms_main/main_frame.py:710
 #, fuzzy
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "Presets manager\tShift+P"
 
-#: videomass/vdms_main/main_frame.py:721
+#: videomass/vdms_main/main_frame.py:711
 msgid "Go to the «Presets Manager» panel"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:725
+#: videomass/vdms_main/main_frame.py:715
 #, fuzzy
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "A/V conversies\tShift+V"
 
-#: videomass/vdms_main/main_frame.py:726
+#: videomass/vdms_main/main_frame.py:716
 msgid "Go to the «A/V Conversions» panel"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:730
+#: videomass/vdms_main/main_frame.py:720
 #, fuzzy
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "Samenvoeg Demuxer\tShift+D"
 
-#: videomass/vdms_main/main_frame.py:731
+#: videomass/vdms_main/main_frame.py:721
 msgid "Go to the «Concatenate Demuxer» panel"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:735
+#: videomass/vdms_main/main_frame.py:725
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:736
+#: videomass/vdms_main/main_frame.py:726
 msgid "Go to the «Still Image Maker» panel"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:740
+#: videomass/vdms_main/main_frame.py:730
 #, fuzzy
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: videomass/vdms_main/main_frame.py:741
+#: videomass/vdms_main/main_frame.py:731
 msgid "Go to the «From Movie to Pictures» panel"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:745
+#: videomass/vdms_main/main_frame.py:735
 #, fuzzy
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr "Output Monitor\tShift+O"
 
-#: videomass/vdms_main/main_frame.py:746
+#: videomass/vdms_main/main_frame.py:736
 msgid "Keeps track of the output for debugging errors"
 msgstr "Inspecteert output voor debug-fouten"
 
-#: videomass/vdms_main/main_frame.py:749
+#: videomass/vdms_main/main_frame.py:739
 #, fuzzy
 msgid "Go"
 msgstr "Ga naar"
 
-#: videomass/vdms_main/main_frame.py:755
+#: videomass/vdms_main/main_frame.py:745
 #, fuzzy
 msgid "User guide"
 msgstr "Handleiding"
 
-#: videomass/vdms_main/main_frame.py:760
+#: videomass/vdms_main/main_frame.py:750
 #, fuzzy
 msgid "System version"
 msgstr "Toont de gebruikte versie"
 
-#: videomass/vdms_main/main_frame.py:762
+#: videomass/vdms_main/main_frame.py:752
 msgid "Get version about your operating system, version of Python and wxPython."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:768
+#: videomass/vdms_main/main_frame.py:758
 #, fuzzy
 msgid "Show log files\tCtrl+L"
 msgstr "Toon Log-berichten\tCtrl+L"
 
-#: videomass/vdms_main/main_frame.py:768
+#: videomass/vdms_main/main_frame.py:758
 msgid "Viewing log messages"
 msgstr "Log-berichten bekijken"
 
-#: videomass/vdms_main/main_frame.py:773
+#: videomass/vdms_main/main_frame.py:763
 msgid "Issue tracker"
 msgstr "Issue tracker"
 
-#: videomass/vdms_main/main_frame.py:778
+#: videomass/vdms_main/main_frame.py:768
 msgid "Contribute to the project"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:783
+#: videomass/vdms_main/main_frame.py:773
 msgid "Sponsor this project"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:784
+#: videomass/vdms_main/main_frame.py:774
 msgid "Become a developer supporter"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:787
+#: videomass/vdms_main/main_frame.py:777
 msgid "Donate now ❤️"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:787
+#: videomass/vdms_main/main_frame.py:777
 #, fuzzy
 msgid "Donate to the Videomass project."
 msgstr "Welkom bij de Videomass Wizard!"
 
-#: videomass/vdms_main/main_frame.py:792
+#: videomass/vdms_main/main_frame.py:782
 msgid "Other projects by the developer"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:815
+#: videomass/vdms_main/main_frame.py:805
 msgid "About Videomass"
 msgstr "Over Videomass"
 
-#: videomass/vdms_main/main_frame.py:817
+#: videomass/vdms_main/main_frame.py:807
 msgid "Check for newer version"
 msgstr "Ga nieuwere versie na"
 
-#: videomass/vdms_main/main_frame.py:818
+#: videomass/vdms_main/main_frame.py:808
 #, fuzzy
 msgid "Check for the latest Videomass version"
 msgstr "Toon de laatste versie..."
 
-#: videomass/vdms_main/main_frame.py:821
+#: videomass/vdms_main/main_frame.py:811
 msgid "Help"
 msgstr "Help"
 
-#: videomass/vdms_main/main_frame.py:916
+#: videomass/vdms_main/main_frame.py:906
 #, fuzzy
 msgid "Import files"
 msgstr "Log folder"
 
-#: videomass/vdms_main/main_frame.py:940
+#: videomass/vdms_main/main_frame.py:930
 msgid "No default folder has been set for the destination of the encodings. The current setting is \"Same destination paths as source files\"."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:980 videomass/vdms_main/main_frame.py:1018
+#: videomass/vdms_main/main_frame.py:970 videomass/vdms_main/main_frame.py:1008
 #, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:998
+#: videomass/vdms_main/main_frame.py:988
 msgid "Are you sure to empty trash folder?"
 msgstr "Weet u zeker dat u de Videomass Prullenbak wilt legen?"
 
-#: videomass/vdms_main/main_frame.py:1011
+#: videomass/vdms_main/main_frame.py:1001
 #, fuzzy, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
 msgstr "Er bestaan geen logs om te tonen."
 
-#: videomass/vdms_main/main_frame.py:1083
+#: videomass/vdms_main/main_frame.py:1073
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1092
+#: videomass/vdms_main/main_frame.py:1082
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1130
+#: videomass/vdms_main/main_frame.py:1120
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2190,17 +2190,17 @@ msgstr ""
 "Wacht....\n"
 "Het archief wordt gedownload"
 
-#: videomass/vdms_main/main_frame.py:1143
+#: videomass/vdms_main/main_frame.py:1133
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Succesvol gedownload naar \"{0}\""
 
-#: videomass/vdms_main/main_frame.py:1411
+#: videomass/vdms_main/main_frame.py:1401
 #, fuzzy
 msgid "Some changes require restarting the application."
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
-#: videomass/vdms_main/main_frame.py:1419
+#: videomass/vdms_main/main_frame.py:1409
 #, fuzzy, python-brace-format
 msgid ""
 "{0}\n"
@@ -2208,156 +2208,156 @@ msgid ""
 "Do you want to restart the application now?"
 msgstr "Afsluiten : bent u zeker?"
 
-#: videomass/vdms_main/main_frame.py:1421
+#: videomass/vdms_main/main_frame.py:1411
 #, fuzzy
 msgid "Restart Videomass?"
 msgstr "Videomass"
 
-#: videomass/vdms_main/main_frame.py:1510
+#: videomass/vdms_main/main_frame.py:1500
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Er is een nieuwe versie beschikbaar - v.{0}\n"
 
-#: videomass/vdms_main/main_frame.py:1513
+#: videomass/vdms_main/main_frame.py:1503
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "U gebruikt een ontwikkelaars versie die nog niet is vrijgegeven!\n"
 
-#: videomass/vdms_main/main_frame.py:1518
+#: videomass/vdms_main/main_frame.py:1508
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Gefeliciteerd! U gebruikt al de laatste versie.\n"
 
-#: videomass/vdms_main/main_frame.py:1599
+#: videomass/vdms_main/main_frame.py:1589
 #, fuzzy
 msgid "Previous panel"
 msgstr "Ga naar vorig panel"
 
-#: videomass/vdms_main/main_frame.py:1600
+#: videomass/vdms_main/main_frame.py:1590
 msgid "Back"
 msgstr "Terug"
 
-#: videomass/vdms_main/main_frame.py:1601
+#: videomass/vdms_main/main_frame.py:1591
 #, fuzzy
 msgid "Next panel"
 msgstr "Volgende >"
 
-#: videomass/vdms_main/main_frame.py:1603
+#: videomass/vdms_main/main_frame.py:1593
 msgid "Next"
 msgstr "Volgende"
 
-#: videomass/vdms_main/main_frame.py:1605
+#: videomass/vdms_main/main_frame.py:1595
 #, fuzzy
 msgid "Home panel"
 msgstr "Ga naar volgende panel"
 
-#: videomass/vdms_main/main_frame.py:1606
+#: videomass/vdms_main/main_frame.py:1596
 msgid "Home"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1608
+#: videomass/vdms_main/main_frame.py:1598
 #, fuzzy
 msgid "Get informative data about imported media streams"
 msgstr "Wint informatie in over multimedia streams"
 
-#: videomass/vdms_main/main_frame.py:1612
+#: videomass/vdms_main/main_frame.py:1602
 msgid "Start batch processing"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1616
+#: videomass/vdms_main/main_frame.py:1606
 msgid "Stops current process"
 msgstr "Stopt huidige proces"
 
-#: videomass/vdms_main/main_frame.py:1618 videomass/vdms_utils/widget_utils.py:157
+#: videomass/vdms_main/main_frame.py:1608 videomass/vdms_utils/widget_utils.py:157
 msgid "Stop"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1620
+#: videomass/vdms_main/main_frame.py:1610
 msgid "Add an item to Queue"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1622
+#: videomass/vdms_main/main_frame.py:1612
 msgid "Add to Queue"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1624
+#: videomass/vdms_main/main_frame.py:1614
 msgid "Show queue"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:1736
+#: videomass/vdms_main/main_frame.py:1726
 #, fuzzy
 msgid "Videomass - File List"
 msgstr "Videomass - Wachtrij Bestanden"
 
-#: videomass/vdms_main/main_frame.py:1754
+#: videomass/vdms_main/main_frame.py:1744
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV Conversies"
 
-#: videomass/vdms_main/main_frame.py:1784
+#: videomass/vdms_main/main_frame.py:1774
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Presets Manager"
 
-#: videomass/vdms_main/main_frame.py:1815
+#: videomass/vdms_main/main_frame.py:1805
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Samenvoeg Demuxer"
 
-#: videomass/vdms_main/main_frame.py:1845
+#: videomass/vdms_main/main_frame.py:1835
 #, fuzzy
 msgid "Videomass - From Movie to Pictures"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: videomass/vdms_main/main_frame.py:1875
+#: videomass/vdms_main/main_frame.py:1865
 #, fuzzy
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: videomass/vdms_main/main_frame.py:1966 videomass/vdms_miniframes/timeline.py:497 videomass/vdms_panels/audio_encoders/acodecs.py:717 videomass/vdms_panels/av_conversions.py:707 videomass/vdms_panels/av_conversions.py:1451 videomass/vdms_panels/filedrop.py:805 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
+#: videomass/vdms_main/main_frame.py:1956 videomass/vdms_miniframes/timeline.py:497 videomass/vdms_panels/audio_encoders/acodecs.py:717 videomass/vdms_panels/av_conversions.py:707 videomass/vdms_panels/av_conversions.py:1451 videomass/vdms_panels/filedrop.py:805 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
 #, fuzzy
 msgid "Have to select an item in the file list first"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: videomass/vdms_main/main_frame.py:1995
+#: videomass/vdms_main/main_frame.py:1985
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2012
+#: videomass/vdms_main/main_frame.py:2002
 #, python-brace-format
 msgid ""
 "Queue limit reached ({} items).\n"
 "Please remove some items before adding more."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2033
+#: videomass/vdms_main/main_frame.py:2023
 #, fuzzy
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Output Monitor"
 
-#: videomass/vdms_main/main_frame.py:2099
+#: videomass/vdms_main/main_frame.py:2089
 #, fuzzy
 msgid "Please wait... interruption in progress"
 msgstr "wacht... bezig met afbreken"
 
-#: videomass/vdms_main/main_frame.py:2171
+#: videomass/vdms_main/main_frame.py:2161
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2172
+#: videomass/vdms_main/main_frame.py:2162
 #, fuzzy
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - Laden..."
 
-#: videomass/vdms_main/main_frame.py:2186
+#: videomass/vdms_main/main_frame.py:2176
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2201
+#: videomass/vdms_main/main_frame.py:2191
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2202
+#: videomass/vdms_main/main_frame.py:2192
 #, fuzzy
 msgid "Videomass - Exiting!"
 msgstr "Videomass - Laden..."
@@ -2388,7 +2388,7 @@ msgstr ""
 msgid "Milliseconds"
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:291 videomass/vdms_miniframes/timeline.py:890
+#: videomass/vdms_miniframes/timeline.py:291 videomass/vdms_miniframes/timeline.py:873
 msgid "No source duration:"
 msgstr ""
 
@@ -2396,7 +2396,7 @@ msgstr ""
 msgid "Wave"
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:384 videomass/vdms_miniframes/timeline.py:866 videomass/vdms_miniframes/timeline.py:929 videomass/vdms_miniframes/timeline.py:935 videomass/vdms_miniframes/timeline.py:1051
+#: videomass/vdms_miniframes/timeline.py:384 videomass/vdms_miniframes/timeline.py:850 videomass/vdms_miniframes/timeline.py:912 videomass/vdms_miniframes/timeline.py:918 videomass/vdms_miniframes/timeline.py:1034
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
@@ -2433,20 +2433,20 @@ msgid ""
 "Loading waveform."
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:650
+#: videomass/vdms_miniframes/timeline.py:631
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:671
+#: videomass/vdms_miniframes/timeline.py:658
 #, fuzzy, python-brace-format
 msgid ""
 "Invalid or unsupported file:\n"
 "'{}'"
 msgstr "Ongeldige URL: \"{}\""
 
-#: videomass/vdms_miniframes/timeline.py:800
+#: videomass/vdms_miniframes/timeline.py:784
 #, python-brace-format
 msgid ""
 "Unable to create waveform.\n"
@@ -2454,7 +2454,7 @@ msgid ""
 "\"{}\""
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:826
+#: videomass/vdms_miniframes/timeline.py:810
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
 "The time format used to report durations is expressed in hours, minutes,\n"
@@ -2473,27 +2473,27 @@ msgid ""
 "This behavior also applies when deselecting files."
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:906
+#: videomass/vdms_miniframes/timeline.py:889
 #, fuzzy
 msgid "Source duration:"
 msgstr "Duur:"
 
-#: videomass/vdms_miniframes/timeline.py:995
+#: videomass/vdms_miniframes/timeline.py:978
 msgid "WARNING: Invalid segment selection, out of range."
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:1110
+#: videomass/vdms_miniframes/timeline.py:1093
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:1146
+#: videomass/vdms_miniframes/timeline.py:1129
 #, fuzzy
 msgid "Start"
 msgstr "Start"
 
-#: videomass/vdms_miniframes/timeline.py:1147
+#: videomass/vdms_miniframes/timeline.py:1130
 #, fuzzy
 msgid "End"
 msgstr "Geactiveerd"

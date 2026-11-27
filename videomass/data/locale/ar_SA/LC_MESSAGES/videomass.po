@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-26 23:47+0100\n"
+"POT-Creation-Date: 2026-11-27 16:07+0100\n"
 "PO-Revision-Date: 2026-10-02 11:59+0000\n"
 "Last-Translator: AbdEl-Rahman Mohammed Hassan <https://github.com/vfggf95565>\n"
 "Language: ar_SA\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: videomass/gui_app.py:149
 #, python-brace-format
@@ -120,7 +120,7 @@ msgstr "نقل الملفات المصدر إلى سلة المهملات"
 msgid "Clear the File List"
 msgstr "مسح قائمة الملفات"
 
-#: videomass/vdms_dialogs/epilogue.py:102 videomass/vdms_dialogs/queuedlg.py:154 videomass/vdms_main/main_frame.py:1614
+#: videomass/vdms_dialogs/epilogue.py:102 videomass/vdms_dialogs/queuedlg.py:154 videomass/vdms_main/main_frame.py:1604
 msgid "Run"
 msgstr "تشغيل"
 
@@ -314,19 +314,19 @@ msgstr "إظهار طرق تسريع العتاد المتاحة"
 msgid "Show license"
 msgstr "إظهار الترخيص"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:146 videomass/vdms_main/main_frame.py:606
+#: videomass/vdms_dialogs/ffmpeg_help.py:146 videomass/vdms_main/main_frame.py:605
 msgid "Show configuration"
 msgstr "إظهار الإعدادات"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:152 videomass/vdms_main/main_frame.py:618
+#: videomass/vdms_dialogs/ffmpeg_help.py:152 videomass/vdms_main/main_frame.py:617
 msgid "Encoders"
 msgstr "المرمِّزات"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:158 videomass/vdms_main/main_frame.py:623
+#: videomass/vdms_dialogs/ffmpeg_help.py:158 videomass/vdms_main/main_frame.py:622
 msgid "Decoders"
 msgstr "مفكِّكات الترميز"
 
-#: videomass/vdms_dialogs/ffmpeg_help.py:164 videomass/vdms_main/main_frame.py:612
+#: videomass/vdms_dialogs/ffmpeg_help.py:164 videomass/vdms_main/main_frame.py:611
 msgid "Muxers and Demuxers"
 msgstr "أدوات الدمج والفصل"
 
@@ -924,7 +924,7 @@ msgstr "نسخ إلى الحافظة"
 msgid "FILE SELECTION"
 msgstr "اختيار الملف"
 
-#: videomass/vdms_dialogs/mediainfo.py:137 videomass/vdms_dialogs/mediainfo.py:140 videomass/vdms_dialogs/mediainfo.py:143 videomass/vdms_dialogs/mediainfo.py:146 videomass/vdms_main/main_frame.py:1610
+#: videomass/vdms_dialogs/mediainfo.py:137 videomass/vdms_dialogs/mediainfo.py:140 videomass/vdms_dialogs/mediainfo.py:143 videomass/vdms_dialogs/mediainfo.py:146 videomass/vdms_main/main_frame.py:1600
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -1162,7 +1162,7 @@ msgstr "اكتب كلمة مرور sudo هنا، لأنظمة التشغيل ا�
 msgid "Preferences"
 msgstr "التفضيلات"
 
-#: videomass/vdms_dialogs/preferences.py:662 videomass/vdms_dialogs/preferences.py:749 videomass/vdms_main/main_frame.py:1113 videomass/vdms_main/main_frame.py:1328
+#: videomass/vdms_dialogs/preferences.py:662 videomass/vdms_dialogs/preferences.py:749 videomass/vdms_main/main_frame.py:1103 videomass/vdms_main/main_frame.py:1318
 msgid "Choose Destination"
 msgstr "اختر الوجهة"
 
@@ -1211,7 +1211,7 @@ msgstr "وسائط FFmpeg للترميز بمرورين"
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr "أي وسائط اختيارية تُضاف قبل ملف الإدخال في الترميز بمرورين، مثل الأسماء المطلوبة لبعض تسريعات العتاد كـ -hwaccel للاستخدام مع CUDA."
 
-#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:572 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
+#: videomass/vdms_dialogs/queuedlg.py:68 videomass/vdms_main/main_frame.py:571 videomass/vdms_panels/presets_manager.py:193 videomass/vdms_panels/video_to_sequence.py:196
 msgid "Edit"
 msgstr "تعديل"
 
@@ -1297,7 +1297,7 @@ msgstr "إظهار مربع النص"
 msgid "Box Color"
 msgstr "لون المربع"
 
-#: videomass/vdms_dialogs/set_timestamp.py:144 videomass/vdms_main/main_frame.py:683
+#: videomass/vdms_dialogs/set_timestamp.py:144 videomass/vdms_main/main_frame.py:673
 msgid "Timestamp settings"
 msgstr "إعدادات الطابع الزمني"
 
@@ -1386,7 +1386,7 @@ msgstr "اختر ملف سجل"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "هل أنت متأكد من رغبتك في مسح ملف السجل المحدد؟"
 
-#: videomass/vdms_dialogs/showlogs.py:177 videomass/vdms_dialogs/wizard_dlg.py:308 videomass/vdms_io/checkup.py:77 videomass/vdms_main/main_frame.py:210 videomass/vdms_main/main_frame.py:999 videomass/vdms_main/main_frame.py:1999 videomass/vdms_panels/presets_manager.py:384 videomass/vdms_panels/presets_manager.py:624 videomass/vdms_panels/presets_manager.py:680
+#: videomass/vdms_dialogs/showlogs.py:177 videomass/vdms_dialogs/wizard_dlg.py:308 videomass/vdms_io/checkup.py:77 videomass/vdms_main/main_frame.py:209 videomass/vdms_main/main_frame.py:989 videomass/vdms_main/main_frame.py:1989 videomass/vdms_panels/presets_manager.py:384 videomass/vdms_panels/presets_manager.py:624 videomass/vdms_panels/presets_manager.py:680
 #: videomass/vdms_panels/presets_manager.py:754 videomass/vdms_panels/presets_manager.py:797 videomass/vdms_panels/presets_manager.py:885 videomass/vdms_panels/presets_manager.py:916 videomass/vdms_panels/presets_manager.py:1027 videomass/vdms_panels/presets_manager.py:1068
 msgid "Please confirm"
 msgstr "يرجى التأكيد"
@@ -1701,11 +1701,11 @@ msgstr ""
 msgid "Videomass - Downloading..."
 msgstr "Videomass - جارٍ التنزيل..."
 
-#: videomass/vdms_main/main_frame.py:185 videomass/vdms_main/main_frame.py:1702 videomass/vdms_main/main_frame.py:1735
+#: videomass/vdms_main/main_frame.py:184 videomass/vdms_main/main_frame.py:1692 videomass/vdms_main/main_frame.py:1725
 msgid "Ready"
 msgstr "جاهز"
 
-#: videomass/vdms_main/main_frame.py:207
+#: videomass/vdms_main/main_frame.py:206
 msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
@@ -1715,369 +1715,369 @@ msgstr ""
 "\n"
 "هل تريد إبقاءها في قائمة الانتظار؟"
 
-#: videomass/vdms_main/main_frame.py:234
+#: videomass/vdms_main/main_frame.py:233
 #, python-brace-format
 msgid "Queue ({0})"
 msgstr "قائمة الانتظار ({0})"
 
-#: videomass/vdms_main/main_frame.py:239 videomass/vdms_main/main_frame.py:1626
+#: videomass/vdms_main/main_frame.py:238 videomass/vdms_main/main_frame.py:1616
 msgid "Queue"
 msgstr "قائمة الانتظار"
 
-#: videomass/vdms_main/main_frame.py:425 videomass/vdms_main/main_frame.py:460
+#: videomass/vdms_main/main_frame.py:424 videomass/vdms_main/main_frame.py:459
 msgid "There are still active windows with running processes, make sure you finish your work before exit."
 msgstr "ما زالت هناك نوافذ نشطة بها عمليات قيد التشغيل، تأكد من إنهاء عملك قبل الخروج."
 
-#: videomass/vdms_main/main_frame.py:438
+#: videomass/vdms_main/main_frame.py:437
 msgid "Are you sure you want to exit the application?"
 msgstr "هل أنت متأكد من رغبتك في الخروج من التطبيق؟"
 
-#: videomass/vdms_main/main_frame.py:439
+#: videomass/vdms_main/main_frame.py:438
 msgid "Exit"
 msgstr "خروج"
 
-#: videomass/vdms_main/main_frame.py:517
+#: videomass/vdms_main/main_frame.py:516
 msgid "Import files\tCtrl+O"
 msgstr "استيراد ملفات\tCtrl+O"
 
-#: videomass/vdms_main/main_frame.py:520
+#: videomass/vdms_main/main_frame.py:519
 msgid "Open destination folder of encodings\tCtrl+D"
 msgstr "فتح مجلد وجهة التحويلات\tCtrl+D"
 
-#: videomass/vdms_main/main_frame.py:524
+#: videomass/vdms_main/main_frame.py:523
 msgid "Load queue file"
 msgstr "تحميل ملف قائمة الانتظار"
 
-#: videomass/vdms_main/main_frame.py:525
+#: videomass/vdms_main/main_frame.py:524
 msgid "Load a previously exported queue file"
 msgstr "تحميل ملف قائمة انتظار تم تصديره سابقًا"
 
-#: videomass/vdms_main/main_frame.py:529
+#: videomass/vdms_main/main_frame.py:528
 msgid "Open trash"
 msgstr "فتح سلة المهملات"
 
-#: videomass/vdms_main/main_frame.py:529
+#: videomass/vdms_main/main_frame.py:528
 msgid "Open the Videomass trash folder"
 msgstr "فتح مجلد سلة مهملات Videomass"
 
-#: videomass/vdms_main/main_frame.py:532
+#: videomass/vdms_main/main_frame.py:531
 msgid "Empty trash"
 msgstr "إفراغ سلة المهملات"
 
-#: videomass/vdms_main/main_frame.py:533
+#: videomass/vdms_main/main_frame.py:532
 msgid "Delete all files in the Videomass trash folder"
 msgstr "حذف جميع الملفات في مجلد سلة مهملات Videomass"
 
-#: videomass/vdms_main/main_frame.py:538
+#: videomass/vdms_main/main_frame.py:537
 msgid "Exit\tCtrl+Q"
 msgstr "خروج\tCtrl+Q"
 
-#: videomass/vdms_main/main_frame.py:538
+#: videomass/vdms_main/main_frame.py:537
 msgid "Completely exit the application"
 msgstr "الخروج من التطبيق بالكامل"
 
-#: videomass/vdms_main/main_frame.py:540
+#: videomass/vdms_main/main_frame.py:539
 msgid "File"
 msgstr "ملف"
 
-#: videomass/vdms_main/main_frame.py:545 videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:558
+#: videomass/vdms_main/main_frame.py:544 videomass/vdms_panels/filedrop.py:519 videomass/vdms_panels/filedrop.py:558
 msgid "Rename selected file\tCtrl+R"
 msgstr "إعادة تسمية الملف المحدد\tCtrl+R"
 
-#: videomass/vdms_main/main_frame.py:546
+#: videomass/vdms_main/main_frame.py:545
 msgid "Rename the destination of the selected file"
 msgstr "إعادة تسمية وجهة الملف المحدد"
 
-#: videomass/vdms_main/main_frame.py:551 videomass/vdms_panels/filedrop.py:520 videomass/vdms_panels/filedrop.py:561
+#: videomass/vdms_main/main_frame.py:550 videomass/vdms_panels/filedrop.py:520 videomass/vdms_panels/filedrop.py:561
 msgid "Batch rename files\tCtrl+B"
 msgstr "إعادة تسمية الملفات دفعة واحدة\tCtrl+B"
 
-#: videomass/vdms_main/main_frame.py:552
+#: videomass/vdms_main/main_frame.py:551
 msgid "Numerically renames the destination of all items in the list"
 msgstr "إعادة تسمية وجهة جميع عناصر القائمة بأرقام متسلسلة"
 
-#: videomass/vdms_main/main_frame.py:558 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:565
+#: videomass/vdms_main/main_frame.py:557 videomass/vdms_panels/filedrop.py:522 videomass/vdms_panels/filedrop.py:565
 msgid "Remove selected entry\tDEL"
 msgstr "إزالة الإدخال المحدد\tDEL"
 
-#: videomass/vdms_main/main_frame.py:559
+#: videomass/vdms_main/main_frame.py:558
 msgid "Remove the selected file from the list"
 msgstr "إزالة الملف المحدد من القائمة"
 
-#: videomass/vdms_main/main_frame.py:563 videomass/vdms_panels/filedrop.py:523 videomass/vdms_panels/filedrop.py:568
+#: videomass/vdms_main/main_frame.py:562 videomass/vdms_panels/filedrop.py:523 videomass/vdms_panels/filedrop.py:568
 msgid "Clear list\tShift+DEL"
 msgstr "مسح القائمة\tShift+DEL"
 
-#: videomass/vdms_main/main_frame.py:563
+#: videomass/vdms_main/main_frame.py:562
 msgid "Clear the file list"
 msgstr "مسح قائمة الملفات"
 
-#: videomass/vdms_main/main_frame.py:569
+#: videomass/vdms_main/main_frame.py:568
 msgid "Preferences\tCtrl+P"
 msgstr "التفضيلات\tCtrl+P"
 
-#: videomass/vdms_main/main_frame.py:570
+#: videomass/vdms_main/main_frame.py:569
 msgid "Application preferences"
 msgstr "تفضيلات التطبيق"
 
-#: videomass/vdms_main/main_frame.py:577
+#: videomass/vdms_main/main_frame.py:576
 msgid "Find FFmpeg topics"
 msgstr "البحث في مواضيع FFmpeg"
 
-#: videomass/vdms_main/main_frame.py:578
+#: videomass/vdms_main/main_frame.py:577
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "أداة مفيدة للبحث في مواضيع وخيارات مساعدة FFmpeg"
 
-#: videomass/vdms_main/main_frame.py:584
+#: videomass/vdms_main/main_frame.py:583
 msgid "Check for preset updates"
 msgstr "التحقق من تحديثات الإعدادات المسبقة"
 
-#: videomass/vdms_main/main_frame.py:585
+#: videomass/vdms_main/main_frame.py:584
 #, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "التحقق من وجود تحديثات جديدة للإعدادات المسبقة من {0}"
 
-#: videomass/vdms_main/main_frame.py:589
+#: videomass/vdms_main/main_frame.py:588
 msgid "Get latest presets"
 msgstr "الحصول على أحدث الإعدادات المسبقة"
 
-#: videomass/vdms_main/main_frame.py:590
+#: videomass/vdms_main/main_frame.py:589
 #, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "الحصول على أحدث الإعدادات المسبقة من {0}"
 
-#: videomass/vdms_main/main_frame.py:595
+#: videomass/vdms_main/main_frame.py:594
 msgid "Work notes\tCtrl+N"
 msgstr "ملاحظات العمل\tCtrl+N"
 
-#: videomass/vdms_main/main_frame.py:596
+#: videomass/vdms_main/main_frame.py:595
 msgid "Read and write useful notes and reminders."
 msgstr "اقرأ واكتب ملاحظات وتذكيرات مفيدة."
 
-#: videomass/vdms_main/main_frame.py:599
+#: videomass/vdms_main/main_frame.py:598
 msgid "Tools"
 msgstr "أدوات"
 
-#: videomass/vdms_main/main_frame.py:607
+#: videomass/vdms_main/main_frame.py:606
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "إظهار إمكانيات الإعدادات المضمّنة في FFmpeg"
 
-#: videomass/vdms_main/main_frame.py:613
+#: videomass/vdms_main/main_frame.py:612
 msgid "Muxers and demuxers available on your version of FFmpeg"
 msgstr "أدوات الدمج والفصل المتاحة في إصدار FFmpeg لديك"
 
-#: videomass/vdms_main/main_frame.py:619
+#: videomass/vdms_main/main_frame.py:618
 msgid "Encoders available on your version of FFmpeg"
 msgstr "المرمِّزات المتاحة في إصدار FFmpeg لديك"
 
-#: videomass/vdms_main/main_frame.py:624
+#: videomass/vdms_main/main_frame.py:623
 msgid "Decoders available on your version of FFmpeg"
 msgstr "مفكِّكات الترميز المتاحة في إصدار FFmpeg لديك"
 
-#: videomass/vdms_main/main_frame.py:630
+#: videomass/vdms_main/main_frame.py:629
 msgid "Enable timestamps on playback"
 msgstr "تفعيل الطوابع الزمنية أثناء التشغيل"
 
-#: videomass/vdms_main/main_frame.py:631
+#: videomass/vdms_main/main_frame.py:630
 msgid "Displays timestamp when playing media with FFplay"
 msgstr "يعرض الطابع الزمني عند تشغيل الوسائط باستخدام FFplay"
 
-#: videomass/vdms_main/main_frame.py:637
+#: videomass/vdms_main/main_frame.py:636
 msgid "Auto-exit after playback"
 msgstr "إغلاق تلقائي بعد التشغيل"
 
-#: videomass/vdms_main/main_frame.py:639
+#: videomass/vdms_main/main_frame.py:638
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr "عند التحديد، ستُغلق نافذة FFplay تلقائيًا عند انتهاء التشغيل"
 
-#: videomass/vdms_main/main_frame.py:651
+#: videomass/vdms_main/main_frame.py:647
 msgid "Window dimension"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:656
+#: videomass/vdms_main/main_frame.py:650
 #, fuzzy
 msgid "Native"
 msgstr "موجة"
 
-#: videomass/vdms_main/main_frame.py:657
+#: videomass/vdms_main/main_frame.py:651
 msgid "Use native video dimensions"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:662
+#: videomass/vdms_main/main_frame.py:656
 msgid "Medium (854x480)"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:663
+#: videomass/vdms_main/main_frame.py:657
 msgid "Set preview window to 854x480"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:668
+#: videomass/vdms_main/main_frame.py:662
 msgid "Small (640x360)"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:669
+#: videomass/vdms_main/main_frame.py:663
 msgid "Set preview window to 640x360"
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:683
+#: videomass/vdms_main/main_frame.py:673
 msgid "Customize the timestamp style"
 msgstr "تخصيص نمط الطابع الزمني"
 
-#: videomass/vdms_main/main_frame.py:687
+#: videomass/vdms_main/main_frame.py:677
 msgid "While playing..."
 msgstr "أثناء التشغيل..."
 
-#: videomass/vdms_main/main_frame.py:689
+#: videomass/vdms_main/main_frame.py:679
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr "إظهار مفاتيح الاختصار المفيدة عند التشغيل أو المعاينة باستخدام FFplay"
 
-#: videomass/vdms_main/main_frame.py:696
+#: videomass/vdms_main/main_frame.py:686
 msgid "Show timeline editor\tCtrl+T"
 msgstr "إظهار محرر الخط الزمني\tCtrl+T"
 
-#: videomass/vdms_main/main_frame.py:698
+#: videomass/vdms_main/main_frame.py:688
 msgid "Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr "حدد المدة أو اقتطع شرائح زمنية لإزالة الأجزاء غير المرغوبة من ملفاتك"
 
-#: videomass/vdms_main/main_frame.py:706
+#: videomass/vdms_main/main_frame.py:696
 msgid "View"
 msgstr "عرض"
 
-#: videomass/vdms_main/main_frame.py:714
+#: videomass/vdms_main/main_frame.py:704
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "اللوحة الرئيسية\tCtrl+Shift+H"
 
-#: videomass/vdms_main/main_frame.py:715
+#: videomass/vdms_main/main_frame.py:705
 msgid "Go to the «Home» panel"
 msgstr "الانتقال إلى لوحة «الرئيسية»"
 
-#: videomass/vdms_main/main_frame.py:720
+#: videomass/vdms_main/main_frame.py:710
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "مدير الإعدادات المسبقة\tCtrl+Shift+P"
 
-#: videomass/vdms_main/main_frame.py:721
+#: videomass/vdms_main/main_frame.py:711
 msgid "Go to the «Presets Manager» panel"
 msgstr "الانتقال إلى لوحة «مدير الإعدادات المسبقة»"
 
-#: videomass/vdms_main/main_frame.py:725
+#: videomass/vdms_main/main_frame.py:715
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "تحويلات الصوت والفيديو\tCtrl+Shift+V"
 
-#: videomass/vdms_main/main_frame.py:726
+#: videomass/vdms_main/main_frame.py:716
 msgid "Go to the «A/V Conversions» panel"
 msgstr "الانتقال إلى لوحة «تحويلات الصوت والفيديو»"
 
-#: videomass/vdms_main/main_frame.py:730
+#: videomass/vdms_main/main_frame.py:720
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "فاصل الدمج (Concatenate Demuxer)\tCtrl+Shift+D"
 
-#: videomass/vdms_main/main_frame.py:731
+#: videomass/vdms_main/main_frame.py:721
 msgid "Go to the «Concatenate Demuxer» panel"
 msgstr "الانتقال إلى لوحة «فاصل الدمج (Concatenate Demuxer)»"
 
-#: videomass/vdms_main/main_frame.py:735
+#: videomass/vdms_main/main_frame.py:725
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr "صانع الصور الثابتة\tCtrl+Shift+I"
 
-#: videomass/vdms_main/main_frame.py:736
+#: videomass/vdms_main/main_frame.py:726
 msgid "Go to the «Still Image Maker» panel"
 msgstr "الانتقال إلى لوحة «صانع الصور الثابتة»"
 
-#: videomass/vdms_main/main_frame.py:740
+#: videomass/vdms_main/main_frame.py:730
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "من فيلم إلى صور\tCtrl+Shift+S"
 
-#: videomass/vdms_main/main_frame.py:741
+#: videomass/vdms_main/main_frame.py:731
 msgid "Go to the «From Movie to Pictures» panel"
 msgstr "الانتقال إلى لوحة «من فيلم إلى صور»"
 
-#: videomass/vdms_main/main_frame.py:745
+#: videomass/vdms_main/main_frame.py:735
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr "شاشة المخرجات\tCtrl+Shift+O"
 
-#: videomass/vdms_main/main_frame.py:746
+#: videomass/vdms_main/main_frame.py:736
 msgid "Keeps track of the output for debugging errors"
 msgstr "تتبّع المخرجات لتصحيح الأخطاء"
 
-#: videomass/vdms_main/main_frame.py:749
+#: videomass/vdms_main/main_frame.py:739
 msgid "Go"
 msgstr "انتقال"
 
-#: videomass/vdms_main/main_frame.py:755
+#: videomass/vdms_main/main_frame.py:745
 msgid "User guide"
 msgstr "دليل المستخدم"
 
-#: videomass/vdms_main/main_frame.py:760
+#: videomass/vdms_main/main_frame.py:750
 msgid "System version"
 msgstr "إصدار النظام"
 
-#: videomass/vdms_main/main_frame.py:762
+#: videomass/vdms_main/main_frame.py:752
 msgid "Get version about your operating system, version of Python and wxPython."
 msgstr "الحصول على معلومات إصدار نظام التشغيل وبايثون وwxPython لديك."
 
-#: videomass/vdms_main/main_frame.py:768
+#: videomass/vdms_main/main_frame.py:758
 msgid "Show log files\tCtrl+L"
 msgstr "إظهار ملفات السجل\tCtrl+L"
 
-#: videomass/vdms_main/main_frame.py:768
+#: videomass/vdms_main/main_frame.py:758
 msgid "Viewing log messages"
 msgstr "عرض رسائل السجل"
 
-#: videomass/vdms_main/main_frame.py:773
+#: videomass/vdms_main/main_frame.py:763
 msgid "Issue tracker"
 msgstr "متتبع المشكلات"
 
-#: videomass/vdms_main/main_frame.py:778
+#: videomass/vdms_main/main_frame.py:768
 msgid "Contribute to the project"
 msgstr "المساهمة في المشروع"
 
-#: videomass/vdms_main/main_frame.py:783
+#: videomass/vdms_main/main_frame.py:773
 msgid "Sponsor this project"
 msgstr "ادعم هذا المشروع"
 
-#: videomass/vdms_main/main_frame.py:784
+#: videomass/vdms_main/main_frame.py:774
 msgid "Become a developer supporter"
 msgstr "كن داعمًا للمطوّر"
 
-#: videomass/vdms_main/main_frame.py:787
+#: videomass/vdms_main/main_frame.py:777
 #, fuzzy
 msgid "Donate now ❤️"
 msgstr "تبرّع"
 
-#: videomass/vdms_main/main_frame.py:787
+#: videomass/vdms_main/main_frame.py:777
 #, fuzzy
 msgid "Donate to the Videomass project."
 msgstr "المساهمة في المشروع"
 
-#: videomass/vdms_main/main_frame.py:792
+#: videomass/vdms_main/main_frame.py:782
 msgid "Other projects by the developer"
 msgstr "مشاريع أخرى للمطوّر"
 
-#: videomass/vdms_main/main_frame.py:815
+#: videomass/vdms_main/main_frame.py:805
 msgid "About Videomass"
 msgstr "حول Videomass"
 
-#: videomass/vdms_main/main_frame.py:817
+#: videomass/vdms_main/main_frame.py:807
 msgid "Check for newer version"
 msgstr "التحقق من وجود إصدار أحدث"
 
-#: videomass/vdms_main/main_frame.py:818
+#: videomass/vdms_main/main_frame.py:808
 msgid "Check for the latest Videomass version"
 msgstr "التحقق من أحدث إصدار من Videomass"
 
-#: videomass/vdms_main/main_frame.py:821
+#: videomass/vdms_main/main_frame.py:811
 msgid "Help"
 msgstr "مساعدة"
 
-#: videomass/vdms_main/main_frame.py:916
+#: videomass/vdms_main/main_frame.py:906
 msgid "Import files"
 msgstr "استيراد ملفات"
 
-#: videomass/vdms_main/main_frame.py:940
+#: videomass/vdms_main/main_frame.py:930
 msgid "No default folder has been set for the destination of the encodings. The current setting is \"Same destination paths as source files\"."
 msgstr "لم يتم تعيين مجلد افتراضي لوجهة التحويلات. الإعداد الحالي هو \"نفس مسارات الملفات المصدر\"."
 
-#: videomass/vdms_main/main_frame.py:980 videomass/vdms_main/main_frame.py:1018
+#: videomass/vdms_main/main_frame.py:970 videomass/vdms_main/main_frame.py:1008
 #, python-brace-format
 msgid ""
 "'{}':\n"
@@ -2086,11 +2086,11 @@ msgstr ""
 "'{}':\n"
 "لا يوجد ملف أو مجلد بهذا الاسم"
 
-#: videomass/vdms_main/main_frame.py:998
+#: videomass/vdms_main/main_frame.py:988
 msgid "Are you sure to empty trash folder?"
 msgstr "هل أنت متأكد من رغبتك في إفراغ سلة المهملات؟"
 
-#: videomass/vdms_main/main_frame.py:1011
+#: videomass/vdms_main/main_frame.py:1001
 #, python-brace-format
 msgid ""
 "'{}':\n"
@@ -2099,17 +2099,17 @@ msgstr ""
 "'{}':\n"
 "لا توجد ملفات لحذفها."
 
-#: videomass/vdms_main/main_frame.py:1083
+#: videomass/vdms_main/main_frame.py:1073
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "الإصدار المثبّت v{0}. يتوفر إصدار جديد من الإعدادات المسبقة {1}"
 
-#: videomass/vdms_main/main_frame.py:1092
+#: videomass/vdms_main/main_frame.py:1082
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "الإصدار المثبّت v{0}. لا توجد تحديثات جديدة."
 
-#: videomass/vdms_main/main_frame.py:1130
+#: videomass/vdms_main/main_frame.py:1120
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2117,16 +2117,16 @@ msgstr ""
 "انتظر....\n"
 "جارٍ تنزيل الأرشيف"
 
-#: videomass/vdms_main/main_frame.py:1143
+#: videomass/vdms_main/main_frame.py:1133
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "تم التنزيل بنجاح إلى \"{0}\""
 
-#: videomass/vdms_main/main_frame.py:1411
+#: videomass/vdms_main/main_frame.py:1401
 msgid "Some changes require restarting the application."
 msgstr "تتطلب بعض التغييرات إعادة تشغيل التطبيق."
 
-#: videomass/vdms_main/main_frame.py:1419
+#: videomass/vdms_main/main_frame.py:1409
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -2137,104 +2137,104 @@ msgstr ""
 "\n"
 "هل تريد إعادة تشغيل التطبيق الآن؟"
 
-#: videomass/vdms_main/main_frame.py:1421
+#: videomass/vdms_main/main_frame.py:1411
 msgid "Restart Videomass?"
 msgstr "إعادة تشغيل Videomass؟"
 
-#: videomass/vdms_main/main_frame.py:1510
+#: videomass/vdms_main/main_frame.py:1500
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "يتوفر إصدار جديد - v.{0}\n"
 
-#: videomass/vdms_main/main_frame.py:1513
+#: videomass/vdms_main/main_frame.py:1503
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "أنت تستخدم نسخة تطوير لم تصدر بعد!\n"
 
-#: videomass/vdms_main/main_frame.py:1518
+#: videomass/vdms_main/main_frame.py:1508
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "تهانينا! أنت تستخدم أحدث إصدار بالفعل.\n"
 
-#: videomass/vdms_main/main_frame.py:1599
+#: videomass/vdms_main/main_frame.py:1589
 msgid "Previous panel"
 msgstr "اللوحة السابقة"
 
-#: videomass/vdms_main/main_frame.py:1600
+#: videomass/vdms_main/main_frame.py:1590
 msgid "Back"
 msgstr "رجوع"
 
-#: videomass/vdms_main/main_frame.py:1601
+#: videomass/vdms_main/main_frame.py:1591
 msgid "Next panel"
 msgstr "اللوحة التالية"
 
-#: videomass/vdms_main/main_frame.py:1603
+#: videomass/vdms_main/main_frame.py:1593
 msgid "Next"
 msgstr "التالي"
 
-#: videomass/vdms_main/main_frame.py:1605
+#: videomass/vdms_main/main_frame.py:1595
 msgid "Home panel"
 msgstr "اللوحة الرئيسية"
 
-#: videomass/vdms_main/main_frame.py:1606
+#: videomass/vdms_main/main_frame.py:1596
 msgid "Home"
 msgstr "الرئيسية"
 
-#: videomass/vdms_main/main_frame.py:1608
+#: videomass/vdms_main/main_frame.py:1598
 msgid "Get informative data about imported media streams"
 msgstr "الحصول على بيانات معلوماتية عن تدفقات الوسائط المستوردة"
 
-#: videomass/vdms_main/main_frame.py:1612
+#: videomass/vdms_main/main_frame.py:1602
 msgid "Start batch processing"
 msgstr "بدء المعالجة الدفعية"
 
-#: videomass/vdms_main/main_frame.py:1616
+#: videomass/vdms_main/main_frame.py:1606
 msgid "Stops current process"
 msgstr "إيقاف العملية الحالية"
 
-#: videomass/vdms_main/main_frame.py:1618 videomass/vdms_utils/widget_utils.py:157
+#: videomass/vdms_main/main_frame.py:1608 videomass/vdms_utils/widget_utils.py:157
 msgid "Stop"
 msgstr "إيقاف"
 
-#: videomass/vdms_main/main_frame.py:1620
+#: videomass/vdms_main/main_frame.py:1610
 msgid "Add an item to Queue"
 msgstr "إضافة عنصر إلى قائمة الانتظار"
 
-#: videomass/vdms_main/main_frame.py:1622
+#: videomass/vdms_main/main_frame.py:1612
 msgid "Add to Queue"
 msgstr "إضافة إلى قائمة الانتظار"
 
-#: videomass/vdms_main/main_frame.py:1624
+#: videomass/vdms_main/main_frame.py:1614
 msgid "Show queue"
 msgstr "إظهار قائمة الانتظار"
 
-#: videomass/vdms_main/main_frame.py:1736
+#: videomass/vdms_main/main_frame.py:1726
 msgid "Videomass - File List"
 msgstr "Videomass - قائمة الملفات"
 
-#: videomass/vdms_main/main_frame.py:1754
+#: videomass/vdms_main/main_frame.py:1744
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - تحويلات الصوت والفيديو"
 
-#: videomass/vdms_main/main_frame.py:1784
+#: videomass/vdms_main/main_frame.py:1774
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - مدير الإعدادات المسبقة"
 
-#: videomass/vdms_main/main_frame.py:1815
+#: videomass/vdms_main/main_frame.py:1805
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - فاصل الدمج (Concatenate Demuxer)"
 
-#: videomass/vdms_main/main_frame.py:1845
+#: videomass/vdms_main/main_frame.py:1835
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - من فيلم إلى صور"
 
-#: videomass/vdms_main/main_frame.py:1875
+#: videomass/vdms_main/main_frame.py:1865
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - صانع الصور الثابتة"
 
-#: videomass/vdms_main/main_frame.py:1966 videomass/vdms_miniframes/timeline.py:497 videomass/vdms_panels/audio_encoders/acodecs.py:717 videomass/vdms_panels/av_conversions.py:707 videomass/vdms_panels/av_conversions.py:1451 videomass/vdms_panels/filedrop.py:805 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
+#: videomass/vdms_main/main_frame.py:1956 videomass/vdms_miniframes/timeline.py:497 videomass/vdms_panels/audio_encoders/acodecs.py:717 videomass/vdms_panels/av_conversions.py:707 videomass/vdms_panels/av_conversions.py:1451 videomass/vdms_panels/filedrop.py:805 videomass/vdms_panels/sequence_to_video.py:373 videomass/vdms_panels/video_to_sequence.py:425 videomass/vdms_panels/video_to_sequence.py:574
 msgid "Have to select an item in the file list first"
 msgstr "يجب تحديد عنصر في قائمة الملفات أولًا"
 
-#: videomass/vdms_main/main_frame.py:1995
+#: videomass/vdms_main/main_frame.py:1985
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
@@ -2244,40 +2244,40 @@ msgstr ""
 "\n"
 "هل تريد استبداله بإضافة العنصر الجديد إلى قائمة الانتظار؟"
 
-#: videomass/vdms_main/main_frame.py:2012
+#: videomass/vdms_main/main_frame.py:2002
 #, python-brace-format
 msgid ""
 "Queue limit reached ({} items).\n"
 "Please remove some items before adding more."
 msgstr ""
 
-#: videomass/vdms_main/main_frame.py:2033
+#: videomass/vdms_main/main_frame.py:2023
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - مراقبة رسائل FFmpeg"
 
-#: videomass/vdms_main/main_frame.py:2099
+#: videomass/vdms_main/main_frame.py:2089
 msgid "Please wait... interruption in progress"
 msgstr "يرجى الانتظار... جارٍ إيقاف العملية"
 
-#: videomass/vdms_main/main_frame.py:2171
+#: videomass/vdms_main/main_frame.py:2161
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr "سيتم إيقاف تشغيل النظام خلال {0} ثانية"
 
-#: videomass/vdms_main/main_frame.py:2172
+#: videomass/vdms_main/main_frame.py:2162
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - إيقاف التشغيل!"
 
-#: videomass/vdms_main/main_frame.py:2186
+#: videomass/vdms_main/main_frame.py:2176
 msgid "Error while shutting down. Please see file log for details."
 msgstr "حدث خطأ أثناء إيقاف التشغيل. يرجى مراجعة ملف السجل للتفاصيل."
 
-#: videomass/vdms_main/main_frame.py:2201
+#: videomass/vdms_main/main_frame.py:2191
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr "سيتم الخروج من التطبيق خلال {0} ثانية"
 
-#: videomass/vdms_main/main_frame.py:2202
+#: videomass/vdms_main/main_frame.py:2192
 msgid "Videomass - Exiting!"
 msgstr "Videomass - جارٍ الخروج!"
 
@@ -2305,7 +2305,7 @@ msgstr "ثوانٍ"
 msgid "Milliseconds"
 msgstr "أجزاء من الثانية (ميلي ثانية)"
 
-#: videomass/vdms_miniframes/timeline.py:291 videomass/vdms_miniframes/timeline.py:890
+#: videomass/vdms_miniframes/timeline.py:291 videomass/vdms_miniframes/timeline.py:873
 msgid "No source duration:"
 msgstr "لا توجد مدة للمصدر:"
 
@@ -2313,7 +2313,7 @@ msgstr "لا توجد مدة للمصدر:"
 msgid "Wave"
 msgstr "موجة"
 
-#: videomass/vdms_miniframes/timeline.py:384 videomass/vdms_miniframes/timeline.py:866 videomass/vdms_miniframes/timeline.py:929 videomass/vdms_miniframes/timeline.py:935 videomass/vdms_miniframes/timeline.py:1051
+#: videomass/vdms_miniframes/timeline.py:384 videomass/vdms_miniframes/timeline.py:850 videomass/vdms_miniframes/timeline.py:912 videomass/vdms_miniframes/timeline.py:918 videomass/vdms_miniframes/timeline.py:1034
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  مدة المقطع: {2}"
@@ -2349,7 +2349,7 @@ msgid ""
 "Loading waveform."
 msgstr ""
 
-#: videomass/vdms_miniframes/timeline.py:650
+#: videomass/vdms_miniframes/timeline.py:631
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
@@ -2357,14 +2357,14 @@ msgstr ""
 "تحديد المقطع غير صالح!\n"
 "يجب تحريك مؤشر «النهاية» إلى يمين مؤشر «البداية»."
 
-#: videomass/vdms_miniframes/timeline.py:671
+#: videomass/vdms_miniframes/timeline.py:658
 #, fuzzy, python-brace-format
 msgid ""
 "Invalid or unsupported file:\n"
 "'{}'"
 msgstr "ملف غير صالح أو غير مدعوم:  %s"
 
-#: videomass/vdms_miniframes/timeline.py:800
+#: videomass/vdms_miniframes/timeline.py:784
 #, python-brace-format
 msgid ""
 "Unable to create waveform.\n"
@@ -2375,7 +2375,7 @@ msgstr ""
 "لا يحتوي ملف المصدر المحدد على أي تدفقات صوتية:\n"
 "\"{}\""
 
-#: videomass/vdms_miniframes/timeline.py:826
+#: videomass/vdms_miniframes/timeline.py:810
 #, fuzzy
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
@@ -2409,15 +2409,15 @@ msgstr ""
 "(00:00:00.000) وسيتم تعطيل جميع عناصر تحكم الخط الزمني.\n"
 "ينطبق هذا السلوك أيضًا عند إلغاء تحديد الملفات."
 
-#: videomass/vdms_miniframes/timeline.py:906
+#: videomass/vdms_miniframes/timeline.py:889
 msgid "Source duration:"
 msgstr "مدة المصدر:"
 
-#: videomass/vdms_miniframes/timeline.py:995
+#: videomass/vdms_miniframes/timeline.py:978
 msgid "WARNING: Invalid segment selection, out of range."
 msgstr "تحذير: تحديد المقطع غير صالح، خارج النطاق."
 
-#: videomass/vdms_miniframes/timeline.py:1110
+#: videomass/vdms_miniframes/timeline.py:1093
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
@@ -2425,11 +2425,11 @@ msgstr ""
 "ابدأ بسحب المقابض في الزوايا اليسرى أو\n"
 "انقر على أزرار ضبط البداية/النهاية للضبط الدقيق."
 
-#: videomass/vdms_miniframes/timeline.py:1146
+#: videomass/vdms_miniframes/timeline.py:1129
 msgid "Start"
 msgstr "البداية"
 
-#: videomass/vdms_miniframes/timeline.py:1147
+#: videomass/vdms_miniframes/timeline.py:1130
 msgid "End"
 msgstr "النهاية"
 

@@ -14,7 +14,7 @@ Fri, 27 November 2026 v6.1.30
   * Dropped Backward compatibility with wxPython v4.0.7.
   * Fixed debug messages in wxPython v4.3.2; this will make the application
     ready (and cleaner) for the latest versions of the toolkit.
-  * Improved building package using hatchling. This removes `setuptools` from
+  * Fixed building package using hatchling. This removes `setuptools` from
     dependencies :-).
   * Fixed UI Dark mode issue on Windows11 using Dark system theme (see #23).
     This fix applies only in wxPython v4.3 or higher. Note that changes to the
@@ -27,7 +27,7 @@ Fri, 27 November 2026 v6.1.30
   * Improved `NormalTransientPopup` class: it now supports automatic line
     wrapping - based on a width in pixels specified as an integer argument -
     for the text displayed in the popup.
-  * Updated help clicking on ? button for Resize filter.
+  * Updated contextual Quick tip for Resize filter.
   * Code refactoring performed on the following files: gui_app.py [ OnExit(),
     auto_restart() ], utils.py [ open_default_application(),
     format_bytes(), to_bytes(), time_to_integer(), integer_to_time(),
@@ -53,9 +53,9 @@ Fri, 27 November 2026 v6.1.30
     when the application's main window is closed.
   * Fixed a timeline portability issue; segment playback is now available on
     Windows as well (Testing on macOS still needs to be done by any of you).
-  * Redesigned the timeline graphics engine; it is thread-safe, consumes very
+  * NEW: Redesigned the timeline graphics engine; it is thread-safe, consumes very
     few resources, and performs in a consistent and fluid manner.
-  * Improved waveform visualization in the timeline, in addition to other
+  * NEW: Improved waveform visualization in the timeline, in addition to other
     cosmetic enhancements applied.
   * Improved display of Quick Tips (formerly "Read me" buttons).
   * Redesigned the graphics engine in the Crop filter window in A/V Conversions.
@@ -77,7 +77,7 @@ Fri, 27 November 2026 v6.1.30
   * Fixed portability issues on ffprobe.py wrapper.
   * Removed Popen wrapper on utils.py file, in favor of a more modern interface
     to subprocess.
-  * The timeline editor now features a "stop preview" button; if the "play"
+  * NEW: The timeline editor now features a "stop preview" button; if the "play"
     button is pressed, it will turn into a "stop" button.
   * Fixed a UI freezing issue in the "Transpose" filter that occurred while
     loading the preview, and improved the overall appearance of the window.
@@ -94,10 +94,10 @@ Fri, 27 November 2026 v6.1.30
   * Fixed "Still Image Maker" comparing image dimensions.
   * Added ".tiff" format (no multi-page) to "Still Image Maker" file
     compatibilities.
-  * Fixed stream inspection assuming the video stream is always at index 0,
-    preventing false warnings on files where audio or subtitle tracks precede
-    the video stream.
-  * Ignored embedded cover art (attached_pic) when detecting primary
+  * Fixed probing parser: stream inspection assuming the video stream is always
+    at index 0, preventing false warnings on files where audio or subtitle
+    tracks precede the video stream.
+  * Probing: Ignored embedded cover art (attached_pic) when detecting primary
     video/audio streams.
   * Run ffprobe asynchronously in a background worker thread during file
     import and drag-and-drop to prevent UI freezes.
@@ -105,8 +105,9 @@ Fri, 27 November 2026 v6.1.30
     of re-probing files.
   * The logic for enabling/disabling controls and buttons in the video
     stabilization filter has been redesigned.
-  * Improved icon relevance for MessageBox().
-  * New dynamic-sized layout in the dialog wizard.
+  * Fixes relevance level of icons on MessageBoxes (replaces non-serious errors
+    and warnings with more informational messages).
+  * Fixes dynamic-sized layout in the dialog wizard.
   * To more safely manage GUI workloads, reasonable limits have been imposed on
     the total number of files in the list control, then a maximum limit on the
     files dragged at a time and also on the number of items in the queue.
@@ -114,7 +115,7 @@ Fri, 27 November 2026 v6.1.30
     with structured argument lists passed directly to subprocess.Popen,
     preventing issues with file paths containing spaces, quotes, or backslashes
     on Windows, macOS, and Linux.
-  * Improved previews[Waveform, Transpose]: To limit ffmpeg processes and speed
+  * Fixes previews[Waveform, Transpose]: To limit ffmpeg processes and speed
     up some preview loading tasks, the last modification timestamp (mtime) +
     file size has been added to the generated frame names, to ensure that the
     cache is automatically regenerated if the file is overwritten or modified.
